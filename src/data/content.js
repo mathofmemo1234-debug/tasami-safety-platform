@@ -186,9 +186,9 @@ export const content = {
       quickLinks: "روابط سريعة",
       ourServices: "خدماتنا الرئيسية",
       contactInfo: "معلومات التواصل",
-      address: "المملكة العربية السعودية، الرياض، طريق الملك فهد",
-      phone: "+966 11 234 5678",
-      email: "info@tasami-safety.sa",
+      address: "المملكة العربية السعودية - مكة المكرمة - حي الشوقية - شارع ابراهيم الخليل 24351",
+      phone: "+966 59 168 4133",
+      email: "makkah-branch@tasaami.com",
       allRightsReserved: "جميع الحقوق محفوظة © 2026 شركة تسامي لحلول الأمن والسلامة.",
       visionQuote: "نعمل بتوافق تام مع مستهدفات وتطلعات رؤية المملكة 2030 لتعزيز جودة الحياة وحماية الأرواح والمنشآت."
     }
@@ -380,9 +380,9 @@ export const content = {
       quickLinks: "Quick Links",
       ourServices: "Core Services",
       contactInfo: "Contact Details",
-      address: "King Fahd Road, Riyadh, Kingdom of Saudi Arabia",
-      phone: "+966 11 234 5678",
-      email: "info@tasami-safety.sa",
+      address: "KSA - Makkah Al-Mukarramah - Ash Shawqiyah Dist. - Ibrahim Al-Khalil Str. 24351",
+      phone: "+966 59 168 4133",
+      email: "makkah-branch@tasaami.com",
       allRightsReserved: "All Rights Reserved © 2026 TASAMI Safety Solutions.",
       visionQuote: "Committed to the goals of Saudi Vision 2030 to enhance quality of life and preserve human capital."
     }

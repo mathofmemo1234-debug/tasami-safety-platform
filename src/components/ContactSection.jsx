@@ -112,12 +112,22 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   <div className="w-12 h-12 rounded-xl bg-amber-50 text-[#c59a45] flex items-center justify-center flex-shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <div>
-                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'الهاتف الموحد' : 'Central Phone'}</span>
-                    <a href="tel:+966112345678" className="block text-base font-bold text-slate-900 hover:text-[#c59a45] font-sans direction-ltr text-right" dir="ltr">
-                      +966 11 234 5678
+                  <div className="flex-1">
+                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'رقم الجوال والاتصال المباشر' : 'Direct Mobile & Call'}</span>
+                    <a href="tel:+966591684133" className="block text-base font-bold text-slate-900 hover:text-[#c59a45] font-sans direction-ltr text-right" dir="ltr">
+                      +966 59 168 4133
                     </a>
-                    <span className="text-[11px] text-emerald-600 font-medium">متاح من 8:00 ص - 6:00 م</span>
+                    <div className="mt-1 flex items-center gap-3">
+                      <span className="text-[11px] text-emerald-600 font-medium">متاح للاتصال وخدمة العملاء</span>
+                      <a
+                        href="https://wa.me/966591684133?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%A3%D9%85%D9%86%20%D9%88%D8%B3%D9%84%D8%A7%D9%85%D8%A9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md"
+                      >
+                        <span>محادثة واتساب 💬</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -128,10 +138,10 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}</span>
-                    <a href="mailto:info@tasami-safety.sa" className="block text-base font-bold text-slate-900 hover:text-[#c59a45] font-sans">
-                      info@tasami-safety.sa
+                    <a href="mailto:makkah-branch@tasaami.com" className="block text-base font-bold text-slate-900 hover:text-[#c59a45] font-sans">
+                      makkah-branch@tasaami.com
                     </a>
-                    <span className="text-[11px] text-slate-400">الرد خلال أقل من ساعتين</span>
+                    <span className="text-[11px] text-slate-400">فرع مكة المكرمة • الرد الفوري</span>
                   </div>
                 </div>
 
@@ -141,11 +151,14 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'المقر الرئيسي' : 'Headquarters'}</span>
-                    <div className="text-sm font-bold text-slate-900">
-                      طريق الملك فهد، حي الملقا، الرياض
+                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'العنوان والموقع' : 'Branch Address'}</span>
+                    <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug mt-0.5">
+                      {lang === 'ar' ? (
+                        <>المملكة العربية السعودية - مكة المكرمة - حي الشوقية - شارع ابراهيم الخليل 24351</>
+                      ) : (
+                        <>KSA - Makkah Al-Mukarramah - Ash Shawqiyah Dist. - Ibrahim Al-Khalil Str. 24351</>
+                      )}
                     </div>
-                    <span className="text-[11px] text-slate-400">المملكة العربية السعودية</span>
                   </div>
                 </div>
               </div>

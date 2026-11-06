@@ -72,11 +72,11 @@ export default function Footer({ lang, content, onOpenAdmin }) {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#c59a45] flex-shrink-0" />
-                <span dir="ltr">{t.phone}</span>
+                <a href={`tel:${t.phone.replace(/\s+/g, '')}`} className="hover:text-white transition" dir="ltr">{t.phone}</a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#c59a45] flex-shrink-0" />
-                <span>{t.email}</span>
+                <a href={`mailto:${t.email}`} className="hover:text-white transition">{t.email}</a>
               </div>
             </div>
 
