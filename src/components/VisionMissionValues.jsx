@@ -42,7 +42,7 @@ export default function VisionMissionValues({ lang, content }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           
           {/* Mission Card */}
-          <div className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl p-8 sm:p-10 relative overflow-hidden group shadow-xl transition-all duration-300">
+          <div id="mission" className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl p-8 sm:p-10 relative overflow-hidden group shadow-xl transition-all duration-300 scroll-mt-24">
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#c59a45]/10 rounded-full blur-xl group-hover:scale-150 transition-transform"></div>
             
             <div className="flex items-center gap-4 mb-6">
@@ -66,7 +66,7 @@ export default function VisionMissionValues({ lang, content }) {
           </div>
 
           {/* Vision Card */}
-          <div className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl p-8 sm:p-10 relative overflow-hidden group shadow-xl transition-all duration-300">
+          <div id="vision" className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl p-8 sm:p-10 relative overflow-hidden group shadow-xl transition-all duration-300 scroll-mt-24">
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform"></div>
 
             <div className="flex items-center gap-4 mb-6">

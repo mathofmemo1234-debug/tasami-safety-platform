@@ -71,7 +71,7 @@ export default function CeoMessage({ lang, content }) {
               <div className="relative z-10 mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-[#c59a45]" />
-                  <span>شركة تسامي الأعمال</span>
+                  <span>تسامي الأعمال لأنظمة السلامة</span>
                 </span>
                 <span className="font-mono text-[#dfb76c]">TASAMI</span>
               </div>

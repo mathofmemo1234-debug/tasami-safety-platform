@@ -22,7 +22,7 @@ export default class ErrorBoundary extends React.Component {
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#c59a45]/20 text-[#c59a45] flex items-center justify-center">
               <span className="text-2xl font-black">!</span>
             </div>
-            <h2 className="text-xl font-black mb-2 text-white">شركة تسامي الأعمال</h2>
+            <h2 className="text-xl font-black mb-2 text-white">تسامي الأعمال لأنظمة السلامة</h2>
             <p className="text-xs text-slate-400 mb-6 leading-relaxed">
               تم رصد تحديث في الصفحة، يرجى الضغط أدناه لإعادة تحميل المنصة بكامل خدماتها.
             </p>

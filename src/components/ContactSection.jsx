@@ -205,7 +205,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                 <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
                   <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
                   <h5 className="text-base font-bold text-emerald-900">تم إرسال طلبك بنجاح!</h5>
-                  <p className="text-xs text-emerald-700">شكراً لثقتكم بشركة تسامي الأعمال. سيتواصل معكم فريقنا الفني قريباً.</p>
+                  <p className="text-xs text-emerald-700">شكراً لثقتكم بتسامي الأعمال لأنظمة السلامة. سيتواصل معكم فريقنا الفني قريباً.</p>
                   <button
                     onClick={() => setSubmitted(false)}
                     className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold"

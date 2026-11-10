@@ -31,10 +31,10 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
                   TASAMI
                 </div>
                 <div className="text-[10px] tracking-widest uppercase text-[#dfb76c] font-bold">
-                  BUSINESS COMPANY
+                  FOR SAFETY SYSTEMS
                 </div>
                 <div className="mt-1 text-xs text-slate-200 font-semibold font-cairo">
-                  — شركة تسامي الأعمال —
+                  — تسامي الأعمال لأنظمة السلامة —
                 </div>
               </div>
 

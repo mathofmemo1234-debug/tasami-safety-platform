@@ -28,8 +28,8 @@ export default function App() {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.title = lang === 'ar'
-      ? 'شركة تسامي الأعمال | TASAMI BUSINESS COMPANY - لأنظمة الإطفاء والإنذار من الحريق'
-      : 'Tasami Business Company | Turnkey Fire & Safety Engineering';
+      ? 'تسامي الأعمال لأنظمة السلامة | TASAMI BUSINESS FOR SAFETY SYSTEMS'
+      : 'Tasami Business for Safety Systems | Turnkey Fire & Safety Engineering';
   }, [lang]);
 
   const handleOpenConsultation = (serviceName = '') => {
