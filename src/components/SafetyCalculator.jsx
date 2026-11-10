@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Calculator, CheckCircle2, AlertCircle, ArrowLeft, ArrowRight, ShieldCheck, Flame, BellRing, Sparkles } from 'lucide-react';
 
 export default function SafetyCalculator({ lang, content, onSaveQuote }) {
-  const t = content[lang].calculator;
+  const t = content?.[lang]?.calculator || {};
 
   const [facilityType, setFacilityType] = useState('commercial');
   const [area, setArea] = useState(2500);

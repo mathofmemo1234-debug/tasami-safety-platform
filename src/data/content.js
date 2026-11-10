@@ -18,6 +18,7 @@ export const content = {
       products: "منتجاتنا",
       licenses: "الاعتمادات والتراخيص",
       orgChart: "الهيكل التنظيمي",
+      projects: "أبرز مشاريعنا",
       calculator: "حاسبة السلامة",
       contact: "تواصل معنا",
       requestConsultation: "طلب استشارة هندسية",
@@ -319,6 +320,76 @@ export const content = {
         { title: "شهادة تسجيل ضريبة القيمة المضافة", authority: "هيئة الزكاة والضريبة والجمارك (ZATCA)", note: "امتثال ضريبي رسمي" }
       ]
     },
+    projects: {
+      tag: "أبرز مشاريعنا",
+      title: "مشاريع تساهم في بناء مستقبل أكثر أماناً",
+      subtitle: "نعتز بثقة كبرى الشركات والجهات الحكومية والخاصة في مختلف مناطق المملكة",
+      filterAll: "جميع المشاريع",
+      filterCommercial: "مجمعات تجارية",
+      filterTowers: "أبراج مكتبية وسكنية",
+      filterIndustrial: "منشآت صناعية ومستودعات",
+      items: [
+        {
+          id: 1,
+          category: "commercial",
+          title: "مشروع مجمع تجاري رائد",
+          location: "الرياض",
+          scope: "حلول السلامة الشاملة",
+          desc: "توريد وتركيب شبكة إطفاء متكاملة، ونظام إنذار معنون، وتنسيق أنظمة سحب الدخان مع اعتماد الدفاع المدني.",
+          image: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
+          stats: "مساحة 45,000 م² - 3 طوابق"
+        },
+        {
+          id: 2,
+          category: "towers",
+          title: "مشروع أبراج مكتبية حديثة",
+          location: "شمال الرياض",
+          scope: "الاستشارات وإدارة المخاطر",
+          desc: "دراسة هندسية متقدمة لمسالك الهروب، ونظام ضغط السلالم ومصاعد الطوارئ، مع تدريب طاقم إدارة البرج.",
+          image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+          stats: "ارتفاع 32 طابقاً - إشغال 4,000 شخص"
+        },
+        {
+          id: 3,
+          category: "industrial",
+          title: "مشروع منشأة بتروكيماوية وصناعية",
+          location: "الجبيل الصناعية",
+          scope: "أنظمة السلامة من الحريق والإطفاء بالرغوة",
+          desc: "أنظمة مكافحة الحريق بالرغوة (Deluge & Foam Systems)، وكواشف الغازات السامة واللهب عالية الحساسية.",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+          stats: "مجمع صناعي عالي الخطورة - مساحة 80,000 م²"
+        },
+        {
+          id: 4,
+          category: "commercial",
+          title: "مركز تسوق وفندقة متكامل",
+          location: "جدة",
+          scope: "أنظمة الإنذار والإخلاء الصوتي الذكي",
+          desc: "ربط أكثر من 3,000 نقطة إنذار ذكية بنظام الإخلاء الصوتي متعدد اللغات وغرف التحكم.",
+          image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80",
+          stats: "مجمع تجاري فندقي"
+        }
+      ]
+    },
+    calculator: {
+      tag: "أداة تفاعلية حصرية",
+      title: "حاسبة متطلبات وتكاليف السلامة الذكية",
+      subtitle: "احصل على تقدير فوري مبدئي لمتطلبات وتكلفة أنظمة الأمن والسلامة لمنشأتك وفق المعايير السعودية",
+      facilityType: "نوع المنشأة / النشاط",
+      area: "المساحة الإجمالية التقديرية (متر مربع)",
+      floors: "عدد الطوابق",
+      hazard: "مستوى الخطورة التشغيلية",
+      hazardLow: "منخفض (مكاتب، عيادات بسيطة)",
+      hazardMed: "متوسط (مجمعات تجارية، مدارس، مستودعات عامة)",
+      hazardHigh: "مرتفع (مصانع، مواد بترولية، مستشفيات)",
+      calculateBtn: "احسب التقدير والمتطلبات الآن",
+      resultTitle: "ملخص التقدير الفني الأولي",
+      estimatedCostLabel: "التقدير التقريبي لتجهيزات السلامة:",
+      sar: "ريال سعودي",
+      recommendedSystems: "الأنظمة الموصى بها إلزامياً لمشروعك:",
+      saveEstimate: "طلب دراسة تفصيلية وعرض سعر رسمي",
+      notice: "* هذا التقدير تقريبي ويعتمد على المعاينة الميدانية التفصيلية والمخططات المعمارية المعتمدة."
+    },
     contact: {
       tag: "تواصل معنا",
       title: "يسعدنا دائماً خدمتكم والتواصل معكم",
@@ -373,6 +444,7 @@ export const content = {
       products: "Products",
       licenses: "Accreditations & Licenses",
       orgChart: "Org Structure",
+      projects: "Featured Projects",
       calculator: "Safety Estimator",
       contact: "Contact Us",
       requestConsultation: "Request Engineering Consultation",
@@ -673,6 +745,76 @@ export const content = {
         { title: "Commercial Activity License", authority: "Balady Platform / Ministry of Municipalities", note: "Municipal Operating License" },
         { title: "VAT Registration Certificate", authority: "Zakat, Tax and Customs Authority (ZATCA)", note: "Tax Compliant Entity" }
       ]
+    },
+    projects: {
+      tag: "Featured Projects",
+      title: "Projects Building a Safer Future",
+      subtitle: "Trusted by prominent corporations and government institutions throughout the Kingdom",
+      filterAll: "All Projects",
+      filterCommercial: "Commercial Malls",
+      filterTowers: "Office & Residential Towers",
+      filterIndustrial: "Industrial & Warehouses",
+      items: [
+        {
+          id: 1,
+          category: "commercial",
+          title: "Flagship Commercial Mall",
+          location: "Riyadh",
+          scope: "Turnkey Safety Solutions",
+          desc: "Full fire sprinkler network, addressable alarms, smoke evacuation, and Civil Defense certification.",
+          image: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
+          stats: "45,000 sqm - 3 Floors"
+        },
+        {
+          id: 2,
+          category: "towers",
+          title: "Modern Corporate Towers",
+          location: "North Riyadh",
+          scope: "Consultancy & Risk Management",
+          desc: "Advanced egress modeling, staircase pressurization systems, and dedicated building staff training.",
+          image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+          stats: "32 Floors - 4,000 Occupants"
+        },
+        {
+          id: 3,
+          category: "industrial",
+          title: "Petrochemical Industrial Facility",
+          location: "Jubail Industrial City",
+          scope: "Deluge & Foam Fire Suppression",
+          desc: "High-expansion foam systems, optical flame sensors, and toxic gas detection arrays.",
+          image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+          stats: "High hazard zone - 80,000 sqm"
+        },
+        {
+          id: 4,
+          category: "commercial",
+          title: "Luxury Mixed-Use Hotel & Retail Hub",
+          location: "Jeddah",
+          scope: "Smart Alarm & Voice Evacuation",
+          desc: "Integration of 3,000+ smart alarm points with multi-lingual automated voice evacuation systems.",
+          image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80",
+          stats: "Mixed-use hospitality complex"
+        }
+      ]
+    },
+    calculator: {
+      tag: "Interactive Feature",
+      title: "Smart Safety Needs & Cost Estimator",
+      subtitle: "Obtain an instant preliminary estimation of required safety systems and budgetary projections",
+      facilityType: "Facility Type / Activity",
+      area: "Estimated Gross Area (sqm)",
+      floors: "Number of Floors",
+      hazard: "Operational Hazard Level",
+      hazardLow: "Low (Offices, Clinics)",
+      hazardMed: "Medium (Commercial Malls, Schools, General Warehouses)",
+      hazardHigh: "High (Factories, Hazardous Storage, Hospitals)",
+      calculateBtn: "Calculate Requirements Now",
+      resultTitle: "Preliminary Technical Summary",
+      estimatedCostLabel: "Budgetary Estimate for Safety Systems:",
+      sar: "SAR",
+      recommendedSystems: "Statutory Mandatory Systems:",
+      saveEstimate: "Request Formal Engineering Study",
+      notice: "* This calculation is an estimate and subject to comprehensive on-site survey and approved architectural drawings."
     },
     contact: {
       tag: "Contact Us",

@@ -46,6 +46,8 @@ export default function Footer({ lang, content, onOpenAdmin }) {
               <li><a href="#products" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'كتالوج المنتجات' : 'Products'}</a></li>
               <li><a href="#licenses" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'الاعتمادات والتراخيص' : 'Licenses'}</a></li>
               <li><a href="#org-chart" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'الهيكل التنظيمي' : 'Org Chart'}</a></li>
+              <li><a href="#projects" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'أبرز مشاريعنا' : 'Projects'}</a></li>
+              <li><a href="#calculator" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'حاسبة السلامة' : 'Safety Estimator'}</a></li>
             </ul>
           </div>
 

@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { Building2, Factory, Landmark, MapPin, ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 
 export default function ProjectsSection({ lang, content }) {
-  const t = content[lang].projects;
+  const t = content?.[lang]?.projects || {};
   const [activeFilter, setActiveFilter] = useState('all');
 
+  const items = Array.isArray(t.items) ? t.items : [];
   const filteredItems = activeFilter === 'all'
-    ? t.items
-    : t.items.filter((item) => item.category === activeFilter);
+    ? items
+    : items.filter((item) => item.category === activeFilter);
 
   const filterButtons = [
-    { id: 'all', label: t.filterAll },
-    { id: 'commercial', label: t.filterCommercial },
-    { id: 'towers', label: t.filterTowers },
-    { id: 'industrial', label: t.filterIndustrial },
+    { id: 'all', label: t.filterAll || (lang === 'ar' ? 'جميع المشاريع' : 'All') },
+    { id: 'commercial', label: t.filterCommercial || (lang === 'ar' ? 'مجمعات تجارية' : 'Commercial') },
+    { id: 'towers', label: t.filterTowers || (lang === 'ar' ? 'أبراج' : 'Towers') },
+    { id: 'industrial', label: t.filterIndustrial || (lang === 'ar' ? 'صناعية' : 'Industrial') },
   ];
 
   return (

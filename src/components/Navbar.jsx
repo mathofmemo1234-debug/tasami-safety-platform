@@ -32,6 +32,7 @@ export default function Navbar({ lang, setLang, content, onOpenConsultation }) {
     { label: t.products, href: '#products' },
     { label: t.licenses, href: '#licenses' },
     { label: t.orgChart, href: '#org-chart' },
+    { label: t.projects || (lang === 'ar' ? 'أبرز مشاريعنا' : 'Projects'), href: '#projects' },
     { label: t.calculator, href: '#calculator', isCalc: true },
     { label: t.contact, href: '#contact' },
   ];
