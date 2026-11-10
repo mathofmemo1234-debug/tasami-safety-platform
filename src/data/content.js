@@ -302,8 +302,8 @@ export const content = {
           en: "UL/FM Certified Fire Sprinklers",
           desc: "رشاشات مائية بكافة درجات الحرارة والاستجابات (Pendent, Upright, Sidewall) معتمدة UL/FM وكود البناء السعودي.",
           image: "./images/product-1.jpg",
-          videoId: "Wv5G4_N170s",
-          videoTitle: "طريقة تركيب وتوزيع رشاشات الحريق الأوتوماتيكية وفق الكود السعودي",
+          videoId: "cvpABJITn28",
+          videoTitle: "طريقة تركيب وتوزيع رشاشات الحريق وتجهيزات الأنابيب المعتمدة",
           videoTitleEn: "How Fire Sprinkler Systems Are Installed & Engineered",
           specs: "UL Listed / FM Approved / K-Factor 5.6 & 8.0"
         },
@@ -362,7 +362,7 @@ export const content = {
           en: "Certified UL/FM Fire Pump Packages",
           desc: "مضخات طرد مركزي مجزأة أفقياً وعمودية بكافة معدلات التدفق (500 إلى 2500 GPM) مع لوحات تحكم أوتوماتيكية.",
           image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-          videoId: "7s2A1V89p-A",
+          videoId: "Job8w2OhXBc",
           videoTitle: "شرح تركيب واختبار غرفة مضخات الحريق وتوصيل خطوط السحب والطرد",
           videoTitleEn: "Fire Pump Skid Assembly, Piping, and Flow Testing",
           specs: "NFPA 20 / UL 448 / FM 1311 / 500-2500 GPM"
@@ -374,7 +374,7 @@ export const content = {
           en: "Fire Hose Cabinets & Extinguishers",
           desc: "صناديق جدارية من الستانلس ستيل المقاوم للصدأ مع بكرات خراطيم مطاطية وسينثيتك وطفايات بودرة وغاز معتمدة.",
           image: "./images/1f02a2dd-bd12-466e-b451-40c0c13b8ebc.jfif",
-          videoId: "Wv5G4_N170s",
+          videoId: "cvpABJITn28",
           videoTitle: "طريقة تركيب صندوق الحريق وتوصيل بكرة الخرطوم ومحبس الهبوط",
           videoTitleEn: "Fire Hose Reel Cabinet Installation & Pressure Connection",
           specs: "BS EN 671-1 / كود البناء السعودي SBC 801"
@@ -386,8 +386,8 @@ export const content = {
           en: "Clean Agent Fire Extinguishing Systems",
           desc: "أسطوانات عالية الضغط مع مشغلات كهربائية وميكانيكية وشبكة فوهات غمر كلي لغرف السيرفرات ومراكز البيانات.",
           image: "./images/3ada732e-c06f-40e9-ad06-bb80dc23d0a3.jfif",
-          videoId: "z8zvZxSSTLQ",
-          videoTitle: "شرح تركيب أسطوانات وشبكة فوهات الإطفاء بغاز FM-200 لغرف السيرفرات",
+          videoId: "ZatPdTk1Ulw",
+          videoTitle: "شرح واختبار شبكة فوهات وأسطوانات الإطفاء بغاز FM-200 النظيف",
           videoTitleEn: "FM-200 Clean Agent System Installation & Piping Layout",
           specs: "NFPA 2001 / UL Listed / Zero Ozone Depletion"
         },
@@ -398,7 +398,7 @@ export const content = {
           en: "High-Temp Smoke Extraction & Pressurization Fans",
           desc: "مراوح طرد محورية مقاومة لدرجات حرارة 400°C لمدة ساعتين لضمان خلو مسالك الهروب من الدخان أثناء الإخلاء.",
           image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
-          videoId: "7s2A1V89p-A",
+          videoId: "Job8w2OhXBc",
           videoTitle: "طريقة تركيب وتثبيت مراوح سحب الدخان وضغط السلالم وقنوات التهوية",
           videoTitleEn: "Staircase Pressurization and Smoke Exhaust Fan Installation",
           specs: "F400 / 2 Hours Fire Rated / EN 12101-3"
@@ -410,7 +410,7 @@ export const content = {
           en: "Fire Rated Emergency Exit Doors",
           desc: "أبواب فولاذية مقاومة للحريق (60 إلى 120 دقيقة) مزودة بأقفال ذعر وهلع ومغلقات أوتوماتيكية معتمدة.",
           image: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
-          videoId: "Wv5G4_N170s",
+          videoId: "cvpABJITn28",
           videoTitle: "طريقة تركيب أبواب الهروب المقاومة للحريق ومقابض الهلع Panic Bar",
           videoTitleEn: "UL Fire Rated Steel Door and Panic Exit Hardware Installation",
           specs: "UL 10C / NFPA 252 / 60-120 Min Rating"
@@ -870,7 +870,7 @@ export const content = {
           en: "UL/FM Certified Fire Sprinklers",
           desc: "Pendent, upright, and sidewall sprinkler heads across temperature ratings and K-factors compliant with SBC 801.",
           image: "./images/product-1.jpg",
-          videoId: "Wv5G4_N170s",
+          videoId: "cvpABJITn28",
           videoTitle: "طريقة تركيب وتوزيع رشاشات الحريق الأوتوماتيكية وفق الكود السعودي",
           videoTitleEn: "How Fire Sprinkler Systems Are Installed & Engineered",
           specs: "UL Listed / FM Approved / K-Factor 5.6 & 8.0"
@@ -930,7 +930,7 @@ export const content = {
           en: "Certified UL/FM Fire Pump Packages",
           desc: "UL/FM certified fire pump sets (Electric, Diesel, Jockey) across all flow rates (500 to 2,500 GPM).",
           image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-          videoId: "7s2A1V89p-A",
+          videoId: "Job8w2OhXBc",
           videoTitle: "شرح تركيب واختبار غرفة مضخات الحريق وتوصيل خطوط السحب والطرد",
           videoTitleEn: "Fire Pump Skid Assembly, Piping, and Flow Testing",
           specs: "NFPA 20 / UL 448 / FM 1311 / 500-2500 GPM"
@@ -942,7 +942,7 @@ export const content = {
           en: "Fire Hose Cabinets & Extinguishers",
           desc: "Stainless steel and epoxy cabinets with synthetic fire hoses and portable extinguishers.",
           image: "./images/1f02a2dd-bd12-466e-b451-40c0c13b8ebc.jfif",
-          videoId: "Wv5G4_N170s",
+          videoId: "cvpABJITn28",
           videoTitle: "طريقة تركيب صندوق الحريق وتوصيل بكرة الخرطوم ومحبس الهبوط",
           videoTitleEn: "Fire Hose Reel Cabinet Installation & Pressure Connection",
           specs: "BS EN 671-1 / Saudi Building Code SBC 801"
@@ -954,7 +954,7 @@ export const content = {
           en: "Clean Agent Fire Extinguishing Systems",
           desc: "Clean agent cylinders, manifold headers, and discharge nozzles for FM-200, Novec & CO₂ data vault protection.",
           image: "./images/3ada732e-c06f-40e9-ad06-bb80dc23d0a3.jfif",
-          videoId: "z8zvZxSSTLQ",
+          videoId: "ZatPdTk1Ulw",
           videoTitle: "شرح تركيب أسطوانات وشبكة فوهات الإطفاء بغاز FM-200 لغرف السيرفرات",
           videoTitleEn: "FM-200 Clean Agent System Installation & Piping Layout",
           specs: "NFPA 2001 / UL Listed / Zero Ozone Depletion"
@@ -966,7 +966,7 @@ export const content = {
           en: "High-Temp Smoke Extraction & Pressurization Fans",
           desc: "High-temperature rated axial and centrifugal smoke extract and stairwell pressurization fans (400°C / 2h).",
           image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
-          videoId: "7s2A1V89p-A",
+          videoId: "Job8w2OhXBc",
           videoTitle: "طريقة تركيب وتثبيت مراوح سحب الدخان وضغط السلالم وقنوات التهوية",
           videoTitleEn: "Staircase Pressurization and Smoke Exhaust Fan Installation",
           specs: "F400 / 2 Hours Fire Rated / EN 12101-3"
@@ -978,7 +978,7 @@ export const content = {
           en: "Fire Rated Emergency Exit Doors",
           desc: "Certified fire-rated steel doors equipped with panic bars, closers, and intumescent smoke seals.",
           image: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
-          videoId: "Wv5G4_N170s",
+          videoId: "cvpABJITn28",
           videoTitle: "طريقة تركيب أبواب الهروب المقاومة للحريق ومقابض الهلع Panic Bar",
           videoTitleEn: "UL Fire Rated Steel Door and Panic Exit Hardware Installation",
           specs: "UL 10C / NFPA 252 / 60-120 Min Rating"

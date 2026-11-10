@@ -242,7 +242,7 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
           <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-4xl w-full p-4 sm:p-6 relative shadow-2xl overflow-hidden flex flex-col">
             
             {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4 gap-3">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
@@ -251,22 +251,36 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
                   </h3>
                 </div>
                 <p className="text-xs text-[#dfb76c] font-semibold mt-0.5">
-                  {activeVideo.productName} — شركة تسامي الأعمال لأنظمة السلامة
+                  {activeVideo.productName} — تسامي الأعمال لأنظمة السلامة
                 </p>
               </div>
-              <button
-                onClick={() => setActiveVideo(null)}
-                className="w-9 h-9 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 flex items-center justify-center transition"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href={`https://www.youtube.com/watch?v=${activeVideo.videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white text-xs font-bold transition border border-red-500/30"
+                  title="فتح في يوتيوب"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>{lang === 'ar' ? 'يوتيوب' : 'YouTube'}</span>
+                </a>
+
+                <button
+                  onClick={() => setActiveVideo(null)}
+                  className="w-9 h-9 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 flex items-center justify-center transition"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Embedded 16:9 Video Player */}
             <div className="relative w-full pb-[56.25%] h-0 rounded-2xl overflow-hidden bg-black shadow-inner border border-slate-800">
               <iframe
-                src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1&rel=0&modestbranding=1`}
+                src={`https://www.youtube-nocookie.com/embed/${activeVideo.videoId}?autoplay=1&rel=0`}
                 title={activeVideo.title}
                 className="absolute top-0 left-0 w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
