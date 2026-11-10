@@ -17,10 +17,6 @@ export default function TasamiLogo({ className = "h-12", showText = true, isWhit
               <stop offset="0%" stopColor="#1e293b" />
               <stop offset="100%" stopColor="#0f172a" />
             </linearGradient>
-            <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
           </defs>
 
           {/* Outer Shield Border */}
@@ -57,19 +53,19 @@ export default function TasamiLogo({ className = "h-12", showText = true, isWhit
       {showText && (
         <div className="flex flex-col leading-tight">
           <div className="flex items-center gap-1.5">
-            <span className={`font-black tracking-wider text-xl font-sans ${isWhite ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
+            <span className={`font-black tracking-wider text-lg sm:text-xl font-sans ${isWhite ? 'text-white' : 'text-slate-900'}`}>
               TASAMI
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#c59a45]"></span>
-            <span className="text-[#c59a45] font-bold text-xs tracking-widest uppercase">
-              SAFETY
+            <span className="text-[#c59a45] font-bold text-[10px] tracking-widest uppercase">
+              BUSINESS
             </span>
           </div>
-          <span className="text-[10px] uppercase tracking-widest font-semibold text-slate-500 dark:text-slate-400">
-            SAFETY SOLUTION
+          <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-500">
+            TASAMI BUSINESS COMPANY
           </span>
           <span className="text-[11px] font-bold text-[#c59a45] font-cairo">
-            — سلامتك أمانة —
+            شركة تسامي الأعمال
           </span>
         </div>
       )}

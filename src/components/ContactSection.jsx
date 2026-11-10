@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, MessageSquare } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Share2 } from 'lucide-react';
 
 export default function ContactSection({ lang, content, onOpenConsultation }) {
   const t = content[lang];
   const cta = t.ctaBanner;
+  const c = t.contact;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -39,15 +40,13 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
   return (
     <section id="contact" className="relative">
       
-      {/* 1. Pre-Footer Call to Action Banner matching the design */}
+      {/* 1. Pre-Footer Call to Action Banner */}
       <div className="bg-gradient-to-r from-[#2a2113] via-[#3d3019] to-[#221a0f] text-white py-14 border-y border-[#c59a45]/30 relative overflow-hidden">
-        {/* Subtle geometric pattern in background */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#c59a45_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-right rtl:lg:text-right ltr:lg:text-left">
             
-            {/* Headline and Vision */}
             <div className="space-y-2">
               <h3 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                 {cta.title}
@@ -60,7 +59,6 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
               </p>
             </div>
 
-            {/* Actions & Vision 2030 Badge */}
             <div className="flex flex-wrap items-center justify-center gap-6">
               <button
                 onClick={onOpenConsultation}
@@ -87,110 +85,139 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
         </div>
       </div>
 
-      {/* 2. Direct Contact Form & Info */}
+      {/* 2. Direct Contact Form & Channels */}
       <div className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
-            {/* Contact Information & Channels */}
-            <div className="lg:col-span-5 space-y-8">
+            {/* Contact Channels */}
+            <div className="lg:col-span-5 space-y-6">
               <div>
                 <span className="text-xs font-black tracking-widest text-[#9a752a] uppercase bg-[#c59a45]/10 px-3.5 py-1 rounded-md inline-block">
-                  {lang === 'ar' ? 'قنوات الاتصال المباشر' : 'Direct Channels'}
+                  {c.tag}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-3">
-                  {lang === 'ar' ? 'يسعدنا استقبال استفساراتكم' : 'We Welcome Your Inquiries'}
+                  {c.title}
                 </h3>
                 <p className="text-sm text-slate-600 mt-2">
-                  {lang === 'ar' ? 'فريق خدمة العملاء والمهندسين الاستشاريين متواجدون للرد على كافة متطلباتكم.' : 'Our customer support and engineering teams are ready to assist you.'}
+                  {c.subtitle}
                 </p>
               </div>
 
               <div className="space-y-4">
-                {/* Phone */}
-                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="w-12 h-12 rounded-xl bg-amber-50 text-[#c59a45] flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5" />
+                {/* Phone Numbers */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
+                    <Phone className="w-4 h-4 text-[#c59a45]" />
+                    <span>{lang === 'ar' ? 'أرقام الاتصال والواتساب المباشر' : 'Direct Phone & WhatsApp'}</span>
                   </div>
-                  <div className="flex-1">
-                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'رقم الجوال والاتصال المباشر' : 'Direct Mobile & Call'}</span>
-                    <a href="tel:+966591684133" className="block text-base font-bold text-slate-900 hover:text-[#c59a45] font-sans direction-ltr text-right" dir="ltr">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                    <a
+                      href="tel:+966591684133"
+                      className="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-900 hover:text-[#c59a45] hover:border-[#c59a45] text-center block font-mono"
+                      dir="ltr"
+                    >
                       +966 59 168 4133
                     </a>
-                    <div className="mt-1 flex items-center gap-3">
-                      <span className="text-[11px] text-emerald-600 font-medium">متاح للاتصال وخدمة العملاء</span>
-                      <a
-                        href="https://wa.me/966591684133?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%A3%D9%85%D9%86%20%D9%88%D8%B3%D9%84%D8%A7%D9%85%D8%A9"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md"
-                      >
-                        <span>محادثة واتساب 💬</span>
-                      </a>
-                    </div>
+                    <a
+                      href="tel:+966533480098"
+                      className="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-900 hover:text-[#c59a45] hover:border-[#c59a45] text-center block font-mono"
+                      dir="ltr"
+                    >
+                      +966 53 348 0098
+                    </a>
+                  </div>
+                  <div className="pt-1 flex items-center justify-between text-[11px]">
+                    <span className="text-emerald-600 font-semibold">متاح طوال أيام الأسبوع</span>
+                    <a
+                      href="https://wa.me/966591684133"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-700 hover:underline font-bold"
+                    >
+                      محادثة فورية عبر واتساب 💬
+                    </a>
                   </div>
                 </div>
 
                 {/* Email */}
-                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="w-12 h-12 rounded-xl bg-amber-50 text-[#c59a45] flex items-center justify-center flex-shrink-0">
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#c59a45] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}</span>
-                    <a href="mailto:makkah-branch@tasaami.com" className="block text-base font-bold text-slate-900 hover:text-[#c59a45] font-sans">
-                      makkah-branch@tasaami.com
+                    <span className="text-xs text-slate-500 font-semibold block">{lang === 'ar' ? 'البريد الإلكتروني الرسمي' : 'Official Email'}</span>
+                    <a href={`mailto:${c.email}`} className="text-sm font-bold text-slate-900 hover:text-[#c59a45] font-sans">
+                      {c.email}
                     </a>
-                    <span className="text-[11px] text-slate-400">فرع مكة المكرمة • الرد الفوري</span>
+                    <span className="text-[11px] text-slate-400 block mt-0.5">فرع مكة المكرمة • الرد والاستجابة السريعة</span>
                   </div>
                 </div>
 
                 {/* Address */}
-                <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="w-12 h-12 rounded-xl bg-amber-50 text-[#c59a45] flex items-center justify-center flex-shrink-0">
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-[#c59a45] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-slate-500 font-semibold">{lang === 'ar' ? 'العنوان والموقع' : 'Branch Address'}</span>
+                    <span className="text-xs text-slate-500 font-semibold block">{lang === 'ar' ? 'المقر والعنوان' : 'Office Address'}</span>
                     <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug mt-0.5">
-                      {lang === 'ar' ? (
-                        <>المملكة العربية السعودية - مكة المكرمة - حي الشوقية - شارع ابراهيم الخليل 24351</>
-                      ) : (
-                        <>KSA - Makkah Al-Mukarramah - Ash Shawqiyah Dist. - Ibrahim Al-Khalil Str. 24351</>
-                      )}
+                      {lang === 'ar' ? c.address : c.addressEn}
                     </div>
                   </div>
                 </div>
+
+                {/* Official Social Media Channels */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                  <span className="text-xs text-slate-500 font-semibold block mb-3">
+                    {lang === 'ar' ? 'حسابات التواصل الاجتماعي الرسمية' : 'Official Social Channels'}
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {c.socialLinks.map((s, idx) => (
+                      <a
+                        key={idx}
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-[#c59a45] text-slate-700 hover:text-[#c59a45] text-xs font-semibold flex items-center gap-1.5 transition"
+                      >
+                        <Share2 className="w-3.5 h-3.5 text-[#c59a45]" />
+                        <span>{s.platform}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            {/* Quick Message Form */}
+            {/* Quick Inquiry Form */}
             <div className="lg:col-span-7 bg-slate-50 p-6 sm:p-10 rounded-3xl border border-slate-200">
               <h4 className="text-lg font-bold text-slate-900 mb-1 flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-[#c59a45]" />
-                <span>{lang === 'ar' ? 'أرسل لنا رسالة فورية' : 'Send an Instant Message'}</span>
+                <span>{lang === 'ar' ? 'طلب عرض سعر / استشارة فورية' : 'Request Instant Quotation / Survey'}</span>
               </h4>
               <p className="text-xs text-slate-500 mb-6">
-                {lang === 'ar' ? 'املأ الحقول التالية وسيتواصل معك الموظف المختص مباشرة:' : 'Fill in the details below and our team will get back to you promptly:'}
+                {lang === 'ar' ? 'أدخل بيانات موقعك ومشروعك وسيقوم المهندس المختص بالتواصل معك مباشرة:' : 'Provide your project specs and our engineering advisor will contact you directly:'}
               </p>
 
               {submitted ? (
                 <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
                   <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-                  <h5 className="text-base font-bold text-emerald-900">تم إرسال رسالتك بنجاح!</h5>
-                  <p className="text-xs text-emerald-700">شكراً لتواصلك مع تسامي للسلامة. سنرد على استفسارك قريباً.</p>
+                  <h5 className="text-base font-bold text-emerald-900">تم إرسال طلبك بنجاح!</h5>
+                  <p className="text-xs text-emerald-700">شكراً لثقتكم بشركة تسامي الأعمال. سيتواصل معكم فريقنا الفني قريباً.</p>
                   <button
                     onClick={() => setSubmitted(false)}
                     className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold"
                   >
-                    إرسال رسالة أخرى
+                    إرسال طلب آخر
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'الاسم' : 'Name'} *</label>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'الاسم أو المنشأة' : 'Name / Entity'} *</label>
                       <input
                         type="text"
                         required
@@ -200,9 +227,10 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'رقم الجوال' : 'Phone'}</label>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'رقم الجوال' : 'Phone'} *</label>
                       <input
                         type="tel"
+                        required
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:border-[#c59a45]"
@@ -212,34 +240,34 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'} *</label>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</label>
                       <input
                         type="email"
-                        required
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:border-[#c59a45]"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'الموضوع' : 'Subject'}</label>
+                      <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'نوع النظام أو الخدمة' : 'System / Service'}</label>
                       <input
                         type="text"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        placeholder="استفسار عن رخصة سلامة / كود البناء"
+                        placeholder="نظام إطفاء تلقائي FM200 / شبكة رشاشات / توريد"
                         className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:border-[#c59a45]"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'نص الرسالة' : 'Message'} *</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">{lang === 'ar' ? 'تفاصيل الطلب أو الموقع' : 'Details'} *</label>
                     <textarea
                       rows="3"
                       required
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="وصف المنشأة، المساحة، والأنظمة المطلوبة..."
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-900 focus:outline-none focus:border-[#c59a45]"
                     ></textarea>
                   </div>
@@ -247,10 +275,10 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 rounded-xl text-xs font-bold text-white bg-[#c59a45] hover:bg-[#b58a38] transition shadow flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#c59a45] hover:bg-[#b58a38] transition shadow flex items-center justify-center gap-2"
                   >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>{isSubmitting ? 'جارِ الإرسال...' : (lang === 'ar' ? 'إرسال الرسالة الآن' : 'Send Message')}</span>
+                    <Send className="w-4 h-4" />
+                    <span>{isSubmitting ? 'جارِ الإرسال...' : (lang === 'ar' ? 'إرسال طلب التسعير الآن' : 'Submit Request Now')}</span>
                   </button>
                 </form>
               )}

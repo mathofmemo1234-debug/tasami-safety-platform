@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import AboutSection from './components/AboutSection';
-import ServicesSection from './components/ServicesSection';
+import CeoMessage from './components/CeoMessage';
+import VisionMissionValues from './components/VisionMissionValues';
+import AutomaticSuppressionSection from './components/AutomaticSuppressionSection';
+import ServicesDetailedSection from './components/ServicesDetailedSection';
+import ProductsCatalogSection from './components/ProductsCatalogSection';
+import CertificatesLicensesSection from './components/CertificatesLicensesSection';
+import OrgStructureSection from './components/OrgStructureSection';
 import ProjectsSection from './components/ProjectsSection';
 import SafetyCalculator from './components/SafetyCalculator';
 import ContactSection from './components/ContactSection';
@@ -22,8 +28,8 @@ export default function App() {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.title = lang === 'ar'
-      ? 'تسامي لحلول الأمن والسلامة | TASAMI SAFETY SOLUTION - سلامتك أمانة'
-      : 'TASAMI Safety Solutions | Integrated Security & Safety';
+      ? 'شركة تسامي الأعمال | TASAMI BUSINESS COMPANY - لأنظمة الإطفاء والإنذار من الحريق'
+      : 'Tasami Business Company | Turnkey Fire & Safety Engineering';
   }, [lang]);
 
   const handleOpenConsultation = (serviceName = '') => {
@@ -34,7 +40,7 @@ export default function App() {
   return (
     <div className={`min-h-screen bg-slate-50 text-slate-900 font-${lang === 'ar' ? 'cairo' : 'sans'}`}>
       
-      {/* Navigation Bar */}
+      {/* 1. Navigation Bar */}
       <Navbar
         lang={lang}
         setLang={setLang}
@@ -42,48 +48,86 @@ export default function App() {
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Hero Section */}
+      {/* 2. Hero Section */}
       <Hero
         lang={lang}
         content={content}
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* About Us & Vision 2030 */}
+      {/* 3. About Company Section */}
       <AboutSection
         lang={lang}
         content={content}
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Core Engineering Services */}
-      <ServicesSection
+      {/* 4. CEO Executive Message */}
+      <CeoMessage
         lang={lang}
         content={content}
-        onSelectService={(serviceTitle) => handleOpenConsultation(serviceTitle)}
       />
 
-      {/* Featured Projects Gallery */}
+      {/* 5. Vision, Mission, Goals & Values */}
+      <VisionMissionValues
+        lang={lang}
+        content={content}
+      />
+
+      {/* 6. Automatic Fire Suppression Systems (FM-200, NOVEC 1230, Aerosol, Kitchen, CO2) */}
+      <AutomaticSuppressionSection
+        lang={lang}
+        content={content}
+        onSelectService={(serviceName) => handleOpenConsultation(serviceName)}
+      />
+
+      {/* 7. Comprehensive Services & Matrix */}
+      <ServicesDetailedSection
+        lang={lang}
+        content={content}
+        onSelectService={(serviceName) => handleOpenConsultation(serviceName)}
+      />
+
+      {/* 8. Products Catalog & Supply */}
+      <ProductsCatalogSection
+        lang={lang}
+        content={content}
+        onSelectService={(serviceName) => handleOpenConsultation(serviceName)}
+      />
+
+      {/* 9. Global Accreditations & Statutory Government Licenses */}
+      <CertificatesLicensesSection
+        lang={lang}
+        content={content}
+      />
+
+      {/* 10. Organizational Structure */}
+      <OrgStructureSection
+        lang={lang}
+        content={content}
+      />
+
+      {/* 11. Featured Projects Showcase */}
       <ProjectsSection
         lang={lang}
         content={content}
       />
 
-      {/* Interactive Safety Calculator & Estimator */}
+      {/* 12. Interactive Safety Calculator & Estimator */}
       <SafetyCalculator
         lang={lang}
         content={content}
         onSaveQuote={() => {}}
       />
 
-      {/* Pre-Footer Banner & Direct Contact */}
+      {/* 13. Pre-Footer Banner & Direct Contact Channels */}
       <ContactSection
         lang={lang}
         content={content}
         onOpenConsultation={() => handleOpenConsultation()}
       />
 
-      {/* Footer */}
+      {/* 14. Footer */}
       <Footer
         lang={lang}
         content={content}

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Users, FileCheck2, Shield, Building2, Check, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Users, FileCheck2, Shield, Building2, Check, ArrowLeft, ArrowRight, ShieldCheck, Award } from 'lucide-react';
 
 export default function AboutSection({ lang, content, onOpenConsultation }) {
   const t = content[lang].about;
 
   const statIcons = [
     <Users className="w-6 h-6 text-[#c59a45]" />,
-    <FileCheck2 className="w-6 h-6 text-[#c59a45]" />,
-    <Shield className="w-6 h-6 text-[#c59a45]" />,
+    <Building2 className="w-6 h-6 text-[#c59a45]" />,
+    <ShieldCheck className="w-6 h-6 text-[#c59a45]" />,
   ];
 
   return (
@@ -21,39 +21,39 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
               <img
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
                 alt="Corporate Headquarters"
-                className="w-full h-[460px] object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-[480px] object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/30 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/40 to-transparent"></div>
 
               {/* Embossed Brand Banner on Building */}
               <div className="absolute top-8 left-8 right-8 p-4 rounded-2xl glass-dark border border-white/20 text-center">
                 <div className="text-xl font-black text-white tracking-widest font-sans">
                   TASAMI
                 </div>
-                <div className="text-[10px] tracking-widest uppercase text-[#c59a45] font-bold">
-                  SAFETY SOLUTION
+                <div className="text-[10px] tracking-widest uppercase text-[#dfb76c] font-bold">
+                  BUSINESS COMPANY
                 </div>
-                <div className="mt-1 text-xs text-slate-300 font-semibold font-cairo">
-                  — سلامتك أمانة —
+                <div className="mt-1 text-xs text-slate-200 font-semibold font-cairo">
+                  — شركة تسامي الأعمال —
                 </div>
               </div>
 
               {/* Slogan pill in the lower area */}
               <div className="absolute bottom-8 left-8 right-8 p-5 rounded-2xl bg-slate-900/90 border border-[#c59a45]/40 text-white backdrop-blur-md">
                 <h4 className="font-bold text-base text-[#dfb76c]">
-                  سلامة الإنسان أساس استدامة الأعمال
+                  الأمان ليس خياراً بل ضرورة
                 </h4>
                 <p className="text-[11px] text-slate-300 uppercase tracking-wider mt-1 font-mono">
-                  PEOPLE SAFETY • BUSINESS SUSTAINABILITY
+                  SAFETY IS A NECESSITY • UNCOMPROMISING PROTECTION
                 </p>
               </div>
             </div>
           </div>
 
           {/* Text and Story Side */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 text-right rtl:text-right ltr:text-left">
             <div className="space-y-3">
-              <span className="text-sm font-black tracking-widest text-[#9a752a] uppercase bg-[#c59a45]/10 px-3.5 py-1 rounded-md">
+              <span className="text-sm font-black tracking-widest text-[#9a752a] uppercase bg-[#c59a45]/10 px-3.5 py-1 rounded-md inline-block">
                 {t.tag}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
@@ -61,12 +61,16 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
               </h2>
             </div>
 
-            <p className="text-lg text-slate-700 leading-relaxed font-medium">
+            <p className="text-base sm:text-lg text-slate-800 leading-relaxed font-semibold">
               {t.lead}
             </p>
 
             <p className="text-sm text-slate-600 leading-relaxed">
               {t.paragraph2}
+            </p>
+
+            <p className="text-sm text-slate-600 leading-relaxed">
+              {t.paragraph3}
             </p>
 
             {/* Saudi Vision 2030 Badge */}
@@ -78,11 +82,11 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
                 </div>
               </div>
               <p className="text-xs text-slate-700 leading-relaxed">
-                مساهمون فاعلون في تحقيق مستهدفات <strong className="text-slate-900">رؤية السعودية 2030</strong> لتوفير بيئة عمل استثمارية وحضرية متقدمة وآمنة وفق أفضل الممارسات العالمية.
+                مساهمون فاعلون في تعزيز منظومة السلامة والوقاية الوطنية وفق تطلعات <strong className="text-slate-900">رؤية السعودية 2030</strong> لتوفير بيئة خالية تماماً من المخاطر تحمي الأرواح والممتلكات.
               </p>
             </div>
 
-            {/* Stats Row matching the 3 cards in the design */}
+            {/* Stats Row */}
             <div className="pt-4 grid grid-cols-3 gap-4 border-t border-slate-100">
               {t.stats.map((stat, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center hover:border-[#c59a45]/30 transition">
@@ -100,17 +104,6 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Action button */}
-            <div className="pt-2">
-              <button
-                onClick={onOpenConsultation}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-[#c59a45] hover:bg-[#b58a38] transition shadow"
-              >
-                <span>{t.learnMore}</span>
-                {lang === 'ar' ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-              </button>
             </div>
 
           </div>

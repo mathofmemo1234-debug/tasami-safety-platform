@@ -1,0 +1,95 @@
+import React from 'react';
+import { Users, UserCheck, ShieldCheck, ChevronDown, Award } from 'lucide-react';
+
+export default function OrgStructureSection({ lang, content }) {
+  const t = content[lang].orgChart;
+
+  const ceoNode = t.nodes.find((n) => n.id === 'ceo');
+  const departmentNodes = t.nodes.filter((n) => n.level === 2);
+
+  return (
+    <section id="org-chart" className="py-20 bg-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <span className="text-xs font-black tracking-widest text-[#9a752a] uppercase bg-[#c59a45]/10 border border-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
+            {t.tag}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            {t.title}
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600">
+            {t.subtitle}
+          </p>
+        </div>
+
+        {/* Interactive / Visual Hierarchy Chart */}
+        <div className="flex flex-col items-center">
+          
+          {/* Top Level: CEO Card */}
+          <div className="w-full max-w-md bg-gradient-to-r from-slate-900 via-slate-800 to-[#221a0f] text-white p-6 rounded-3xl border-2 border-[#c59a45] shadow-2xl text-center relative group">
+            <div className="w-16 h-16 rounded-2xl bg-[#c59a45] text-slate-900 mx-auto flex items-center justify-center font-black text-xl mb-3 shadow-lg">
+              TH
+            </div>
+            <span className="text-[11px] font-mono tracking-widest text-[#dfb76c] uppercase block">
+              EXECUTIVE LEADERSHIP
+            </span>
+            <h3 className="text-xl font-black text-white mt-1">
+              {ceoNode?.name}
+            </h3>
+            <p className="text-xs font-bold text-[#dfb76c] mt-0.5">
+              {ceoNode?.role}
+            </p>
+            <p className="text-xs text-slate-300 mt-2">
+              {ceoNode?.desc}
+            </p>
+          </div>
+
+          {/* Connecting Vertical Stem */}
+          <div className="w-0.5 h-10 bg-[#c59a45]"></div>
+
+          {/* Horizontal Distribution Line */}
+          <div className="hidden lg:block w-5/6 h-0.5 bg-slate-300 relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#c59a45]"></div>
+          </div>
+
+          {/* Secondary Level: 6 Operational Departments */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mt-6">
+            {departmentNodes.map((dept, idx) => (
+              <div
+                key={dept.id}
+                className="bg-slate-50 border border-slate-200 hover:border-[#c59a45] rounded-2xl p-5 hover:shadow-lg transition-all duration-200 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="w-8 h-8 rounded-xl bg-white shadow-sm border border-slate-200 text-[#9a752a] font-bold text-xs flex items-center justify-center font-mono">
+                      0{idx + 1}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono uppercase">
+                      Department
+                    </span>
+                  </div>
+
+                  <h4 className="font-bold text-base text-slate-900 group-hover:text-[#c59a45] transition-colors mb-1.5">
+                    {dept.role}
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {dept.desc}
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-200/80 flex items-center gap-1.5 text-[11px] text-[#9a752a] font-semibold">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>فريق متخصص معتمد</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}

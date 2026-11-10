@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الملف التعريفي التنفيذي | شركة تسامي الأعمال (Tasami Business Company)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #c59a45;
+      --primary-dark: #9a752a;
+      --primary-light: #f5e8c8;
+      --navy: #0f172a;
+      --navy-light: #1e293b;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-600: #475569;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --text: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif;
+      background-color: #f1f5f9;
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px 12px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+    }
+
+    /* Header / Cover */
+    .cover-header {
+      background: linear-gradient(135deg, #090d16 0%, #172033 50%, #281f10 100%);
+      color: #ffffff;
+      padding: 60px 48px;
+      position: relative;
+      border-bottom: 4px solid var(--primary);
+    }
+
+    .cover-header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(197, 154, 69, 0.15) 0%, transparent 60%);
+      pointer-events-none;
+    }
+
+    .brand-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-badge {
+      width: 56px;
+      height: 60px;
+      background: linear-gradient(135deg, #c59a45, #dfb76c, #8d6824);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0f172a;
+      font-weight: 900;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(197,154,69,0.4);
+    }
+
+    .brand-name-h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .vision-badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 10px 18px;
+      text-align: center;
+    }
+
+    .cover-title {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+
+    .cover-title span {
+      color: var(--primary);
+      position: relative;
+    }
+
+    .cover-desc {
+      font-size: 16px;
+      color: #cbd5e1;
+      max-width: 800px;
+      line-height: 1.8;
+    }
+
+    .cover-pill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .pill-tag {
+      background: rgba(197, 154, 69, 0.15);
+      color: #f3dd98;
+      border: 1px solid rgba(197, 154, 69, 0.4);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Document Body */
+    .doc-body {
+      padding: 48px;
+    }
+
+    .section-block {
+      margin-bottom: 48px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--slate-100);
+      padding-bottom: 12px;
+    }
+
+    .section-number {
+      width: 36px;
+      height: 36px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    /* Executive Speech Card */
+    .ceo-card {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-right: 6px solid var(--primary);
+      border-radius: 18px;
+      padding: 32px;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .ceo-quote {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    .ceo-text {
+      font-size: 15px;
+      color: var(--slate-600);
+      margin-bottom: 12px;
+    }
+
+    .ceo-signature {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ceo-name {
+      font-weight: 900;
+      font-size: 17px;
+      color: var(--navy);
+    }
+
+    .ceo-role {
+      font-size: 13px;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    /* Vision & Mission Table/Cards */
+    .vm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .vm-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .vm-card {
+      background: var(--navy);
+      color: #ffffff;
+      padding: 28px;
+      border-radius: 18px;
+      border: 1px solid rgba(197,154,69,0.3);
+      position: relative;
+    }
+
+    .vm-card.vision {
+      background: linear-gradient(135deg, #101726, #1f2a3e);
+    }
+
+    .vm-card.mission {
+      background: linear-gradient(135deg, #181d28, #2a2216);
+    }
+
+    .vm-card h4 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .vm-card p {
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+
+    /* Goals & Values */
+    .gv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .gv-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gv-box {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .gv-box h4 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 8px;
+    }
+
+    .gv-list {
+      list-style: none;
+    }
+
+    .gv-list li {
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--slate-600);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .gv-list li::before {
+      content: "✔";
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    /* Suppression Systems Showcase */
+    .system-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+
+    .system-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+
+    .system-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .system-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .system-en {
+      font-size: 12px;
+      font-family: monospace;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .system-desc {
+      font-size: 14px;
+      color: var(--slate-600);
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .step-pill {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+
+    .step-pill-title {
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .step-pill-desc {
+      font-size: 11px;
+      color: var(--slate-600);
+      line-height: 1.5;
+    }
+
+    .warning-box {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-right: 4px solid #e11d48;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #9f1239;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    th {
+      background: var(--navy);
+      color: #ffffff;
+      padding: 12px 16px;
+      text-align: right;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--slate-200);
+      color: var(--slate-600);
+    }
+
+    tr:nth-child(even) td {
+      background: var(--slate-50);
+    }
+
+    /* Accreditations */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .cert-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .cert-badge {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .cert-badge strong {
+      display: block;
+      font-size: 16px;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .cert-badge span {
+      font-size: 11px;
+      color: var(--slate-600);
+    }
+
+    /* Legal list */
+    .legal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .legal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .legal-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .legal-card strong {
+      font-size: 13px;
+      color: var(--navy);
+      display: block;
+    }
+
+    .legal-card span {
+      font-size: 11px;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    /* Footer */
+    .doc-footer {
+      background: var(--navy);
+      color: #cbd5e1;
+      padding: 40px 48px;
+      border-top: 4px solid var(--primary);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-col h5 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .footer-col p {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: var(--primary);
+      color: var(--navy);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .container {
+        box-shadow: none;
+        border: none;
+      }
+      .print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">🖨️ طباعة الملف التعريفي / حفظ PDF</button>
+
+  <div class="container">
+    
+    <!-- Cover Header -->
+    <header class="cover-header">
+      <div class="brand-top">
+        <div class="brand-logo-wrap">
+          <div class="logo-badge">T</div>
+          <div>
+            <h1 class="brand-name-h1">شركة تسامي الأعمال</h1>
+            <div class="brand-sub">TASAMI BUSINESS COMPANY</div>
+          </div>
+        </div>
+
+        <div class="vision-badge">
+          <div style="font-size: 10px; color: #34d399; font-weight: 800;">رؤيـــة</div>
+          <div style="font-size: 16px; font-weight: 900; letter-spacing: -1px;">2030</div>
+          <div style="font-size: 8px; color: #94a3b8;">المملكة العربية السعودية</div>
+        </div>
+      </div>
+
+      <h2 class="cover-title">
+        الملف التعريفي التنفيذي<br>
+        <span>حلول متكاملة لأنظمة الإطفاء والإنذار من الحريق</span>
+      </h2>
+
+      <p class="cover-desc">
+        نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية وفق كود البناء السعودي وترخيص الدفاع المدني.
+      </p>
+
+      <div class="cover-pill-tags">
+        <span class="pill-tag">توريد وتركيب معتمد</span>
+        <span class="pill-tag">أنظمة إطفاء تلقائي متقدمة</span>
+        <span class="pill-tag">شهادات سابر وUL وFM</span>
+        <span class="pill-tag">عقود صيانة دورية 24/7</span>
+      </div>
+    </header>
+
+    <!-- Content Sections -->
+    <main class="doc-body">
+      
+      <!-- 1. About -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">1</div>
+          <h3 class="section-title">عن الشركة</h3>
+        </div>
+        <p style="font-size: 15px; color: var(--slate-800); font-weight: 600; margin-bottom: 12px;">
+          نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية. نحن لا نكتفي بتطبيق المعايير المحلية والعالمية، بل نحرص على تطوير حلول مبتكرة تواكب التطورات التقنية وتلبي أعلى متطلبات الأمان.
+        </p>
+        <p style="font-size: 14px; color: var(--slate-600); margin-bottom: 10px;">
+          يعتمد نجاحنا على فريق هندسي وفني مؤهل يمتلك خبرة واسعة ومعرفة متعمقة في مجال السلامة ومكافحة الحرائق، حيث يعملون بروح الفريق الواحد لضمان تنفيذ المشاريع بأعلى درجات الاحترافية والالتزام بالمواعيد.
+        </p>
+        <p style="font-size: 14px; color: var(--slate-600);">
+          في شركة تسامي الأعمال، نؤمن أن الأمان ليس خياراً بل ضرورة، لذلك نسعى دائماً لأن نكون شريكاً موثوقاً لعملائنا، نقدم لهم الدعم الفني والاستشارات المتخصصة، ونبني معهم علاقات طويلة الأمد قائمة على الثقة والجودة.
+        </p>
+      </section>
+
+      <!-- 2. CEO Word -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">2</div>
+          <h3 class="section-title">كلمة المدير التنفيذي</h3>
+        </div>
+
+        <div class="ceo-card">
+          <div class="ceo-quote">
+            "وضعنا نصب أعيننا هدفاً سامياً يتمثل في حماية الأرواح والممتلكات، وإرساء ثقافة الأمان في المجتمع من خلال خدمات موثوقة تعتمد على أحدث التقنيات وفريق عمل مؤهل يمتلك الخبرة والكفاءة."
+          </div>
+          <p class="ceo-text">
+            نحن في شركة تسامي الأعمال نؤمن بأن النجاح الحقيقي لا يتحقق إلا عبر الالتزام المستمر بالتحسين والتطوير، والاستماع إلى احتياجات عملائنا وتجاوز توقعاتهم، وبناء شراكات قوية تقوم على الثقة والمصداقية.
+          </p>
+          <p class="ceo-text">
+            أعدكم بمواصلة العمل الجاد للحفاظ على مكانتنا كشريككم الأول في مجال أنظمة الإطفاء والإنذار من الحريق، وأن نظل دائماً عند حسن ظنكم.
+          </p>
+          <p class="ceo-text" style="font-weight: 700; color: var(--navy); margin-top: 10px;">
+            والسلام عليكم ورحمة الله وبركاته
+          </p>
+
+          <div class="ceo-signature">
+            <div>
+              <div class="ceo-name">أ. طه هندي</div>
+              <div class="ceo-role">المدير التنفيذي – شركة تسامي الأعمال</div>
+            </div>
+            <div style="font-size: 12px; color: var(--primary-dark); font-weight: bold;">
+              TASAMI BUSINESS COMPANY
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Vision & Mission -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">3</div>
+          <h3 class="section-title">الرؤية والرسالة</h3>
+        </div>
+
+        <div class="vm-grid">
+          <div class="vm-card mission">
+            <h4>رسالتنا</h4>
+            <p>
+              نعاهد أنفسنا وشركاءنا أن نكون العين الساهرة واليد الماهرة في عالم السلامة. نضع خبراتنا وحرصنا في خدمة كل موقع، للارتقاء بمفهوم الوقاية من مجرد معايير إلى ثقافة راسخة، نضمن بها سلامة الإنسان وازدهار المكان. لنجسد معاً معنى التسامي بالأمان، وأن نسعى دائماً ونسمو بالأمان نحو غاية أسمى: بيئة خالية تماماً من المخاطر. نعمل بتكامل وإتقان ليتحول شغفنا بالحماية إلى أمان واقعي يلمسه الجميع، فنصون الأرواح، ونحمي الممتلكات، ونمنح شركاءنا الثقة ليبدعوا في المستقبل.
+            </p>
+          </div>
+
+          <div class="vm-card vision">
+            <h4>رؤيتنا</h4>
+            <p>
+              أن تكون «تسامي» هي الملاذ الذي يجمع شغفنا بالسلامة، والمنارة التي نستمد منها إلهامنا لنحمي كل تفاصيل العمل، ونرتفع معاً بمعايير الحياة والمكان للسلامة: ننسج معاً سياجاً منيعاً لنحمي الإنسان ونعزز الأثر، سائرين بخطى ثابتة نحو قمم التميز والريادة.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Goals & Values -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">4</div>
+          <h3 class="section-title">الأهداف والقيم</h3>
+        </div>
+
+        <div class="gv-grid">
+          <div class="gv-box">
+            <h4>الأهداف (Goals)</h4>
+            <ul class="gv-list">
+              <li>تقديم خدمات أمن وسلامة عالية الجودة تلبي احتياجات العملاء وتتجاوز توقعاتهم.</li>
+              <li>الالتزام بأعلى المعايير العالمية في مجال السلامة والإطفاء.</li>
+              <li>تطوير شراكات استراتيجية قوية مع الجهات الحكومية والخاصة وكبرى الشركات المصنعة.</li>
+              <li>المساهمة بفاعلية في تعزيز الوعي المجتمعي بمخاطر الحريق والوقاية منها.</li>
+            </ul>
+          </div>
+
+          <div class="gv-box">
+            <h4>القيم (Values)</h4>
+            <ul class="gv-list">
+              <li><strong>الجودة والتميز:</strong> تقديم خدمات ومنتجات بمعايير عالمية.</li>
+              <li><strong>الاحترافية والموثوقية:</strong> الالتزام بالمواعيد والوعود.</li>
+              <li><strong>النزاهة والشفافية:</strong> بناء علاقات ثقة مع العملاء والشركاء.</li>
+              <li><strong>الابتكار والتطوير:</strong> تبني أحدث الحلول والتقنيات.</li>
+              <li><strong>المسؤولية والسلامة:</strong> حماية الأرواح والممتلكات كأولوية قصوى.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Automatic Suppression Systems -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">5</div>
+          <h3 class="section-title">أنظمة الإطفاء التلقائي المتقدمة</h3>
+        </div>
+
+        <!-- 1. FM-200 -->
+        <div class="system-card">
+          <div class="system-header">
+            <div class="system-name">1. نظام الإطفاء النظيف (FM-200)</div>
+            <div class="system-en">FM-200 Clean Agent System</div>
+          </div>
+          <p class="system-desc">
+            <strong>نبذة عن النظام:</strong> الحل الأمثل والراقي لحماية الأصول الحساسة وغرف العمليات ومراكز البيانات؛ إذ يستخدم غازاً نظيفاً يخمد الحريق بسرعة فائقة دون ترك أي مخلفات أو إحداث أي أضرار بالبيئة أو الأجهزة الإلكترونية الحساسة.
+          </p>
+          <div class="steps-grid">
+            <div class="step-pill">
+              <div class="step-pill-title">الرصد اللحظي</div>
+              <div class="step-pill-desc">تلتقط الحساسات مؤشرات الخطر وتطلق إنذار أول للمغادرة.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الاستجابة الخاطفة</div>
+              <div class="step-pill-desc">في غضون 10 ثوانٍ أو أقل، يندفع الغاز ليغمر الغرفة بالكامل.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">آلية الأمان المتفوقة</div>
+              <div class="step-pill-desc">إزالة عنصر الحرارة دون إزاحة ضارة للأكسجين، آمن للأماكن المأهولة.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. NOVEC 1230 -->
+        <div class="system-card">
+          <div class="system-header">
+            <div class="system-name">2. نظام الإطفاء بغاز NOVEC 1230</div>
+            <div class="system-en">NOVEC 1230 Protection Fluid</div>
+          </div>
+          <p class="system-desc">
+            <strong>نبذة عن النظام:</strong> عامل إطفاء نظيف ومستدام مصمم لمكافحة الحرائق بسرعة وكفاءة دون ترك أي رواسب أو مخلفات على المعدات المحمية. ملائم لمراكز البيانات وغرف الاتصالات والمختبرات وغرف التحكم.
+          </p>
+          <div class="steps-grid">
+            <div class="step-pill">
+              <div class="step-pill-title">الكشف الذكي</div>
+              <div class="step-pill-desc">كواشف دخان وحرارة متخصصة للكشف المبكر.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإنذار والتنبيه</div>
+              <div class="step-pill-desc">إنذارات صوتية وضوئية للإخلاء الفوري.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">التأخير الزمني</div>
+              <div class="step-pill-desc">ضبط فترة تأخير التفريغ وفق معايير السلامة.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">التفريغ الآمن</div>
+              <div class="step-pill-desc">إطلاق العامل عبر شبكة أنابيب وفوهات مصممة هندسياً.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإخماد الفعال</div>
+              <div class="step-pill-desc">تحقيق التركيز المطلوب وحماية كامل الممتلكات.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Aerosol -->
+        <div class="system-card">
+          <div class="system-header">
+            <div class="system-name">3. نظام الإطفاء بالأيروسول (Aerosol)</div>
+            <div class="system-en">Condensed Aerosol Fire Suppression</div>
+          </div>
+          <p class="system-desc">
+            <strong>نبذة عن النظام:</strong> يعتمد على تقنية متطورة لإنتاج جسيمات دقيقة توقف التفاعلات الكيميائية للاحتراق. يتميز بصغر الحجم وسهولة الدمج في اللوحات الكهربائية وغرف المعدات والحاويات.
+          </p>
+          <div class="steps-grid">
+            <div class="step-pill">
+              <div class="step-pill-title">الكشف الذكي</div>
+              <div class="step-pill-desc">ربط بكواشف الحريق للكشف في المراحل الأولى.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإنذار والتنبيه</div>
+              <div class="step-pill-desc">تفعيل التنبيه الصوتي والمرئي.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">آلية التشغيل</div>
+              <div class="step-pill-desc">تشغيل تلقائي أو يدوي حسب التطبيق.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإطلاق والتوزيع</div>
+              <div class="step-pill-desc">نشر جسيمات الإطفاء داخل الحيز المحمي.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإخماد الفعال</div>
+              <div class="step-pill-desc">قطع سلسلة تفاعل الاحتراق بنجاح فائق.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Commercial Kitchens -->
+        <div class="system-card">
+          <div class="system-header">
+            <div class="system-name">4. نظام الإطفاء التلقائي للمطابخ التجارية</div>
+            <div class="system-en">Kitchen Hood Fire Suppression</div>
+          </div>
+          <p class="system-desc">
+            <strong>نبذة عن النظام:</strong> مخصص لمكافحة حرائق الزيوت والدهون الناتجة عن الطهي في المطاعم والفنادق عبر مادة كيميائية رطبة تبرد الزيوت وتشكل طبقة عازلة تمنع إعادة الاشتعال.
+          </p>
+          <div class="steps-grid">
+            <div class="step-pill">
+              <div class="step-pill-title">الكشف الحراري</div>
+              <div class="step-pill-desc">وصلات حرارية (Fusible Links) لمراقبة درجات الحرارة.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإنذار والتنبيه</div>
+              <div class="step-pill-desc">تشغيل الإنذار فور اندلاع الخطر.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإيقاف التلقائي</div>
+              <div class="step-pill-desc">قطع إمدادات الغاز والكهرباء آلياً.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">التفريغ الآمن</div>
+              <div class="step-pill-desc">تغطية أجهزة الطهي والشفاط ومجرى العادم.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإخماد الفعال</div>
+              <div class="step-pill-desc">عزل الزيوت ومنع إعادة الاشتعال نهائياً.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. CO2 -->
+        <div class="system-card">
+          <div class="system-header">
+            <div class="system-name">5. نظام إطفاء ثاني أكسيد الكربون (CO₂)</div>
+            <div class="system-en">CO2 Total Flooding System</div>
+          </div>
+          <p class="system-desc">
+            <strong>نبذة عن النظام:</strong> يعتمد على غاز غير موصل للكهرباء لإخماد الحرائق الصناعية بكفاءة عالية عبر خفض تركيز الأكسجين مع التبريد الفوري للمنطقة.
+          </p>
+          <div class="warning-box">
+            ⚠️ تحذير: يجب تصميم نظام CO₂ مع مراعاة خطورة الغاز على حياة الأشخاص، ومتطلبات الإخلاء والتحذير والتأخير وأقفال السلامة الميكانيكية.
+          </div>
+          <div class="steps-grid">
+            <div class="step-pill">
+              <div class="step-pill-title">الاستشعار الذكي</div>
+              <div class="step-pill-desc">كواشف دقيقة للدخان والحرارة.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإنذار والتنبيه</div>
+              <div class="step-pill-desc">إشارات صوتية ومرئية تمكّن من الإخلاء الآمن.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">التأخير (30-60 ثانية)</div>
+              <div class="step-pill-desc">مهلة زمنية دقيقة لضمان خروج جميع الأفراد.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">التدفق والإطلاق</div>
+              <div class="step-pill-desc">فتح الصمامات وتدفق الغاز عبر شبكة الأنابيب.</div>
+            </div>
+            <div class="step-pill">
+              <div class="step-pill-title">الإخماد الفعال</div>
+              <div class="step-pill-desc">تغطية كامل المنطقة وتبريد متكامل وفوري.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Products Table -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">6</div>
+          <h3 class="section-title">كتالوج التوريد والمنتجات</h3>
+        </div>
+
+        <p style="font-weight: 700; color: var(--navy); margin-bottom: 12px; font-size: 15px;">
+          "نستطيع توفير أي منتجات تخص الأمن والسلامة بأي كمية وبأفضل جودة وفي وقت قياسي."
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 25%;">المنتج (بالعربية)</th>
+              <th style="width: 25%;">English Name</th>
+              <th>التطبيق والمواصفات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>المواسير</strong></td><td>Pipes</td><td>أنابيب حديدية مجلفنة وسوداء معتمدة لأنظمة الإطفاء والشبكات الرطبة والجافة</td></tr>
+            <tr><td><strong>مواد التسنين</strong></td><td>Threading materials</td><td>تجهيزات ومواد تسنين عالية المتانة لتحمل الضغوط العالية</td></tr>
+            <tr><td><strong>الجروف</strong></td><td>Grooved fittings</td><td>وصلات وقطع الجروف الميكانيكية المعتمدة لسرعة وسهولة التجميع</td></tr>
+            <tr><td><strong>المحابس</strong></td><td>Valves</td><td>محابس تحكم، عدم رجوع، فراشة، ومحابس بوابة OS&Y معتمدة</td></tr>
+            <tr><td><strong>مواد التثبيت</strong></td><td>Fasteners</td><td>حوامل ومثبتات زلزالية وميكانيكية مطابقة لمواصفات NFPA</td></tr>
+            <tr><td><strong>أجهزة الإنذار</strong></td><td>Alarm systems</td><td>كواشف دخان، حرارة، لهب، نقاط نداء يدوية، وأجراس وسارينات</td></tr>
+            <tr><td><strong>المضخات</strong></td><td>Pumps</td><td>مضخات حريق معتمدة UL/FM (ديزل، كهرباء، جوكي) بكافة السعات</td></tr>
+            <tr><td><strong>صناديق وطفايات الحريق</strong></td><td>Cabinets & extinguishers</td><td>صناديق حريق ستانلس وحديد مع بكرات وخراطيم وطفايات معتمدة</td></tr>
+            <tr><td><strong>أنظمة الغازات</strong></td><td>Gas systems</td><td>أسطوانات وصمامات وشبكات الغازات النظيفة FM-200 وNOVEC وCO₂</td></tr>
+            <tr><td><strong>رشاشات الحريق</strong></td><td>Fire sprinklers</td><td>رشاشات مائية بكافة درجات الحرارة والاستجابات (Pendent, Upright, Sidewall)</td></tr>
+            <tr><td><strong>مراوح سحب الدخان</strong></td><td>Smoke extraction fans</td><td>مراوح طرد ومقاومة لدرجات الحرارة العالية للإخلاء الآمن</td></tr>
+            <tr><td><strong>مهمات الحماية الشخصية</strong></td><td>PPE</td><td>خوذات، نظارات، قفازات حرارية، أحذية سلامة، وسترات أمان عاكسة</td></tr>
+            <tr><td><strong>أبواب الطوارئ</strong></td><td>Emergency doors</td><td>أبواب مقاومة للحريق معتمدة بمقابض هلع وإغلاق ذاتي</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 7. Services Matrix -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">7</div>
+          <h3 class="section-title">مصفوفة الخدمات المتكاملة</h3>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">الخدمة</th>
+              <th>تفاصيل ونطاق العمل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>المعاينة الأولية</strong></td><td>معاينة الموقع بدقة لتحديد الاحتياجات والمتطلبات الفنية بدقة عالية.</td></tr>
+            <tr><td><strong>التوريد</strong></td><td>توفير وتوريد جميع المنتجات والمستلزمات بأعلى معايير الجودة وبأي كمية مطلوبة.</td></tr>
+            <tr><td><strong>التركيب</strong></td><td>تنفيذ أعمال التركيب باحترافية تامة وتحت إشراف متخصصين لضمان كفاءة التشغيل.</td></tr>
+            <tr><td><strong>الصيانة</strong></td><td>تقديم خدمات الصيانة الدورية والفورية لضمان استمرارية العمل بأفضل أداء.</td></tr>
+            <tr><td><strong>خدمات ما بعد البيع</strong></td><td>دعم فني ومتابعة مستمرة لضمان رضا العملاء وتلبية كافة احتياجاتهم.</td></tr>
+            <tr><td><strong>توفير الكميات بأسعار تنافسية</strong></td><td>تلبية الطلبات الكبيرة والصغيرة بأفضل الأسعار في السوق.</td></tr>
+            <tr><td><strong>عروض خاصة</strong></td><td>يوجد خصم خاص للعملاء المميزين تقديراً لتعاونهم الدائم معنا.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 8. Accreditations & Statutory Documents -->
+      <section class="section-block">
+        <div class="section-title-wrap">
+          <div class="section-number">8</div>
+          <h3 class="section-title">الاعتمادات والتراخيص الحكومية</h3>
+        </div>
+
+        <h4 style="font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 12px;">شهادات الاعتماد العالمية والمحلية:</h4>
+        <div class="cert-grid">
+          <div class="cert-badge">
+            <strong>سابر (SABER)</strong>
+            <span>شهادات مطابقة المنتجات السعودية</span>
+          </div>
+          <div class="cert-badge">
+            <strong>UL Listed</strong>
+            <span>معايير السلامة الأمريكية العالمية</span>
+          </div>
+          <div class="cert-badge">
+            <strong>FM Approved</strong>
+            <span>اعتماد فاكتوري ميوتشوال للإطفاء</span>
+          </div>
+          <div class="cert-badge">
+            <strong>LPCB</strong>
+            <span>مجلس اعتماد الحماية البريطاني</span>
+          </div>
+        </div>
+
+        <h4 style="font-size: 16px; font-weight: 800; color: var(--navy); margin-top: 24px; margin-bottom: 12px;">الأوراق الثبوتية والتراخيص الرسمية:</h4>
+        <div class="legal-grid">
+          <div class="legal-card">
+            <div>
+              <strong>شهادة تسجيل الاستثمار</strong>
+              <span>وزارة الاستثمار (MISA)</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>شهادة السجل التجاري (عربي)</strong>
+              <span>وزارة التجارة</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>Commercial Registration (English)</strong>
+              <span>Ministry of Commerce</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>شهادة انتساب الغرفة التجارية</strong>
+              <span>غرفة مكة المكرمة</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>شهادة التأمينات الاجتماعية</strong>
+              <span>المؤسسة العامة للتأمينات (GOSI)</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>ترخيص الدفاع المدني</strong>
+              <span>منصة سلامة</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>رخصة نشاط تجاري</strong>
+              <span>منصة بلدي</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+          <div class="legal-card">
+            <div>
+              <strong>شهادة تسجيل ضريبة القيمة المضافة</strong>
+              <span>هيئة الزكاة والضريبة والجمارك (ZATCA)</span>
+            </div>
+            <div style="color: #059669; font-weight: 900;">✓</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer / Contact Info -->
+    <footer class="doc-footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h5>بيانات الاتصال والمقر الرئيسي</h5>
+          <p><strong>العنوان:</strong> مكة المكرمة – الشوقية – شارع إبراهيم الخليل</p>
+          <p><strong>الهاتف المباشر:</strong> +966 59 168 4133 / +966 53 348 0098</p>
+          <p><strong>البريد الإلكتروني:</strong> makkah-branch@tasaami.com</p>
+        </div>
+
+        <div class="footer-col">
+          <h5>المنصات الرقمية وحسابات التواصل</h5>
+          <p><strong>LinkedIn الشركة:</strong> Tasami Business Company</p>
+          <p><strong>LinkedIn المدير التنفيذي:</strong> Taha Hendy</p>
+          <p><strong>Instagram:</strong> @tasamibusinesses | <strong>TikTok:</strong> @tasami.safety.sol</p>
+          <p><strong>Facebook:</strong> Tasami Busines Company</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #94a3b8;">
+        جميع الحقوق محفوظة © 2026 شركة تسامي الأعمال (Tasami Business Company).
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -1,14 +1,14 @@
 import React from 'react';
-import { ShieldCheck, HardHat, Settings, FileText, Play, CheckCircle2, Award } from 'lucide-react';
+import { ShieldCheck, HardHat, Settings, FileText, Play, CheckCircle2, Award, Flame, BellRing } from 'lucide-react';
 
 export default function Hero({ lang, content, onOpenConsultation }) {
   const t = content[lang].hero;
 
   const pillarIcons = [
-    <ShieldCheck className="w-6 h-6 text-[#c59a45]" />,
-    <FileText className="w-6 h-6 text-[#c59a45]" />,
+    <BellRing className="w-6 h-6 text-[#c59a45]" />,
     <Settings className="w-6 h-6 text-[#c59a45]" />,
-    <HardHat className="w-6 h-6 text-[#c59a45]" />,
+    <ShieldCheck className="w-6 h-6 text-[#c59a45]" />,
+    <Flame className="w-6 h-6 text-[#c59a45]" />,
   ];
 
   return (
@@ -31,24 +31,28 @@ export default function Hero({ lang, content, onOpenConsultation }) {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.2] tracking-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.25] tracking-tight">
               {lang === 'ar' ? (
                 <>
-                  نحو بيئة <span className="text-[#c59a45] underline decoration-[#c59a45]/30 underline-offset-8">أكثر أماناً</span>
+                  حلول متكاملة في أنظمة <span className="text-[#c59a45] underline decoration-[#c59a45]/30 underline-offset-8">الإطفاء والإنذار</span>
                   <br />
-                  لمستقبل مستدام
+                  <span className="text-2xl sm:text-3xl lg:text-4xl text-slate-700 font-bold block mt-2">
+                    نحو بيئة خالية تماماً من المخاطر
+                  </span>
                 </>
               ) : (
                 <>
-                  Towards a <span className="text-[#c59a45]">Safer Environment</span>
+                  Integrated <span className="text-[#c59a45]">Fire Protection & Detection</span>
                   <br />
-                  for a Sustainable Future
+                  <span className="text-2xl sm:text-3xl lg:text-4xl text-slate-700 font-bold block mt-2">
+                    Towards a Hazard-Free Environment
+                  </span>
                 </>
               )}
             </h1>
 
             {/* Description */}
-            <p className="text-lg sm:text-xl text-slate-600 max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
               {t.description}
             </p>
 
@@ -63,7 +67,7 @@ export default function Hero({ lang, content, onOpenConsultation }) {
               </button>
 
               <a
-                href="#services"
+                href="#suppression"
                 className="inline-flex items-center gap-2.5 px-6 py-4 rounded-xl text-base font-bold text-slate-800 hover:text-[#c59a45] bg-white border border-slate-200 hover:border-[#c59a45]/40 shadow-sm transition-all"
               >
                 <div className="w-7 h-7 rounded-full bg-[#c59a45]/15 flex items-center justify-center text-[#c59a45]">
@@ -74,19 +78,23 @@ export default function Hero({ lang, content, onOpenConsultation }) {
             </div>
 
             {/* Trust badge */}
-            <div className="pt-4 flex items-center gap-6 text-xs text-slate-500 border-t border-slate-200/80">
+            <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-slate-500 border-t border-slate-200/80">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>معتمد من الدفاع المدني (منصة سلامة)</span>
+                <span>ترخيص الدفاع المدني (منصة سلامة)</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Award className="w-4 h-4 text-[#c59a45]" />
                 <span>مطابق لكود البناء السعودي (SBC)</span>
               </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                <span>شهادات SABER / UL / FM</span>
+              </div>
             </div>
           </div>
 
-          {/* Visual Column: Engineer & Riyadh Skyline */}
+          {/* Visual Column: Engineering Safety & Mecca Region Presence */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
               {/* Outer decorative ring */}
@@ -94,33 +102,29 @@ export default function Hero({ lang, content, onOpenConsultation }) {
 
               {/* Main Card */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900">
-                {/* Background: Riyadh Skyline Photo */}
                 <img
                   src="https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=1000&q=80"
-                  alt="Riyadh Skyline and Kingdom Tower"
-                  className="w-full h-[460px] object-cover opacity-80 mix-blend-luminosity filter contrast-125"
+                  alt="Fire & Safety Engineering in Saudi Arabia"
+                  className="w-full h-[470px] object-cover opacity-85 mix-blend-luminosity filter contrast-125"
                 />
 
-                {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent"></div>
 
-                {/* Floating Safety Helmet Badge with Brand */}
                 <div className="absolute top-6 left-6 right-6 flex items-center justify-between">
-                  <div className="glass-dark px-3 py-1.5 rounded-full border border-white/20 text-xs text-white font-semibold flex items-center gap-2">
+                  <div className="glass-dark px-3.5 py-1.5 rounded-full border border-white/20 text-xs text-white font-semibold flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span>معتمد رسمياً في المملكة 🇸🇦</span>
+                    <span>شركة مرخصة ومصنفة رسمياً 🇸🇦</span>
                   </div>
                 </div>
 
-                {/* Hero Feature Overlay at Bottom */}
                 <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl glass-dark border border-white/10 text-white backdrop-blur-md">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#c59a45] to-[#9a752a] flex items-center justify-center flex-shrink-0 shadow-md">
                       <HardHat className="w-7 h-7 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-white">إشراف هندسي وميداني معتمد</h4>
-                      <p className="text-xs text-slate-300 mt-0.5">كوادر سعودية متخصصة ومصنفة لدى هيئة المهندسين</p>
+                      <h4 className="font-bold text-sm text-white">فريق هندسي وفني مؤهل ومتخصص</h4>
+                      <p className="text-xs text-slate-300 mt-0.5">تنفيذ المشاريع بأعلى معايير الاحترافية والالتزام بالمواعيد</p>
                     </div>
                   </div>
                 </div>
@@ -129,11 +133,11 @@ export default function Hero({ lang, content, onOpenConsultation }) {
               {/* Floating Stat Pill */}
               <div className="absolute -bottom-5 -right-4 bg-white px-5 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-[#c59a45] font-black text-sm">
-                  10+
+                  100%
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-800">سنوات ريادة</div>
-                  <div className="text-[10px] text-slate-500">في الأمن والسلامة</div>
+                  <div className="text-xs font-bold text-slate-800">جاهزية وأمان تام</div>
+                  <div className="text-[10px] text-slate-500">لجميع القطاعات</div>
                 </div>
               </div>
 
@@ -142,7 +146,7 @@ export default function Hero({ lang, content, onOpenConsultation }) {
 
         </div>
 
-        {/* Quick Highlights / 4 Pillars Bar matching the design */}
+        {/* 4 Pillars Bar */}
         <div className="mt-16 pt-8 border-t border-slate-200">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {t.features.map((feature, idx) => (
