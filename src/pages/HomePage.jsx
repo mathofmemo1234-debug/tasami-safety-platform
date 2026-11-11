@@ -19,6 +19,7 @@ import {
   Users
 } from 'lucide-react';
 import Hero from '../components/Hero';
+import TasamiLogo from '../components/TasamiLogo';
 
 export default function HomePage({
   lang,
@@ -80,25 +81,25 @@ export default function HomePage({
       name: isAr ? 'لوحات إنذار الحريق الذكية التناظرية' : 'Addressable Fire Alarm Panels',
       category: isAr ? 'أنظمة الإنذار' : 'Alarms',
       specs: isAr ? '2 إلى 8 لوبات • معتمدة UL / LPCB' : '2-8 Loops • UL / LPCB Approved',
-      image: '/images/product-1.jpg'
+      image: './images/product-1.jpg'
     },
     {
       name: isAr ? 'أسطوانات غاز FM-200 و NOVEC 1230' : 'Clean Agent Suppression Cylinders',
       category: isAr ? 'الإطفاء التلقائي' : 'Suppression',
       specs: isAr ? 'معتمدة UL/FM • صديقة للبيئة والبيانات' : 'UL/FM Certified • Zero Ozone Depletion',
-      image: '/images/product-2.jpg'
+      image: './images/product-2.jpg'
     },
     {
       name: isAr ? 'رؤوس رشاشات الحريق الأوتوماتيكية' : 'Automatic Fire Sprinkler Heads',
       category: isAr ? 'الشبكات المائية' : 'Sprinklers',
       specs: isAr ? 'درجات حرارة متعددة • نحاس معتمد UL/FM' : 'Multiple temp ratings • UL/FM Listed',
-      image: '/images/product-3.jpg'
+      image: './images/product-3.jpg'
     },
     {
       name: isAr ? 'صناديق ومحابس ومضخات الحريق' : 'Fire Hose Cabinets & Pump Sets',
       category: isAr ? 'معدات الإطفاء' : 'Fire Equipment',
       specs: isAr ? 'حديد غير قابل للصدأ • مواصفات الدفاع المدني' : 'Stainless steel • Civil Defense Approved',
-      image: '/images/product-4.jpg'
+      image: './images/product-4.jpg'
     }
   ];
 
@@ -119,9 +120,12 @@ export default function HomePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#c59a45]/10 text-[#9a752a] text-xs font-bold">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#c59a45]" />
-                <span>{isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami for Safety Systems'}</span>
+              <div className="flex flex-wrap items-center gap-3">
+                <TasamiLogo lang={lang} className="h-12 sm:h-14" />
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#c59a45]/10 text-[#9a752a] text-xs font-bold">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#c59a45]" />
+                  <span>{isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami for Safety Systems'}</span>
+                </div>
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
                 {isAr

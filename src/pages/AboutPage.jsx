@@ -19,6 +19,7 @@ import VisionMissionValues from '../components/VisionMissionValues';
 import OrgStructureSection from '../components/OrgStructureSection';
 import CertificatesLicensesSection from '../components/CertificatesLicensesSection';
 import ProjectsSection from '../components/ProjectsSection';
+import TasamiLogo from '../components/TasamiLogo';
 
 export default function AboutPage({
   lang,
@@ -45,10 +46,13 @@ export default function AboutPage({
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
-              {isAr ? 'الريادة المؤسسية' : 'Corporate Leadership'}
-            </span>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <TasamiLogo lang={lang} className="h-10 sm:h-12" />
+              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
+                {isAr ? 'الريادة المؤسسية' : 'Corporate Leadership'}
+              </span>
+            </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">
               {isAr ? 'عن تسامي الأعمال لأنظمة السلامة' : 'About Tasami Business for Safety Systems'}
             </h1>

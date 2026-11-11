@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   ChevronDown
 } from 'lucide-react';
+import TasamiLogo from '../components/TasamiLogo';
 
 export default function ProductsPage({
   lang,
@@ -68,10 +69,13 @@ export default function ProductsPage({
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
-              {isAr ? 'توريدات وأنظمة معتمدة' : 'Certified Procurement'}
-            </span>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <TasamiLogo lang={lang} className="h-10 sm:h-12" />
+              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
+                {isAr ? 'توريدات وأنظمة معتمدة' : 'Certified Procurement'}
+              </span>
+            </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">
               {isAr ? 'كتالوج المنتجات ومعدات السلامة ومكافحة الحريق' : 'Fire Safety Products & Equipment Catalog'}
             </h1>
@@ -150,7 +154,7 @@ export default function ProductsPage({
             {/* Image */}
             <div className="relative h-48 bg-slate-100 overflow-hidden">
               <img
-                src={item.image || '/images/product-1.jpg'}
+                src={item.image || './images/product-1.jpg'}
                 alt={item.ar}
                 onError={(e) => {
                   e.currentTarget.src = 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80';

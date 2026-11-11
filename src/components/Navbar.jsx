@@ -123,19 +123,19 @@ export default function Navbar({
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-md py-2 border-b border-slate-100'
-            : 'bg-white/95 backdrop-blur-sm py-2.5 sm:py-3 border-b border-slate-100'
+            : 'bg-white/95 backdrop-blur-sm py-2 sm:py-2.5 border-b border-slate-100'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
-            {/* Logo - Horizontal single element with no redundant duplicate text */}
+            {/* Logo - Prominently visible horizontal logo banner on all pages */}
             <button
               onClick={() => onNavigate('home')}
               className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#c59a45]/40 rounded-xl"
               title="تسامي الأعمال لأنظمة السلامة"
             >
-              <TasamiLogo lang={lang} className="h-10 sm:h-12 md:h-13" />
+              <TasamiLogo lang={lang} className="h-12 sm:h-14 md:h-16" />
             </button>
 
             {/* Desktop Navigation Menu */}
