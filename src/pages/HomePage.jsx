@@ -120,8 +120,8 @@ export default function HomePage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
-              <div className="flex flex-wrap items-center gap-3">
-                <TasamiLogo lang={lang} className="h-12 sm:h-14" />
+              <div className="flex flex-wrap items-center gap-4">
+                <TasamiLogo lang={lang} className="h-20 sm:h-24 md:h-28" />
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#c59a45]/10 text-[#9a752a] text-xs font-bold">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#c59a45]" />
                   <span>{isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami for Safety Systems'}</span>

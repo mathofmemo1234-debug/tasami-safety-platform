@@ -16,27 +16,48 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [selectedServiceForConsultation, setSelectedServiceForConsultation] = useState('');
 
-  // Current page state ('home', 'services', 'products', 'about', 'contact')
-  const getInitialPage = () => {
-    const hash = window.location.hash.replace('#', '').replace('/', '').trim();
-    if (['services', 'products', 'about', 'contact'].includes(hash)) {
-      return hash;
+  // Multi-page navigation state
+  const parseHash = () => {
+    const raw = window.location.hash.replace(/^#\/?/, '').trim();
+    if (!raw) return { page: 'home', section: null };
+    
+    // Support formats like: 'about#ceo' or 'about' or 'services#calculator'
+    const parts = raw.split('#');
+    const page = parts[0] || 'home';
+    const section = parts[1] || null;
+
+    if (['services', 'products', 'about', 'contact'].includes(page)) {
+      return { page, section };
     }
-    return 'home';
+    return { page: 'home', section: null };
   };
 
-  const [currentPage, setCurrentPage] = useState(getInitialPage);
+  const initial = parseHash();
+  const [currentPage, setCurrentPage] = useState(initial.page);
+  const [targetSection, setTargetSection] = useState(initial.section);
+  const [activeBranchFilter, setActiveBranchFilter] = useState(null);
+  const [openCalculator, setOpenCalculator] = useState(false);
 
   // Sync with browser back/forward and hash changes
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').replace('/', '').trim();
-      if (['services', 'products', 'about', 'contact'].includes(hash)) {
-        setCurrentPage(hash);
+      const { page, section } = parseHash();
+      setCurrentPage(page);
+      setTargetSection(section);
+
+      if (section) {
+        setTimeout(() => {
+          const el = document.getElementById(section);
+          if (el) {
+            const headerOffset = 115;
+            const elementPosition = el.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          }
+        }, 150);
       } else {
-        setCurrentPage('home');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -52,10 +73,42 @@ export default function App() {
       : 'Tasami Business for Safety Systems | Turnkey Fire & Safety Engineering';
   }, [lang]);
 
-  const navigateTo = (page) => {
+  // Comprehensive, robust navigation function
+  const navigateTo = (page, sectionId = null, filter = null, shouldOpenCalc = false) => {
     setCurrentPage(page);
-    window.location.hash = page === 'home' ? '' : page;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTargetSection(sectionId);
+    
+    if (filter) {
+      setActiveBranchFilter(filter);
+    }
+    if (shouldOpenCalc !== undefined) {
+      setOpenCalculator(Boolean(shouldOpenCalc));
+    }
+
+    // Update browser URL hash
+    if (sectionId) {
+      window.location.hash = `${page}#${sectionId}`;
+    } else {
+      window.location.hash = page === 'home' ? '' : page;
+    }
+
+    // Accurate scroll handling
+    if (sectionId) {
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const headerOffset = 115;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 180);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleOpenConsultation = (serviceName = '') => {
@@ -93,6 +146,9 @@ export default function App() {
             content={content}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
+            targetSection={targetSection}
+            activeBranchFilter={activeBranchFilter}
+            openCalculator={openCalculator}
           />
         )}
 
@@ -111,6 +167,7 @@ export default function App() {
             content={content}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
+            targetSection={targetSection}
           />
         )}
 

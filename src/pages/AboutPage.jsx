@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Quote,
   Eye,
@@ -25,9 +25,29 @@ export default function AboutPage({
   lang,
   content,
   onNavigate,
-  onOpenConsultation
+  onOpenConsultation,
+  targetSection
 }) {
   const isAr = lang === 'ar';
+
+  // Smoothly scroll to the target section when navigating from dropdown
+  useEffect(() => {
+    if (targetSection) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetSection);
+        if (el) {
+          const headerOffset = 110;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [targetSection]);
 
   return (
     <div className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -46,10 +66,11 @@ export default function AboutPage({
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <TasamiLogo lang={lang} className="h-10 sm:h-12" />
-              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Doubled Logo size */}
+              <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
+              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/20">
                 {isAr ? 'الريادة المؤسسية' : 'Corporate Leadership'}
               </span>
             </div>
@@ -66,41 +87,53 @@ export default function AboutPage({
       </div>
 
       {/* 2. Main Company Story & Background */}
-      <AboutSection
-        lang={lang}
-        content={content}
-        onOpenConsultation={onOpenConsultation}
-      />
+      <div className="scroll-mt-28">
+        <AboutSection
+          lang={lang}
+          content={content}
+          onOpenConsultation={onOpenConsultation}
+        />
+      </div>
 
       {/* 3. Executive CEO Message */}
-      <CeoMessage
-        lang={lang}
-        content={content}
-      />
+      <div className="scroll-mt-28">
+        <CeoMessage
+          lang={lang}
+          content={content}
+        />
+      </div>
 
       {/* 4. Vision, Mission & Core Values */}
-      <VisionMissionValues
-        lang={lang}
-        content={content}
-      />
+      <div className="scroll-mt-28">
+        <VisionMissionValues
+          lang={lang}
+          content={content}
+        />
+      </div>
 
       {/* 5. Organizational Structure */}
-      <OrgStructureSection
-        lang={lang}
-        content={content}
-      />
+      <div className="scroll-mt-28">
+        <OrgStructureSection
+          lang={lang}
+          content={content}
+        />
+      </div>
 
       {/* 6. Accreditations & Licenses */}
-      <CertificatesLicensesSection
-        lang={lang}
-        content={content}
-      />
+      <div className="scroll-mt-28">
+        <CertificatesLicensesSection
+          lang={lang}
+          content={content}
+        />
+      </div>
 
       {/* 7. Featured Projects */}
-      <ProjectsSection
-        lang={lang}
-        content={content}
-      />
+      <div className="scroll-mt-28">
+        <ProjectsSection
+          lang={lang}
+          content={content}
+        />
+      </div>
 
     </div>
   );

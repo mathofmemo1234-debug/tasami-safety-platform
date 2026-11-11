@@ -60,57 +60,69 @@ export default function Navbar({
     }
   };
 
-  // 1. عن الشركة Sub-items
+  // 1. عن الشركة Sub-items with strict target sections
   const aboutSubItems = [
     {
       label: t.ceo || (lang === 'ar' ? 'كلمة الرئيس التنفيذي' : 'CEO Message'),
-      target: 'about',
+      page: 'about',
+      sectionId: 'ceo',
       desc: lang === 'ar' ? 'رسالة الإدارة التنفيذية ورؤيتها' : 'Executive leadership message',
       icon: <Quote className="w-4 h-4 text-[#c59a45]" />
     },
     {
       label: t.vision || (lang === 'ar' ? 'الرؤية والرسالة' : 'Vision & Mission'),
-      target: 'about',
+      page: 'about',
+      sectionId: 'vision',
       desc: lang === 'ar' ? 'طموحنا نحو بيئة خالية من المخاطر' : 'Our vision towards zero-hazard future',
       icon: <Eye className="w-4 h-4 text-[#c59a45]" />
     },
     {
       label: t.orgChart || (lang === 'ar' ? 'الهيكل التنظيمي' : 'Org Structure'),
-      target: 'about',
+      page: 'about',
+      sectionId: 'org-chart',
       desc: lang === 'ar' ? 'الهيكل الإداري والهندسي المؤسسي' : 'Organizational and technical hierarchy',
       icon: <Network className="w-4 h-4 text-[#c59a45]" />
     },
     {
       label: t.projects || (lang === 'ar' ? 'أبرز مشاريعنا' : 'Featured Projects'),
-      target: 'about',
+      page: 'about',
+      sectionId: 'projects',
       desc: lang === 'ar' ? 'مشاريعنا المنفذة في كبرى قطاعات المملكة' : 'Flagship projects secured kingdom-wide',
       icon: <FolderKanban className="w-4 h-4 text-[#c59a45]" />
     },
   ];
 
-  // 2. خدماتنا Sub-items
+  // 2. خدماتنا Sub-items with strict filters & sections
   const servicesSubItems = [
     {
       label: t.suppression || (lang === 'ar' ? 'أنظمة الإطفاء التلقائي' : 'Automatic Suppression'),
-      target: 'services',
+      page: 'services',
+      sectionId: 'services-grid',
+      filter: 'suppression',
       desc: lang === 'ar' ? 'FM-200، NOVEC 1230، الأيروسول، والمطابخ' : 'Clean agent, aerosol & kitchen systems',
       icon: <Flame className="w-4 h-4 text-[#c59a45]" />
     },
     {
       label: t.certifiedServices || t.services || (lang === 'ar' ? 'الرشاشات والمضخات' : 'Sprinklers & Pumps'),
-      target: 'services',
+      page: 'services',
+      sectionId: 'services-grid',
+      filter: 'sprinklers-pumps',
       desc: lang === 'ar' ? 'الشبكات المائية ومحطات المضخات' : 'Alarms, sprinklers & pump networks',
       icon: <ShieldCheck className="w-4 h-4 text-[#c59a45]" />
     },
     {
       label: t.licenses || (lang === 'ar' ? 'الصيانة وتراخيص سلامة' : 'Maintenance & Civil Defense'),
-      target: 'services',
+      page: 'services',
+      sectionId: 'services-grid',
+      filter: 'maintenance',
       desc: lang === 'ar' ? 'عقود الصيانة وإصدار تراخيص منصة سلامة' : 'Civil Defense approvals & maintenance',
       icon: <FileCheck className="w-4 h-4 text-[#c59a45]" />
     },
     {
       label: t.calculator || (lang === 'ar' ? 'حاسبة السلامة الهندسية' : 'Safety Estimator'),
-      target: 'services',
+      page: 'services',
+      sectionId: 'calculator-section',
+      openCalculator: true,
       desc: lang === 'ar' ? 'احسب تقدير التكاليف والمتطلبات فورياً' : 'Instant budgetary & statutory estimator',
       icon: <Calculator className="w-4 h-4 text-[#dfb76c]" />,
       isSpecial: true
@@ -123,19 +135,19 @@ export default function Navbar({
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-md py-2 border-b border-slate-100'
-            : 'bg-white/95 backdrop-blur-sm py-2 sm:py-2.5 border-b border-slate-100'
+            : 'bg-white/95 backdrop-blur-sm py-2 sm:py-3 border-b border-slate-100'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
-            {/* Logo - Prominently visible horizontal logo banner on all pages */}
+            {/* Logo - Prominently enlarged horizontal logo banner on all pages */}
             <button
               onClick={() => onNavigate('home')}
-              className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#c59a45]/40 rounded-xl"
+              className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#c59a45]/40 rounded-xl py-1"
               title="تسامي الأعمال لأنظمة السلامة"
             >
-              <TasamiLogo lang={lang} className="h-12 sm:h-14 md:h-16" />
+              <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
             </button>
 
             {/* Desktop Navigation Menu */}
@@ -176,7 +188,7 @@ export default function Navbar({
                     {aboutSubItems.map((item, idx) => (
                       <button
                         key={idx}
-                        onClick={() => onNavigate(item.target)}
+                        onClick={() => onNavigate(item.page, item.sectionId)}
                         className="w-full flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 transition group/item text-right rtl:text-right ltr:text-left"
                       >
                         <div className="w-7 h-7 rounded-lg bg-[#c59a45]/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:bg-[#c59a45] group-hover/item:text-white transition">
@@ -220,7 +232,7 @@ export default function Navbar({
                     {servicesSubItems.map((item, idx) => (
                       <button
                         key={idx}
-                        onClick={() => onNavigate(item.target)}
+                        onClick={() => onNavigate(item.page, item.sectionId, item.filter, item.openCalculator)}
                         className={`w-full flex items-start gap-2.5 p-2 rounded-xl transition group/item text-right rtl:text-right ltr:text-left ${
                           item.isSpecial
                             ? 'bg-amber-50/50 hover:bg-amber-100/70 border border-[#c59a45]/20'
@@ -362,7 +374,7 @@ export default function Navbar({
           </div>
         )}
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu with Full Accordions */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-slate-200 bg-white shadow-2xl px-4 py-5 space-y-3 max-h-[85vh] overflow-y-auto">
             
@@ -379,34 +391,92 @@ export default function Navbar({
               {t.home}
             </button>
 
-            {/* 2. عن الشركة */}
-            <button
-              onClick={() => {
-                onNavigate('about');
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 ${
-                currentPage === 'about' ? 'text-[#c59a45]' : 'text-slate-800'
-              }`}
-            >
-              {t.about}
-            </button>
+            {/* 2. عن الشركة (مع أكورديون التفريعات) */}
+            <div className="border-b border-slate-100 pb-2">
+              <div className="flex items-center justify-between py-2">
+                <button
+                  onClick={() => {
+                    onNavigate('about');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`text-sm font-bold ${currentPage === 'about' ? 'text-[#c59a45]' : 'text-slate-800'}`}
+                >
+                  {t.about}
+                </button>
+                <button
+                  onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                  className="p-1.5 text-slate-500 hover:text-[#c59a45]"
+                  aria-label="Toggle About Submenu"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileAboutOpen ? 'rotate-180 text-[#c59a45]' : ''}`} />
+                </button>
+              </div>
 
-            {/* 3. خدماتنا (صفحة مستقلة) */}
-            <button
-              onClick={() => {
-                onNavigate('services');
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 flex items-center justify-between ${
-                currentPage === 'services' ? 'text-[#c59a45]' : 'text-slate-800'
-              }`}
-            >
-              <span>{t.services}</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#c59a45]/15 text-[#9a752a] font-normal">
-                {lang === 'ar' ? 'صفحة وتفريعات' : 'Dedicated'}
-              </span>
-            </button>
+              {mobileAboutOpen && (
+                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-slate-50 p-2.5 rounded-xl">
+                  {aboutSubItems.map((sub, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        onNavigate(sub.page, sub.sectionId);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-2 py-1.5 text-xs font-semibold text-slate-700 hover:text-[#c59a45] text-right rtl:text-right ltr:text-left"
+                    >
+                      {sub.icon}
+                      <span>{sub.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 3. خدماتنا (مع أكورديون التفريعات) */}
+            <div className="border-b border-slate-100 pb-2">
+              <div className="flex items-center justify-between py-2">
+                <button
+                  onClick={() => {
+                    onNavigate('services');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`text-sm font-bold ${currentPage === 'services' ? 'text-[#c59a45]' : 'text-slate-800'}`}
+                >
+                  {t.services}
+                </button>
+                <button
+                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  className="p-1.5 text-slate-500 hover:text-[#c59a45]"
+                  aria-label="Toggle Services Submenu"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180 text-[#c59a45]' : ''}`} />
+                </button>
+              </div>
+
+              {mobileServicesOpen && (
+                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-slate-50 p-2.5 rounded-xl">
+                  {servicesSubItems.map((sub, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        onNavigate(sub.page, sub.sectionId, sub.filter, sub.openCalculator);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center justify-between py-1.5 text-xs font-semibold text-slate-700 hover:text-[#c59a45] text-right rtl:text-right ltr:text-left"
+                    >
+                      <div className="flex items-center gap-2">
+                        {sub.icon}
+                        <span>{sub.label}</span>
+                      </div>
+                      {sub.isSpecial && (
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#c59a45] text-white font-bold">
+                          {lang === 'ar' ? 'حاسبة' : 'CALC'}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* 4. منتجاتنا (صفحة مستقلة) */}
             <button
@@ -453,7 +523,7 @@ export default function Navbar({
           </div>
         )}
       </header>
-      <div className="h-16 sm:h-18"></div>
+      <div className="h-24 sm:h-28 md:h-32"></div>
     </>
   );
 }

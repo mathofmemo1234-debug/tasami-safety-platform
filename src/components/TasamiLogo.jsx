@@ -1,7 +1,7 @@
 import React from 'react';
 import logoImg from '../assets/logo.jpg';
 
-export default function TasamiLogo({ className = "h-12 sm:h-14 lg:h-16", isWhite = false, lang = "ar" }) {
+export default function TasamiLogo({ className = "h-20 sm:h-24 lg:h-28", isWhite = false, lang = "ar" }) {
   const getFallbackSrc = () => {
     const baseUrl = import.meta.env.BASE_URL || './';
     const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
@@ -12,13 +12,13 @@ export default function TasamiLogo({ className = "h-12 sm:h-14 lg:h-16", isWhite
     <div className="flex items-center select-none">
       <div className={`transition-all duration-200 ${
         isWhite
-          ? 'bg-white p-2 sm:p-2.5 rounded-2xl shadow-sm border border-slate-200/80 inline-flex items-center'
+          ? 'bg-white p-3 sm:p-4 rounded-3xl shadow-md border border-slate-200/80 inline-flex items-center'
           : 'flex items-center'
       }`}>
         <img
           src={logoImg || getFallbackSrc()}
           alt="تسامي الأعمال لأنظمة السلامة | TASAMI BUSINESS FOR SAFETY SYSTEMS"
-          className={`${className} w-auto max-w-[280px] sm:max-w-[340px] object-contain transition-transform duration-200 hover:scale-[1.02]`}
+          className={`${className} w-auto max-w-[450px] sm:max-w-[600px] object-contain transition-transform duration-200 hover:scale-[1.02]`}
           loading="eager"
           onError={(e) => {
             if (!e.target.dataset.triedBase) {
@@ -27,6 +27,9 @@ export default function TasamiLogo({ className = "h-12 sm:h-14 lg:h-16", isWhite
             } else if (!e.target.dataset.triedRelative) {
               e.target.dataset.triedRelative = 'true';
               e.target.src = './logo.jpg';
+            } else if (!e.target.dataset.triedUpper) {
+              e.target.dataset.triedUpper = 'true';
+              e.target.src = './LOGO.jpg';
             } else if (!e.target.dataset.triedJfif) {
               e.target.dataset.triedJfif = 'true';
               e.target.src = './logo.jfif';

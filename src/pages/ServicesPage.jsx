@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flame,
   BellRing,
@@ -24,13 +24,49 @@ export default function ServicesPage({
   lang,
   content,
   onNavigate,
-  onOpenConsultation
+  onOpenConsultation,
+  targetSection,
+  activeBranchFilter,
+  openCalculator
 }) {
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
 
-  const [activeBranch, setActiveBranch] = useState('all');
-  const [showCalculator, setShowCalculator] = useState(false);
+  const [activeBranch, setActiveBranch] = useState(activeBranchFilter || 'all');
+  const [showCalculator, setShowCalculator] = useState(Boolean(openCalculator));
+
+  // Sync active branch when passed from dropdown
+  useEffect(() => {
+    if (activeBranchFilter) {
+      setActiveBranch(activeBranchFilter);
+    }
+  }, [activeBranchFilter]);
+
+  // Sync calculator state when triggered from dropdown
+  useEffect(() => {
+    if (openCalculator) {
+      setShowCalculator(true);
+    }
+  }, [openCalculator]);
+
+  // Smoothly scroll to target section when requested
+  useEffect(() => {
+    if (targetSection) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetSection);
+        if (el) {
+          const headerOffset = 110;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [targetSection, showCalculator]);
 
   // Sub-branches definition
   const branches = [
@@ -221,10 +257,10 @@ export default function ServicesPage({
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <TasamiLogo lang={lang} className="h-10 sm:h-12" />
-              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center gap-4">
+              <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
+              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/20">
                 {isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami Engineering Solutions'}
               </span>
             </div>
@@ -259,7 +295,7 @@ export default function ServicesPage({
 
       {/* Optional Interactive Safety Calculator Banner / Accordion */}
       {showCalculator && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
+        <div id="calculator-section" className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 scroll-mt-28">
           <div className="mb-6 flex items-center justify-between">
             <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
               <Calculator className="w-5 h-5 text-[#c59a45]" />
@@ -299,7 +335,7 @@ export default function ServicesPage({
       </div>
 
       {/* 3. Detailed Services Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div id="services-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 scroll-mt-28">
         {filteredServices.map((srv) => (
           <div
             key={srv.id}
