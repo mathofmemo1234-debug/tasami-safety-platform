@@ -2,9 +2,17 @@ import React from 'react';
 import TasamiLogo from './TasamiLogo';
 import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2 } from 'lucide-react';
 
-export default function Footer({ lang, content, onOpenAdmin }) {
+export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
   const t = content[lang].footer;
   const c = content[lang].contact;
+
+  const navigate = (page) => {
+    if (onNavigate) {
+      onNavigate(page);
+    } else {
+      window.location.hash = page === 'home' ? '' : page;
+    }
+  };
 
   return (
     <footer className="bg-slate-950 text-slate-400 pt-16 pb-12 border-t border-slate-900">
@@ -15,7 +23,9 @@ export default function Footer({ lang, content, onOpenAdmin }) {
           
           {/* Brand & Vision Col */}
           <div className="lg:col-span-4 space-y-4">
-            <TasamiLogo isWhite={true} lang={lang} />
+            <button onClick={() => navigate('home')} className="focus:outline-none">
+              <TasamiLogo isWhite={true} lang={lang} className="h-10 sm:h-12" />
+            </button>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm mt-3">
               {t.aboutText}
             </p>
@@ -37,17 +47,31 @@ export default function Footer({ lang, content, onOpenAdmin }) {
               {t.quickLinks}
             </h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#home" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'الرئيسية' : 'Home'}</a></li>
-              <li><a href="#about" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'عن الشركة' : 'About Us'}</a></li>
-              <li><a href="#ceo" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'كلمة المدير التنفيذي' : 'CEO Message'}</a></li>
-              <li><a href="#vision-values" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'الرؤية والقيم' : 'Vision & Values'}</a></li>
-              <li><a href="#suppression" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'أنظمة الإطفاء التلقائي' : 'Suppression'}</a></li>
-              <li><a href="#services" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'خدماتنا' : 'Services'}</a></li>
-              <li><a href="#products" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'كتالوج المنتجات' : 'Products'}</a></li>
-              <li><a href="#licenses" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'الاعتمادات والتراخيص' : 'Licenses'}</a></li>
-              <li><a href="#org-chart" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'الهيكل التنظيمي' : 'Org Chart'}</a></li>
-              <li><a href="#projects" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'أبرز مشاريعنا' : 'Projects'}</a></li>
-              <li><a href="#calculator" className="hover:text-[#dfb76c] transition">{lang === 'ar' ? 'حاسبة السلامة' : 'Safety Estimator'}</a></li>
+              <li>
+                <button onClick={() => navigate('home')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">
+                  {lang === 'ar' ? 'الرئيسية' : 'Home'}
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigate('about')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">
+                  {lang === 'ar' ? 'عن الشركة' : 'About Us'}
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left font-bold text-slate-300">
+                  {lang === 'ar' ? 'صفحة الخدمات وتفريعاتها' : 'Services & Branches'}
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigate('products')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left font-bold text-slate-300">
+                  {lang === 'ar' ? 'كتالوج المنتجات' : 'Products Catalog'}
+                </button>
+              </li>
+              <li>
+                <button onClick={() => navigate('contact')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">
+                  {lang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -57,13 +81,12 @@ export default function Footer({ lang, content, onOpenAdmin }) {
               {t.ourServices}
             </h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#suppression" className="hover:text-[#dfb76c] transition">نظام الإطفاء النظيف FM-200</a></li>
-              <li><a href="#suppression" className="hover:text-[#dfb76c] transition">نظام الإطفاء بغاز NOVEC 1230</a></li>
-              <li><a href="#suppression" className="hover:text-[#dfb76c] transition">نظام الإطفاء بالأيروسول Aerosol</a></li>
-              <li><a href="#suppression" className="hover:text-[#dfb76c] transition">إطفاء المطابخ التجارية التلقائي</a></li>
-              <li><a href="#suppression" className="hover:text-[#dfb76c] transition">نظام ثاني أكسيد الكربون CO₂</a></li>
-              <li><a href="#services" className="hover:text-[#dfb76c] transition">شبكات الرشاشات ومضخات الحريق</a></li>
-              <li><a href="#services" className="hover:text-[#dfb76c] transition">أنظمة التحكم وسحب الدخان</a></li>
+              <li><button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">نظام الإطفاء النظيف FM-200</button></li>
+              <li><button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">نظام الإطفاء بغاز NOVEC 1230</button></li>
+              <li><button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">نظام الإطفاء بالأيروسول Aerosol</button></li>
+              <li><button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">إطفاء المطابخ التجارية التلقائي</button></li>
+              <li><button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">شبكات الرشاشات ومضخات الحريق</button></li>
+              <li><button onClick={() => navigate('services')} className="hover:text-[#dfb76c] transition text-right rtl:text-right ltr:text-left">أنظمة التحكم وسحب الدخان</button></li>
             </ul>
           </div>
 

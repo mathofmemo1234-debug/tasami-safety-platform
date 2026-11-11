@@ -5,14 +5,25 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
     overflow-x: hidden;
+    font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1e293b; /* Softer, eye-friendly slate instead of harsh black */
+    line-height: 1.75; /* Comfortable breathing room for Arabic typography */
+  }
+
+  /* Eye-friendly text hierarchy */
+  p {
+    line-height: 1.8;
   }
 }
 
-/* Custom styling for luxury gold accents & gradients */
+/* Custom styling for luxury gold accents & subtle gradients */
 .gold-gradient-text {
   background: linear-gradient(135deg, #dfb76c 0%, #c59a45 50%, #8f6e2b 100%);
   -webkit-background-clip: text;
@@ -24,29 +35,29 @@
 }
 
 .gold-border-glow {
-  border: 1px solid rgba(197, 154, 69, 0.35);
-  box-shadow: 0 0 15px rgba(197, 154, 69, 0.12);
+  border: 1px solid rgba(197, 154, 69, 0.25);
+  box-shadow: 0 4px 20px -2px rgba(197, 154, 69, 0.12);
 }
 
 .glass-dark {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-light {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 /* Smooth custom scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
