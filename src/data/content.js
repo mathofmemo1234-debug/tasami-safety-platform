@@ -3,6 +3,7 @@ export const content = {
     brand: {
       name: "تسامي الأعمال لأنظمة السلامة",
       nameEn: "Tasami Business for Safety Systems",
+      motto: "سلامتك أمانة",
       slogan: "بيئة خالية تماماً من المخاطر",
       subSlogan: "سلامة الإنسان أساس استدامة الأعمال",
       visionTag: "رؤية المملكة 2030",
@@ -43,7 +44,9 @@ export const content = {
     },
     about: {
       tag: "عن الشركة",
+      motto: "سلامتك أمانة",
       title: "تسامي الأعمال لأنظمة السلامة",
+      foundingOrigin: "منذ انطلاقتنا في عام 2026 بمدينة مكة المكرمة – المملكة العربية السعودية، وضعنا في شركة تسامي الأعمال هدفاً واضحاً يتمثل في تقديم حلول شاملة ومبتكرة للسلامة من الحرائق، لنكون الخيار الأول لكل من يسعى إلى حماية الأرواح والممتلكات بأعلى مستويات الكفاءة والجودة.",
       lead: "نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية. نحن لا نكتفي بتطبيق المعايير المحلية والعالمية، بل نحرص على تطوير حلول مبتكرة تواكب التطورات التقنية وتلبي أعلى متطلبات الأمان.",
       paragraph2: "يعتمد نجاحنا على فريق هندسي وفني مؤهل يمتلك خبرة واسعة ومعرفة متعمقة في مجال السلامة ومكافحة الحرائق، حيث يعملون بروح الفريق الواحد لضمان تنفيذ المشاريع بأعلى درجات الاحترافية والالتزام بالمواعيد.",
       paragraph3: "في تسامي الأعمال لأنظمة السلامة، نؤمن أن الأمان ليس خياراً بل ضرورة، لذلك نسعى دائماً لأن نكون شريكاً موثوقاً لعملائنا، نقدم لهم الدعم الفني والاستشارات المتخصصة، ونبني معهم علاقات طويلة الأمد قائمة على الثقة والجودة.",
@@ -320,6 +323,18 @@ export const content = {
           specs: "ASTM A53 / Sch 40 & Sch 10 / صلب مجلفن"
         },
         {
+          id: "threading",
+          category: "networks",
+          ar: "مواد التسنين والوصلات الملولبة",
+          en: "Threading Materials",
+          desc: "مواد التسنين وملحقات القلوظة المعتمدة، وشرائط ومواد إحكام الوصلات الملولبة ولقم التسنين المقاومة للضغط والحرارة في شبكات الإطفاء.",
+          image: "./images/product-4.jpg",
+          videoId: "UHo9BAs3kI0",
+          videoTitle: "طرق التسنين وعزل الوصلات الملولبة في شبكات مكافحة الحريق",
+          videoTitleEn: "Pipe Threading Materials & Sealed Joint Assembly for Fire Systems",
+          specs: "NPT / BSPT Threading • UL/FM Sealants • NFPA 13"
+        },
+        {
           id: "alarms",
           category: "alarms",
           ar: "أجهزة ولوحات إنذار الحريق المعنونة",
@@ -446,20 +461,20 @@ export const content = {
       title: "التراخيص الحكومية والاعتمادات الدولية",
       subtitle: "شركة مرخصة ومصرحة رسمياً من كافة الجهات الرقابية والتنظيمية في المملكة العربية السعودية",
       certifications: [
-        { name: "سابر (SABER)", desc: "شهادات مطابقة المنتجات لمنصة سابر السعودية" },
-        { name: "UL Listed", desc: "معايير السلامة والجودة العالمية الأمريكية Underwriters Laboratories" },
-        { name: "FM Approved", desc: "اعتماد Factory Mutual العالمي المعتمد لأنظمة مكافحة الحريق" },
-        { name: "LPCB", desc: "شهادة مجلس اعتماد أبحاث وفحص الحماية البريطانية Loss Prevention Certification Board" }
+        { name: "سابر (SABER)", desc: "شهادات مطابقة المنتجات لمنصة سابر السعودية", image: "./images/profile/accred-2.jpg" },
+        { name: "UL Listed", desc: "معايير السلامة والجودة العالمية الأمريكية Underwriters Laboratories", image: "./images/profile/accred-3.jpg" },
+        { name: "FM Approved", desc: "اعتماد Factory Mutual العالمي المعتمد لأنظمة مكافحة الحريق", image: "./images/profile/accred-3.jpg" },
+        { name: "LPCB", desc: "شهادة مجلس اعتماد أبحاث وفحص الحماية البريطانية Loss Prevention Certification Board", image: "./images/profile/accred-1.jpg" }
       ],
       legalDocuments: [
-        { title: "شهادة تسجيل الاستثمار", authority: "وزارة الاستثمار (MISA)", note: "ترخيص استثماري رسمي" },
-        { title: "شهادة السجل التجاري (عربي)", authority: "وزارة التجارة", note: "سجل تجاري ساري وموثق" },
-        { title: "Commercial Registration (English)", authority: "Ministry of Commerce", note: "Official English Verification" },
-        { title: "شهادة انتساب الغرفة التجارية", authority: "غرفة مكة المكرمة", note: "عضوية وتصنيف معتمد" },
-        { title: "شهادة التأمينات الاجتماعية", authority: "المؤسسة العامة للتأمينات (GOSI)", note: "شهادة الالتزام والامتثال" },
-        { title: "ترخيص الدفاع المدني", authority: "المديرية العامة للدفاع المدني (سلامة)", note: "ترخيص معتمد لأنظمة الإطفاء والإنذار" },
-        { title: "رخصة نشاط تجاري", authority: "منصة بلدي / وزارة البلديات والإسكان", note: "رخصة تشغيلية معتمدة" },
-        { title: "شهادة تسجيل ضريبة القيمة المضافة", authority: "هيئة الزكاة والضريبة والجمارك (ZATCA)", note: "امتثال ضريبي رسمي" }
+        { title: "شهادة تسجيل الاستثمار", authority: "وزارة الاستثمار (MISA)", note: "ترخيص استثماري رسمي", image: "./images/profile/doc-misa.jpg" },
+        { title: "شهادة السجل التجاري (عربي)", authority: "وزارة التجارة", note: "سجل تجاري ساري وموثق", image: "./images/profile/doc-cr-ar.jpg" },
+        { title: "Commercial Registration (English)", authority: "Ministry of Commerce", note: "Official English Verification", image: "./images/profile/doc-cr-en.jpg" },
+        { title: "شهادة انتساب الغرفة التجارية", authority: "غرفة مكة المكرمة", note: "عضوية وتصنيف معتمد", image: "./images/profile/doc-chamber.jpg" },
+        { title: "شهادة التأمينات الاجتماعية", authority: "المؤسسة العامة للتأمينات (GOSI)", note: "شهادة الالتزام والامتثال", image: "./images/profile/doc-gosi.jpg" },
+        { title: "ترخيص الدفاع المدني", authority: "المديرية العامة للدفاع المدني (سلامة)", note: "ترخيص معتمد لأنظمة الإطفاء والإنذار", image: "./images/profile/doc-salamah.jpg" },
+        { title: "رخصة نشاط تجاري", authority: "منصة بلدي / وزارة البلديات والإسكان", note: "رخصة تشغيلية معتمدة", image: "./images/profile/doc-balady.jpg" },
+        { title: "شهادة تسجيل ضريبة القيمة المضافة", authority: "هيئة الزكاة والضريبة والجمارك (ZATCA)", note: "امتثال ضريبي رسمي", image: "./images/profile/doc-vat.jpg" }
       ]
     },
     projects: {
@@ -571,6 +586,7 @@ export const content = {
     brand: {
       name: "Tasami Business for Safety Systems",
       nameEn: "Tasami Business for Safety Systems",
+      motto: "Your Safety Is Our Trust",
       slogan: "Towards an Environment Completely Free of Hazards",
       subSlogan: "People Safety is the Foundation of Business Sustainability",
       visionTag: "Saudi Vision 2030",
@@ -611,7 +627,9 @@ export const content = {
     },
     about: {
       tag: "About The Company",
+      motto: "Your Safety Is Our Trust",
       title: "Tasami Business for Safety Systems",
+      foundingOrigin: "Since our inception in 2026 in Makkah Al-Mukarramah – Kingdom of Saudi Arabia, we at Tasami Business have set a clear goal: delivering comprehensive and innovative fire safety solutions to be the premier choice for protecting lives and property with the highest levels of efficiency and quality.",
       lead: "We specialize in providing integrated solutions encompassing the supply, installation, and maintenance of state-of-the-art fire suppression and fire alarm systems, engineered to meet the stringent demands of industrial, commercial, and residential sectors. We go beyond compliance with local and global standards by developing innovative solutions that keep pace with technological advancement and satisfy the highest safety mandates.",
       paragraph2: "Our success is propelled by a certified engineering and technical cadre possessing deep-rooted expertise in safety and fire protection, working seamlessly as a unified team to execute projects with premier professionalism and prompt delivery.",
       paragraph3: "At Tasami Business for Safety Systems, we believe safety is not an option—it is an absolute necessity. Therefore, we continuously strive to be our clients' trusted partner, providing specialized technical support and building enduring relationships anchored in mutual trust and quality.",
@@ -888,6 +906,18 @@ export const content = {
           specs: "ASTM A53 / Sch 40 & Sch 10 / Galvanized Steel"
         },
         {
+          id: "threading",
+          category: "networks",
+          ar: "مواد التسنين والوصلات الملولبة",
+          en: "Threading Materials",
+          desc: "Approved pipe threading supplies, cutting dies, PTFE tapes, and high-pressure thread sealants ensuring leak-free fire piping joints.",
+          image: "./images/product-4.jpg",
+          videoId: "UHo9BAs3kI0",
+          videoTitle: "طرق التسنين وعزل الوصلات الملولبة في شبكات مكافحة الحريق",
+          videoTitleEn: "Pipe Threading Materials & Sealed Joint Assembly for Fire Systems",
+          specs: "NPT / BSPT Threading • UL/FM Sealants • NFPA 13"
+        },
+        {
           id: "alarms",
           category: "alarms",
           ar: "أجهزة ولوحات إنذار الحريق المعنونة",
@@ -1014,20 +1044,20 @@ export const content = {
       title: "Government Licenses & Global Accreditations",
       subtitle: "Fully licensed and accredited by all regulatory authorities in the Kingdom of Saudi Arabia",
       certifications: [
-        { name: "SABER", desc: "Saudi Product Conformity Certification via SABER Platform" },
-        { name: "UL Listed", desc: "Underwriters Laboratories global safety benchmark certification" },
-        { name: "FM Approved", desc: "Factory Mutual world-renowned certification for fire protection equipment" },
-        { name: "LPCB", desc: "Loss Prevention Certification Board certification for security and fire systems" }
+        { name: "SABER", desc: "Saudi Product Conformity Certification via SABER Platform", image: "./images/profile/accred-2.jpg" },
+        { name: "UL Listed", desc: "Underwriters Laboratories global safety benchmark certification", image: "./images/profile/accred-3.jpg" },
+        { name: "FM Approved", desc: "Factory Mutual world-renowned certification for fire protection equipment", image: "./images/profile/accred-3.jpg" },
+        { name: "LPCB", desc: "Loss Prevention Certification Board certification for security and fire systems", image: "./images/profile/accred-1.jpg" }
       ],
       legalDocuments: [
-        { title: "Investment Registration Certificate", authority: "Ministry of Investment (MISA)", note: "Official Corporate License" },
-        { title: "Commercial Registration Certificate (Arabic)", authority: "Ministry of Commerce", note: "Active Commercial Record" },
-        { title: "Commercial Registration (English)", authority: "Ministry of Commerce", note: "Official Verification" },
-        { title: "Chamber of Commerce Membership", authority: "Makkah Chamber of Commerce", note: "Accredited Corporate Member" },
-        { title: "Social Insurance Certificate", authority: "General Organization for Social Insurance (GOSI)", note: "Regulatory Compliance" },
-        { title: "Civil Defense License", authority: "General Directorate of Civil Defense (Salamah)", note: "Approved Fire & Safety Contractor" },
-        { title: "Commercial Activity License", authority: "Balady Platform / Ministry of Municipalities", note: "Municipal Operating License" },
-        { title: "VAT Registration Certificate", authority: "Zakat, Tax and Customs Authority (ZATCA)", note: "Tax Compliant Entity" }
+        { title: "Investment Registration Certificate", authority: "Ministry of Investment (MISA)", note: "Official Corporate License", image: "./images/profile/doc-misa.jpg" },
+        { title: "Commercial Registration Certificate (Arabic)", authority: "Ministry of Commerce", note: "Active Commercial Record", image: "./images/profile/doc-cr-ar.jpg" },
+        { title: "Commercial Registration (English)", authority: "Ministry of Commerce", note: "Official Verification", image: "./images/profile/doc-cr-en.jpg" },
+        { title: "Chamber of Commerce Membership", authority: "Makkah Chamber of Commerce", note: "Accredited Corporate Member", image: "./images/profile/doc-chamber.jpg" },
+        { title: "Social Insurance Certificate", authority: "General Organization for Social Insurance (GOSI)", note: "Regulatory Compliance", image: "./images/profile/doc-gosi.jpg" },
+        { title: "Civil Defense License", authority: "General Directorate of Civil Defense (Salamah)", note: "Approved Fire & Safety Contractor", image: "./images/profile/doc-salamah.jpg" },
+        { title: "Commercial Activity License", authority: "Balady Platform / Ministry of Municipalities", note: "Municipal Operating License", image: "./images/profile/doc-balady.jpg" },
+        { title: "VAT Registration Certificate", authority: "Zakat, Tax and Customs Authority (ZATCA)", note: "Tax Compliant Entity", image: "./images/profile/doc-vat.jpg" }
       ]
     },
     projects: {

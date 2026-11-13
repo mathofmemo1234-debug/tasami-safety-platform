@@ -53,13 +53,26 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
           {/* Text and Story Side */}
           <div className="lg:col-span-7 space-y-6 text-right rtl:text-right ltr:text-left">
             <div className="space-y-3">
-              <span className="text-sm font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
-                {t.tag}
-              </span>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="text-sm font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
+                  {t.tag}
+                </span>
+                {t.motto && (
+                  <span className="text-xs font-bold text-[#162d6c] dark:text-[#93c5fd] bg-[#162d6c]/10 dark:bg-[#1d4ed8]/20 border border-[#162d6c]/20 dark:border-[#1d4ed8]/30 px-3 py-1 rounded-md inline-block">
+                    {t.motto}
+                  </span>
+                )}
+              </div>
               <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
                 {t.title}
               </h2>
             </div>
+
+            {t.foundingOrigin && (
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0b1120] border-s-4 border-[#c59a45] text-sm sm:text-base text-[#162d6c] dark:text-slate-200 leading-relaxed font-semibold">
+                {t.foundingOrigin}
+              </div>
+            )}
 
             <p className="text-base sm:text-lg text-[#0f172a] dark:text-slate-100 leading-relaxed font-semibold">
               {t.lead}

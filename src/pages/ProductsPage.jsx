@@ -28,6 +28,7 @@ export default function ProductsPage({
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeVideo, setActiveVideo] = useState(null);
+  const [showBrandsModal, setShowBrandsModal] = useState(false);
 
   const categories = t.categories || [
     { id: 'all', name: isAr ? 'جميع المنتجات والمعدات' : 'All Products' },
@@ -252,8 +253,8 @@ export default function ProductsPage({
         </div>
       )}
 
-      {/* 4. Quality Certifications Strip */}
-      <div className="p-6 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-center">
+      {/* 4. Quality Certifications Strip & Partner Brands Trigger */}
+      <div className="p-6 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-center">
         <div className="text-xs font-bold text-[#0f172a] dark:text-slate-200">
           {isAr ? 'شهادات اعتماد وجودة المنتجات الموردة:' : 'Procurement Statutory Certifications:'}
         </div>
@@ -269,7 +270,86 @@ export default function ProductsPage({
         <div className="px-3.5 py-1.5 rounded-lg bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-700 text-xs font-bold text-[#162d6c] dark:text-slate-200 shadow-sm font-mono">
           LPCB CERTIFIED
         </div>
+        <button
+          onClick={() => setShowBrandsModal(true)}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#162d6c] hover:bg-[#1d4ed8] text-white text-xs font-bold transition shadow-sm border border-[#c59a45]/40"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-[#dfb76c]" />
+          <span>{isAr ? 'استعراض البراندات والعلامات التجارية المعتمدة' : 'View Certified Product Brands'}</span>
+        </button>
       </div>
+
+      {/* Partner Brands & Accreditations Lightbox Modal */}
+      {showBrandsModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm animate-fade-in"
+          onClick={() => setShowBrandsModal(false)}
+        >
+          <div
+            className="bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-700 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+              <div>
+                <h3 className="font-bold text-sm sm:text-base text-[#0f172a] dark:text-white">
+                  {isAr ? 'البراندات العالمية والاعتمادات الموردة' : 'Certified Global Brands & Accreditations'}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {isAr ? 'نورّد نخبة العلامات التجارية العالمية المعتمدة في أنظمة السلامة ومكافحة الحريق' : 'Authorized supply of globally certified fire protection and alarm brands'}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowBrandsModal(false)}
+                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 overflow-y-auto space-y-6 bg-slate-50 dark:bg-[#0b1120]">
+              <div>
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#9a752a] dark:text-[#dfb76c] mb-3">
+                  {isAr ? 'البراندات (العلامات التجارية للمنتجات)' : 'Product Partner Brands'}
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {['brand-1.jpg', 'brand-2.jpg', 'brand-3.jpg', 'brand-4.jpg'].map((img, i) => (
+                    <div key={img} className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center justify-center">
+                      <img
+                        src={`./images/profile/${img}`}
+                        alt={`Partner Brands ${i + 1}`}
+                        className="w-full h-auto max-h-56 object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#162d6c] dark:text-[#93c5fd] mb-3">
+                  {isAr ? 'الاعتمادات القياسية الرسمية' : 'Official Standard Seals'}
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { file: 'accred-2.jpg', label: 'SABER SASO' },
+                    { file: 'accred-3.jpg', label: 'UL & FM Approved' },
+                    { file: 'accred-1.jpg', label: 'LPCB' }
+                  ].map((item) => (
+                    <div key={item.file} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center justify-center gap-2">
+                      <img
+                        src={`./images/profile/${item.file}`}
+                        alt={item.label}
+                        className="h-28 w-auto object-contain"
+                      />
+                      <span className="text-[11px] font-bold text-slate-700">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Video Modal */}
       {activeVideo && (

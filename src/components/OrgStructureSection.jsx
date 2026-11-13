@@ -1,8 +1,10 @@
-import React from 'react';
-import { Users, UserCheck, ShieldCheck, ChevronDown, Award } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldCheck, Image, X } from 'lucide-react';
 
 export default function OrgStructureSection({ lang, content }) {
   const t = content[lang].orgChart;
+  const isAr = lang === 'ar';
+  const [showOrgImage, setShowOrgImage] = useState(false);
 
   const ceoNode = t.nodes.find((n) => n.id === 'ceo');
   const departmentNodes = t.nodes.filter((n) => n.level === 2);
@@ -22,6 +24,15 @@ export default function OrgStructureSection({ lang, content }) {
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
             {t.subtitle}
           </p>
+          <div className="pt-2">
+            <button
+              onClick={() => setShowOrgImage(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 dark:bg-[#0b1120] hover:bg-[#162d6c] dark:hover:bg-[#1d4ed8] text-[#162d6c] dark:text-[#dfb76c] hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition shadow-sm"
+            >
+              <Image className="w-4 h-4" />
+              <span>{isAr ? 'عرض المخطط التنظيمي الرسمي (صورة)' : 'View Official Org Chart Image'}</span>
+            </button>
+          </div>
         </div>
 
         {/* Interactive / Visual Hierarchy Chart */}
@@ -90,6 +101,39 @@ export default function OrgStructureSection({ lang, content }) {
         </div>
 
       </div>
+
+      {/* Official Org Chart Image Lightbox */}
+      {showOrgImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm animate-fade-in"
+          onClick={() => setShowOrgImage(false)}
+        >
+          <div
+            className="bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-700 rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="font-bold text-sm sm:text-base text-[#0f172a] dark:text-white">
+                {t.title}
+              </h3>
+              <button
+                onClick={() => setShowOrgImage(false)}
+                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="bg-slate-100 dark:bg-[#0b1120] p-4 flex items-center justify-center max-h-[78vh] overflow-auto">
+              <img
+                src="./images/profile/org-chart.jpg"
+                alt={t.title}
+                className="max-h-[72vh] w-auto object-contain rounded-xl shadow-md"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

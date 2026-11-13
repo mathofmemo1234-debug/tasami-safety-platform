@@ -1,15 +1,65 @@
-import React from 'react';
-import { ShieldCheck, FileCheck, Award, Building, Landmark, CheckCircle, ExternalLink, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShieldCheck, FileCheck, Award, Landmark, CheckCircle, FileText, Eye, X, ChevronLeft, ChevronRight, Palette } from 'lucide-react';
 
 export default function CertificatesLicensesSection({ lang, content }) {
   const t = content[lang].certificationsAndLicenses;
+  const isAr = lang === 'ar';
+  const [previewItem, setPreviewItem] = useState(null);
+  const [docIndex, setDocIndex] = useState(null);
+  const [identitySlide, setIdentitySlide] = useState(0);
+  const [showIdentityModal, setShowIdentityModal] = useState(false);
+
+  const identitySlides = [
+    {
+      src: './images/profile/cover-identity.jpg',
+      title: isAr ? 'غلاف الملف التعريفي والشعار الرسمي' : 'Company Profile Cover & Official Emblem'
+    },
+    {
+      src: './images/profile/visual-identity-1.jpg',
+      title: isAr ? 'الهوية البصرية وتطبيقات السلامة الميدانية' : 'Visual Identity & Field Safety Applications'
+    },
+    {
+      src: './images/profile/visual-identity-2.jpg',
+      title: isAr ? 'الهوية البصرية للموقع والواجهة الرسمية' : 'Digital Brand Identity & UI Showcase'
+    }
+  ];
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') {
+        setPreviewItem(null);
+        setDocIndex(null);
+        setShowIdentityModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
+  const openDocument = (idx) => {
+    setDocIndex(idx);
+    const d = t.legalDocuments[idx];
+    setPreviewItem({
+      image: d.image,
+      title: d.title,
+      subtitle: d.authority,
+      note: d.note
+    });
+  };
+
+  const stepDoc = (dir) => {
+    if (docIndex === null) return;
+    const total = t.legalDocuments.length;
+    const next = (docIndex + dir + total) % total;
+    openDocument(next);
+  };
 
   return (
     <section id="licenses" className="py-16 bg-white dark:bg-[#0b1120] relative overflow-hidden transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/15 border border-[#c59a45]/30 px-3.5 py-1 rounded-md inline-block">
             {t.tag}
           </span>
@@ -19,13 +69,22 @@ export default function CertificatesLicensesSection({ lang, content }) {
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
             {t.subtitle}
           </p>
+          <div className="pt-1 flex flex-wrap justify-center gap-3">
+            <button
+              onClick={() => { setIdentitySlide(0); setShowIdentityModal(true); }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 dark:bg-[#131c31] hover:bg-[#162d6c] dark:hover:bg-[#1d4ed8] text-[#162d6c] dark:text-[#dfb76c] hover:text-white border border-slate-200 dark:border-slate-700 text-xs font-bold transition shadow-sm"
+            >
+              <Palette className="w-4 h-4" />
+              <span>{isAr ? 'استعراض الهوية البصرية للشركة' : 'View Corporate Visual Identity'}</span>
+            </button>
+          </div>
         </div>
 
         {/* 1. Global Product Certifications Showcase */}
         <div className="mb-14">
           <h3 className="text-lg font-bold text-[#0f172a] dark:text-white mb-6 flex items-center gap-2">
             <Award className="w-5 h-5 text-[#c59a45]" />
-            <span>{lang === 'ar' ? 'الاعتمادات ومطابقة المعايير الدولية' : 'Global Standards & Accreditations'}</span>
+            <span>{isAr ? 'الاعتمادات ومطابقة المعايير الدولية' : 'Global Standards & Accreditations'}</span>
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -46,9 +105,28 @@ export default function CertificatesLicensesSection({ lang, content }) {
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold">
-                  <CheckCircle className="w-3.5 h-3.5" />
-                  <span>معتمد رسمياً للمشاريع</span>
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    <span>{isAr ? 'معتمد رسمياً' : 'Certified'}</span>
+                  </span>
+                  {cert.image && (
+                    <button
+                      onClick={() => {
+                        setDocIndex(null);
+                        setPreviewItem({
+                          image: cert.image,
+                          title: cert.name,
+                          subtitle: cert.desc,
+                          note: isAr ? 'اعتماد دولي ومحلي لمستلزمات السلامة' : 'Official product safety accreditation'
+                        });
+                      }}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#162d6c] dark:text-[#dfb76c] hover:underline"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>{isAr ? 'عرض الشعار' : 'View Seal'}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -60,10 +138,10 @@ export default function CertificatesLicensesSection({ lang, content }) {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h3 className="text-lg font-bold text-[#0f172a] dark:text-white flex items-center gap-2">
               <FileCheck className="w-5 h-5 text-[#1d4ed8] dark:text-[#60a5fa]" />
-              <span>{lang === 'ar' ? 'الأوراق الثبوتية والتراخيص الحكومية الرسمية' : 'Official Statutory Registrations & Operating Licenses'}</span>
+              <span>{isAr ? 'الأوراق الثبوتية والتراخيص الحكومية الرسمية' : 'Official Statutory Registrations & Operating Licenses'}</span>
             </h3>
             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              {lang === 'ar' ? 'جميع الوثائق سارية ومحققة لمعايير الحوكمة والامتثال' : 'All statutory documents verified and active'}
+              {isAr ? 'اضغط «عرض الوثيقة» لمعاينة أي شهادة أو ترخيص دون مغادرة الصفحة' : 'Click "View Document" to preview any official certificate'}
             </span>
           </div>
 
@@ -79,7 +157,7 @@ export default function CertificatesLicensesSection({ lang, content }) {
                       <FileText className="w-4 h-4" />
                     </span>
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-700/50">
-                      سارٍ وموثق ✓
+                      {isAr ? 'سارٍ وموثق ✓' : 'Verified ✓'}
                     </span>
                   </div>
 
@@ -92,8 +170,19 @@ export default function CertificatesLicensesSection({ lang, content }) {
                   </div>
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400">
-                  {doc.note}
+                <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                    {doc.note}
+                  </span>
+                  {doc.image && (
+                    <button
+                      onClick={() => openDocument(idx)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#162d6c]/10 dark:bg-[#1d4ed8]/25 hover:bg-[#c59a45] text-[#162d6c] dark:text-[#93c5fd] hover:text-[#0b1120] text-[11px] font-bold transition flex-shrink-0"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>{isAr ? 'عرض الوثيقة' : 'View'}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -101,6 +190,135 @@ export default function CertificatesLicensesSection({ lang, content }) {
         </div>
 
       </div>
+
+      {/* Document / Seal Lightbox Modal */}
+      {previewItem && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm animate-fade-in"
+          onClick={() => { setPreviewItem(null); setDocIndex(null); }}
+        >
+          <div
+            className="bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-700 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+              <div className="space-y-0.5">
+                <h3 className="font-bold text-sm sm:text-base text-[#0f172a] dark:text-white">
+                  {previewItem.title}
+                </h3>
+                {previewItem.subtitle && (
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {previewItem.subtitle}
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={() => { setPreviewItem(null); setDocIndex(null); }}
+                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="bg-slate-100 dark:bg-[#0b1120] p-4 flex items-center justify-center max-h-[72vh] overflow-auto">
+              <img
+                src={previewItem.image}
+                alt={previewItem.title}
+                className="max-h-[65vh] w-auto object-contain rounded-xl shadow-md bg-white p-2"
+              />
+            </div>
+
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 bg-white dark:bg-[#131c31]">
+              <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+                {previewItem.note}
+              </span>
+              {docIndex !== null && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => stepDoc(-1)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold text-[#0f172a] dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                  >
+                    <ChevronRight className={`w-4 h-4 ${isAr ? '' : 'rotate-180'}`} />
+                    <span>{isAr ? 'السابق' : 'Prev'}</span>
+                  </button>
+                  <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 px-1">
+                    {docIndex + 1} / {t.legalDocuments.length}
+                  </span>
+                  <button
+                    onClick={() => stepDoc(1)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#162d6c] dark:bg-[#1d4ed8] text-white text-xs font-bold hover:opacity-90 transition"
+                  >
+                    <span>{isAr ? 'التالي' : 'Next'}</span>
+                    <ChevronLeft className={`w-4 h-4 ${isAr ? '' : 'rotate-180'}`} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Corporate Visual Identity Gallery Modal */}
+      {showIdentityModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm animate-fade-in"
+          onClick={() => setShowIdentityModal(false)}
+        >
+          <div
+            className="bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-700 rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2">
+                <Palette className="w-5 h-5 text-[#c59a45]" />
+                <h3 className="font-bold text-sm sm:text-base text-[#0f172a] dark:text-white">
+                  {identitySlides[identitySlide].title}
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowIdentityModal(false)}
+                className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="bg-slate-100 dark:bg-[#0b1120] p-4 flex items-center justify-center max-h-[70vh] overflow-auto">
+              <img
+                src={identitySlides[identitySlide].src}
+                alt={identitySlides[identitySlide].title}
+                className="max-h-[64vh] w-auto object-contain rounded-xl shadow-lg"
+              />
+            </div>
+
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 bg-white dark:bg-[#131c31]">
+              <div className="flex flex-wrap gap-2">
+                {identitySlides.map((s, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setIdentitySlide(idx)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                      identitySlide === idx
+                        ? 'bg-[#c59a45] text-[#0b1120]'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    {idx + 1}. {s.title}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setShowIdentityModal(false)}
+                className="px-4 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+              >
+                {isAr ? 'إغلاق' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

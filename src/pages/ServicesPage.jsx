@@ -74,6 +74,7 @@ export default function ServicesPage({
     { id: 'suppression', name: isAr ? 'أنظمة الإطفاء التلقائي' : 'Automatic Clean Suppression' },
     { id: 'alarm-smoke', name: isAr ? 'الإنذار وسحب الدخان' : 'Alarms & Smoke Evacuation' },
     { id: 'sprinklers-pumps', name: isAr ? 'الرشاشات والمضخات' : 'Sprinklers & Fire Pumps' },
+    { id: 'safety-gear', name: isAr ? 'طفايات الحريق ومعدات الوقاية' : 'Extinguishers & PPE' },
     { id: 'maintenance', name: isAr ? 'الصيانة وتراخيص سلامة' : 'Maintenance & Civil Defense' },
     { id: 'engineering', name: isAr ? 'المخططات الهندسية SBC' : 'Engineering Design & SBC' },
   ];
@@ -232,6 +233,32 @@ export default function ServicesPage({
       applications: isAr ? ['المشاريع قيد الإنشاء والتطوير', 'المكاتب الهندسية والمقاولين العامين', 'تعديل وتأهيل المباني القائمة'] : ['New construction & developments', 'Engineering consulting firms', 'Building retrofit projects'],
       standards: 'SBC 801 • SBC 201 • NFPA 13 / 14 / 20 / 72',
       color: 'purple'
+    },
+
+    // 6. Portable Fire Extinguishers & PPE
+    {
+      id: 'fire-extinguishers',
+      branch: 'safety-gear',
+      title: isAr ? 'طفايات الحريق اليدوية — توريد وفحص وإعادة تعبئة' : 'Portable Fire Extinguishers — Supply, Inspection & Refilling',
+      badge: isAr ? 'جاهزية وقت الحاجة' : 'First-Response Gear',
+      desc: isAr
+        ? 'توفير طفايات الحريق بأنواع وسعات تناسب طبيعة المخاطر في المنشآت المختلفة (البودرة الكيميائية، CO2، الرغوة، والماء)، مع توزيعها وتركيبها في مواقع واضحة يسهل الوصول إليها، وتنفيذ الفحص والصيانة وإعادة التعبئة وفق المتطلبات المعتمدة.'
+        : 'Supply of portable fire extinguishers in capacities and agents tailored to facility hazards, strategically mounted for immediate access alongside certified inspection, servicing, and refilling.',
+      applications: isAr ? ['المكاتب والشركات والمحلات التجارية', 'المستودعات والورش والمصانع', 'المطابخ والفنادق والمباني السكنية'] : ['Offices, retail & commercial stores', 'Warehouses, workshops & plants', 'Kitchens, hotels & residential towers'],
+      standards: 'NFPA 10 • سابر SABER • اشتراطات الدفاع المدني',
+      color: 'rose'
+    },
+    {
+      id: 'ppe-equipment',
+      branch: 'safety-gear',
+      title: isAr ? 'معدات السلامة والوقاية الشخصية (PPE)' : 'Personal Protective Equipment (PPE)',
+      badge: isAr ? 'حماية العاملين' : 'Workplace PPE',
+      desc: isAr
+        ? 'توفير معدات الوقاية الشخصية بما يلائم طبيعة الأعمال والمخاطر داخل مواقع العمل، وتشمل خوذات السلامة، النظارات الواقية، القفازات، أحذية السلامة، السترات العاكسة، ووسائل الحماية المعتمدة لدعم بيئة عمل آمنة.'
+        : 'Supplying comprehensive workplace PPE tailored to site hazards including safety helmets, protective goggles, industrial gloves, safety footwear, and high-visibility vests to protect personnel.',
+      applications: isAr ? ['مواقع الإنشاءات والمشاريع الهندسية', 'المصانع والمنشآت الصناعية', 'المستودعات ومناطق المناولة اللوجستية'] : ['Construction & engineering sites', 'Factories & industrial facilities', 'Warehouses & logistics hubs'],
+      standards: 'ANSI / EN ISO • معايير السلامة المهنية OSHA',
+      color: 'amber'
     }
   ];
 
@@ -401,6 +428,55 @@ export default function ServicesPage({
           </div>
         ))}
       </div>
+
+      {/* 3.5 Integrated Service Stages & Commercial Advantages Table */}
+      {Array.isArray(content[lang]?.coreServices?.serviceTable) && content[lang].coreServices.serviceTable.length > 0 && (
+        <section className="rounded-3xl bg-white dark:bg-[#131c31] border border-slate-200/90 dark:border-slate-800 p-7 sm:p-10 shadow-sm space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-extrabold px-3 py-1 rounded-full bg-[#c59a45]/10 dark:bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c]">
+                <Sparkles className="w-3.5 h-3.5" />
+                {isAr ? 'مراحل التنفيذ والمزايا التنافسية' : 'Execution Lifecycle & Commercial Advantages'}
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black text-[#0f172a] dark:text-white">
+                {isAr ? 'منهجية خدماتنا وعروضنا الخاصة لعملائنا' : 'How We Serve You & Special Client Offers'}
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md">
+              {isAr
+                ? 'التزام متكامل يبدأ من المعاينة الأولية للموقع ويمتد لخدمات ما بعد البيع مع أسعار تنافسية وخصومات للعملاء المميزين.'
+                : 'An end-to-end commitment from initial site inspection through after-sales support, competitive bulk pricing, and VIP partner discounts.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {content[lang].coreServices.serviceTable.map((row, idx) => (
+              <div
+                key={idx}
+                className={`rounded-2xl p-5 border transition-all ${
+                  idx === content[lang].coreServices.serviceTable.length - 1
+                    ? 'sm:col-span-2 lg:col-span-3 bg-gradient-to-r from-[#c59a45]/10 via-[#dfb76c]/10 to-[#162d6c]/5 dark:from-[#c59a45]/20 dark:via-[#c59a45]/10 dark:to-[#1d4ed8]/10 border-[#c59a45]/40'
+                    : 'bg-slate-50/80 dark:bg-[#0b1120] border-slate-200/80 dark:border-slate-800 hover:border-[#1d4ed8]/40 dark:hover:border-[#c59a45]/50'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#162d6c] dark:bg-[#1d4ed8] text-white font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
+                    {idx + 1}
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm sm:text-base font-extrabold text-[#0f172a] dark:text-white">
+                      {row.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {row.detail}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 4. Bottom Support CTA Card */}
       <div className="rounded-3xl bg-[#0b1120] dark:bg-[#131c31] border border-[#1d4ed8]/30 text-white p-8 sm:p-12 text-center space-y-4 shadow-xl">
