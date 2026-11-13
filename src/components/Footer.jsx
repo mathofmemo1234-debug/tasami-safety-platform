@@ -100,9 +100,24 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
                 <MapPin className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
                 <span>{t.address}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#c59a45] flex-shrink-0" />
-                <span dir="ltr" className="font-mono text-slate-300">+966 59 168 4133 / +966 53 348 0098</span>
+              <div className="flex items-start gap-2">
+                <Phone className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-1 font-mono text-slate-300">
+                  <a
+                    href="tel:+966591684133"
+                    dir="ltr"
+                    className="whitespace-nowrap hover:text-[#dfb76c] transition inline-block w-fit"
+                  >
+                    +966 59 168 4133
+                  </a>
+                  <a
+                    href="tel:+966533480098"
+                    dir="ltr"
+                    className="whitespace-nowrap hover:text-[#dfb76c] transition inline-block w-fit"
+                  >
+                    +966 53 348 0098
+                  </a>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#c59a45] flex-shrink-0" />
