@@ -24,14 +24,27 @@ export default class ErrorBoundary extends React.Component {
             </div>
             <h2 className="text-xl font-black mb-2 text-white">تسامي الأعمال لأنظمة السلامة</h2>
             <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-              تم رصد تحديث في الصفحة، يرجى الضغط أدناه لإعادة تحميل المنصة بكامل خدماتها.
+              تم تحديث إعدادات المنصة بنجاح. اضغط أدناه لإعادة تشغيل المنصة بأحدث التحديثات.
             </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-6 py-2.5 bg-[#c59a45] hover:bg-[#dfb76c] text-slate-950 font-black rounded-xl text-xs transition shadow-lg shadow-[#c59a45]/20"
-            >
-              تحديث الصفحة الآن
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  try {
+                    localStorage.removeItem('tasami_live_content');
+                  } catch {}
+                  window.location.reload();
+                }}
+                className="w-full px-6 py-3 bg-[#c59a45] hover:bg-[#dfb76c] text-slate-950 font-black rounded-xl text-xs transition shadow-lg shadow-[#c59a45]/20"
+              >
+                إعادة تحميل الصفحة الآن
+              </button>
+            </div>
+            {this.state.error && (
+              <details className="mt-4 text-[10px] text-slate-400 font-mono text-left dir-ltr bg-slate-950/80 p-3 rounded-lg border border-slate-800 cursor-pointer">
+                <summary className="text-[#dfb76c] font-sans text-xs">تفاصيل الخطأ الفني (Technical Details)</summary>
+                <p className="mt-2 text-red-400 break-all">{this.state.error.toString()}</p>
+              </details>
+            )}
           </div>
         </div>
       );

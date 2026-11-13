@@ -12,6 +12,7 @@ import {
   Network,
   FolderKanban,
   Flame,
+  Shield,
   ShieldCheck,
   FileCheck,
   Calculator,

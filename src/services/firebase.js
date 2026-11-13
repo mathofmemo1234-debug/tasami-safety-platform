@@ -58,6 +58,33 @@ try {
 
 export { app, db, storage };
 
+// Safe deep merge helper ensuring default structure and array safety
+function deepMerge(target, source) {
+  if (!source || typeof source !== 'object') return target;
+  if (!target || typeof target !== 'object') return source;
+
+  const output = Array.isArray(target) ? [...target] : { ...target };
+
+  for (const key of Object.keys(source)) {
+    const srcVal = source[key];
+    const tgtVal = target[key];
+
+    if (srcVal === null || srcVal === undefined) {
+      continue;
+    }
+
+    if (Array.isArray(srcVal)) {
+      output[key] = srcVal;
+    } else if (typeof srcVal === 'object' && typeof tgtVal === 'object' && !Array.isArray(tgtVal)) {
+      output[key] = deepMerge(tgtVal, srcVal);
+    } else {
+      output[key] = srcVal;
+    }
+  }
+
+  return output;
+}
+
 // Real-time synchronization of all website components
 export function subscribeToLiveContent(onUpdate) {
   if (!db) {
@@ -70,10 +97,11 @@ export function subscribeToLiveContent(onUpdate) {
     const unsubscribe = onSnapshot(docRef, (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        onUpdate({
-          ar: { ...defaultContent.ar, ...(data.ar || {}) },
-          en: { ...defaultContent.en, ...(data.en || {}) }
-        });
+        const merged = {
+          ar: deepMerge(defaultContent.ar, data.ar || {}),
+          en: deepMerge(defaultContent.en, data.en || {})
+        };
+        onUpdate(merged);
       } else {
         // Automatically seed existing content into Firebase on initial run
         setDoc(docRef, defaultContent, { merge: true }).catch((err) => {
@@ -87,7 +115,12 @@ export function subscribeToLiveContent(onUpdate) {
       try {
         const cached = localStorage.getItem('tasami_live_content');
         if (cached) {
-          onUpdate(JSON.parse(cached));
+          const parsed = JSON.parse(cached);
+          const merged = {
+            ar: deepMerge(defaultContent.ar, parsed.ar || {}),
+            en: deepMerge(defaultContent.en, parsed.en || {})
+          };
+          onUpdate(merged);
           return;
         }
       } catch {}
