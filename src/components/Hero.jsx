@@ -41,7 +41,7 @@ export default function Hero({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* Text Content Column */}
-          <div className="lg:col-span-7 space-y-6 text-right rtl:text-right ltr:text-left">
+          <div className="lg:col-span-7 space-y-6 text-center flex flex-col items-center">
             
             {/* Luxury Shimmer Motto Badge */}
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#c59a45]/15 via-[#dfb76c]/10 to-[#162d6c]/10 dark:from-[#c59a45]/25 dark:to-[#1d4ed8]/20 border border-[#c59a45]/45 shadow-gold-subtle">
@@ -73,12 +73,12 @@ export default function Hero({
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl leading-loose">
+            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto leading-loose">
               {t.description}
             </p>
 
             {/* Flashy Action Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <button
                 onClick={onOpenConsultation}
                 className="btn-flashy-gold inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-xs sm:text-sm font-black text-[#0b1120]"
@@ -103,7 +103,7 @@ export default function Hero({
             </div>
 
             {/* Trust badge */}
-            <div className="pt-5 flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-200/80 dark:border-slate-800/80 font-semibold">
+            <div className="pt-5 w-full flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-200/80 dark:border-slate-800/80 font-semibold">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                 <span>{isAr ? 'ترخيص الدفاع المدني (سلامة)' : 'Civil Defense Licensed'}</span>
