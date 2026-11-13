@@ -4,6 +4,10 @@ import { FileCheck, Award, Landmark, FileText, X, ChevronLeft, ChevronRight } fr
 export default function CertificatesLicensesSection({ lang, content }) {
   const t = content[lang].certificationsAndLicenses;
   const isAr = lang === 'ar';
+  const vis = content[lang]?.visibility || {};
+  const docVis = vis.documents || {};
+  const visibleDocs = (t.legalDocuments || []).filter(doc => docVis[doc.id] !== false);
+
   const [previewItem, setPreviewItem] = useState(null);
   const [docIndex, setDocIndex] = useState(null);
 
@@ -20,7 +24,8 @@ export default function CertificatesLicensesSection({ lang, content }) {
 
   const openDocument = (idx) => {
     setDocIndex(idx);
-    const d = t.legalDocuments[idx];
+    const d = visibleDocs[idx];
+    if (!d) return;
     setPreviewItem({
       image: d.image,
       title: d.title,
@@ -31,10 +36,13 @@ export default function CertificatesLicensesSection({ lang, content }) {
 
   const stepDoc = (dir) => {
     if (docIndex === null) return;
-    const total = t.legalDocuments.length;
+    const total = visibleDocs.length;
+    if (total === 0) return;
     const next = (docIndex + dir + total) % total;
     openDocument(next);
   };
+
+  if (vis.licenses === false) return null;
 
   return (
     <section id="licenses" className="py-12 bg-white dark:bg-[#0b1120] relative overflow-hidden transition-colors">
@@ -102,7 +110,7 @@ export default function CertificatesLicensesSection({ lang, content }) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {t.legalDocuments.map((doc, idx) => (
+            {visibleDocs.map((doc, idx) => (
               <button
                 key={idx}
                 type="button"

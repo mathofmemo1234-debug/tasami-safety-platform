@@ -98,7 +98,15 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
             <div className="space-y-2.5 text-xs">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
-                <span>{t.address}</span>
+                <a
+                  href={c.googleMapsUrl || "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#dfb76c] transition underline-offset-2 hover:underline"
+                  title={lang === 'ar' ? 'عرض المقر على خرائط Google' : 'View Headquarters on Google Maps'}
+                >
+                  {t.address}
+                </a>
               </div>
               <div className="flex items-start gap-2">
                 <Phone className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
@@ -128,16 +136,16 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
             {/* Social channels preview */}
             <div className="pt-2">
               <span className="text-[11px] text-slate-400 block mb-1.5 font-semibold">
-                {lang === 'ar' ? 'تابعنا على المنصات:' : 'Follow Us:'}
+                {lang === 'ar' ? 'تابعنا على المنصات الرسمية:' : 'Official Social Channels:'}
               </span>
               <div className="flex flex-wrap gap-1.5">
-                {c.socialLinks.slice(0, 3).map((s, idx) => (
+                {(c.socialLinks || []).map((s, idx) => (
                   <a
                     key={idx}
                     href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 hover:text-[#dfb76c] hover:border-[#dfb76c]/40 transition"
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-[#dfb76c] hover:border-[#dfb76c]/40 transition"
                   >
                     {s.platform}
                   </a>
@@ -151,7 +159,7 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
                 onClick={onOpenAdmin}
                 className="text-[11px] text-slate-500 hover:text-[#dfb76c] flex items-center gap-1 transition"
               >
-                <span>لوحة تحكم الطلبات (Admin View)</span>
+                <span>{lang === 'ar' ? 'لوحة تحكم مدير الموقع (Admin Dashboard)' : 'Admin Dashboard (CMS)'}</span>
                 <ExternalLink className="w-3 h-3" />
               </button>
             </div>

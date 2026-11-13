@@ -10,7 +10,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
     email: '',
     phone: '',
     sector: 'مجمع تجاري',
-    service_type: initialService || 'استشارة هندسية في الأمن والسلامة',
+    service_type: initialService || 'معاينة هندسية وفنية لموقع المنشأة',
     notes: '',
   });
 
@@ -71,10 +71,10 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
           </div>
           <div>
             <h3 className="text-xl font-black text-[#0f172a] dark:text-white">
-              {lang === 'ar' ? 'طلب استشارة هندسية في الأمن والسلامة' : 'Request Safety Engineering Consultation'}
+              {lang === 'ar' ? 'طلب معاينة هندسية وفنية للموقع' : 'Request Site Safety Inspection & Survey'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              {lang === 'ar' ? 'سيتواصل معكم استشاري معتمد لمراجعة متطلبات منشأتكم مجاناً' : 'A certified safety consultant will contact you within 24 hours'}
+              {lang === 'ar' ? 'سيتواصل معكم مهندس معتمد لجدولة موعد المعاينة الميدانية وفحص الموقع' : 'A certified safety engineer will contact you for site survey'}
             </p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h4 className="text-lg font-bold text-emerald-900">
-              {lang === 'ar' ? 'تم استلام طلبكم بنجاح' : 'Consultation Request Received!'}
+              {lang === 'ar' ? 'تم استلام طلب المعاينة بنجاح' : 'Inspection Request Received!'}
             </h4>
             <p className="text-xs text-emerald-700 leading-relaxed max-w-md mx-auto">
               {successMsg}
@@ -240,7 +240,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>{lang === 'ar' ? 'إرسال طلب الاستشارة' : 'Submit Consultation Request'}</span>
+                    <span>{lang === 'ar' ? 'إرسال طلب المعاينة الهندسية' : 'Submit Site Survey Request'}</span>
                   </>
                 )}
               </button>

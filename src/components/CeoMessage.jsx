@@ -43,11 +43,11 @@ export default function CeoMessage({ lang, content }) {
 
                 <div className="text-center lg:text-right rtl:lg:text-right ltr:lg:text-left">
                   <h3 className="text-2xl font-black text-white">{t.name}</h3>
-                  <p className="text-xs font-semibold text-[#dfb76c] mt-1 font-mono tracking-wide">
+                  <p className="text-xs font-semibold text-[#dfb76c] mt-1 tracking-wide leading-relaxed">
                     {t.position}
                   </p>
-                  <p className="text-[11px] text-slate-300 mt-2">
-                    {lang === 'ar' ? 'قيادة متخصصة ترتكز على معايير السلامة العالمية والتميز الهندسي' : 'Specialized leadership rooted in global safety standards and engineering excellence'}
+                  <p className="text-[11px] text-slate-300 mt-2 leading-relaxed">
+                    {t.headline || (lang === 'ar' ? 'حلول مكافحة وإنذار الحريق | التوريد والتنفيذ والصيانة | تطوير الأعمال والشراكات الاستراتيجية' : 'Fire Fighting & Alarm Solutions | Supply, Installation & Maintenance | Business Development & Strategic Partnerships')}
                   </p>
                 </div>
 

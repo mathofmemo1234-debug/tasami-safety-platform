@@ -127,12 +127,16 @@ export default function Hero({
               <div className="p-[2px] rounded-[26px] bg-gradient-to-br from-[#dfb76c] via-[#1d4ed8]/60 to-[#c59a45] shadow-[0_25px_60px_-15px_rgba(22,45,108,0.4)] dark:shadow-[0_25px_65px_-12px_rgba(197,154,69,0.28)] group">
                 <div className="relative rounded-3xl overflow-hidden bg-[#0b1120]">
                   <img
-                    src="https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?auto=format&fit=crop&w=1000&q=80"
-                    alt="Fire & Safety Engineering in Saudi Arabia"
-                    className="w-full h-[430px] object-cover opacity-85 group-hover:scale-105 transition-transform duration-700 filter contrast-125"
+                    src="./images/hero-tasami-engineer-clean.jpg"
+                    alt="مهندس سلامة معتمد - شركة تسامي الأعمال لأنظمة السلامة"
+                    className="w-full h-[430px] object-cover group-hover:scale-105 transition-transform duration-700"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = './images/showcase/hero-engineer.jpg';
+                    }}
                   />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-[#0f2152]/45 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070b14] via-[#0f2152]/30 to-transparent"></div>
 
                   {/* Top Glass Pill + Gold Shield Emblem */}
                   <div className="absolute top-5 left-5 right-5 flex items-center justify-between gap-2">
@@ -140,8 +144,8 @@ export default function Hero({
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                       <span>{isAr ? 'منشأة مرخصة ومصنفة رسمياً 🇸🇦' : 'Official Licensed Entity 🇸🇦'}</span>
                     </div>
-                    <div className="w-10 h-10 rounded-xl bg-white/95 p-1 shadow-lg border border-[#c59a45]/50 flex items-center justify-center">
-                      <img src="./images/profile/cover-identity.jpg" alt="Tasami Shield" className="w-full h-full object-contain" />
+                    <div className="w-10 h-10 rounded-xl bg-white p-1 shadow-lg border border-[#c59a45]/50 flex items-center justify-center">
+                      <img src="./logo.jpg" alt="Tasami Shield" className="w-full h-full object-contain" />
                     </div>
                   </div>
 

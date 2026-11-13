@@ -25,7 +25,7 @@ export const content = {
       projects: "أبرز مشاريعنا",
       calculator: "حاسبة السلامة",
       contact: "تواصل معنا",
-      requestConsultation: "طلب استشارة هندسية",
+      requestConsultation: "طلب معاينة هندسية",
       adminPortal: "بوابة الإدارة",
     },
     hero: {
@@ -33,7 +33,7 @@ export const content = {
       title: "حلول متكاملة في أنظمة الإطفاء والإنذار من الحريق",
       subtitle: "نحو بيئة آمنة خالية تماماً من المخاطر",
       description: "نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية وفق أعلى المعايير المحلية والعالمية.",
-      ctaPrimary: "طلب استشارة وتوريد",
+      ctaPrimary: "طلب معاينة وتوريد",
       ctaSecondary: "استعراض أنظمة الإطفاء",
       features: [
         { title: "أنظمة إنذار الحريق", desc: "كواشف متطورة، أجهزة تنبيه، وربط بلوحات التحكم الذكية" },
@@ -49,7 +49,7 @@ export const content = {
       foundingOrigin: "منذ انطلاقتنا في عام 2026 بمدينة مكة المكرمة – المملكة العربية السعودية، وضعنا في شركة تسامي الأعمال هدفاً واضحاً يتمثل في تقديم حلول شاملة ومبتكرة للسلامة من الحرائق، لنكون الخيار الأول لكل من يسعى إلى حماية الأرواح والممتلكات بأعلى مستويات الكفاءة والجودة.",
       lead: "نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية. نحن لا نكتفي بتطبيق المعايير المحلية والعالمية، بل نحرص على تطوير حلول مبتكرة تواكب التطورات التقنية وتلبي أعلى متطلبات الأمان.",
       paragraph2: "يعتمد نجاحنا على فريق هندسي وفني مؤهل يمتلك خبرة واسعة ومعرفة متعمقة في مجال السلامة ومكافحة الحرائق، حيث يعملون بروح الفريق الواحد لضمان تنفيذ المشاريع بأعلى درجات الاحترافية والالتزام بالمواعيد.",
-      paragraph3: "في تسامي الأعمال لأنظمة السلامة، نؤمن أن الأمان ليس خياراً بل ضرورة، لذلك نسعى دائماً لأن نكون شريكاً موثوقاً لعملائنا، نقدم لهم الدعم الفني والاستشارات المتخصصة، ونبني معهم علاقات طويلة الأمد قائمة على الثقة والجودة.",
+      paragraph3: "في تسامي الأعمال لأنظمة السلامة، نؤمن أن الأمان ليس خياراً بل ضرورة، لذلك نسعى دائماً لأن نكون شريكاً موثوقاً لعملائنا، نقدم لهم الدعم الفني والمعاينات الفنية المتخصصة، ونبني معهم علاقات طويلة الأمد قائمة على الثقة والجودة.",
       learnMore: "استكشف خدماتنا",
       stats: [
         { number: "+500", label: "عميل وشريك نجاح", sub: "في مختلف القطاعات بالمملكة" },
@@ -61,27 +61,31 @@ export const content = {
       tag: "القيادة التنفيذية",
       title: "كلمة الرئيس التنفيذي",
       name: "أ. طه هندي",
-      position: "الرئيس التنفيذي – تسامي الأعمال لأنظمة السلامة",
+      position: "المدير التنفيذي | شركة تسامي الأعمال لأنظمة الحريق والأعمال الكهروميكانيكية",
+      headline: "حلول مكافحة وإنذار الحريق | التوريد والتنفيذ والصيانة | تطوير الأعمال والشراكات الاستراتيجية",
       quote: "الأمان ليس خياراً بل ضرورة... والنجاح الحقيقي يتحقق بالالتزام المستمر بالتحسين والتطوير.",
       p1: "وضعنا نصب أعيننا هدفاً سامياً يتمثل في حماية الأرواح والممتلكات، وإرساء ثقافة الأمان في المجتمع من خلال خدمات موثوقة تعتمد على أحدث التقنيات وفريق عمل مؤهل يمتلك الخبرة والكفاءة.",
       p2: "نحن في تسامي الأعمال لأنظمة السلامة نؤمن بأن النجاح الحقيقي لا يتحقق إلا عبر الالتزام المستمر بالتحسين والتطوير، والاستماع إلى احتياجات عملائنا وتجاوز توقعاتهم، وبناء شراكات قوية تقوم على الثقة والمصداقية.",
       p3: "أعدكم بمواصلة العمل الجاد للحفاظ على مكانتنا كشريككم الأول في مجال أنظمة الإطفاء والإنذار من الحريق، وأن نظل دائماً عند حسن ظنكم.",
       closing: "والسلام عليكم ورحمة الله وبركاته",
-      linkedin: "https://www.linkedin.com/in/taha-hendy/"
+      linkedin: "https://www.linkedin.com/in/taha-hendy-650134b8/"
     },
     missionVision: {
       mission: {
         title: "رسالتنا",
-        content: "نعاهد أنفسنا وشركاءنا أن نكون العين الساهرة واليد الماهرة في عالم السلامة. نضع خبراتنا وحرصنا في خدمة كل موقع، للارتقاء بمفهوم الوقاية من مجرد معايير إلى ثقافة راسخة، نضمن بها سلامة الإنسان وازدهار المكان. لنجسد معاً معنى التسامي بالأمان، وأن نسعى دائماً ونسمو بالأمان نحو غاية أسمى: بيئة خالية تماماً من المخاطر. نعمل بتكامل وإتقان ليتحول شغفنا بالحماية إلى أمان واقعي يلمسه الجميع، فنصون الأرواح، ونحمي الممتلكات، ونمنح شركاءنا الثقة ليبدعوا في المستقبل."
+        content: "نعاهد أنفسنا وشركاءنا أن نكون العين الساهرة واليد الماهرة في عالم السلامة. نضع خبراتنا وحرصنا في خدمة كل موقع، للارتقاء بمفهوم الوقاية من مجرد معايير إلى ثقافة راسخة، نضمن بها سلامة الإنسان وازدهار المكان. لنجسد معاً معنى التسامي بالأمان، وأن نسعى دائماً ونسمو بالأمان نحو غاية أسمى: بيئة خالية تماماً من المخاطر. نعمل بتكامل وإتقان ليتحول شغفنا بالحماية إلى أمان واقعي يلمسه الجميع، فنصون الأرواح، ونحمي الممتلكات، ونمنح شركاءنا الثقة ليبدعوا في المستقبل.",
+        image: "./images/about/mission-expressive.jpg"
       },
       vision: {
         title: "رؤيتنا",
-        content: "أن تكون «تسامي» هي الملاذ الذي يجمع شغفنا بالسلامة، والمنارة التي نستمد منها إلهامنا لنحمي كل تفاصيل العمل، ونرتفع معاً بمعايير الحياة والمكان للسلامة: ننسج معاً سياجاً منيعاً لنحمي الإنسان ونعزز الأثر، سائرين بخطى ثابتة نحو قمم التميز والريادة."
+        content: "أن تكون «تسامي» هي الملاذ الذي يجمع شغفنا بالسلامة، والمنارة التي نستمد منها إلهامنا لنحمي كل تفاصيل العمل، ونرتفع معاً بمعايير الحياة والمكان للسلامة: ننسج معاً سياجاً منيعاً لنحمي الإنسان ونعزز الأثر، سائرين بخطى ثابتة نحو قمم التميز والريادة.",
+        image: "./images/about/vision-expressive.jpg"
       }
     },
     goalsValues: {
       goals: {
         title: "الأهداف (Goals)",
+        image: "./images/about/goals-expressive.jpg",
         items: [
           "تقديم خدمات أمن وسلامة عالية الجودة تلبي احتياجات العملاء وتتجاوز توقعاتهم.",
           "الالتزام بأعلى المعايير العالمية في مجال السلامة والإطفاء.",
@@ -91,6 +95,7 @@ export const content = {
       },
       values: {
         title: "القيم (Values)",
+        image: "./images/about/values-expressive.jpg",
         items: [
           { title: "الجودة والتميز", desc: "تقديم خدمات ومنتجات بمعايير عالمية." },
           { title: "الاحترافية والموثوقية", desc: "الالتزام بالمواعيد والوعود." },
@@ -139,7 +144,7 @@ export const content = {
         {
           id: "sales",
           role: "إدارة المبيعات وتطوير الأعمال",
-          desc: "خدمة العملاء، الاستشارات، والتسعير التنافسي",
+          desc: "خدمة العملاء، المعاينات الميدانية، والتسعير التنافسي",
           level: 2
         },
         {
@@ -229,7 +234,7 @@ export const content = {
     coreServices: {
       tag: "الخدمات الرئيسية",
       title: "منظومة خدمات الأمن والسلامة المتكاملة",
-      subtitle: "حلول شاملة تغطي كافة مراحل دورة حياة المشروع من الاستشارة حتى الصيانة المستدامة",
+      subtitle: "حلول شاملة تغطي كافة مراحل دورة حياة المشروع من المعاينة الأولية حتى الصيانة المستدامة",
       categories: [
         {
           id: "fire-alarm",
@@ -467,14 +472,14 @@ export const content = {
         { name: "LPCB", desc: "شهادة مجلس اعتماد أبحاث وفحص الحماية البريطانية Loss Prevention Certification Board", image: "./images/profile/accred-1.jpg" }
       ],
       legalDocuments: [
-        { title: "شهادة تسجيل الاستثمار", authority: "وزارة الاستثمار (MISA)", note: "ترخيص استثماري رسمي", image: "./images/profile/doc-misa.jpg" },
-        { title: "شهادة السجل التجاري (عربي)", authority: "وزارة التجارة", note: "سجل تجاري ساري وموثق", image: "./images/profile/doc-cr-ar.jpg" },
-        { title: "Commercial Registration (English)", authority: "Ministry of Commerce", note: "Official English Verification", image: "./images/profile/doc-cr-en.jpg" },
-        { title: "شهادة انتساب الغرفة التجارية", authority: "غرفة مكة المكرمة", note: "عضوية وتصنيف معتمد", image: "./images/profile/doc-chamber.jpg" },
-        { title: "شهادة التأمينات الاجتماعية", authority: "المؤسسة العامة للتأمينات (GOSI)", note: "شهادة الالتزام والامتثال", image: "./images/profile/doc-gosi.jpg" },
-        { title: "ترخيص الدفاع المدني", authority: "المديرية العامة للدفاع المدني (سلامة)", note: "ترخيص معتمد لأنظمة الإطفاء والإنذار", image: "./images/profile/doc-salamah.jpg" },
-        { title: "رخصة نشاط تجاري", authority: "منصة بلدي / وزارة البلديات والإسكان", note: "رخصة تشغيلية معتمدة", image: "./images/profile/doc-balady.jpg" },
-        { title: "شهادة تسجيل ضريبة القيمة المضافة", authority: "هيئة الزكاة والضريبة والجمارك (ZATCA)", note: "امتثال ضريبي رسمي", image: "./images/profile/doc-vat.jpg" }
+        { id: "doc-misa", title: "شهادة تسجيل الاستثمار", authority: "وزارة الاستثمار (MISA)", note: "ترخيص استثماري رسمي", image: "./images/profile/doc-misa.jpg" },
+        { id: "doc-cr-ar", title: "شهادة السجل التجاري (عربي)", authority: "وزارة التجارة", note: "سجل تجاري ساري وموثق", image: "./images/profile/doc-cr-ar.jpg" },
+        { id: "doc-cr-en", title: "Commercial Registration (English)", authority: "Ministry of Commerce", note: "Official English Verification", image: "./images/profile/doc-cr-en.jpg" },
+        { id: "doc-chamber", title: "شهادة انتساب الغرفة التجارية", authority: "غرفة مكة المكرمة", note: "عضوية وتصنيف معتمد", image: "./images/profile/doc-chamber.jpg" },
+        { id: "doc-gosi", title: "شهادة التأمينات الاجتماعية", authority: "المؤسسة العامة للتأمينات (GOSI)", note: "شهادة الالتزام والامتثال", image: "./images/profile/doc-gosi.jpg" },
+        { id: "doc-salamah", title: "ترخيص الدفاع المدني", authority: "المديرية العامة للدفاع المدني (سلامة)", note: "ترخيص معتمد لأنظمة الإطفاء والإنذار", image: "./images/profile/doc-salamah.jpg" },
+        { id: "doc-balady", title: "رخصة نشاط تجاري", authority: "منصة بلدي / وزارة البلديات والإسكان", note: "رخصة تشغيلية معتمدة", image: "./images/profile/doc-balady.jpg" },
+        { id: "doc-vat", title: "شهادة تسجيل ضريبة القيمة المضافة", authority: "هيئة الزكاة والضريبة والجمارك (ZATCA)", note: "امتثال ضريبي رسمي", image: "./images/profile/doc-vat.jpg" }
       ]
     },
     projects: {
@@ -550,25 +555,54 @@ export const content = {
     contact: {
       tag: "تواصل معنا",
       title: "يسعدنا دائماً خدمتكم والتواصل معكم",
-      subtitle: "نحن هنا لتقديم الاستشارات وتوريد أحدث أنظمة الإطفاء وتنفيذ مشاريعكم بأعلى معايير الجودة.",
+      subtitle: "نحن هنا لتقديم المعاينات الميدانية المتخصصة وتوريد أحدث أنظمة الإطفاء وتنفيذ مشاريعكم بأعلى معايير الجودة.",
       phone1: "+966 591684133",
       phone2: "+966 533480098",
       email: "makkah-branch@tasaami.com",
       address: "مكة المكرمة – الشوقية – شارع إبراهيم الخليل",
       addressEn: "Ibrahim Al Khalil St - Ash Shawqiyah - Makkah",
+      googleMapsUrl: "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7",
+      googleBusinessUrl: "https://share.google/9AmZxrxPQL8I9od2U",
+      coordinates: "21.445570, 39.801060",
       socialLinks: [
-        { platform: "LinkedIn (الشركة)", url: "https://www.linkedin.com/company/tasami-business-company", label: "Tasami Business Company" },
-        { platform: "LinkedIn (المدير التنفيذي)", url: "https://www.linkedin.com/in/taha-hendy/", label: "Taha Hendy" },
+        { platform: "LinkedIn (الشركة)", url: "https://www.linkedin.com/company/%D8%AA%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84/", label: "تسامي الأعمال | TASAMI BUSINESS" },
+        { platform: "LinkedIn (المدير التنفيذي)", url: "https://www.linkedin.com/in/taha-hendy-650134b8/", label: "أ. طه هندي" },
+        { platform: "Facebook", url: "https://www.facebook.com/people/Tasami-Businesses-Company/61594404870971/?rdid=MiW5l4YbSU11Ccyu&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19x6kmegWr%2F", label: "Tasami Businesses Company" },
         { platform: "Instagram", url: "https://instagram.com/tasamibusinesses", label: "@tasamibusinesses" },
-        { platform: "TikTok", url: "https://tiktok.com/@tasami.safety.sol", label: "@tasami.safety.sol" },
-        { platform: "Facebook", url: "https://facebook.com/TasamiBusinessCompany", label: "Tasami Business Company" }
+        { platform: "TikTok", url: "https://tiktok.com/@tasami.safety.sol", label: "@tasami.safety.sol" }
       ]
     },
     ctaBanner: {
       title: "معاً لبيئة خالية تماماً من المخاطر",
       subtitle: "PARTNERING FOR UNCOMPROMISING SAFETY",
       desc: "فريقنا الهندسي المتخصص مستعد لزيارة موقعك وإعداد دراسة شاملة وتوريد وتركيب أحدث أنظمة الإطفاء والإنذار.",
-      btnText: "طلب عرض سعر أو استشارة",
+      btnText: "طلب معاينة ميدانية وعرض سعر",
+    },
+    visibility: {
+      hero: true,
+      about: true,
+      ceo: true,
+      missionVision: true,
+      goalsValues: true,
+      orgChart: true,
+      brandIdentity: true,
+      services: true,
+      products: true,
+      calculator: true,
+      licenses: true,
+      projects: true,
+      contact: true,
+      map: true,
+      documents: {
+        "doc-misa": true,
+        "doc-cr-ar": true,
+        "doc-cr-en": true,
+        "doc-chamber": true,
+        "doc-gosi": true,
+        "doc-salamah": true,
+        "doc-balady": true,
+        "doc-vat": true
+      }
     },
     footer: {
       aboutText: "تسامي الأعمال لأنظمة السلامة متخصصة في توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق وفق كود البناء السعودي وترخيص الدفاع المدني.",
@@ -608,7 +642,7 @@ export const content = {
       projects: "Featured Projects",
       calculator: "Safety Estimator",
       contact: "Contact Us",
-      requestConsultation: "Request Engineering Consultation",
+      requestConsultation: "Request Engineering Site Survey",
       adminPortal: "Admin Portal",
     },
     hero: {
@@ -644,13 +678,14 @@ export const content = {
       tag: "Executive Leadership",
       title: "CEO Message",
       name: "Mr. Taha Hendy",
-      position: "Chief Executive Officer – Tasami Business for Safety Systems",
+      position: "Chief Executive Officer | Tasami Business for Fire Safety & Electromechanical Systems",
+      headline: "Fire Protection & Alarm Solutions | Supply, Installation & Maintenance | Business Development & Strategic Partnerships",
       quote: "Safety is not an option but an absolute necessity... True success is realized only through continuous improvement and exceeding client expectations.",
       p1: "We have set our sights on a lofty objective: protecting lives and property, and instilling a robust culture of safety within our community through reliable solutions powered by modern technology and a highly qualified, proficient team.",
       p2: "At Tasami Business for Safety Systems, we firmly believe that genuine success is achieved through sustained enhancement, attentive listening to our clients' requirements, surpassing their expectations, and cultivating solid partnerships founded on credibility and trust.",
       p3: "I pledge our unwavering commitment to maintaining our standing as your primary partner in fire fighting and fire detection systems, always honoring your trust and confidence.",
       closing: "Peace, mercy, and blessings of God be upon you.",
-      linkedin: "https://www.linkedin.com/in/taha-hendy/"
+      linkedin: "https://www.linkedin.com/in/taha-hendy-650134b8/"
     },
     missionVision: {
       mission: {
@@ -1139,19 +1174,48 @@ export const content = {
       email: "makkah-branch@tasaami.com",
       address: "Makkah Al-Mukarramah – Ash Shawqiyah – Ibrahim Al Khalil Street",
       addressEn: "Ibrahim Al Khalil St - Ash Shawqiyah - Makkah",
+      googleMapsUrl: "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7",
+      googleBusinessUrl: "https://share.google/9AmZxrxPQL8I9od2U",
+      coordinates: "21.445570, 39.801060",
       socialLinks: [
-        { platform: "LinkedIn (Company)", url: "https://www.linkedin.com/company/tasami-business-company", label: "Tasami Business Company" },
-        { platform: "LinkedIn (CEO)", url: "https://www.linkedin.com/in/taha-hendy/", label: "Taha Hendy" },
+        { platform: "LinkedIn (Company)", url: "https://www.linkedin.com/company/%D8%AA%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84/", label: "Tasami Business | تسامي الأعمال" },
+        { platform: "LinkedIn (CEO)", url: "https://www.linkedin.com/in/taha-hendy-650134b8/", label: "Taha Hendy" },
+        { platform: "Facebook", url: "https://www.facebook.com/people/Tasami-Businesses-Company/61594404870971/?rdid=MiW5l4YbSU11Ccyu&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19x6kmegWr%2F", label: "Tasami Businesses Company" },
         { platform: "Instagram", url: "https://instagram.com/tasamibusinesses", label: "@tasamibusinesses" },
-        { platform: "TikTok", url: "https://tiktok.com/@tasami.safety.sol", label: "@tasami.safety.sol" },
-        { platform: "Facebook", url: "https://facebook.com/TasamiBusinessCompany", label: "Tasami Business Company" }
+        { platform: "TikTok", url: "https://tiktok.com/@tasami.safety.sol", label: "@tasami.safety.sol" }
       ]
     },
     ctaBanner: {
       title: "Together Towards a Hazard-Free Environment",
       subtitle: "PARTNERING FOR UNCOMPROMISING SAFETY",
       desc: "Our specialized safety engineers are ready to inspect your site, prepare detailed studies, and supply and install the latest fire protection systems.",
-      btnText: "Request Quote or Consultation",
+      btnText: "Request Quote or Site Survey",
+    },
+    visibility: {
+      hero: true,
+      about: true,
+      ceo: true,
+      missionVision: true,
+      goalsValues: true,
+      orgChart: true,
+      brandIdentity: true,
+      services: true,
+      products: true,
+      calculator: true,
+      licenses: true,
+      projects: true,
+      contact: true,
+      map: true,
+      documents: {
+        "doc-misa": true,
+        "doc-cr-ar": true,
+        "doc-cr-en": true,
+        "doc-chamber": true,
+        "doc-gosi": true,
+        "doc-salamah": true,
+        "doc-balady": true,
+        "doc-vat": true
+      }
     },
     footer: {
       aboutText: "Tasami Business Company specializes in the supply, installation, and maintenance of cutting-edge fire suppression and detection systems compliant with SBC and Civil Defense.",

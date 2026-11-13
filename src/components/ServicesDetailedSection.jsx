@@ -73,7 +73,7 @@ export default function ServicesDetailedSection({ lang, content, onSelectService
                   onClick={() => onSelectService(cat.title)}
                   className="text-xs font-bold text-[#dfb76c] hover:text-white flex items-center gap-1.5 transition"
                 >
-                  <span>{lang === 'ar' ? 'طلب استشارة لهذا النظام' : 'Request Consultation'}</span>
+                  <span>{lang === 'ar' ? 'طلب معاينة لهذا النظام' : 'Request Site Survey'}</span>
                   <span className={lang === 'ar' ? 'rotate-180' : ''}>→</span>
                 </button>
               </div>

@@ -31,6 +31,7 @@ export default function ServicesPage({
 }) {
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
+  const vis = content[lang]?.visibility || {};
 
   const [activeBranch, setActiveBranch] = useState(activeBranchFilter || 'all');
   const [showCalculator, setShowCalculator] = useState(Boolean(openCalculator));
@@ -302,18 +303,20 @@ export default function ServicesPage({
           </div>
 
           <div className="flex items-center gap-3 flex-shrink-0">
+            {vis.calculator !== false && (
+              <button
+                onClick={() => setShowCalculator(!showCalculator)}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-xs sm:text-sm font-bold transition shadow-sm"
+              >
+                <Calculator className="w-4 h-4 text-[#dfb76c]" />
+                <span>{showCalculator ? (isAr ? 'إخفاء حاسبة السلامة' : 'Hide Calculator') : (isAr ? 'حاسبة السلامة الفورية' : 'Safety Estimator')}</span>
+              </button>
+            )}
             <button
-              onClick={() => setShowCalculator(!showCalculator)}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-xs sm:text-sm font-bold transition shadow-sm"
-            >
-              <Calculator className="w-4 h-4 text-[#dfb76c]" />
-              <span>{showCalculator ? (isAr ? 'إخفاء حاسبة السلامة' : 'Hide Calculator') : (isAr ? 'حاسبة السلامة الفورية' : 'Safety Estimator')}</span>
-            </button>
-            <button
-              onClick={() => onOpenConsultation(isAr ? 'استشارة عامة في الخدمات' : 'General Engineering Consultation')}
+              onClick={() => onOpenConsultation(isAr ? 'معاينة هندسية عامة وتوريد' : 'General Site Survey & Supply')}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] text-xs sm:text-sm font-bold transition shadow-sm"
             >
-              <span>{isAr ? 'طلب استشارة أو تسعير' : 'Request a Quote'}</span>
+              <span>{isAr ? 'طلب معاينة أو تسعير' : 'Request Site Survey or Quote'}</span>
               <ArrowIcon className="w-4 h-4" />
             </button>
           </div>
@@ -321,7 +324,7 @@ export default function ServicesPage({
       </div>
 
       {/* Optional Interactive Safety Calculator Banner / Accordion */}
-      {showCalculator && (
+      {vis.calculator !== false && showCalculator && (
         <div id="calculator-section" className="bg-white dark:bg-[#131c31] rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-800 scroll-mt-28">
           <div className="mb-6 flex items-center justify-between">
             <h3 className="text-lg font-bold text-[#0f172a] dark:text-white flex items-center gap-2">

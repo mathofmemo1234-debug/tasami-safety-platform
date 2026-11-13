@@ -5,6 +5,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
   const t = content[lang];
   const cta = t.ctaBanner;
   const c = t.contact;
+  const vis = content[lang]?.visibility || {};
 
   const [formData, setFormData] = useState({
     name: '',
@@ -154,18 +155,56 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   </div>
                 </div>
 
-                {/* Address */}
-                <div className="p-4 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 flex items-start gap-4 shadow-sm">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-[#1d4ed8]/20 text-[#1d4ed8] dark:text-[#60a5fa] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <MapPin className="w-5 h-5" />
+                {/* Address & Google Maps Navigation */}
+                <a
+                  href={c.googleMapsUrl || "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 hover:border-[#c59a45] dark:hover:border-[#dfb76c] flex items-start gap-4 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer block"
+                  title={lang === 'ar' ? 'انقر لفتح الموقع مباشرة على خرائط Google' : 'Click to open in Google Maps'}
+                >
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-[#1d4ed8]/20 text-[#1d4ed8] dark:text-[#60a5fa] group-hover:bg-[#c59a45]/20 group-hover:text-[#9a752a] dark:group-hover:text-[#dfb76c] flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors">
+                    <MapPin className="w-5 h-5 transform group-hover:scale-110 transition-transform" />
                   </div>
-                  <div>
-                    <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">{lang === 'ar' ? 'المقر والعنوان' : 'Office Address'}</span>
-                    <div className="text-xs sm:text-sm font-bold text-[#0f172a] dark:text-white leading-snug mt-0.5">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">
+                        {lang === 'ar' ? 'المقر والعنوان' : 'Office Address'}
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#c59a45]/15 text-[#9a752a] dark:text-[#dfb76c] font-bold">
+                        {lang === 'ar' ? 'خرائط Google 🗺️' : 'Google Maps 🗺️'}
+                      </span>
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] leading-snug mt-1 transition-colors">
                       {lang === 'ar' ? c.address : c.addressEn}
                     </div>
+                    <div className="mt-2 text-[11px] font-bold text-[#9a752a] dark:text-[#dfb76c] flex items-center gap-1.5">
+                      <span>{lang === 'ar' ? 'عرض الاتجاهات والملاحة المباشرة' : 'Open live directions'}</span>
+                      <span className="transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">←</span>
+                    </div>
                   </div>
-                </div>
+                </a>
+
+                {/* Google Maps Interactive Embed Frame */}
+                {vis.map !== false && (
+                  <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm relative h-48 bg-slate-100 dark:bg-[#0b1120]">
+                    <iframe
+                      title="موقع شركة تسامي الأعمال لأنظمة السلامة"
+                      src="https://maps.google.com/maps?q=21.445570,39.801060&hl=ar&z=15&output=embed"
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                      allowFullScreen
+                    ></iframe>
+                    <a
+                      href={c.googleBusinessUrl || "https://share.google/9AmZxrxPQL8I9od2U"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-2 left-2 rtl:left-2 ltr:right-2 text-[10px] bg-slate-900/90 text-white px-2.5 py-1 rounded-lg border border-[#c59a45]/40 hover:bg-[#c59a45] hover:text-slate-950 transition font-bold"
+                    >
+                      {lang === 'ar' ? 'الملف التعريفي في Google' : 'Google Business'}
+                    </a>
+                  </div>
+                )}
 
                 {/* Official Social Media Channels */}
                 <div className="p-4 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -195,7 +234,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
             <div className="lg:col-span-7 bg-white dark:bg-[#131c31] p-6 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
               <h4 className="text-lg font-bold text-[#0f172a] dark:text-white mb-1 flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-[#1d4ed8] dark:text-[#60a5fa]" />
-                <span>{lang === 'ar' ? 'طلب عرض سعر / استشارة فورية' : 'Request Instant Quotation / Survey'}</span>
+                <span>{lang === 'ar' ? 'طلب عرض سعر / معاينة فورية للموقع' : 'Request Instant Quotation / Site Survey'}</span>
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
                 {lang === 'ar' ? 'أدخل بيانات موقعك ومشروعك وسيقوم المهندس المختص بالتواصل معك مباشرة:' : 'Provide your project specs and our engineering advisor will contact you directly:'}

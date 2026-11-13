@@ -299,11 +299,11 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
                 onClick={() => {
                   const prod = activeVideo.productName;
                   setActiveVideo(null);
-                  onSelectService(lang === 'ar' ? `استشارة هندسية في توريد وتركيب ${prod}` : `Technical consultation for ${prod}`);
+                  onSelectService(lang === 'ar' ? `معاينة هندسية وتوريد وتركيب ${prod}` : `Site survey & supply for ${prod}`);
                 }}
                 className="px-5 py-2.5 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-slate-950 font-black transition shadow-md whitespace-nowrap"
               >
-                {lang === 'ar' ? 'طلب استشارة وتوريد لهذا المنتج' : 'Inquire About This Product'}
+                {lang === 'ar' ? 'طلب معاينة وتوريد لهذا المنتج' : 'Inquire & Request Site Survey'}
               </button>
             </div>
 

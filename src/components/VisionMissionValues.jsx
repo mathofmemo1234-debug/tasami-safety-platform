@@ -38,75 +38,107 @@ export default function VisionMissionValues({ lang, content }) {
           </p>
         </div>
 
-        {/* 1. Vision & Mission Cards Grid */}
+        {/* 1. Vision & Mission Cards Grid with Expressive Visuals */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           
           {/* Mission Card */}
-          <div id="mission" className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl p-8 sm:p-10 relative overflow-hidden group shadow-xl transition-all duration-300 scroll-mt-24">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#c59a45]/10 rounded-full blur-xl group-hover:scale-150 transition-transform"></div>
-            
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#c59a45]/20 border border-[#c59a45]/40 flex items-center justify-center text-[#dfb76c] shadow-lg">
-                <Compass className="w-7 h-7" />
-              </div>
-              <div>
-                <span className="text-[11px] font-mono tracking-widest text-[#dfb76c] uppercase block">OUR MISSION</span>
-                <h3 className="text-2xl font-black text-white">{mv.mission.title}</h3>
+          <div id="mission" className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl overflow-hidden group shadow-xl transition-all duration-300 scroll-mt-24 flex flex-col justify-between">
+            <div className="relative h-48 sm:h-56 overflow-hidden">
+              <img
+                src={mv.mission.image || './images/about/mission-expressive.jpg'}
+                alt={mv.mission.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = './images/showcase/hero-engineer.jpg';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+              <div className="absolute bottom-4 right-4 rtl:right-4 ltr:left-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#c59a45]/90 backdrop-blur-md flex items-center justify-center text-slate-950 shadow-lg">
+                  <Compass className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono tracking-widest text-[#dfb76c] uppercase block">OUR MISSION</span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white">{mv.mission.title}</h3>
+                </div>
               </div>
             </div>
 
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base font-normal">
-              {mv.mission.content}
-            </p>
+            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+              <p className="text-slate-300 leading-relaxed text-sm sm:text-base font-normal">
+                {mv.mission.content}
+              </p>
 
-            <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs font-semibold text-[#dfb76c]">
-              <Sparkles className="w-4 h-4" />
-              <span>{lang === 'ar' ? 'العين الساهرة واليد الماهرة في عالم السلامة' : 'The watchful eye and the skilled hand'}</span>
+              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs font-semibold text-[#dfb76c]">
+                <Sparkles className="w-4 h-4" />
+                <span>{lang === 'ar' ? 'العين الساهرة واليد الماهرة في عالم السلامة' : 'The watchful eye and the skilled hand'}</span>
+              </div>
             </div>
           </div>
 
           {/* Vision Card */}
-          <div id="vision" className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl p-8 sm:p-10 relative overflow-hidden group shadow-xl transition-all duration-300 scroll-mt-24">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform"></div>
-
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-[#c59a45]/20 border border-[#c59a45]/40 flex items-center justify-center text-[#dfb76c] shadow-lg">
-                <Eye className="w-7 h-7" />
-              </div>
-              <div>
-                <span className="text-[11px] font-mono tracking-widest text-[#dfb76c] uppercase block">OUR VISION</span>
-                <h3 className="text-2xl font-black text-white">{mv.vision.title}</h3>
+          <div id="vision" className="bg-slate-800/90 border border-slate-700 hover:border-[#c59a45]/60 rounded-3xl overflow-hidden group shadow-xl transition-all duration-300 scroll-mt-24 flex flex-col justify-between">
+            <div className="relative h-48 sm:h-56 overflow-hidden">
+              <img
+                src={mv.vision.image || './images/about/vision-expressive.jpg'}
+                alt={mv.vision.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = './images/showcase/vision-banner.jpg';
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+              <div className="absolute bottom-4 right-4 rtl:right-4 ltr:left-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#c59a45]/90 backdrop-blur-md flex items-center justify-center text-slate-950 shadow-lg">
+                  <Eye className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono tracking-widest text-[#dfb76c] uppercase block">OUR VISION</span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white">{mv.vision.title}</h3>
+                </div>
               </div>
             </div>
 
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base font-normal">
-              {mv.vision.content}
-            </p>
+            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+              <p className="text-slate-300 leading-relaxed text-sm sm:text-base font-normal">
+                {mv.vision.content}
+              </p>
 
-            <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs font-semibold text-[#dfb76c]">
-              <Target className="w-4 h-4" />
-              <span>{lang === 'ar' ? 'سياج منيع لنحمي الإنسان ونعزز الأثر' : 'An impenetrable shield protecting humanity'}</span>
+              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs font-semibold text-[#dfb76c]">
+                <Target className="w-4 h-4" />
+                <span>{lang === 'ar' ? 'سياج منيع لنحمي الإنسان ونعزز الأثر' : 'An impenetrable shield protecting humanity'}</span>
+              </div>
             </div>
           </div>
 
         </div>
 
-        {/* 2. Goals & Values Split Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* 2. Goals & Values Split Section with Expressive Visuals */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
           
           {/* Strategic Goals (Left) */}
-          <div className="lg:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-3xl p-8 sm:p-10">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-[#c59a45]/20 flex items-center justify-center text-[#dfb76c]">
-                <Target className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">{gv.goals.title}</h3>
-                <span className="text-xs text-slate-400">{lang === 'ar' ? 'أهدافنا الاستراتيجية التنموية' : 'Strategic Milestones'}</span>
+          <div className="lg:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-3xl overflow-hidden flex flex-col shadow-lg">
+            <div className="relative h-44 overflow-hidden">
+              <img
+                src={gv.goals.image || './images/about/goals-expressive.jpg'}
+                alt={gv.goals.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+              <div className="absolute bottom-4 right-4 rtl:right-4 ltr:left-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#c59a45]/90 flex items-center justify-center text-slate-950">
+                  <Target className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">{gv.goals.title}</h3>
+                  <span className="text-xs text-slate-300">{lang === 'ar' ? 'أهدافنا الاستراتيجية التنموية' : 'Strategic Milestones'}</span>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="p-6 sm:p-8 flex-1 space-y-4">
               {gv.goals.items.map((goal, idx) => (
                 <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/50 hover:border-[#c59a45]/40 transition">
                   <div className="w-6 h-6 rounded-full bg-[#c59a45]/20 text-[#dfb76c] flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5 font-mono">
@@ -121,18 +153,26 @@ export default function VisionMissionValues({ lang, content }) {
           </div>
 
           {/* Core Values (Right) */}
-          <div className="lg:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-3xl p-8 sm:p-10">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-[#c59a45]/20 flex items-center justify-center text-[#dfb76c]">
-                <Shield className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">{gv.values.title}</h3>
-                <span className="text-xs text-slate-400">{lang === 'ar' ? 'قيمنا المؤسسية الحاكمة' : 'Core Organizational Values'}</span>
+          <div className="lg:col-span-6 bg-slate-800/60 border border-slate-700/80 rounded-3xl overflow-hidden flex flex-col shadow-lg">
+            <div className="relative h-44 overflow-hidden">
+              <img
+                src={gv.values.image || './images/about/values-expressive.jpg'}
+                alt={gv.values.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+              <div className="absolute bottom-4 right-4 rtl:right-4 ltr:left-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#c59a45]/90 flex items-center justify-center text-slate-950">
+                  <Shield className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">{gv.values.title}</h3>
+                  <span className="text-xs text-slate-300">{lang === 'ar' ? 'قيمنا المؤسسية الحاكمة' : 'Core Organizational Values'}</span>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-3.5">
+            <div className="p-6 sm:p-8 flex-1 space-y-3.5">
               {gv.values.items.map((val, idx) => (
                 <div key={idx} className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/50 hover:border-[#c59a45]/40 transition flex items-start gap-3">
                   <div className="p-2 rounded-lg bg-slate-900 border border-slate-700/60 flex-shrink-0">

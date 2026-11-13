@@ -19,6 +19,7 @@ import VisionMissionValues from '../components/VisionMissionValues';
 import OrgStructureSection from '../components/OrgStructureSection';
 import CertificatesLicensesSection from '../components/CertificatesLicensesSection';
 import ProjectsSection from '../components/ProjectsSection';
+import BrandIdentitySection from '../components/BrandIdentitySection';
 import TasamiLogo from '../components/TasamiLogo';
 
 export default function AboutPage({
@@ -29,6 +30,7 @@ export default function AboutPage({
   targetSection
 }) {
   const isAr = lang === 'ar';
+  const vis = content[lang]?.visibility || {};
 
   // Smoothly scroll to the target section when navigating from dropdown
   useEffect(() => {
@@ -75,7 +77,7 @@ export default function AboutPage({
               </span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
-              {isAr ? 'عن تسامي الأعمال لأنظمة السلامة' : 'About Tasami Business for Safety Systems'}
+              {isAr ? 'عن شركة تسامي الأعمال لأنظمة السلامة' : 'About Tasami Business for Safety Systems'}
             </h1>
             <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
               {isAr
@@ -87,53 +89,75 @@ export default function AboutPage({
       </div>
 
       {/* 2. Main Company Story & Background */}
-      <div className="scroll-mt-28">
-        <AboutSection
-          lang={lang}
-          content={content}
-          onOpenConsultation={onOpenConsultation}
-        />
-      </div>
+      {vis.about !== false && (
+        <div className="scroll-mt-28">
+          <AboutSection
+            lang={lang}
+            content={content}
+            onOpenConsultation={onOpenConsultation}
+          />
+        </div>
+      )}
 
       {/* 3. Executive CEO Message */}
-      <div className="scroll-mt-28">
-        <CeoMessage
-          lang={lang}
-          content={content}
-        />
-      </div>
+      {vis.ceo !== false && (
+        <div className="scroll-mt-28">
+          <CeoMessage
+            lang={lang}
+            content={content}
+          />
+        </div>
+      )}
 
       {/* 4. Vision, Mission & Core Values */}
-      <div className="scroll-mt-28">
-        <VisionMissionValues
-          lang={lang}
-          content={content}
-        />
-      </div>
+      {(vis.missionVision !== false || vis.goalsValues !== false) && (
+        <div className="scroll-mt-28">
+          <VisionMissionValues
+            lang={lang}
+            content={content}
+          />
+        </div>
+      )}
 
       {/* 5. Organizational Structure */}
-      <div className="scroll-mt-28">
-        <OrgStructureSection
-          lang={lang}
-          content={content}
-        />
-      </div>
+      {vis.orgChart !== false && (
+        <div className="scroll-mt-28">
+          <OrgStructureSection
+            lang={lang}
+            content={content}
+          />
+        </div>
+      )}
 
-      {/* 6. Accreditations & Licenses */}
-      <div className="scroll-mt-28">
-        <CertificatesLicensesSection
-          lang={lang}
-          content={content}
-        />
-      </div>
+      {/* 6. Brand Identity Section */}
+      {vis.brandIdentity !== false && (
+        <div className="scroll-mt-28">
+          <BrandIdentitySection
+            lang={lang}
+            content={content}
+          />
+        </div>
+      )}
 
-      {/* 7. Featured Projects */}
-      <div className="scroll-mt-28">
-        <ProjectsSection
-          lang={lang}
-          content={content}
-        />
-      </div>
+      {/* 7. Accreditations & Licenses */}
+      {vis.licenses !== false && (
+        <div className="scroll-mt-28">
+          <CertificatesLicensesSection
+            lang={lang}
+            content={content}
+          />
+        </div>
+      )}
+
+      {/* 8. Featured Projects */}
+      {vis.projects !== false && (
+        <div className="scroll-mt-28">
+          <ProjectsSection
+            lang={lang}
+            content={content}
+          />
+        </div>
+      )}
 
     </div>
   );

@@ -242,6 +242,43 @@ export default function AdminDashboard({
     updateNested(['en', 'certificationsAndLicenses', 'legalDocuments'], enList);
   };
 
+  // Visibility Helpers
+  const handleToggleSection = (sectionKey) => {
+    setLocalData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      if (!next.ar) next.ar = {};
+      if (!next.ar.visibility) next.ar.visibility = {};
+      if (!next.en) next.en = {};
+      if (!next.en.visibility) next.en.visibility = {};
+
+      const currentVal = next[langTab]?.visibility?.[sectionKey] !== false;
+      const newVal = !currentVal;
+
+      next.ar.visibility[sectionKey] = newVal;
+      next.en.visibility[sectionKey] = newVal;
+      return next;
+    });
+  };
+
+  const handleToggleDocument = (docId) => {
+    setLocalData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      if (!next.ar) next.ar = {};
+      if (!next.ar.visibility) next.ar.visibility = {};
+      if (!next.ar.visibility.documents) next.ar.visibility.documents = {};
+      if (!next.en) next.en = {};
+      if (!next.en.visibility) next.en.visibility = {};
+      if (!next.en.visibility.documents) next.en.visibility.documents = {};
+
+      const currentVal = next[langTab]?.visibility?.documents?.[docId] !== false;
+      const newVal = !currentVal;
+
+      next.ar.visibility.documents[docId] = newVal;
+      next.en.visibility.documents[docId] = newVal;
+      return next;
+    });
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-[#0b1120]/85 backdrop-blur-md animate-fade-in font-cairo">
       
@@ -400,6 +437,7 @@ export default function AdminDashboard({
           {/* Navigation Category Tabs */}
           <div className="flex overflow-x-auto border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 gap-2 py-2">
             {[
+              { id: 'visibility', name: '👁️ إظهار / إخفاء الأقسام والمستندات' },
               { id: 'products', name: '📦 كتالوج المنتجات', count: (localData[langTab]?.productsCatalog?.items || []).length },
               { id: 'services', name: '🛠️ الأنظمة والخدمات' },
               { id: 'licenses', name: '📜 التراخيص والاعتمادات', count: (localData[langTab]?.certificationsAndLicenses?.legalDocuments || []).length },
@@ -995,6 +1033,171 @@ export default function AdminDashboard({
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* TAB: VISIBILITY CONTROL (إظهار / إخفاء الأقسام والمستندات) */}
+            {activeTab === 'visibility' && (
+              <div className="space-y-8 animate-fade-in font-cairo">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-[#162d6c]/10 via-[#c59a45]/15 to-transparent p-5 rounded-2xl border border-[#c59a45]/30">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 rounded-xl bg-[#162d6c] text-[#dfb76c] flex items-center justify-center font-bold shadow">
+                      <Eye className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-base font-black text-[#0f172a] dark:text-white">
+                        لوحة التحكم بظهور أجزاء الموقع والمستندات الثبوتية
+                      </h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        تحكم فوري ودقيق في إظهار أو إخفاء أي قسم في الموقع أو أي وثيقة ومستند ثبوتي بضغطة زر واحدة
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section A: Main Website Sections Visibility */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                    <h5 className="text-sm font-black text-[#0f172a] dark:text-white flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-[#c59a45]" />
+                      <span>أقسام الموقع الرئيسية (Website Sections)</span>
+                    </h5>
+                    <span className="text-xs text-slate-400 font-medium">
+                      يمكنك تعطيل ظهور أي قسم مؤقتاً دون حذفه
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {[
+                      { key: 'hero', title: 'الواجهة الرئيسية (Hero Section)', desc: 'صورة المهندس والشعار الرئيسي وأزرار المعاينة السريعة' },
+                      { key: 'about', title: 'نبذة عن الشركة (About Section)', desc: 'التعريف بشركة تسامي ورؤية 2030 والاعتمادات الرسمية' },
+                      { key: 'ceo', title: 'كلمة الرئيس التنفيذي (أ. طه هندي)', desc: 'الرسالة القيادية والصورة والرؤية التنفيذية للمدير التنفيذي' },
+                      { key: 'missionVision', title: 'الرؤية والرسالة (Vision & Mission)', desc: 'بطاقات الرؤية والرسالة والصور التعبيرية المتناسقة' },
+                      { key: 'goalsValues', title: 'الأهداف والقيم (Goals & Values)', desc: 'أهداف تسامي الاستراتيجية وقيم العمل المؤسسية' },
+                      { key: 'orgChart', title: 'الهيكل التنظيمي (Organizational Chart)', desc: 'المخطط الهيكلي لأقسام الشركة الفنية والإدارية' },
+                      { key: 'brandIdentity', title: 'الهوية البصرية الرسمية (Brand Identity)', desc: 'عرض ألوان الهوية ولوحة الخطوط والمطبوعات المعتمدة' },
+                      { key: 'services', title: 'الأنظمة والخدمات (Services)', desc: 'أنظمة الإطفاء والإنذار والتوريد والتركيب والصيانة' },
+                      { key: 'products', title: 'كتالوج المنتجات والمعدات (Products)', desc: 'قائمة منتجات ومهمات السلامة ومقاطع الفيديو التوضيحية' },
+                      { key: 'licenses', title: 'التراخيص والاعتمادات (Certificates)', desc: 'شهادات الدفاع المدني، كود البناء، سابر، والمستندات الرسمية' },
+                      { key: 'calculator', title: 'حاسبة متطلبات السلامة (Calculator)', desc: 'حاسبة التقدير الأولي للتكاليف والأنظمة الإلزامية' },
+                      { key: 'projects', title: 'سابقة الأعمال والمشاريع (Projects)', desc: 'المشاريع المنفذة وتطبيقات أنظمة السلامة' },
+                      { key: 'map', title: 'خريطة المقر الرئيسي (Google Maps)', desc: 'خريطة الموقع التفاعلية في مكة المكرمة – الشوقية' },
+                      { key: 'contact', title: 'قسم التواصل ونموذج المعاينة (Contact)', desc: 'أرقام الهواتف ونموذج طلب المعاينة وروابط التواصل' }
+                    ].map(sec => {
+                      const isVisible = localData[langTab]?.visibility?.[sec.key] !== false;
+                      return (
+                        <div
+                          key={sec.key}
+                          onClick={() => handleToggleSection(sec.key)}
+                          className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-4 select-none ${
+                            isVisible
+                              ? 'bg-white dark:bg-[#131c31] border-emerald-500/40 shadow-sm hover:border-emerald-500'
+                              : 'bg-slate-100/60 dark:bg-[#0b1120]/60 border-slate-200 dark:border-slate-800 opacity-60 hover:opacity-90'
+                          }`}
+                        >
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className={`w-2 h-2 rounded-full ${isVisible ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
+                              <h6 className="text-xs font-black text-[#0f172a] dark:text-white">
+                                {sec.title}
+                              </h6>
+                            </div>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                              {sec.desc}
+                            </p>
+                          </div>
+
+                          <div className="flex-shrink-0 flex items-center gap-2">
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                              isVisible
+                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400'
+                                : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                            }`}>
+                              {isVisible ? 'معروض' : 'مخفي'}
+                            </span>
+                            <div className={`w-10 h-6 rounded-full transition-colors p-0.5 flex items-center ${
+                              isVisible ? 'bg-emerald-500 justify-end' : 'bg-slate-300 dark:bg-slate-700 justify-start'
+                            }`}>
+                              <div className="w-5 h-5 rounded-full bg-white shadow-md transform transition"></div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Section B: Statutory Documents Visibility */}
+                <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+                    <h5 className="text-sm font-black text-[#0f172a] dark:text-white flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-[#c59a45]" />
+                      <span>المستندات والوثائق الثبوتية الرسمية (Statutory Documents)</span>
+                    </h5>
+                    <span className="text-xs text-slate-400 font-medium">
+                      التحكم في ظهور كل وثيقة رسمية في الموقع بشكل منفرد
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {[
+                      { id: 'doc-misa', title: '1. شهادة تسجيل الاستثمار – وزارة الاستثمار', auth: 'وزارة الاستثمار (MISA)', img: './images/profile/doc-misa.jpg' },
+                      { id: 'doc-cr-ar', title: '2. شهادة السجل التجاري (عربي)', auth: 'وزارة التجارة - المملكة العربية السعودية', img: './images/profile/doc-cr-ar.jpg' },
+                      { id: 'doc-cr-en', title: '3. Commercial Registration Certificate (English)', auth: 'Ministry of Commerce - KSA', img: './images/profile/doc-cr-en.jpg' },
+                      { id: 'doc-chamber', title: '4. شهادة انتساب الغرفة التجارية بمكة المكرمة', auth: 'غرفة مكة المكرمة', img: './images/profile/doc-chamber.jpg' },
+                      { id: 'doc-gosi', title: '5. شهادة التأمينات الاجتماعية (GOSI)', auth: 'المؤسسة العامة للتأمينات الاجتماعية', img: './images/profile/doc-gosi.jpg' },
+                      { id: 'doc-salamah', title: '6. ترخيص الدفاع المدني – سلامة', auth: 'المديرية العامة للدفاع المدني', img: './images/profile/doc-salamah.jpg' },
+                      { id: 'doc-balady', title: '7. رخصة نشاط تجاري – بلدي', auth: 'وزارة الشؤون البلدية والقروية والإسكان', img: './images/profile/doc-balady.jpg' },
+                      { id: 'doc-vat', title: '8. شهادة ضريبة القيمة المضافة (ZATCA)', auth: 'هيئة الزكاة والضريبة والجمارك', img: './images/profile/doc-vat.jpg' }
+                    ].map(doc => {
+                      const isVisible = localData[langTab]?.visibility?.documents?.[doc.id] !== false;
+                      return (
+                        <div
+                          key={doc.id}
+                          onClick={() => handleToggleDocument(doc.id)}
+                          className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 select-none ${
+                            isVisible
+                              ? 'bg-white dark:bg-[#131c31] border-emerald-500/40 shadow-sm hover:border-emerald-500'
+                              : 'bg-slate-100/60 dark:bg-[#0b1120]/60 border-slate-200 dark:border-slate-800 opacity-60 hover:opacity-90'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={doc.img}
+                              alt={doc.title}
+                              className="w-12 h-16 object-cover rounded-lg border border-slate-200 dark:border-slate-700 bg-white shadow-sm flex-shrink-0"
+                            />
+                            <div className="space-y-0.5">
+                              <h6 className="text-xs font-black text-[#0f172a] dark:text-white line-clamp-1">
+                                {doc.title}
+                              </h6>
+                              <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                                {doc.auth}
+                              </p>
+                              <span className={`inline-block text-[9px] font-bold px-2 py-0.5 rounded-full ${
+                                isVisible
+                                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400'
+                                  : 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-400'
+                              }`}>
+                                {isVisible ? 'مستند معروض للزوار' : 'مستند مخفي'}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex-shrink-0">
+                            <div className={`w-10 h-6 rounded-full transition-colors p-0.5 flex items-center ${
+                              isVisible ? 'bg-emerald-500 justify-end' : 'bg-slate-300 dark:bg-slate-700 justify-start'
+                            }`}>
+                              <div className="w-5 h-5 rounded-full bg-white shadow-md transform transition"></div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
               </div>
             )}
 
