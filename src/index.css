@@ -30,36 +30,153 @@
 
 /* Custom styling for luxury gold accents & royal blue glass headers */
 .gold-gradient-text {
-  background: linear-gradient(135deg, #dfb76c 0%, #c59a45 50%, #8f6e2b 100%);
+  background: linear-gradient(120deg, #9a752a 0%, #c59a45 25%, #f5d78e 50%, #c59a45 75%, #9a752a 100%);
+  background-size: 220% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: shimmerText 5s linear infinite;
+}
+
+html.dark .gold-gradient-text {
+  background: linear-gradient(120deg, #c59a45 0%, #f5d78e 35%, #ffffff 50%, #dfb76c 75%, #c59a45 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerText 5s linear infinite;
 }
 
 .gold-gradient-bg {
-  background: linear-gradient(135deg, #c59a45 0%, #dcb86a 50%, #a87e2f 100%);
+  background: linear-gradient(135deg, #c59a45 0%, #dfb76c 50%, #a87e2f 100%);
 }
 
 .gold-border-glow {
-  border: 1px solid rgba(197, 154, 69, 0.3);
-  box-shadow: 0 4px 20px -2px rgba(197, 154, 69, 0.14);
+  border: 1px solid rgba(197, 154, 69, 0.35);
+  box-shadow: 0 8px 30px -4px rgba(197, 154, 69, 0.22);
 }
 
 .glass-royal {
-  background: linear-gradient(90deg, rgba(15, 33, 82, 0.97) 0%, rgba(22, 45, 108, 0.97) 50%, rgba(15, 33, 82, 0.97) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(90deg, rgba(11, 23, 60, 0.96) 0%, rgba(22, 45, 108, 0.96) 50%, rgba(11, 23, 60, 0.96) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .glass-dark {
-  background: rgba(11, 17, 32, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(11, 17, 32, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .glass-light {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Precision architectural grid backdrop */
+.hero-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(22, 45, 108, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 45, 108, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+html.dark .hero-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(223, 183, 108, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(223, 183, 108, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+/* Flashy metallic sheen buttons */
+.btn-flashy-gold {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #dfb76c 0%, #c59a45 55%, #b38732 100%);
+  box-shadow: 0 10px 28px -6px rgba(197, 154, 69, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+
+.btn-flashy-gold::after,
+.btn-flashy-royal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.48) 50%, transparent 80%);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+
+.btn-flashy-gold:hover::after,
+.btn-flashy-royal:hover::after {
+  left: 140%;
+}
+
+.btn-flashy-gold:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 14px 36px -4px rgba(197, 154, 69, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.btn-flashy-royal {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #162d6c 100%);
+  box-shadow: 0 10px 28px -6px rgba(29, 78, 216, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+
+.btn-flashy-royal:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 14px 36px -4px rgba(29, 78, 216, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Luxury 3D elevated cards */
+.card-flashy {
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease, border-color 0.32s ease;
+}
+
+.card-flashy:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 44px -14px rgba(22, 45, 108, 0.16), 0 8px 24px -8px rgba(197, 154, 69, 0.22);
+}
+
+html.dark .card-flashy:hover {
+  box-shadow: 0 22px 48px -12px rgba(0, 0, 0, 0.65), 0 0 28px -6px rgba(197, 154, 69, 0.28);
+}
+
+/* Keyframes */
+@keyframes shimmerText {
+  0% { background-position: 0% center; }
+  100% { background-position: 220% center; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.08); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-float {
+  animation: floatSlow 4.5s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Smooth custom scrollbars */

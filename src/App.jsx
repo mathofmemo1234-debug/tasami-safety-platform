@@ -8,10 +8,12 @@ import ServicesPage from './pages/ServicesPage';
 import ProductsPage from './pages/ProductsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
-import { content } from './data/content';
+import { content as initialFallbackContent } from './data/content';
+import { subscribeToLiveContent } from './services/firebase';
 
 export default function App() {
   const [lang, setLang] = useState('ar');
+  const [siteContent, setSiteContent] = useState(initialFallbackContent);
   const [darkMode, setDarkMode] = useState(() => {
     try {
       return localStorage.getItem('tasami-theme') === 'dark';
@@ -22,6 +24,16 @@ export default function App() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [selectedServiceForConsultation, setSelectedServiceForConsultation] = useState('');
+
+  // Subscribe to real-time live content from Firebase Firestore
+  useEffect(() => {
+    const unsubscribe = subscribeToLiveContent((updated) => {
+      if (updated) {
+        setSiteContent(updated);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Sync Tailwind dark class and persistence
   useEffect(() => {
@@ -144,8 +156,9 @@ export default function App() {
         setLang={setLang}
         darkMode={darkMode}
         onToggleDarkMode={() => setDarkMode((prev) => !prev)}
-        content={content}
+        content={siteContent}
         onOpenConsultation={() => handleOpenConsultation()}
+        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       {/* 2. Main Page Content View */}
@@ -153,7 +166,7 @@ export default function App() {
         {currentPage === 'home' && (
           <HomePage
             lang={lang}
-            content={content}
+            content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
           />
@@ -162,7 +175,7 @@ export default function App() {
         {currentPage === 'services' && (
           <ServicesPage
             lang={lang}
-            content={content}
+            content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
             targetSection={targetSection}
@@ -174,7 +187,7 @@ export default function App() {
         {currentPage === 'products' && (
           <ProductsPage
             lang={lang}
-            content={content}
+            content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
           />
@@ -183,7 +196,7 @@ export default function App() {
         {currentPage === 'about' && (
           <AboutPage
             lang={lang}
-            content={content}
+            content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
             targetSection={targetSection}
@@ -193,7 +206,7 @@ export default function App() {
         {currentPage === 'contact' && (
           <ContactPage
             lang={lang}
-            content={content}
+            content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
           />
@@ -203,7 +216,7 @@ export default function App() {
       {/* 3. Footer */}
       <Footer
         lang={lang}
-        content={content}
+        content={siteContent}
         onNavigate={navigateTo}
         onOpenAdmin={() => setIsAdminOpen(true)}
       />
@@ -216,10 +229,12 @@ export default function App() {
         initialService={selectedServiceForConsultation}
       />
 
-      {/* Admin Dashboard to view live submissions */}
+      {/* Admin Dashboard to view and edit live site & Firebase */}
       <AdminDashboard
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
+        currentContent={siteContent}
+        onContentUpdate={(updated) => setSiteContent(updated)}
       />
 
     </div>

@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مختبر STEM البنائي للقسمة المطولة</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .block-100 {
+      width: 36px;
+      height: 36px;
+      background-image: 
+        linear-gradient(to left, rgba(255,255,255,0.28) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.28) 1px, transparent 1px);
+      background-size: 7.2px 7.2px;
+    }
+    .block-10 {
+      width: 12px;
+      height: 36px;
+      background-image: linear-gradient(to bottom, rgba(255,255,255,0.3) 1px, transparent 1px);
+      background-size: 100% 7.2px;
+    }
+    .block-1 {
+      width: 14px;
+      height: 14px;
+    }
+    /* جدول الكاف العربية للقسمة المطولة */
+    .ar-division-grid {
+      display: inline-grid;
+      grid-template-columns: repeat(3, 2.2rem) 0.9rem auto;
+      direction: ltr; /* تثبيت خانات المئات-العشرات-الآحاد للأعداد مع وضع المقسوم عليه يمين الكاف */
+      align-items: center;
+      justify-items: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      line-height: 2rem;
+    }
+    .ar-kaf-dividend {
+      border-top: 3px solid var(--foreground);
+      border-right: 3px solid var(--foreground);
+      border-top-right-radius: 6px;
+    }
+    .ar-sub-line {
+      border-bottom: 2px solid var(--foreground);
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-6 min-h-screen select-none" dir="rtl">
+
+  <!-- الرأس ولوحة تعديل ونمذجة المقسوم والمقسوم عليه التفاعلية -->
+  <header class="max-w-7xl mx-auto mb-5 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div>
+        <div class="flex flex-wrap items-center gap-2 mb-1.5">
+          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
+            نمذجة STEM البنائية (RTL)
+          </span>
+          <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-sky-500/15 text-sky-500 border border-sky-500/30">
+            من المحسوس ← شبه المحسوس ← المجرد (CPA)
+          </span>
+        </div>
+        <h1 class="text-xl md:text-2xl font-bold text-[var(--foreground)]">
+          مختبر النمذجة البنائية للقسمة المطولة (بالأرقام العربية والاتجاه اليميني)
+        </h1>
+        <p class="text-sm text-[var(--muted-foreground)] mt-1">
+          عدّل المقسوم والمقسوم عليه بحرية، وشاهد فوراً كيف تتفاعل قطع دينز (المئات والعشرات والآحاد) مع نموذج المساحة الهندسي ورمز القسمة المطولة العربي.
+        </p>
+      </div>
+
+      <!-- سيناريوهات STEM السريعة -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-semibold text-[var(--muted-foreground)] ml-1">أمثلة STEM جاهزة:</span>
+        <button onclick="loadScenario(0)" id="scen-0" class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all">
+          ☀️ ألواح الطاقة (٤٣٢ ÷ ٣)
+        </button>
+        <button onclick="loadScenario(1)" id="scen-1" class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all">
+          🤖 كبسولات المريخ (٥٣٨ ÷ ٤)
+        </button>
+        <button onclick="loadScenario(2)" id="scen-2" class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all">
+          🌱 الصوبات الذكية (٧٥٦ ÷ ٦)
+        </button>
+        <button onclick="loadScenario(3)" id="scen-3" class="px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all">
+          💧 تحلية المياه (٨٢٩ ÷ ٥)
+        </button>
+      </div>
+    </div>
+
+    <!-- لوحة التعديل والنمذجة المباشرة للمقسوم والمقسوم عليه -->
+    <div class="mt-4 pt-4 border-t border-[var(--border)] grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      
+      <!-- التحكم بالمقسوم (العناصر الكلية) + نمذجة منازله -->
+      <div class="lg:col-span-5 bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5 flex flex-col justify-between gap-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-indigo-400">١. نمذجة وتعديل المقسوم (العدد الكلي)</span>
+            <p class="text-xs text-[var(--muted-foreground)]">اكتب العدد أو عدّل منازله أو اسحب المؤشر:</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="stepDividend(-10)" class="px-2 py-1 text-xs font-bold rounded bg-[var(--card)] border border-[var(--border)] hover:border-indigo-500">−١٠</button>
+            <button onclick="stepDividend(-1)" class="px-2 py-1 text-xs font-bold rounded bg-[var(--card)] border border-[var(--border)] hover:border-indigo-500">−١</button>
+            <input type="text" id="input-dividend" value="٤٣٢"
+              oninput="handleArabicInput(this, 'dividend')"
+              class="w-20 px-2 py-1 text-base font-extrabold text-center rounded-lg bg-[var(--card)] text-[var(--foreground)] border-2 border-indigo-500/50 focus:outline-none focus:border-indigo-500">
+            <button onclick="stepDividend(1)" class="px-2 py-1 text-xs font-bold rounded bg-[var(--card)] border border-[var(--border)] hover:border-indigo-500">+١</button>
+            <button onclick="stepDividend(10)" class="px-2 py-1 text-xs font-bold rounded bg-[var(--card)] border border-[var(--border)] hover:border-indigo-500">+١٠</button>
+          </div>
+        </div>
+
+        <input type="range" id="slider-dividend" min="12" max="999" value="432"
+          oninput="setNumbers(parseInt(this.value,10), state.divisor)"
+          class="w-full accent-indigo-500 cursor-pointer">
+
+        <!-- أزرار تعديل المنازل مباشرة (آحاد / عشرات / مئات) -->
+        <div class="grid grid-cols-3 gap-2 pt-1 border-t border-[var(--border)] text-center">
+          <div class="p-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)]">
+            <div class="text-xs font-bold text-indigo-400">مئات (١٠٠)</div>
+            <div class="flex items-center justify-center gap-2 mt-1">
+              <button onclick="stepDividend(100)" class="w-6 h-6 rounded bg-indigo-500/20 text-indigo-400 font-bold text-xs hover:bg-indigo-500 hover:text-white">+</button>
+              <span id="lbl-place-h" class="text-sm font-extrabold">٤</span>
+              <button onclick="stepDividend(-100)" class="w-6 h-6 rounded bg-indigo-500/20 text-indigo-400 font-bold text-xs hover:bg-indigo-500 hover:text-white">−</button>
+            </div>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)]">
+            <div class="text-xs font-bold text-sky-400">عشرات (١٠)</div>
+            <div class="flex items-center justify-center gap-2 mt-1">
+              <button onclick="stepDividend(10)" class="w-6 h-6 rounded bg-sky-500/20 text-sky-400 font-bold text-xs hover:bg-sky-500 hover:text-white">+</button>
+              <span id="lbl-place-t" class="text-sm font-extrabold">٣</span>
+              <button onclick="stepDividend(-10)" class="w-6 h-6 rounded bg-sky-500/20 text-sky-400 font-bold text-xs hover:bg-sky-500 hover:text-white">−</button>
+            </div>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[var(--card)] border border-[var(--border)]">
+            <div class="text-xs font-bold text-amber-400">آحاد (١)</div>
+            <div class="flex items-center justify-center gap-2 mt-1">
+              <button onclick="stepDividend(1)" class="w-6 h-6 rounded bg-amber-500/20 text-amber-400 font-bold text-xs hover:bg-amber-500 hover:text-white">+</button>
+              <span id="lbl-place-o" class="text-sm font-extrabold">٢</span>
+              <button onclick="stepDividend(-1)" class="w-6 h-6 rounded bg-amber-500/20 text-amber-400 font-bold text-xs hover:bg-amber-500 hover:text-white">−</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- التحكم بالمقسوم عليه (عدد القطاعات / عرض المستطيل) -->
+      <div class="lg:col-span-4 bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5 flex flex-col justify-between gap-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-emerald-500">٢. نمذجة وتعديل المقسوم عليه (القاسم)</span>
+            <p class="text-xs text-[var(--muted-foreground)]">يمثل عدد المجموعات أو عرض المستطيل:</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="stepDivisor(-1)" class="px-2.5 py-1 text-xs font-bold rounded bg-[var(--card)] border border-[var(--border)] hover:border-emerald-500">−١</button>
+            <input type="text" id="input-divisor" value="٣"
+              oninput="handleArabicInput(this, 'divisor')"
+              class="w-14 px-2 py-1 text-base font-extrabold text-center rounded-lg bg-[var(--card)] text-[var(--foreground)] border-2 border-emerald-500/50 focus:outline-none focus:border-emerald-500">
+            <button onclick="stepDivisor(1)" class="px-2.5 py-1 text-xs font-bold rounded bg-[var(--card)] border border-[var(--border)] hover:border-emerald-500">+١</button>
+          </div>
+        </div>
+
+        <input type="range" id="slider-divisor" min="2" max="9" value="3"
+          oninput="setNumbers(state.dividend, parseInt(this.value,10))"
+          class="w-full accent-emerald-500 cursor-pointer">
+
+        <!-- أزرار سريعة لاختيار المقسوم عليه (٢ إلى ٩) -->
+        <div class="flex items-center justify-between gap-1 pt-1 border-t border-[var(--border)]" id="divisor-quick-btns"></div>
+      </div>
+
+      <!-- ملخص المعادلة الآني وقصة STEM -->
+      <div class="lg:col-span-3 bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="stem-icon" class="text-xl">☀️</span>
+            <h2 id="stem-title" class="text-xs font-bold text-[var(--foreground)]">مشروع محطة الطاقة الشمسية</h2>
+          </div>
+          <p id="stem-desc" class="text-xs text-[var(--muted-foreground)] mt-1 leading-relaxed">
+            توزيع ٤٣٢ خلية شمسية بالتساوي على ٣ قطاعات هندسية.
+          </p>
+        </div>
+
+        <div class="mt-2 p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-center">
+          <div class="text-xs text-emerald-500 font-bold mb-0.5">المعادلة الجارية الآن (من اليمين لليسار):</div>
+          <div id="live-equation-banner" class="text-base font-extrabold text-[var(--foreground)]"></div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- شريط أوضاع التعلم البنائي -->
+  <div class="max-w-7xl mx-auto mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div class="inline-flex flex-wrap rounded-xl p-1 bg-[var(--card)] border border-[var(--border)] gap-1">
+      <button onclick="setMainTab('guided')" id="tab-guided" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all">
+        ١. النمذجة البنائية المتزامنة (CPA + القسمة المطولة)
+      </button>
+      <button onclick="setMainTab('sandbox')" id="tab-sandbox" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all">
+        ٢. المختبر الحر لقطع دينز (فُكّ ووزّع بيدك)
+      </button>
+      <button onclick="setMainTab('area-builder')" id="tab-area-builder" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all">
+        ٣. مهندس المساحات الجزئية الحر
+      </button>
+    </div>
+
+    <div id="guided-controls-bar" class="flex items-center gap-2 bg-[var(--card)] border border-[var(--border)] rounded-xl px-3 py-1.5">
+      <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold">
+        <input type="checkbox" id="toggle-challenge" onchange="toggleChallengeMode()" class="rounded accent-emerald-500 w-4 h-4">
+        <span>تفعيل وضع التحدي (يتوقع الطالب الرقم قبل إظهار الخطوة)</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- التبويب الأول: النمذجة البنائية المتزامنة (CPA + القسمة المطولة العربية)  -->
+  <!-- ========================================================================= -->
+  <main id="view-guided" class="max-w-7xl mx-auto space-y-5">
+
+    <!-- شريط الخطوات والمرشد البنائي -->
+    <section class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- أزرار التنقل بين الخطوات من اليمين إلى اليسار -->
+        <div class="flex items-center gap-1.5 flex-wrap" id="step-pills-container"></div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="resetSteps()" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-[var(--border)] hover:bg-[var(--background)] transition">
+            ⏮ البداية
+          </button>
+          <button onclick="prevStep()" id="btn-prev" class="px-3.5 py-1.5 text-xs font-bold rounded-lg border border-[var(--border)] hover:bg-[var(--background)] transition">
+            ▶ الخطوة السابقة
+          </button>
+          <button onclick="nextStep()" id="btn-next" class="px-4 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 transition shadow-sm">
+            الخطوة التالية ◀
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة الشرح البنائي وربط المفاهيم -->
+      <div class="mt-4 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+        <div class="lg:col-span-8">
+          <div class="flex items-center gap-2 mb-1">
+            <span id="current-place-badge" class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"></span>
+            <span id="current-op-badge" class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-500/15 text-emerald-500 border border-emerald-500/30"></span>
+          </div>
+          <h3 id="coach-title" class="text-base font-bold text-[var(--foreground)] mt-1"></h3>
+          <p id="coach-body" class="text-sm text-[var(--muted-foreground)] mt-1 leading-relaxed"></p>
+        </div>
+
+        <div class="lg:col-span-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/25">
+          <div class="text-xs font-bold text-amber-500 mb-1">💡 التفسير البنائي (لماذا نفعل ذلك؟)</div>
+          <p id="coach-why" class="text-xs text-[var(--foreground)] leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- صندوق التحدي التفاعلي -->
+      <div id="challenge-box" class="hidden mt-3 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🤔</span>
+          <span id="challenge-question" class="text-xs md:text-sm font-bold text-[var(--foreground)]"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="text" id="challenge-input" placeholder="اكتب الرقم هنا"
+            onkeydown="if(event.key==='Enter') checkChallengeAnswer()"
+            class="w-28 px-3 py-1.5 text-sm font-bold text-center rounded-lg bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)]">
+          <button onclick="checkChallengeAnswer()" class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 text-white hover:bg-emerald-500">
+            تحقق وتقدم ◀
+          </button>
+          <span id="challenge-feedback" class="text-xs font-bold"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- شبكة النماذج الثلاثة (من اليمين إلى اليسار: ١. المحسوس ← ٢. شبه المحسوس ← ٣. المجرد) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+      <!-- العمود الأيمن (١): النموذج المحسوس (قطع دينز) -->
+      <div class="lg:col-span-5 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-3 mb-3">
+            <div>
+              <span class="text-xs font-bold text-indigo-400">١. النموذج المحسوس (Concrete)</span>
+              <h3 class="text-base font-bold text-[var(--foreground)]">توزيع وفك قطع دينز (المئات والعشرات والآحاد)</h3>
+            </div>
+            <div class="flex items-center gap-1.5 text-xs">
+              <span class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 font-bold">■ ١٠٠</span>
+              <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-400 font-bold">▮ ١٠</span>
+              <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-bold">• ١</span>
+            </div>
+          </div>
+
+          <!-- مخزون القطع غير الموزعة -->
+          <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-[var(--muted-foreground)]">المخزون المتبقي للتوزيع أو الفك:</span>
+              <span id="bank-summary-badge" class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-500"></span>
+            </div>
+            <div id="concrete-bank" class="min-h-[68px] flex flex-wrap items-center gap-3 p-2 rounded-lg border border-dashed border-[var(--border)]"></div>
+          </div>
+
+          <!-- القطاعات المتساوية -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-[var(--muted-foreground)]" id="groups-header-label">القطاعات المتساوية:</span>
+              <span class="text-xs font-bold text-emerald-500" id="per-group-badge"></span>
+            </div>
+            <div id="concrete-groups" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[340px] overflow-y-auto pl-1"></div>
+          </div>
+        </div>
+
+        <div class="mt-3 pt-2.5 border-t border-[var(--border)] text-xs text-[var(--muted-foreground)]">
+          فك لوح المئة (١٠٠) إلى ١٠ عشرات هو المعنى العلمي الحقيقي لخطوة "إنزال الرقم" في القسمة المطولة!
+        </div>
+      </div>
+
+      <!-- العمود الأوسط (٢): النموذج شبه المحسوس (نموذج المساحة الهندسي من اليمين لليسار) -->
+      <div class="lg:col-span-4 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-3 mb-3">
+            <div>
+              <span class="text-xs font-bold text-sky-400">٢. النموذج شبه المحسوس (Pictorial)</span>
+              <h3 class="text-base font-bold text-[var(--foreground)]">نموذج المساحة الهندسي (من اليمين لليسار)</h3>
+            </div>
+            <span class="text-xs px-2 py-0.5 rounded bg-sky-500/15 text-sky-400 font-bold">المساحة = الطول × العرض</span>
+          </div>
+
+          <p class="text-xs text-[var(--muted-foreground)] mb-3 leading-relaxed">
+            نبحث هندسياً عن <strong>طول المستطيل</strong> إذا علمنا أن مساحته الكلية (<span id="area-total-lbl" class="font-bold text-[var(--foreground)]"></span>) وعرضه الثابت على اليمين (<span id="area-width-lbl" class="font-bold text-[var(--foreground)]"></span>).
+          </p>
+
+          <!-- رسم المستطيل من اليمين لليسار -->
+          <div id="area-model-container" class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]"></div>
+
+          <!-- ملخص معادلات المساحة -->
+          <div id="area-equations" class="mt-3 space-y-2"></div>
+        </div>
+
+        <div class="mt-3 pt-2.5 border-t border-[var(--border)] text-xs text-[var(--muted-foreground)]">
+          يبدأ بناء المستطيل من اليمين (قسم المئات ثم العشرات ثم الآحاد).
+        </div>
+      </div>
+
+      <!-- العمود الأيسر (٣): النموذج المجرد (القسمة المطولة بالرمز العربي) -->
+      <div class="lg:col-span-3 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between border-b border-[var(--border)] pb-3 mb-3">
+            <div>
+              <span class="text-xs font-bold text-emerald-400">٣. النموذج المجرد (Abstract)</span>
+              <h3 class="text-base font-bold text-[var(--foreground)]">القسمة المطولة (الكاف العربية)</h3>
+            </div>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold">÷ × − ↓</span>
+          </div>
+
+          <!-- دورة العمليات الأربع -->
+          <div class="grid grid-cols-4 gap-1.5 mb-3 text-center">
+            <div id="op-pill-divide" class="p-1.5 rounded-lg border border-[var(--border)] text-xs font-bold transition-all">
+              <div class="text-sm">÷</div>
+              <div>اقسم</div>
+            </div>
+            <div id="op-pill-multiply" class="p-1.5 rounded-lg border border-[var(--border)] text-xs font-bold transition-all">
+              <div class="text-sm">×</div>
+              <div>اضرب</div>
+            </div>
+            <div id="op-pill-subtract" class="p-1.5 rounded-lg border border-[var(--border)] text-xs font-bold transition-all">
+              <div class="text-sm">−</div>
+              <div>اطرح</div>
+            </div>
+            <div id="op-pill-bringdown" class="p-1.5 rounded-lg border border-[var(--border)] text-xs font-bold transition-all">
+              <div class="text-sm">↓</div>
+              <div>أنزل</div>
+            </div>
+          </div>
+
+          <!-- لوحة القسمة المطولة العربية (المقسوم عليه يمين الكاف، والمقسوم تحت الخط) -->
+          <div class="p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] flex flex-col items-center justify-start min-h-[290px]">
+            <div class="text-xs text-[var(--muted-foreground)] mb-2 flex items-center gap-3">
+              <span>المقسوم تحت الكاف</span>
+              <span>|</span>
+              <span>المقسوم عليه يمين الكاف</span>
+            </div>
+            <div id="abstract-notation" class="my-auto"></div>
+          </div>
+        </div>
+
+        <!-- معادلة التحقق الإقليدية -->
+        <div class="mt-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs">
+          <div class="font-bold text-emerald-500 mb-1">معادلة التحقق الهندسي:</div>
+          <div id="verification-formula" class="font-extrabold text-center text-sm text-[var(--foreground)]"></div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- التبويب الثاني: المختبر الحر لقطع دينز                                    -->
+  <!-- ========================================================================= -->
+  <section id="view-sandbox" class="hidden max-w-7xl mx-auto space-y-5">
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
+        <div>
+          <span class="text-xs font-bold text-indigo-400">المختبر الحر للتعلم بالاكتشاف</span>
+          <h2 class="text-lg font-bold text-[var(--foreground)]">وزّع وفُكّ قطع دينز بيدك لاكتشاف ناتج القسمة والباقي!</h2>
+          <p class="text-xs text-[var(--muted-foreground)] mt-0.5">
+            عندما يكون عدد القطع في منزلة ما أقل من المقسوم عليه، اضغط على زر <strong>"فك القطعة"</strong> لتحويلها إلى ١٠ قطع من المنزلة الأصغر.
+          </p>
+        </div>
+        <button onclick="initSandbox()" class="px-3.5 py-2 text-xs font-bold rounded-xl border border-[var(--border)] hover:bg-[var(--background)] transition shrink-0">
+          🔄 إعادة ضبط المختبر الحر
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+        <!-- التحكم بالمئات -->
+        <div class="p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] flex flex-col justify-between gap-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-indigo-400">ألواح المئات (١٠٠)</span>
+            <span id="sb-count-100" class="px-2.5 py-0.5 text-sm font-bold rounded-lg bg-indigo-500/15 text-indigo-400">٠</span>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)]">يتطلب التوزيع المتساوي <span class="sb-divisor-lbl font-bold"></span> ألواح مئات على الأقل.</p>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="sandboxDistribute(100)" id="sb-dist-100" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-40 transition">
+              وزّع ١ مئة لكل قطاع
+            </button>
+            <button onclick="sandboxUngroup(100)" id="sb-ungroup-100" class="px-3 py-2 text-xs font-bold rounded-lg border border-indigo-500/40 text-indigo-400 hover:bg-indigo-500/10 disabled:opacity-40 transition">
+              🔨 فك ١ مئة ← ١٠ عشرات
+            </button>
+          </div>
+        </div>
+
+        <!-- التحكم بالعشرات -->
+        <div class="p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] flex flex-col justify-between gap-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-sky-400">أعمدة العشرات (١٠)</span>
+            <span id="sb-count-10" class="px-2.5 py-0.5 text-sm font-bold rounded-lg bg-sky-500/15 text-sky-400">٠</span>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)]">يتطلب التوزيع المتساوي <span class="sb-divisor-lbl font-bold"></span> أعمدة عشرات على الأقل.</p>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="sandboxDistribute(10)" id="sb-dist-10" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white hover:bg-sky-500 disabled:opacity-40 transition">
+              وزّع ١ عشرة لكل قطاع
+            </button>
+            <button onclick="sandboxUngroup(10)" id="sb-ungroup-10" class="px-3 py-2 text-xs font-bold rounded-lg border border-sky-500/40 text-sky-400 hover:bg-sky-500/10 disabled:opacity-40 transition">
+              🔨 فك ١ عشرة ← ١٠ آحاد
+            </button>
+          </div>
+        </div>
+
+        <!-- التحكم بالآحاد -->
+        <div class="p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] flex flex-col justify-between gap-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-amber-400">مكعبات الآحاد (١)</span>
+            <span id="sb-count-1" class="px-2.5 py-0.5 text-sm font-bold rounded-lg bg-amber-500/15 text-amber-400">٠</span>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)]">وزّع الآحاد بالتساوي حتى يتبقى أقل من <span class="sb-divisor-lbl font-bold"></span>.</p>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="sandboxDistribute(1)" id="sb-dist-1" class="flex-1 px-3 py-2 text-xs font-bold rounded-lg bg-amber-600 text-white hover:bg-amber-500 disabled:opacity-40 transition">
+              وزّع ١ واحد لكل قطاع
+            </button>
+            <button onclick="sandboxDistributeAll(1)" id="sb-dist-all-1" class="px-3 py-2 text-xs font-bold rounded-lg border border-amber-500/40 text-amber-400 hover:bg-amber-500/10 disabled:opacity-40 transition">
+              ⚡ وزّع أقصى آحاد ممكنة
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="sb-status-banner" class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs md:text-sm font-semibold text-[var(--foreground)] mb-4"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div class="lg:col-span-4 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+          <h4 class="text-xs font-bold text-[var(--muted-foreground)] mb-2">المخزون غير الموزع حالياً:</h4>
+          <div id="sb-bank-visual" class="min-h-[140px] flex flex-wrap items-center gap-2.5 p-2"></div>
+        </div>
+        <div class="lg:col-span-8 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+          <h4 class="text-xs font-bold text-[var(--muted-foreground)] mb-2">
+            القطاعات المتساوية (نصيب كل قطاع حتى الآن: <span id="sb-quotient-live" class="text-emerald-500 font-bold text-sm">٠</span>):
+          </h4>
+          <div id="sb-groups-visual" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- التبويب الثالث: مهندس المساحات الجزئية الحر                               -->
+  <!-- ========================================================================= -->
+  <section id="view-area-builder" class="hidden max-w-7xl mx-auto space-y-5">
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
+        <div>
+          <span class="text-xs font-bold text-sky-400">نموذج نواتج القسمة الجزئية (من اليمين لليسار)</span>
+          <h2 class="text-lg font-bold text-[var(--foreground)]">ابْنِ مستطيل المساحة بدفعات من اختيارك!</h2>
+          <p class="text-xs text-[var(--muted-foreground)] mt-0.5">
+            اقتطع من المساحة الكلية دفعات مريحة لك (٢٠٠، ١٠٠، ٥٠، ٢٠، ١٠، ٥، ٢، ١) وشاهد المستطيل ينمو من اليمين إلى اليسار.
+          </p>
+        </div>
+        <button onclick="initAreaBuilder()" class="px-3.5 py-2 text-xs font-bold rounded-xl border border-[var(--border)] hover:bg-[var(--background)] transition shrink-0">
+          🔄 تصفير المستطيل والبدء من جديد
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-4">
+        <div class="lg:col-span-5 space-y-4">
+          <div class="p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-[var(--muted-foreground)]">المساحة المتبقية للتغطية:</span>
+              <span id="ab-remaining-badge" class="text-base font-bold text-amber-500"></span>
+            </div>
+            <p class="text-xs text-[var(--muted-foreground)] mb-3">
+              اختر طول الدفعة التي تريد إضافتها (عرض المستطيل الثابت = <span id="ab-divisor-lbl" class="font-bold text-[var(--foreground)]"></span>):
+            </p>
+            <div id="ab-chunk-buttons" class="grid grid-cols-4 gap-2"></div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+            <h4 class="text-xs font-bold text-[var(--muted-foreground)] mb-2">سجل الدفعات المقتطعة:</h4>
+            <div id="ab-history-list" class="space-y-1.5 text-xs max-h-[200px] overflow-y-auto"></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-[var(--muted-foreground)]">المخطط الهندسي التراكمي للمستطيل (ينمو من اليمين لليسار):</span>
+              <span id="ab-total-quotient" class="text-sm font-bold text-emerald-500"></span>
+            </div>
+            <div id="ab-visual-canvas" class="min-h-[220px] flex items-center"></div>
+          </div>
+          <div id="ab-completion-msg" class="mt-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-semibold hidden"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // =========================================================================
+    // محول الأرقام إلى الأرقام العربية المشرقية (٠١٢٣٤٥٦٧٨٩) حصرياً
+    // =========================================================================
+    const AR_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+    function toAr(val) {
+      if (val === null || val === undefined) return '';
+      return String(val).replace(/\d/g, d => AR_DIGITS[d]);
+    }
+
+    function fromAr(str) {
+      if (!str) return NaN;
+      const normalized = String(str)
+        .replace(/[٠-٩]/g, d => AR_DIGITS.indexOf(d))
+        .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+        .replace(/[^\d]/g, '');
+      return parseInt(normalized, 10);
+    }
+
+    // =========================================================================
+    // سيناريوهات STEM وحالة التطبيق
+    // =========================================================================
+    const STEM_SCENARIOS = [
+      {
+        dividend: 432,
+        divisor: 3,
+        icon: '☀️',
+        title: 'مشروع محطة الطاقة الشمسية',
+        desc: 'توزيع ٤٣٢ خلية كهروضوئية مرتبة في ألواح مئات (١٠٠) وأعمدة عشرات (١٠) وخلايا مفردة (١) بالتساوي على ٣ قطاعات هندسية.'
+      },
+      {
+        dividend: 538,
+        divisor: 4,
+        icon: '🤖',
+        title: 'مهمة كبسولات استكشاف المريخ',
+        desc: 'توزيع ٥٣٨ وحدة استشعار جيولوجية بالتساوي على ٤ مركبات فضائية، ومعرفة الوحدات المتبقية في القاعدة.'
+      },
+      {
+        dividend: 756,
+        divisor: 6,
+        icon: '🌱',
+        title: 'تصميم الصوبات الزراعية الذكية',
+        desc: 'توزيع ٧٥٦ شتلة مائية على ٦ أحواض متوازية، وحساب طول كل حوض هندسياً.'
+      },
+      {
+        dividend: 829,
+        divisor: 5,
+        icon: '💧',
+        title: 'شبكة مرشحات تحلية المياه',
+        desc: 'توزيع ٨٢٩ غشاء ترشيح نانوي بالتساوي على ٥ خطوط تحلية رئيسية.'
+      }
+    ];
+
+    let state = {
+      scenarioIndex: 0,
+      dividend: 432,
+      divisor: 3,
+      steps: [],
+      currentStepIndex: 0,
+      challengeMode: false,
+      activeTab: 'guided',
+      sb: { h: 4, t: 3, o: 2, gh: 0, gt: 0, go: 0, msg: '' },
+      ab: { remaining: 432, chunks: [] }
+    };
+
+    // =========================================================================
+    // بناء الخطوات البنائية (CPA) بالأرقام العربية الكاملة
+    // =========================================================================
+    function buildConstructivistSteps(dividend, divisor) {
+      const H = Math.floor(dividend / 100);
+      const T = Math.floor((dividend % 100) / 10);
+      const O = dividend % 10;
+
+      const steps = [];
+
+      // خطوة ٠: التمثيل الأولي
+      steps.push({
+        place: 'التمثيل البنائي الأولي',
+        op: 'setup',
+        opLabel: 'تحليل العدد إلى منازل',
+        title: `تمثيل المقسوم (${toAr(dividend)}) بقطع دينز وتجهيز (${toAr(divisor)}) قطاعات متساوية`,
+        body: `يتكون العدد ${toAr(dividend)} من ${toAr(H)} مئات (${toAr(H * 100)}) و ${toAr(T)} عشرات (${toAr(T * 10)}) و ${toAr(O)} آحاد (${toAr(O)}). نبدأ القسمة دائماً من المنزلة الأكبر (المئات).`,
+        why: `نبدأ من المنزلة الأكبر حتى نتمكن من فكّ أي مئات متبقية إلى عشرات وضمها إلى العشرات الموجودة لدينا!`,
+        bank: { h: H, t: T, o: O },
+        perGroup: { h: 0, t: 0, o: 0 },
+        areaSegments: [],
+        algoStage: 0,
+        challenge: null
+      });
+
+      // مرحلة المئات
+      const qH = Math.floor(H / divisor);
+      const usedH = qH * divisor;
+      const remH = H - usedH;
+
+      steps.push({
+        place: 'منزلة المئات (١٠٠)',
+        op: 'divide',
+        opLabel: 'اقسم (÷) المئات',
+        title: qH > 0
+          ? `توزيع ${toAr(H)} مئات على ${toAr(divisor)} قطاعات ← يأخذ كل قطاع ${toAr(qH)} مئة`
+          : `${toAr(H)} مئات أقل من ${toAr(divisor)} قطاعات ← يأخذ كل قطاع ٠ مئة ونستعد لفك المئات`,
+        body: qH > 0
+          ? `وزعنا ${toAr(usedH)} مئات بالتساوي (${toAr(qH)} مئة لكل قطاع = ${toAr(qH * 100)}). تبقى في المخزون ${toAr(remH)} مئة.`
+          : `بما أن ${toAr(H)} أصغر من ${toAr(divisor)}، لا تكفي المئات لإعطاء لوح كامل لكل قطاع، فنضع ٠ في مئات الناتج.`,
+        why: `الرقم ${toAr(qH)} في منزلة مئات الناتج قيمته المكانية ${toAr(qH * 100)}، ويمثل طول القسم الأول من المستطيل الهندسي.`,
+        bank: { h: remH, t: T, o: O },
+        perGroup: { h: qH, t: 0, o: 0 },
+        areaSegments: qH > 0 ? [{ place: 'h', length: qH * 100, area: usedH * 100, color: 'indigo' }] : [],
+        algoStage: 1,
+        challenge: {
+          question: `لدينا ${toAr(H)} مئات نريد توزيعها بالتساوي على ${toAr(divisor)} قطاعات. كم مئة كاملة يأخذ كل قطاع؟`,
+          answer: qH
+        }
+      });
+
+      steps.push({
+        place: 'منزلة المئات (١٠٠)',
+        op: 'multiply_subtract',
+        opLabel: 'اضرب (×) واطرح (−)',
+        title: `حساب المئات الموزعة (${toAr(qH)} × ${toAr(divisor)} = ${toAr(usedH)}) وطرحها: ${toAr(H)} − ${toAr(usedH)} = ${toAr(remH)} مئة`,
+        body: `استهلكنا ${toAr(usedH)} مئات (${toAr(usedH * 100)} عنصر)، وبقيت لدينا ${toAr(remH)} مئة غير موزعة.`,
+        why: `الضرب يحسب ما وزعناه فعلاً على القطاعات، والطرح يكشف كم لوح مئة بقي في المخزون لنفكه إلى عشرات.`,
+        bank: { h: remH, t: T, o: O },
+        perGroup: { h: qH, t: 0, o: 0 },
+        areaSegments: qH > 0 ? [{ place: 'h', length: qH * 100, area: usedH * 100, color: 'indigo' }] : [],
+        algoStage: 2,
+        challenge: {
+          question: `بعد توزيع ${toAr(usedH)} مئات من أصل ${toAr(H)} مئات، كم مئة بقيت بدون توزيع؟`,
+          answer: remH
+        }
+      });
+
+      // فك المئات وإنزال العشرات
+      const totalT = remH * 10 + T;
+      steps.push({
+        place: 'الانتقال للعشرات (١٠)',
+        op: 'bringdown',
+        opLabel: 'فك المئات وإنزال العشرات (↓)',
+        title: remH > 0
+          ? `فك ${toAr(remH)} مئة متبقية إلى ${toAr(remH * 10)} عشرات + ضم ${toAr(T)} عشرات أصلية = ${toAr(totalT)} عشرة`
+          : `لم تتبقَّ مئات، فننزل ${toAr(T)} عشرات الأصلية مباشرة لتوزيعها`,
+        body: `أصبح في مخزوننا الآن ${toAr(totalT)} عمود عشرات (قيمتها ${toAr(totalT * 10)}) جاهزة للتوزيع على ${toAr(divisor)} قطاعات.`,
+        why: `إنزال رقم العشرات (${toAr(T)}) بجانب باقي المئات (${toAr(remH)}) ليكوّن (${toAr(totalT)}) هو الترجمة الرمزية لفك كل مئة إلى ١٠ عشرات!`,
+        bank: { h: 0, t: totalT, o: O },
+        perGroup: { h: qH, t: 0, o: 0 },
+        areaSegments: qH > 0 ? [{ place: 'h', length: qH * 100, area: usedH * 100, color: 'indigo' }] : [],
+        algoStage: 3,
+        challenge: {
+          question: `إذا فككنا ${toAr(remH)} مئة إلى عشرات وأضفنا إليها ${toAr(T)} عشرات، فكم عشرة يصبح لدينا؟`,
+          answer: totalT
+        }
+      });
+
+      // مرحلة العشرات
+      const qT = Math.floor(totalT / divisor);
+      const usedT = qT * divisor;
+      const remT = totalT - usedT;
+
+      const areaAfterTens = [];
+      if (qH > 0) areaAfterTens.push({ place: 'h', length: qH * 100, area: usedH * 100, color: 'indigo' });
+      if (qT > 0) areaAfterTens.push({ place: 't', length: qT * 10, area: usedT * 10, color: 'sky' });
+
+      steps.push({
+        place: 'منزلة العشرات (١٠)',
+        op: 'divide',
+        opLabel: 'اقسم (÷) العشرات',
+        title: `توزيع ${toAr(totalT)} عشرة على ${toAr(divisor)} قطاعات ← يأخذ كل قطاع ${toAr(qT)} عشرات`,
+        body: `حصل كل قطاع على ${toAr(qT)} أعمدة عشرات إضافية (${toAr(qT * 10)}). مجموع العشرات الموزعة = ${toAr(usedT)} عشرة (${toAr(usedT * 10)}).`,
+        why: `نكتب ${toAr(qT)} في منزلة عشرات الناتج، ونضيف مستطيلاً فرعياً طوله ${toAr(qT * 10)} ومساحته ${toAr(usedT * 10)}.`,
+        bank: { h: 0, t: remT, o: O },
+        perGroup: { h: qH, t: qT, o: 0 },
+        areaSegments: areaAfterTens,
+        algoStage: 4,
+        challenge: {
+          question: `لدينا ${toAr(totalT)} عشرة نوزعها على ${toAr(divisor)} قطاعات. كم عشرة كاملة يأخذ كل قطاع؟`,
+          answer: qT
+        }
+      });
+
+      steps.push({
+        place: 'منزلة العشرات (١٠)',
+        op: 'multiply_subtract',
+        opLabel: 'اضرب (×) واطرح (−)',
+        title: `طرح العشرات الموزعة (${toAr(qT)} × ${toAr(divisor)} = ${toAr(usedT)}) من ${toAr(totalT)} ← يتبقى ${toAr(remT)} عشرة`,
+        body: `وزعنا ${toAr(usedT)} عشرة من أصل ${toAr(totalT)} عشرة، وبقي في المخزون ${toAr(remT)} عشرة.`,
+        why: `الباقي الجزئي (${toAr(remT)}) أصغر من المقسوم عليه (${toAr(divisor)})، لذلك نفكه إلى آحاد في الخطوة التالية.`,
+        bank: { h: 0, t: remT, o: O },
+        perGroup: { h: qH, t: qT, o: 0 },
+        areaSegments: areaAfterTens,
+        algoStage: 5,
+        challenge: {
+          question: `ما ناتج طرح ${toAr(totalT)} − ${toAr(usedT)} لمعرفة العشرات المتبقية؟`,
+          answer: remT
+        }
+      });
+
+      // فك العشرات وإنزال الآحاد
+      const totalO = remT * 10 + O;
+      steps.push({
+        place: 'الانتقال للآحاد (١)',
+        op: 'bringdown',
+        opLabel: 'فك العشرات وإنزال الآحاد (↓)',
+        title: remT > 0
+          ? `فك ${toAr(remT)} عشرة متبقية إلى ${toAr(remT * 10)} آحاد + ضم ${toAr(O)} آحاد أصلية = ${toAr(totalO)} واحد`
+          : `لم تتبقَّ عشرات، فننزل ${toAr(O)} آحاد مباشرة لتوزيعها`,
+        body: `تحولت ${toAr(remT)} عشرات إلى ${toAr(remT * 10)} مكعبات آحاد، ومع ${toAr(O)} آحاد أصبح لدينا ${toAr(totalO)} وحدة مفردة.`,
+        why: `إنزال رقم الآحاد (${toAr(O)}) بجانب باقي العشرات (${toAr(remT)}) ليصبح (${toAr(totalO)}) يمثل دمج الآحاد بعد فك العشرات.`,
+        bank: { h: 0, t: 0, o: totalO },
+        perGroup: { h: qH, t: qT, o: 0 },
+        areaSegments: areaAfterTens,
+        algoStage: 6,
+        challenge: {
+          question: `بعد فك ${toAr(remT)} عشرات إلى آحاد وإضافة ${toAr(O)} آحاد، كم مكعب واحد يصبح لدينا؟`,
+          answer: totalO
+        }
+      });
+
+      // مرحلة الآحاد والنتيجة النهائية
+      const qO = Math.floor(totalO / divisor);
+      const usedO = qO * divisor;
+      const remO = totalO - usedO;
+      const finalQuotient = Math.floor(dividend / divisor);
+
+      const areaFinal = [...areaAfterTens];
+      if (qO > 0) areaFinal.push({ place: 'o', length: qO, area: usedO, color: 'amber' });
+
+      steps.push({
+        place: 'منزلة الآحاد والنتيجة النهائية',
+        op: 'complete',
+        opLabel: 'اكتمال النمذجة والتحقق',
+        title: `توزيع ${toAr(totalO)} واحد على ${toAr(divisor)} قطاعات ← ${toAr(qO)} لكل قطاع، والباقي النهائي = ${toAr(remO)}`,
+        body: `اكتملت النمذجة! نصيب كل قطاع = ${toAr(qH * 100)} + ${toAr(qT * 10)} + ${toAr(qO)} = ${toAr(finalQuotient)}، والباقي = ${toAr(remO)}.`,
+        why: `مجموع أطوال المستطيل (${toAr(finalQuotient)}) × العرض (${toAr(divisor)}) + الباقي (${toAr(remO)}) = المساحة الكلية (${toAr(dividend)}).`,
+        bank: { h: 0, t: 0, o: remO },
+        perGroup: { h: qH, t: qT, o: qO },
+        areaSegments: areaFinal,
+        algoStage: 7,
+        challenge: {
+          question: `إذا وزعنا ${toAr(totalO)} واحد على ${toAr(divisor)} قطاعات، فكم يأخذ كل قطاع؟`,
+          answer: qO
+        }
+      });
+
+      return {
+        steps,
+        meta: {
+          H, T, O,
+          qH, usedH, remH,
+          totalT, qT, usedT, remT,
+          totalO, qO, usedO, remO,
+          finalQuotient
+        }
+      };
+    }
+
+    // =========================================================================
+    // تحديث وعرض الواجهة الرئيسية
+    // =========================================================================
+    function renderTopControls() {
+      const H = Math.floor(state.dividend / 100);
+      const T = Math.floor((state.dividend % 100) / 10);
+      const O = state.dividend % 10;
+
+      document.getElementById('input-dividend').value = toAr(state.dividend);
+      document.getElementById('input-divisor').value = toAr(state.divisor);
+      document.getElementById('slider-dividend').value = state.dividend;
+      document.getElementById('slider-divisor').value = state.divisor;
+
+      document.getElementById('lbl-place-h').textContent = toAr(H);
+      document.getElementById('lbl-place-t').textContent = toAr(T);
+      document.getElementById('lbl-place-o').textContent = toAr(O);
+
+      // أزرار اختيار المقسوم عليه السريعة (٢ إلى ٩)
+      const qBtns = document.getElementById('divisor-quick-btns');
+      let btnsHTML = '';
+      for (let d = 2; d <= 9; d++) {
+        const active = d === state.divisor;
+        btnsHTML += `
+          <button onclick="setNumbers(state.dividend, ${d})"
+            class="flex-1 py-1 text-xs font-extrabold rounded border transition-all ${
+              active
+                ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
+                : 'bg-[var(--card)] text-[var(--muted-foreground)] border-[var(--border)] hover:border-emerald-500/40'
+            }">
+            ${toAr(d)}
+          </button>
+        `;
+      }
+      qBtns.innerHTML = btnsHTML;
+
+      const q = Math.floor(state.dividend / state.divisor);
+      const r = state.dividend % state.divisor;
+      document.getElementById('live-equation-banner').innerHTML =
+        `${toAr(state.dividend)} ÷ ${toAr(state.divisor)} = <span class="text-emerald-500">${toAr(q)}</span>` +
+        (r > 0 ? ` <span class="text-xs text-rose-400">(والباقي ${toAr(r)})</span>` : ` <span class="text-xs text-sky-400">(قسمة تامة)</span>`);
+    }
+
+    function renderGuidedView() {
+      renderTopControls();
+
+      const model = buildConstructivistSteps(state.dividend, state.divisor);
+      state.steps = model.steps;
+      state.meta = model.meta;
+
+      if (state.currentStepIndex >= state.steps.length) {
+        state.currentStepIndex = state.steps.length - 1;
+      }
+
+      const step = state.steps[state.currentStepIndex];
+
+      // ١. شريط أزرار الخطوات
+      const pillsEl = document.getElementById('step-pills-container');
+      pillsEl.innerHTML = state.steps.map((s, idx) => {
+        const isCurrent = idx === state.currentStepIndex;
+        const isDone = idx < state.currentStepIndex;
+        const cls = isCurrent
+          ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
+          : isDone
+            ? 'bg-emerald-500/15 text-emerald-500 border-emerald-500/30'
+            : 'bg-[var(--background)] text-[var(--muted-foreground)] border-[var(--border)]';
+        return `<button onclick="goToStep(${idx})" class="px-2.5 py-1 text-xs font-bold rounded-lg border transition-all ${cls}">
+          ${idx === 0 ? '٠. البداية' : `خطوة ${toAr(idx)}`}
+        </button>`;
+      }).join('');
+
+      document.getElementById('btn-prev').disabled = state.currentStepIndex === 0;
+      document.getElementById('btn-prev').classList.toggle('opacity-40', state.currentStepIndex === 0);
+
+      // ٢. نصوص الشرح البنائي
+      document.getElementById('current-place-badge').textContent = step.place;
+      document.getElementById('current-op-badge').textContent = step.opLabel;
+      document.getElementById('coach-title').textContent = step.title;
+      document.getElementById('coach-body').textContent = step.body;
+      document.getElementById('coach-why').textContent = step.why;
+
+      // ٣. صندوق التحدي
+      const nextStepObj = state.steps[state.currentStepIndex + 1];
+      const challengeBox = document.getElementById('challenge-box');
+      if (state.challengeMode && nextStepObj && nextStepObj.challenge) {
+        challengeBox.classList.remove('hidden');
+        document.getElementById('challenge-question').textContent = `تحدي الخطوة القادمة: ${nextStepObj.challenge.question}`;
+        document.getElementById('challenge-feedback').textContent = '';
+      } else {
+        challengeBox.classList.add('hidden');
+      }
+
+      // ٤. عرض النماذج الثلاثة
+      renderConcretePanel(step);
+      renderAreaModelPanel(step);
+      renderAbstractAlgorithm(step, model.meta);
+    }
+
+    function createBlocksHTML(h, t, o, compact = false) {
+      let html = '';
+
+      if (h > 0) {
+        html += `<div class="flex flex-wrap items-center gap-1.5">`;
+        for (let i = 0; i < h; i++) {
+          html += `<div title="مئة (١٠٠)" class="block-100 rounded bg-indigo-500 border border-indigo-300 shadow-sm flex items-center justify-center text-white text-xs font-bold">١٠٠</div>`;
+        }
+        html += `</div>`;
+      }
+
+      if (t > 0) {
+        html += `<div class="flex flex-wrap items-center gap-1">`;
+        const maxDisplayT = compact ? 12 : 25;
+        const shownT = Math.min(t, maxDisplayT);
+        for (let i = 0; i < shownT; i++) {
+          html += `<div title="عشرة (١٠)" class="block-10 rounded-sm bg-sky-500 border border-sky-300 shadow-sm"></div>`;
+        }
+        if (t > maxDisplayT) {
+          html += `<span class="text-xs font-bold text-sky-400">+${toAr(t - maxDisplayT)} عشرة</span>`;
+        }
+        html += `</div>`;
+      }
+
+      if (o > 0) {
+        html += `<div class="flex flex-wrap items-center gap-1 max-w-[180px]">`;
+        const maxDisplayO = compact ? 15 : 30;
+        const shownO = Math.min(o, maxDisplayO);
+        for (let i = 0; i < shownO; i++) {
+          html += `<div title="واحد (١)" class="block-1 rounded-sm bg-amber-500 border border-amber-300 shadow-sm"></div>`;
+        }
+        if (o > maxDisplayO) {
+          html += `<span class="text-xs font-bold text-amber-400">+${toAr(o - maxDisplayO)}</span>`;
+        }
+        html += `</div>`;
+      }
+
+      if (h === 0 && t === 0 && o === 0) {
+        html = `<span class="text-xs text-[var(--muted-foreground)]">فارغ (٠)</span>`;
+      }
+      return html;
+    }
+
+    function renderConcretePanel(step) {
+      const bankVal = step.bank.h * 100 + step.bank.t * 10 + step.bank.o;
+      document.getElementById('bank-summary-badge').textContent =
+        `المتبقي: ${toAr(bankVal)} (${toAr(step.bank.h)} مئات، ${toAr(step.bank.t)} عشرات، ${toAr(step.bank.o)} آحاد)`;
+
+      document.getElementById('concrete-bank').innerHTML = createBlocksHTML(step.bank.h, step.bank.t, step.bank.o, false);
+
+      const groupVal = step.perGroup.h * 100 + step.perGroup.t * 10 + step.perGroup.o;
+      document.getElementById('groups-header-label').textContent = `القطاعات المتساوية (${toAr(state.divisor)} قطاعات):`;
+      document.getElementById('per-group-badge').textContent = `نصيب كل قطاع = ${toAr(groupVal)}`;
+
+      let groupsHTML = '';
+      for (let g = 1; g <= state.divisor; g++) {
+        groupsHTML += `
+          <div class="p-2.5 rounded-xl bg-[var(--background)] border border-[var(--border)] flex flex-col justify-between gap-2">
+            <div class="flex items-center justify-between border-b border-[var(--border)] pb-1">
+              <span class="text-xs font-bold text-[var(--foreground)]">قطاع #${toAr(g)}</span>
+              <span class="text-xs font-bold text-emerald-500">${toAr(step.perGroup.h * 100)} + ${toAr(step.perGroup.t * 10)} + ${toAr(step.perGroup.o)} = ${toAr(groupVal)}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 min-h-[42px]">
+              ${createBlocksHTML(step.perGroup.h, step.perGroup.t, step.perGroup.o, true)}
+            </div>
+          </div>
+        `;
+      }
+      document.getElementById('concrete-groups').innerHTML = groupsHTML;
+    }
+
+    // عرض نموذج المساحة من اليمين إلى اليسار (العرض على اليمين، والمستطيلات تنمو نحو اليسار)
+    function renderAreaModelPanel(step) {
+      document.getElementById('area-total-lbl').textContent = toAr(state.dividend);
+      document.getElementById('area-width-lbl').textContent = toAr(state.divisor);
+
+      const segments = step.areaSegments;
+      const usedArea = segments.reduce((acc, s) => acc + s.area, 0);
+      const remArea = state.dividend - usedArea;
+      const totalLen = segments.reduce((acc, s) => acc + s.length, 0);
+
+      let segmentsHTML = '';
+      if (segments.length === 0) {
+        segmentsHTML = `
+          <div class="w-full h-32 rounded-lg border-2 border-dashed border-[var(--border)] flex flex-col items-center justify-center text-center p-3">
+            <span class="text-xs font-bold text-[var(--muted-foreground)]">المساحة الكلية للمستطيل = ${toAr(state.dividend)}</span>
+            <span class="text-xs text-[var(--muted-foreground)] mt-1">انتقل للخطوة التالية لبدء بناء المستطيل من اليمين إلى اليسار</span>
+          </div>
+        `;
+      } else {
+        const colorMap = {
+          indigo: 'bg-indigo-500/20 border-indigo-500 text-indigo-400',
+          sky: 'bg-sky-500/20 border-sky-500 text-sky-400',
+          amber: 'bg-amber-500/20 border-amber-500 text-amber-400'
+        };
+
+        const flexBoxes = segments.map(seg => {
+          const flexWeight = seg.place === 'h' ? 5 : seg.place === 't' ? 3.5 : 2.5;
+          return `
+            <div style="flex: ${flexWeight}" class="flex flex-col items-center">
+              <div class="text-xs font-bold mb-1 text-[var(--foreground)]">+${toAr(seg.length)}</div>
+              <div class="w-full h-28 rounded-lg border-2 ${colorMap[seg.color]} flex flex-col items-center justify-center p-2 text-center transition-all">
+                <span class="text-xs font-bold">${toAr(state.divisor)} × ${toAr(seg.length)}</span>
+                <span class="text-sm font-extrabold mt-1">= ${toAr(seg.area)}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        const remBox = remArea > 0 ? `
+          <div style="flex: 2" class="flex flex-col items-center">
+            <div class="text-xs font-bold mb-1 text-[var(--muted-foreground)]">${step.algoStage === 7 ? 'الباقي' : 'متبقي'}</div>
+            <div class="w-full h-28 rounded-lg border-2 border-dashed border-rose-500/40 bg-rose-500/10 flex flex-col items-center justify-center p-1.5 text-center">
+              <span class="text-xs font-bold text-rose-400">${toAr(remArea)}</span>
+            </div>
+          </div>
+        ` : '';
+
+        // لأن اتجاه الصفحة RTL، العنصر الأول في flex يظهر في أقصى اليمين (عرض المستطيل)، وتنمو الأقسام باتجاه اليسار
+        segmentsHTML = `
+          <div class="flex items-end gap-2">
+            <div class="h-28 flex items-center justify-center px-2.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-500 font-extrabold text-base shrink-0" title="عرض المستطيل (المقسوم عليه)">
+              ${toAr(state.divisor)}
+            </div>
+            <div class="flex-1 flex items-end gap-1.5">
+              ${flexBoxes}
+              ${remBox}
+            </div>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[var(--border)] flex items-center justify-between text-xs">
+            <span class="text-[var(--muted-foreground)]">مجموع الأطوال في الأعلى (خارج القسمة):</span>
+            <span class="font-bold text-emerald-500">${segments.map(s => toAr(s.length)).join(' + ')} = ${toAr(totalLen)}</span>
+          </div>
+        `;
+      }
+
+      document.getElementById('area-model-container').innerHTML = segmentsHTML;
+
+      document.getElementById('area-equations').innerHTML = `
+        <div class="p-2.5 rounded-lg bg-[var(--background)] border border-[var(--border)] flex items-center justify-between text-xs">
+          <span class="text-[var(--muted-foreground)]">المساحة الموزعة حتى الآن:</span>
+          <span class="font-bold text-[var(--foreground)]">${toAr(usedArea)} من أصل ${toAr(state.dividend)}</span>
+        </div>
+        <div class="p-2.5 rounded-lg bg-[var(--background)] border border-[var(--border)] flex items-center justify-between text-xs">
+          <span class="text-[var(--muted-foreground)]">المساحة الفائضة (الباقي):</span>
+          <span class="font-bold text-amber-500">${toAr(remArea)}</span>
+        </div>
+      `;
+    }
+
+    // عرض القسمة المطولة بالرمز العربي (الكاف العربية: المقسوم عليه على اليمين، والمقسوم تحت الخط، وخارج القسمة في الأعلى)
+    function renderAbstractAlgorithm(step, m) {
+      const opPills = ['divide', 'multiply', 'subtract', 'bringdown'];
+      opPills.forEach(p => {
+        document.getElementById(`op-pill-${p}`).className =
+          'p-1.5 rounded-lg border border-[var(--border)] text-xs font-bold transition-all text-[var(--muted-foreground)]';
+      });
+
+      if (step.op === 'divide') {
+        document.getElementById('op-pill-divide').className = 'p-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-400 text-xs font-bold scale-105';
+      } else if (step.op === 'multiply_subtract') {
+        document.getElementById('op-pill-multiply').className = 'p-1.5 rounded-lg border border-sky-500 bg-sky-500/20 text-sky-400 text-xs font-bold scale-105';
+        document.getElementById('op-pill-subtract').className = 'p-1.5 rounded-lg border border-amber-500 bg-amber-500/20 text-amber-400 text-xs font-bold scale-105';
+      } else if (step.op === 'bringdown') {
+        document.getElementById('op-pill-bringdown').className = 'p-1.5 rounded-lg border border-indigo-500 bg-indigo-500/20 text-indigo-400 text-xs font-bold scale-105';
+      }
+
+      const stg = step.algoStage;
+      const qHCell = stg >= 1 ? `<span class="text-indigo-400">${toAr(m.qH)}</span>` : `<span class="opacity-20">·</span>`;
+      const qTCell = stg >= 4 ? `<span class="text-sky-400">${toAr(m.qT)}</span>` : `<span class="opacity-20">·</span>`;
+      const qOCell = stg >= 7 ? `<span class="text-amber-400">${toAr(m.qO)}</span>` : `<span class="opacity-20">·</span>`;
+
+      let gridCells = '';
+
+      // الصف ١: خارج القسمة فوق خط الكاف
+      gridCells += `
+        <div>${qHCell}</div>
+        <div>${qTCell}</div>
+        <div>${qOCell}</div>
+        <div></div>
+        <div class="text-xs font-bold text-emerald-500 pr-1">الناتج</div>
+      `;
+
+      // الصف ٢: المقسوم تحت خط الكاف، والمقسوم عليه على اليمين
+      gridCells += `
+        <div class="ar-kaf-dividend col-span-3 w-full grid grid-cols-3 text-center py-0.5">
+          <span class="text-indigo-400">${toAr(m.H)}</span>
+          <span class="text-sky-400">${toAr(m.T)}</span>
+          <span class="text-amber-400">${toAr(m.O)}</span>
+        </div>
+        <div></div>
+        <div class="text-emerald-500 font-extrabold text-2xl pr-1" title="المقسوم عليه">${toAr(state.divisor)}</div>
+      `;
+
+      // الصف ٣: طرح المئات
+      if (stg >= 2) {
+        gridCells += `
+          <div class="ar-sub-line w-full text-center text-indigo-400">${toAr(m.usedH)}</div>
+          <div class="ar-sub-line w-full text-center text-indigo-400">−</div>
+          <div></div>
+          <div></div>
+          <div></div>
+        `;
+      }
+
+      // الصف ٤: باقي المئات وإنزال العشرات
+      if (stg === 2) {
+        gridCells += `
+          <div>${toAr(m.remH)}</div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        `;
+      } else if (stg >= 3) {
+        gridCells += `
+          <div class="text-indigo-400">${toAr(m.remH)}</div>
+          <div class="text-sky-400 underline decoration-dotted">${toAr(m.T)}</div>
+          <div class="text-xs text-sky-400">↓</div>
+          <div></div>
+          <div class="text-xs text-[var(--muted-foreground)] font-normal">${toAr(m.totalT)} عشرة</div>
+        `;
+      }
+
+      // الصف ٥: طرح العشرات
+      if (stg >= 5) {
+        const uT1 = m.usedT >= 10 ? toAr(Math.floor(m.usedT / 10)) : '';
+        const uT0 = toAr(m.usedT % 10);
+        gridCells += `
+          <div class="ar-sub-line w-full text-center text-sky-400">${uT1}</div>
+          <div class="ar-sub-line w-full text-center text-sky-400">${uT0}</div>
+          <div class="ar-sub-line w-full text-center text-sky-400">−</div>
+          <div></div>
+          <div></div>
+        `;
+      }
+
+      // الصف ٦: باقي العشرات وإنزال الآحاد
+      if (stg === 5) {
+        gridCells += `
+          <div></div>
+          <div>${toAr(m.remT)}</div>
+          <div></div>
+          <div></div>
+          <div></div>
+        `;
+      } else if (stg >= 6) {
+        gridCells += `
+          <div></div>
+          <div class="text-sky-400">${toAr(m.remT)}</div>
+          <div class="text-amber-400 underline decoration-dotted">${toAr(m.O)}</div>
+          <div></div>
+          <div class="text-xs text-[var(--muted-foreground)] font-normal">${toAr(m.totalO)} واحد</div>
+        `;
+      }
+
+      // الصف ٧: طرح الآحاد والباقي النهائي
+      if (stg >= 7) {
+        const uO1 = m.usedO >= 10 ? toAr(Math.floor(m.usedO / 10)) : '';
+        const uO0 = toAr(m.usedO % 10);
+        gridCells += `
+          <div class="ar-sub-line w-full text-center text-amber-400">−</div>
+          <div class="ar-sub-line w-full text-center text-amber-400">${uO1}</div>
+          <div class="ar-sub-line w-full text-center text-amber-400">${uO0}</div>
+          <div></div>
+          <div></div>
+
+          <div></div>
+          <div></div>
+          <div class="text-rose-400 font-extrabold">${toAr(m.remO)}</div>
+          <div></div>
+          <div class="text-xs text-rose-400 font-bold">الباقي</div>
+        `;
+      }
+
+      document.getElementById('abstract-notation').innerHTML = `<div class="ar-division-grid">${gridCells}</div>`;
+
+      // معادلة التحقق بالعربية
+      document.getElementById('verification-formula').textContent =
+        `(${toAr(m.finalQuotient)} × ${toAr(state.divisor)}) + ${toAr(m.remO)} = ${toAr(state.dividend)}`;
+    }
+
+    // =========================================================================
+    // دوال التعديل الفوري للمقسوم والمقسوم عليه
+    // =========================================================================
+    function setNumbers(divd, divs, keepScenario = false) {
+      divd = Math.max(12, Math.min(999, isNaN(divd) ? 432 : divd));
+      divs = Math.max(2, Math.min(9, isNaN(divs) ? 3 : divs));
+
+      state.dividend = divd;
+      state.divisor = divs;
+      state.currentStepIndex = 0;
+
+      if (!keepScenario) {
+        document.getElementById('stem-icon').textContent = '🔬';
+        document.getElementById('stem-title').textContent = `نمذجة مخصصة (${toAr(divd)} ÷ ${toAr(divs)})`;
+        document.getElementById('stem-desc').textContent =
+          `توزيع ${toAr(divd)} عنصراً بالتساوي على ${toAr(divs)} قطاعات هندسية، واكتشاف خارج القسمة والباقي.`;
+
+        for (let i = 0; i < STEM_SCENARIOS.length; i++) {
+          document.getElementById(`scen-${i}`).className =
+            'px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] hover:border-emerald-500/50 transition-all';
+        }
+      }
+
+      refreshAllViews();
+    }
+
+    function stepDividend(delta) {
+      setNumbers(state.dividend + delta, state.divisor);
+    }
+
+    function stepDivisor(delta) {
+      setNumbers(state.dividend, state.divisor + delta);
+    }
+
+    function handleArabicInput(inputEl, target) {
+      const val = fromAr(inputEl.value);
+      if (isNaN(val)) return;
+      if (target === 'dividend' && val >= 12 && val <= 999) {
+        setNumbers(val, state.divisor);
+      } else if (target === 'divisor' && val >= 2 && val <= 9) {
+        setNumbers(state.dividend, val);
+      }
+    }
+
+    function loadScenario(idx) {
+      state.scenarioIndex = idx;
+      const scen = STEM_SCENARIOS[idx];
+      document.getElementById('stem-icon').textContent = scen.icon;
+      document.getElementById('stem-title').textContent = scen.title;
+      document.getElementById('stem-desc').textContent = scen.desc;
+
+      for (let i = 0; i < STEM_SCENARIOS.length; i++) {
+        const btn = document.getElementById(`scen-${i}`);
+        btn.className = i === idx
+          ? 'px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 text-white border border-emerald-500 shadow-sm transition-all'
+          : 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] hover:border-emerald-500/50 transition-all';
+      }
+
+      setNumbers(scen.dividend, scen.divisor, true);
+    }
+
+    function refreshAllViews() {
+      renderGuidedView();
+      initSandbox();
+      initAreaBuilder();
+    }
+
+    function nextStep() {
+      if (state.currentStepIndex < state.steps.length - 1) {
+        state.currentStepIndex++;
+        renderGuidedView();
+      }
+    }
+
+    function prevStep() {
+      if (state.currentStepIndex > 0) {
+        state.currentStepIndex--;
+        renderGuidedView();
+      }
+    }
+
+    function resetSteps() {
+      state.currentStepIndex = 0;
+      renderGuidedView();
+    }
+
+    function goToStep(idx) {
+      state.currentStepIndex = idx;
+      renderGuidedView();
+    }
+
+    function toggleChallengeMode() {
+      state.challengeMode = document.getElementById('toggle-challenge').checked;
+      renderGuidedView();
+    }
+
+    function checkChallengeAnswer() {
+      const nextStepObj = state.steps[state.currentStepIndex + 1];
+      if (!nextStepObj || !nextStepObj.challenge) return;
+
+      const userVal = fromAr(document.getElementById('challenge-input').value);
+      const fb = document.getElementById('challenge-feedback');
+
+      if (userVal === nextStepObj.challenge.answer) {
+        fb.textContent = '✅ أحسنت! إجابة صحيحة.';
+        fb.className = 'text-xs font-bold text-emerald-500';
+        document.getElementById('challenge-input').value = '';
+        setTimeout(() => nextStep(), 400);
+      } else {
+        fb.textContent = `❌ حاول مجدداً (وزّع بالتساوي على ${toAr(state.divisor)})`;
+        fb.className = 'text-xs font-bold text-rose-400';
+      }
+    }
+
+    function setMainTab(tabName) {
+      state.activeTab = tabName;
+      ['guided', 'sandbox', 'area-builder'].forEach(t => {
+        document.getElementById(`view-${t}`).classList.toggle('hidden', t !== tabName);
+        document.getElementById(`tab-${t}`).className = t === tabName
+          ? 'px-4 py-2 text-xs md:text-sm font-bold rounded-lg bg-emerald-600 text-white shadow-sm transition-all'
+          : 'px-4 py-2 text-xs md:text-sm font-semibold rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all';
+      });
+      document.getElementById('guided-controls-bar').classList.toggle('hidden', tabName !== 'guided');
+    }
+
+    // =========================================================================
+    // التبويب الثاني: المختبر الحر لقطع دينز
+    // =========================================================================
+    function initSandbox() {
+      const H = Math.floor(state.dividend / 100);
+      const T = Math.floor((state.dividend % 100) / 10);
+      const O = state.dividend % 10;
+
+      state.sb = {
+        h: H, t: T, o: O,
+        gh: 0, gt: 0, go: 0,
+        msg: `ابدأ بتوزيع ألواح المئات (${toAr(H)}) على القطاعات (${toAr(state.divisor)}). إذا لم تكفِ الألواح، اضغط على "فك ١ مئة ← ١٠ عشرات"!`
+      };
+      renderSandbox();
+    }
+
+    function sandboxDistribute(placeVal) {
+      const d = state.divisor;
+      if (placeVal === 100 && state.sb.h >= d) {
+        state.sb.h -= d;
+        state.sb.gh += 1;
+        state.sb.msg = `✅ وزعنا ١ مئة لكل قطاع (استهلكنا ${toAr(d)} مئات من المخزون).`;
+      } else if (placeVal === 10 && state.sb.t >= d) {
+        state.sb.t -= d;
+        state.sb.gt += 1;
+        state.sb.msg = `✅ وزعنا ١ عشرة لكل قطاع (استهلكنا ${toAr(d)} عشرات من المخزون).`;
+      } else if (placeVal === 1 && state.sb.o >= d) {
+        state.sb.o -= d;
+        state.sb.go += 1;
+        state.sb.msg = `✅ وزعنا ١ واحد لكل قطاع (استهلكنا ${toAr(d)} آحاد من المخزون).`;
+      }
+      renderSandbox();
+    }
+
+    function sandboxDistributeAll(placeVal) {
+      const d = state.divisor;
+      if (placeVal === 1 && state.sb.o >= d) {
+        const rounds = Math.floor(state.sb.o / d);
+        state.sb.o -= rounds * d;
+        state.sb.go += rounds;
+        state.sb.msg = `⚡ وزعنا ${toAr(rounds)} آحاد لكل قطاع دفعة واحدة!`;
+      }
+      renderSandbox();
+    }
+
+    function sandboxUngroup(placeVal) {
+      if (placeVal === 100 && state.sb.h > 0) {
+        state.sb.h -= 1;
+        state.sb.t += 10;
+        state.sb.msg = `🔨 فككنا ١ لوح مئة (١٠٠) إلى ١٠ أعمدة عشرات!`;
+      } else if (placeVal === 10 && state.sb.t > 0) {
+        state.sb.t -= 1;
+        state.sb.o += 10;
+        state.sb.msg = `🔨 فككنا ١ عمود عشرة (١٠) إلى ١٠ مكعبات آحاد!`;
+      }
+      renderSandbox();
+    }
+
+    function renderSandbox() {
+      const d = state.divisor;
+      document.querySelectorAll('.sb-divisor-lbl').forEach(el => el.textContent = toAr(d));
+
+      document.getElementById('sb-count-100').textContent = toAr(state.sb.h);
+      document.getElementById('sb-count-10').textContent = toAr(state.sb.t);
+      document.getElementById('sb-count-1').textContent = toAr(state.sb.o);
+
+      document.getElementById('sb-dist-100').disabled = state.sb.h < d;
+      document.getElementById('sb-ungroup-100').disabled = state.sb.h < 1;
+      document.getElementById('sb-dist-10').disabled = state.sb.t < d;
+      document.getElementById('sb-ungroup-10').disabled = state.sb.t < 1;
+      document.getElementById('sb-dist-1').disabled = state.sb.o < d;
+      document.getElementById('sb-dist-all-1').disabled = state.sb.o < d;
+
+      const remTotal = state.sb.h * 100 + state.sb.t * 10 + state.sb.o;
+      const qLive = state.sb.gh * 100 + state.sb.gt * 10 + state.sb.go;
+
+      if (remTotal < d) {
+        state.sb.msg = `🎉 اكتمل التوزيع! نصيب كل قطاع = ${toAr(qLive)}، والباقي المتبقي = ${toAr(remTotal)}.`;
+      }
+
+      document.getElementById('sb-status-banner').textContent = state.sb.msg;
+      document.getElementById('sb-quotient-live').textContent = toAr(qLive);
+      document.getElementById('sb-bank-visual').innerHTML = createBlocksHTML(state.sb.h, state.sb.t, state.sb.o, false);
+
+      let groupsHTML = '';
+      for (let g = 1; g <= d; g++) {
+        groupsHTML += `
+          <div class="p-3 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+            <div class="flex items-center justify-between border-b border-[var(--border)] pb-1.5 mb-2">
+              <span class="text-xs font-bold">قطاع #${toAr(g)}</span>
+              <span class="text-xs font-bold text-emerald-500">${toAr(qLive)}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 min-h-[48px]">
+              ${createBlocksHTML(state.sb.gh, state.sb.gt, state.sb.go, true)}
+            </div>
+          </div>
+        `;
+      }
+      document.getElementById('sb-groups-visual').innerHTML = groupsHTML;
+    }
+
+    // =========================================================================
+    // التبويب الثالث: مهندس المساحات الجزئية الحر
+    // =========================================================================
+    function initAreaBuilder() {
+      state.ab = { remaining: state.dividend, chunks: [] };
+      renderAreaBuilder();
+    }
+
+    function addAreaChunk(qStep) {
+      const areaNeeded = qStep * state.divisor;
+      if (areaNeeded > state.ab.remaining) return;
+
+      state.ab.remaining -= areaNeeded;
+      state.ab.chunks.push({ q: qStep, area: areaNeeded, afterRem: state.ab.remaining });
+      renderAreaBuilder();
+    }
+
+    function renderAreaBuilder() {
+      const d = state.divisor;
+      document.getElementById('ab-remaining-badge').textContent = `${toAr(state.ab.remaining)} من ${toAr(state.dividend)}`;
+      document.getElementById('ab-divisor-lbl').textContent = toAr(d);
+
+      const candidateLengths = [200, 100, 50, 20, 10, 5, 2, 1];
+      document.getElementById('ab-chunk-buttons').innerHTML = candidateLengths.map(len => {
+        const cost = len * d;
+        const canUse = cost <= state.ab.remaining;
+        return `
+          <button onclick="addAreaChunk(${len})" ${!canUse ? 'disabled' : ''}
+            class="p-2 rounded-xl border text-center transition-all ${
+              canUse
+                ? 'bg-[var(--card)] border-sky-500/40 hover:border-sky-500 hover:bg-sky-500/10 text-[var(--foreground)]'
+                : 'opacity-30 border-[var(--border)] cursor-not-allowed'
+            }">
+            <div class="text-sm font-extrabold text-sky-400">+${toAr(len)}</div>
+            <div class="text-xs text-[var(--muted-foreground)]">مساحة: ${toAr(cost)}</div>
+          </button>
+        `;
+      }).join('');
+
+      const histEl = document.getElementById('ab-history-list');
+      if (state.ab.chunks.length === 0) {
+        histEl.innerHTML = `<div class="text-xs text-[var(--muted-foreground)]">لم تقتطع أي دفعة بعد. اختر دفعة من الأزرار أعلاه!</div>`;
+      } else {
+        histEl.innerHTML = state.ab.chunks.map((c, idx) => `
+          <div class="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] flex items-center justify-between">
+            <span>دفعة #${toAr(idx + 1)}: ${toAr(d)} × <strong>${toAr(c.q)}</strong> = ${toAr(c.area)}</span>
+            <span class="text-amber-500 font-bold">المتبقي: ${toAr(c.afterRem)}</span>
+          </div>
+        `).join('');
+      }
+
+      const totalQ = state.ab.chunks.reduce((acc, c) => acc + c.q, 0);
+      document.getElementById('ab-total-quotient').textContent = `مجموع الأطوال (خارج القسمة) = ${toAr(totalQ)}`;
+
+      const canvasEl = document.getElementById('ab-visual-canvas');
+      if (state.ab.chunks.length === 0) {
+        canvasEl.innerHTML = `
+          <div class="w-full h-36 rounded-xl border-2 border-dashed border-[var(--border)] flex items-center justify-center text-xs text-[var(--muted-foreground)]">
+            اضغط على أزرار الدفعات لبناء المستطيل الهندسي من اليمين إلى اليسار
+          </div>
+        `;
+      } else {
+        const palette = [
+          'bg-indigo-500/20 border-indigo-500 text-indigo-400',
+          'bg-sky-500/20 border-sky-500 text-sky-400',
+          'bg-emerald-500/20 border-emerald-500 text-emerald-400',
+          'bg-amber-500/20 border-amber-500 text-amber-400',
+          'bg-purple-500/20 border-purple-500 text-purple-400'
+        ];
+
+        const boxes = state.ab.chunks.map((c, i) => {
+          const styleCls = palette[i % palette.length];
+          const weight = Math.max(1.5, Math.log10(c.area + 10) * 2);
+          return `
+            <div style="flex: ${weight}" class="flex flex-col items-center">
+              <div class="text-xs font-bold mb-1">+${toAr(c.q)}</div>
+              <div class="w-full h-32 rounded-xl border-2 ${styleCls} flex flex-col items-center justify-center p-2 text-center">
+                <span class="text-xs font-bold">${toAr(d)} × ${toAr(c.q)}</span>
+                <span class="text-sm font-extrabold mt-1">${toAr(c.area)}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        const remBox = state.ab.remaining > 0 ? `
+          <div style="flex: 1.5" class="flex flex-col items-center">
+            <div class="text-xs font-bold mb-1 text-rose-400">${state.ab.remaining < d ? 'الباقي' : 'متبقي'}</div>
+            <div class="w-full h-32 rounded-xl border-2 border-dashed border-rose-500/40 bg-rose-500/10 flex flex-col items-center justify-center p-2 text-center">
+              <span class="text-xs font-bold text-rose-400">${toAr(state.ab.remaining)}</span>
+            </div>
+          </div>
+        ` : '';
+
+        canvasEl.innerHTML = `
+          <div class="w-full flex items-end gap-2">
+            <div class="h-32 flex items-center justify-center px-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-500 font-extrabold text-base shrink-0">
+              ${toAr(d)}
+            </div>
+            <div class="flex-1 flex items-end gap-1.5 overflow-x-auto pb-1">
+              ${boxes}
+              ${remBox}
+            </div>
+          </div>
+        `;
+      }
+
+      const compEl = document.getElementById('ab-completion-msg');
+      if (state.ab.remaining < d) {
+        compEl.classList.remove('hidden');
+        compEl.innerHTML = `
+          ✅ <strong>اكتمل بناء المستطيل الهندسي!</strong>
+          مجموع الأطوال الجزئية (${state.ab.chunks.map(c => toAr(c.q)).join(' + ')}) يساوي خارج القسمة <strong>${toAr(totalQ)}</strong>، والباقي <strong>${toAr(state.ab.remaining)}</strong>.
+        `;
+      } else {
+        compEl.classList.add('hidden');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setMainTab('guided');
+      loadScenario(0);
+    });
+  </script>
+</body>
+</html>

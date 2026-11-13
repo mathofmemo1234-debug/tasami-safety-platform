@@ -30,7 +30,8 @@ export default function Navbar({
   darkMode = false,
   onToggleDarkMode,
   content,
-  onOpenConsultation
+  onOpenConsultation,
+  onOpenAdmin
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -336,10 +337,20 @@ export default function Navbar({
                 <span>{lang === 'ar' ? 'EN' : 'العربية'}</span>
               </button>
 
+              {/* Admin Portal Trigger (Discreet & Elegant) */}
+              <button
+                onClick={onOpenAdmin}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white/90 hover:text-[#0b1120] bg-white/10 hover:bg-[#dfb76c] border border-[#c59a45]/35 hover:border-[#dfb76c] transition-all duration-200 shadow-sm"
+                title={lang === 'ar' ? 'بوابة مدير الموقع وقاعدة البيانات' : 'Admin & Database Portal'}
+              >
+                <Shield className="w-3.5 h-3.5 text-[#dfb76c] hover:text-[#0b1120]" />
+                <span className="hidden xl:inline text-[11px]">{lang === 'ar' ? 'مدير الموقع' : 'Admin'}</span>
+              </button>
+
               {/* Request Consultation CTA Button */}
               <button
                 onClick={onOpenConsultation}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-[#0b1120] bg-[#c59a45] hover:bg-[#dfb76c] shadow-md transition-all transform hover:-translate-y-0.5"
+                className="btn-flashy-gold flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black text-[#0b1120]"
               >
                 <span>{t.requestConsultation}</span>
                 <ArrowIcon className="w-3.5 h-3.5" />
@@ -526,6 +537,23 @@ export default function Navbar({
               }`}
             >
               {t.contact}
+            </button>
+
+            {/* 6. مدير الموقع (لوحة التحكم) */}
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenAdmin();
+              }}
+              className="w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 dark:border-slate-800 flex items-center justify-between text-[#9a752a] dark:text-[#dfb76c]"
+            >
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-[#c59a45]" />
+                <span>{lang === 'ar' ? 'لوحة مدير الموقع (الرمز السري)' : 'Admin Dashboard'}</span>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c] font-bold">
+                Admin
+              </span>
             </button>
 
             {/* CTA */}
