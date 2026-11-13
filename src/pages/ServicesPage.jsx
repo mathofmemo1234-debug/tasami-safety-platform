@@ -245,29 +245,29 @@ export default function ServicesPage({
       {/* 1. Page Header & Breadcrumb */}
       <div className="space-y-4">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
           <button
             onClick={() => onNavigate('home')}
-            className="hover:text-[#c59a45] transition"
+            className="hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] transition"
           >
             {isAr ? 'الرئيسية' : 'Home'}
           </button>
           <span>/</span>
-          <span className="text-[#c59a45]">{isAr ? 'خدماتنا' : 'Our Services'}</span>
+          <span className="text-[#c59a45] dark:text-[#dfb76c]">{isAr ? 'خدماتنا' : 'Our Services'}</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-4">
               <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
-              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/20">
+              <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/30">
                 {isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami Engineering Solutions'}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'خدماتنا وتفريعاتها الهندسية المتكاملة' : 'Comprehensive Engineering Services & Sub-Branches'}
             </h1>
-            <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
+            <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
               {isAr
                 ? 'نقدم منظومة متكاملة من حلول الوقاية ومكافحة الحرائق، مصممة وفق اشتراطات الدفاع المدني وكود البناء السعودي SBC، مع تفريعات متخصصة لكل قطاع.'
                 : 'Turnkey fire protection and early detection solutions tailored to statutory codes and industry standards.'}
@@ -277,14 +277,14 @@ export default function ServicesPage({
           <div className="flex items-center gap-3 flex-shrink-0">
             <button
               onClick={() => setShowCalculator(!showCalculator)}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold transition shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-xs sm:text-sm font-bold transition shadow-sm"
             >
               <Calculator className="w-4 h-4 text-[#dfb76c]" />
               <span>{showCalculator ? (isAr ? 'إخفاء حاسبة السلامة' : 'Hide Calculator') : (isAr ? 'حاسبة السلامة الفورية' : 'Safety Estimator')}</span>
             </button>
             <button
               onClick={() => onOpenConsultation(isAr ? 'استشارة عامة في الخدمات' : 'General Engineering Consultation')}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-slate-950 text-xs sm:text-sm font-bold transition shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] text-xs sm:text-sm font-bold transition shadow-sm"
             >
               <span>{isAr ? 'طلب استشارة أو تسعير' : 'Request a Quote'}</span>
               <ArrowIcon className="w-4 h-4" />
@@ -295,15 +295,15 @@ export default function ServicesPage({
 
       {/* Optional Interactive Safety Calculator Banner / Accordion */}
       {showCalculator && (
-        <div id="calculator-section" className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+        <div id="calculator-section" className="bg-white dark:bg-[#131c31] rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-800 scroll-mt-28">
           <div className="mb-6 flex items-center justify-between">
-            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-[#c59a45]" />
+            <h3 className="text-lg font-bold text-[#0f172a] dark:text-white flex items-center gap-2">
+              <Calculator className="w-5 h-5 text-[#1d4ed8] dark:text-[#60a5fa]" />
               <span>{isAr ? 'حاسبة متطلبات السلامة التقديرية لمشروعك' : 'Interactive Safety Requirements Estimator'}</span>
             </h3>
             <button
               onClick={() => setShowCalculator(false)}
-              className="text-xs text-slate-500 hover:text-slate-800"
+              className="text-xs text-slate-500 dark:text-slate-400 hover:text-[#0f172a] dark:hover:text-white"
             >
               {isAr ? 'إغلاق الحاسبة ✕' : 'Close ✕'}
             </button>
@@ -314,7 +314,7 @@ export default function ServicesPage({
 
       {/* 2. Sub-branches Categories Selector (Tabs) */}
       <div className="space-y-4">
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+        <div className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
           {isAr ? 'اختر التفريع الهندسي المطلوب:' : 'Filter by Sub-Branch:'}
         </div>
         <div className="flex flex-wrap gap-2 sm:gap-2.5">
@@ -324,8 +324,8 @@ export default function ServicesPage({
               onClick={() => setActiveBranch(b.id)}
               className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                 activeBranch === b.id
-                  ? 'bg-[#c59a45] text-slate-950 shadow-sm scale-105'
-                  : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                  ? 'bg-[#1d4ed8] text-white shadow-sm scale-105 ring-2 ring-[#c59a45]/60'
+                  : 'bg-white dark:bg-[#131c31] text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
               }`}
             >
               {b.name}
@@ -339,39 +339,39 @@ export default function ServicesPage({
         {filteredServices.map((srv) => (
           <div
             key={srv.id}
-            className="bg-white rounded-2xl p-7 border border-slate-200/90 hover:border-[#c59a45]/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+            className="bg-white dark:bg-[#131c31] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
           >
             <div className="space-y-4">
               
               {/* Badge & Standard Tag */}
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#c59a45]/10 text-[#9a752a]">
+                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#c59a45]/10 dark:bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c]">
                   {srv.badge}
                 </span>
-                <span className="text-[10px] text-slate-500 font-mono">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                   {srv.standards.split('•')[0]}
                 </span>
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-bold text-slate-800 group-hover:text-[#c59a45] transition leading-snug">
+              <h3 className="text-lg font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition leading-snug">
                 {srv.title}
               </h3>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 {srv.desc}
               </p>
 
               {/* Key Applications */}
               <div className="pt-2">
-                <span className="text-[11px] font-bold text-slate-700 block mb-2">
+                <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 block mb-2">
                   {isAr ? 'أبرز التطبيقات المناسبة:' : 'Key Applications:'}
                 </span>
-                <ul className="space-y-1.5 text-xs text-slate-600">
+                <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
                   {srv.applications.map((app, i) => (
                     <li key={i} className="flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#1d4ed8] dark:text-[#60a5fa] flex-shrink-0" />
                       <span>{app}</span>
                     </li>
                   ))}
@@ -379,18 +379,18 @@ export default function ServicesPage({
               </div>
 
               {/* Standard info */}
-              <div className="pt-2 text-[10px] text-slate-500 font-medium border-t border-slate-100">
+              <div className="pt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium border-t border-slate-100 dark:border-slate-800">
                 {isAr ? 'المعايير المعتمدة: ' : 'Standard Compliance: '}
-                <span className="font-semibold text-slate-700">{srv.standards}</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-200">{srv.standards}</span>
               </div>
 
             </div>
 
             {/* Action CTA */}
-            <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+            <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
               <button
                 onClick={() => onOpenConsultation(srv.title)}
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#c59a45] hover:text-[#9a752a] group-hover:underline"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] hover:underline"
               >
                 <span>{isAr ? 'طلب معاينة أو عرض سعر' : 'Inquire / Request Quote'}</span>
                 <ArrowIcon className="w-3.5 h-3.5" />
@@ -403,13 +403,13 @@ export default function ServicesPage({
       </div>
 
       {/* 4. Bottom Support CTA Card */}
-      <div className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 text-center space-y-4">
+      <div className="rounded-3xl bg-[#0b1120] dark:bg-[#131c31] border border-[#1d4ed8]/30 text-white p-8 sm:p-12 text-center space-y-4 shadow-xl">
         <h3 className="text-xl sm:text-2xl font-bold">
           {isAr
             ? 'هل تحتاج إلى دراسة هندسية خاصة بمشروعك؟'
             : 'Need a custom engineering study for your project?'}
         </h3>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
           {isAr
             ? 'فريقنا الهندسي في تسامي الأعمال على أتم الاستعداد لزيارة الموقع، فحص متطلبات كود البناء، وتقديم عرض فني ومالي متكامل ومعتمد.'
             : 'Our licensed engineers are ready to survey your facility, evaluate building codes, and prepare a statutory compliance proposal.'}
@@ -417,7 +417,7 @@ export default function ServicesPage({
         <div className="pt-2">
           <button
             onClick={() => onOpenConsultation(isAr ? 'دراسة هندسية متكاملة' : 'Full Engineering Study')}
-            className="px-8 py-3.5 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-slate-950 font-bold text-xs sm:text-sm transition shadow-sm"
+            className="px-8 py-3.5 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] font-bold text-xs sm:text-sm transition shadow-sm"
           >
             {isAr ? 'تواصل مع المهندس المختص' : 'Contact an Engineer'}
           </button>

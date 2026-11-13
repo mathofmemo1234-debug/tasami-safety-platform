@@ -12,9 +12,26 @@ import { content } from './data/content';
 
 export default function App() {
   const [lang, setLang] = useState('ar');
+  const [darkMode, setDarkMode] = useState(() => {
+    try {
+      return localStorage.getItem('tasami-theme') === 'dark';
+    } catch {
+      return false;
+    }
+  });
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [selectedServiceForConsultation, setSelectedServiceForConsultation] = useState('');
+
+  // Sync Tailwind dark class and persistence
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    try {
+      localStorage.setItem('tasami-theme', darkMode ? 'dark' : 'light');
+    } catch {
+      // ignore storage errors
+    }
+  }, [darkMode]);
 
   // Multi-page navigation state
   const parseHash = () => {
@@ -117,14 +134,16 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen bg-slate-50 text-slate-800 font-${lang === 'ar' ? 'cairo' : 'sans'} flex flex-col justify-between`}>
+    <div className={`min-h-screen bg-white dark:bg-[#0b1120] text-[#0f172a] dark:text-slate-100 font-${lang === 'ar' ? 'cairo' : 'sans'} flex flex-col justify-between transition-colors duration-300`}>
       
-      {/* 1. Navigation Bar with multi-page tabs and clean horizontal logo */}
+      {/* 1. Navigation Bar with multi-page tabs, Royal Blue header, and Dark Mode toggle */}
       <Navbar
         currentPage={currentPage}
         onNavigate={navigateTo}
         lang={lang}
         setLang={setLang}
+        darkMode={darkMode}
+        onToggleDarkMode={() => setDarkMode((prev) => !prev)}
         content={content}
         onOpenConsultation={() => handleOpenConsultation()}
       />

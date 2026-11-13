@@ -15,11 +15,11 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
   };
 
   return (
-    <footer className="bg-slate-950 text-slate-400 pt-16 pb-12 border-t border-slate-900">
+    <footer className="bg-[#0b1120] text-slate-300 pt-16 pb-12 border-t-2 border-[#162d6c]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
           
           {/* Brand & Vision Col */}
           <div className="lg:col-span-4 space-y-4">
@@ -30,12 +30,12 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
               {t.aboutText}
             </p>
             <div className="pt-2 flex flex-wrap items-center gap-2">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300">
-                <ShieldCheck className="w-4 h-4 text-[#c59a45]" />
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#131c31] border border-[#1d4ed8]/30 text-[11px] text-slate-200">
+                <ShieldCheck className="w-4 h-4 text-[#60a5fa]" />
                 <span>ترخيص الدفاع المدني (سلامة)</span>
               </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300">
-                <Award className="w-4 h-4 text-[#c59a45]" />
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#131c31] border border-[#c59a45]/30 text-[11px] text-slate-200">
+                <Award className="w-4 h-4 text-[#dfb76c]" />
                 <span>كود البناء السعودي SBC</span>
               </div>
             </div>

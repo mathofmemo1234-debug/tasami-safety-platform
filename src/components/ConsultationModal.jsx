@@ -53,27 +53,27 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0b1120]/80 backdrop-blur-md animate-fadeIn">
+      <div className="bg-white dark:bg-[#131c31] rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-y-auto">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 left-5 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
+          className="absolute top-5 left-5 p-2 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Modal Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-[#c59a45]/15 border border-[#c59a45]/30 flex items-center justify-center text-[#c59a45]">
+          <div className="w-12 h-12 rounded-2xl bg-[#1d4ed8]/10 dark:bg-[#1d4ed8]/25 border border-[#1d4ed8]/25 flex items-center justify-center text-[#1d4ed8] dark:text-[#60a5fa]">
             <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
-            <h3 className="text-xl font-black text-slate-900">
+            <h3 className="text-xl font-black text-[#0f172a] dark:text-white">
               {lang === 'ar' ? 'طلب استشارة هندسية في الأمن والسلامة' : 'Request Safety Engineering Consultation'}
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               {lang === 'ar' ? 'سيتواصل معكم استشاري معتمد لمراجعة متطلبات منشأتكم مجاناً' : 'A certified safety consultant will contact you within 24 hours'}
             </p>
           </div>
@@ -109,7 +109,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
             {/* Name & Company */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                   {lang === 'ar' ? 'الاسم الكريم *' : 'Full Name *'}
                 </label>
                 <div className="relative">
@@ -120,13 +120,13 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
                     value={formData.name}
                     onChange={handleChange}
                     placeholder={lang === 'ar' ? 'م. محمد الأحمد' : 'John Doe'}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 text-xs text-slate-900 bg-slate-50"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                   {lang === 'ar' ? 'اسم المنشأة / الشركة' : 'Company Name'}
                 </label>
                 <input
@@ -135,7 +135,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
                   value={formData.company}
                   onChange={handleChange}
                   placeholder={lang === 'ar' ? 'شركة الاستثمار العقاري' : 'Company Inc'}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 text-xs text-slate-900 bg-slate-50"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
                 />
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
             {/* Email & Phone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                   {lang === 'ar' ? 'البريد الإلكتروني *' : 'Email Address *'}
                 </label>
                 <input
@@ -153,12 +153,12 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="name@company.com"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 text-xs text-slate-900 bg-slate-50"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                   {lang === 'ar' ? 'رقم الجوال *' : 'Mobile Phone *'}
                 </label>
                 <input
@@ -168,7 +168,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="05XXXXXXXX"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 text-xs text-slate-900 bg-slate-50"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
                 />
               </div>
             </div>
@@ -176,14 +176,14 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
             {/* Sector & Service Type */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                   {lang === 'ar' ? 'القطاع / نوع المشروع' : 'Project Sector'}
                 </label>
                 <select
                   name="sector"
                   value={formData.sector}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] text-xs text-slate-900 bg-slate-50"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
                 >
                   <option value="مجمع تجاري">{lang === 'ar' ? 'مجمع تجاري / تسوق' : 'Commercial Mall'}</option>
                   <option value="برج إداري أو سكني">{lang === 'ar' ? 'برج إداري أو سكني' : 'Office/Residential Tower'}</option>
@@ -194,14 +194,14 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                   {lang === 'ar' ? 'الخدمة المطلوبة' : 'Requested Service'}
                 </label>
                 <select
                   name="service_type"
                   value={formData.service_type}
                   onChange={handleChange}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] text-xs text-slate-900 bg-slate-50"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
                 >
                   <option value="أنظمة السلامة ومكافحة الحريق">أنظمة السلامة ومكافحة الحريق</option>
                   <option value="دراسات وتحليل المخاطر">دراسات وتحليل المخاطر</option>
@@ -215,7 +215,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
 
             {/* Notes */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">
                 {lang === 'ar' ? 'ملاحظات أو متطلبات خاصة بالمشروع' : 'Project Details / Notes'}
               </label>
               <textarea
@@ -224,7 +224,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
                 value={formData.notes}
                 onChange={handleChange}
                 placeholder={lang === 'ar' ? 'اذكر مساحة المشروع، المدينة، أو أي مواصفات خاصة...' : 'Provide project size, location, or specific requirements...'}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#c59a45] text-xs text-slate-900 bg-slate-50"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] text-xs text-[#0f172a] dark:text-white bg-white dark:bg-[#0b1120]"
               ></textarea>
             </div>
 
@@ -233,7 +233,7 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl text-sm font-bold text-white bg-[#c59a45] hover:bg-[#b58a38] shadow-md hover:shadow-gold-glow transition flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl text-sm font-bold text-[#0b1120] bg-[#c59a45] hover:bg-[#dfb76c] shadow-md hover:shadow-gold-glow transition flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <span>{lang === 'ar' ? 'جارِ الإرسال...' : 'Submitting...'}</span>

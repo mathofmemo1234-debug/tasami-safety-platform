@@ -96,25 +96,25 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
   const recommendedSystems = getRecommendedSystems();
 
   return (
-    <section id="calculator" className="py-20 bg-gradient-to-b from-slate-50 via-amber-50/20 to-white relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="calculator" className="py-10 bg-white dark:bg-[#131c31] relative transition-colors">
+      <div className="max-w-6xl mx-auto px-2 sm:px-4">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#c59a45]/15 text-[#9a752a] text-xs font-black uppercase border border-[#c59a45]/30">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#c59a45]/15 text-[#9a752a] dark:text-[#dfb76c] text-xs font-black uppercase border border-[#c59a45]/30">
             <Sparkles className="w-3.5 h-3.5 text-[#c59a45]" />
             <span>{t.tag}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0f172a] dark:text-white tracking-tight">
             {t.title}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
             {t.subtitle}
           </p>
         </div>
 
         {/* Interactive Calculator Card */}
-        <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+        <div className="bg-white dark:bg-[#0b1120] rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
           
           {/* Controls Form Column */}
           <div className="p-6 sm:p-10 lg:col-span-7 space-y-6">
@@ -122,13 +122,13 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
               
               {/* Facility Type */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-2">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 uppercase mb-2">
                   {t.facilityType}
                 </label>
                 <select
                   value={facilityType}
                   onChange={(e) => { setFacilityType(e.target.value); setIsCalculated(false); }}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 bg-slate-50 text-slate-800 text-sm font-semibold transition"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white text-sm font-semibold transition"
                 >
                   <option value="commercial">{lang === 'ar' ? 'مجمع أو مركز تجاري / معارض' : 'Commercial Mall / Retail'}</option>
                   <option value="towers">{lang === 'ar' ? 'برج مكاتب أو مجمع سكني مرتفع' : 'Office Tower / High-Rise Residential'}</option>
@@ -141,10 +141,10 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
               {/* Area Slider & Input */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-xs font-bold text-slate-700 uppercase">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase">
                     {t.area}
                   </label>
-                  <span className="text-sm font-extrabold text-[#9a752a] font-mono bg-amber-50 px-3 py-0.5 rounded-lg border border-amber-200">
+                  <span className="text-sm font-extrabold text-[#1d4ed8] dark:text-[#dfb76c] font-mono bg-blue-50 dark:bg-[#131c31] px-3 py-0.5 rounded-lg border border-blue-200 dark:border-[#c59a45]/40">
                     {Number(area).toLocaleString()} م²
                   </span>
                 </div>
@@ -155,7 +155,7 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
                   step="100"
                   value={area}
                   onChange={(e) => { setArea(Number(e.target.value)); setIsCalculated(false); }}
-                  className="w-full accent-[#c59a45] h-2 bg-slate-200 rounded-lg cursor-pointer"
+                  className="w-full accent-[#1d4ed8] dark:accent-[#c59a45] h-2 bg-slate-200 dark:bg-slate-700 rounded-lg cursor-pointer"
                 />
               </div>
 
@@ -163,7 +163,7 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Number of Floors */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-2">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 uppercase mb-2">
                     {t.floors}
                   </label>
                   <input
@@ -172,19 +172,19 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
                     max="60"
                     value={floors}
                     onChange={(e) => { setFloors(Number(e.target.value)); setIsCalculated(false); }}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 bg-slate-50 text-slate-800 text-sm font-semibold"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white text-sm font-semibold"
                   />
                 </div>
 
                 {/* Hazard Level */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-2">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 uppercase mb-2">
                     {t.hazard}
                   </label>
                   <select
                     value={hazard}
                     onChange={(e) => { setHazard(e.target.value); setIsCalculated(false); }}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#c59a45] focus:ring-2 focus:ring-[#c59a45]/20 bg-slate-50 text-slate-800 text-sm font-semibold"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#1d4ed8] dark:focus:border-[#c59a45] focus:ring-2 focus:ring-[#1d4ed8]/20 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white text-sm font-semibold"
                   >
                     <option value="low">{t.hazardLow}</option>
                     <option value="medium">{t.hazardMed}</option>
@@ -196,7 +196,7 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
               {/* Calculate Button */}
               <button
                 type="submit"
-                className="w-full py-4 rounded-xl text-base font-bold text-white bg-[#c59a45] hover:bg-[#b58a38] shadow-md hover:shadow-gold-glow transition flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-xl text-base font-bold text-[#0b1120] bg-[#c59a45] hover:bg-[#dfb76c] shadow-md hover:shadow-gold-glow transition flex items-center justify-center gap-2"
               >
                 <Calculator className="w-5 h-5" />
                 <span>{t.calculateBtn}</span>
@@ -205,7 +205,7 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
           </div>
 
           {/* Results Display Column */}
-          <div className="bg-slate-900 p-6 sm:p-10 lg:col-span-5 text-white flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-800">
+          <div className="bg-[#0f2152] dark:bg-[#131c31] p-6 sm:p-10 lg:col-span-5 text-white flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-[#1d4ed8]/30 dark:border-slate-800">
             <div>
               <div className="flex items-center gap-2 text-xs font-bold text-[#dfb76c] uppercase tracking-wider mb-2">
                 <ShieldCheck className="w-4 h-4" />
@@ -213,8 +213,8 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
               </div>
 
               {/* Price Estimate Highlight */}
-              <div className="p-5 rounded-2xl bg-slate-800/80 border border-slate-700/80 my-4">
-                <span className="text-xs text-slate-400 block mb-1">
+              <div className="p-5 rounded-2xl bg-[#0b1120]/70 border border-[#c59a45]/30 my-4">
+                <span className="text-xs text-slate-300 block mb-1">
                   {t.estimatedCostLabel}
                 </span>
                 <div className="flex items-baseline gap-2">
@@ -225,7 +225,7 @@ export default function SafetyCalculator({ lang, content, onSaveQuote }) {
                     {t.sar}
                   </span>
                 </div>
-                <div className="text-[11px] text-slate-400 mt-2">
+                <div className="text-[11px] text-slate-300 mt-2">
                   (شامل التوريد والتركيب والاعتماد المبدئي)
                 </div>
               </div>

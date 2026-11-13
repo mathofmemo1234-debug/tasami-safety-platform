@@ -18,19 +18,19 @@ export default function ProjectsSection({ lang, content }) {
   ];
 
   return (
-    <section id="projects" className="py-20 bg-slate-50 relative">
+    <section id="projects" className="py-16 bg-white dark:bg-[#0b1120] relative transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div className="space-y-3">
-            <span className="text-xs font-black tracking-widest text-[#9a752a] uppercase bg-[#c59a45]/10 px-3.5 py-1 rounded-md inline-block">
+            <span className="text-xs font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
               {t.tag}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
               {t.title}
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-2xl">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
               {t.subtitle}
             </p>
           </div>
@@ -43,8 +43,8 @@ export default function ProjectsSection({ lang, content }) {
                 onClick={() => setActiveFilter(btn.id)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                   activeFilter === btn.id
-                    ? 'bg-[#c59a45] text-white shadow-md'
-                    : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200'
+                    ? 'bg-[#1d4ed8] text-white shadow-md ring-2 ring-[#c59a45]/50'
+                    : 'bg-white dark:bg-[#131c31] text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700'
                 }`}
               >
                 {btn.label}
@@ -58,7 +58,7 @@ export default function ProjectsSection({ lang, content }) {
           {filteredItems.map((project) => (
             <div
               key={project.id}
-              className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col transform hover:-translate-y-1"
+              className="bg-white dark:bg-[#131c31] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-[#c59a45]/60 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col transform hover:-translate-y-1"
             >
               {/* Project Image */}
               <div className="relative h-56 overflow-hidden">
@@ -67,10 +67,10 @@ export default function ProjectsSection({ lang, content }) {
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120]/85 via-transparent to-transparent"></div>
                 
                 {/* Location badge */}
-                <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white font-semibold flex items-center gap-1.5 border border-white/20">
+                <div className="absolute top-4 right-4 bg-[#162d6c]/90 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white font-semibold flex items-center gap-1.5 border border-[#c59a45]/30">
                   <MapPin className="w-3.5 h-3.5 text-[#dfb76c]" />
                   <span>{project.location}</span>
                 </div>
@@ -89,14 +89,14 @@ export default function ProjectsSection({ lang, content }) {
               {/* Project Details */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {project.desc}
                   </p>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
                   <span>{project.stats}</span>
-                  <div className="text-[#c59a45] font-bold flex items-center gap-1">
+                  <div className="text-[#9a752a] dark:text-[#dfb76c] font-bold flex items-center gap-1">
                     <span>مكتمل ومعتمد</span>
                   </div>
                 </div>

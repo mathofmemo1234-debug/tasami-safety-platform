@@ -30,20 +30,20 @@ export default function AdminDashboard({ isOpen, onClose }) {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-      <div className="bg-white rounded-3xl max-w-4xl w-full p-6 sm:p-8 relative shadow-2xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0b1120]/80 backdrop-blur-md animate-fadeIn">
+      <div className="bg-white dark:bg-[#131c31] rounded-3xl max-w-4xl w-full p-6 sm:p-8 relative shadow-2xl border border-slate-200 dark:border-slate-700 max-h-[90vh] overflow-hidden flex flex-col">
         
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#c59a45]/15 text-[#c59a45] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#1d4ed8]/10 dark:bg-[#1d4ed8]/25 text-[#1d4ed8] dark:text-[#60a5fa] flex items-center justify-center">
               <Shield className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-black text-slate-900">
+              <h3 className="text-lg font-black text-[#0f172a] dark:text-white">
                 لوحة إدارة طلبات الموقع وقاعدة البيانات (Database Admin)
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 بيانات حية مخزنة في SQLite Database (توضح استقبال ومعالجة الطلبات)
               </p>
             </div>

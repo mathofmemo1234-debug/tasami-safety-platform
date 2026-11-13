@@ -15,29 +15,29 @@ export default function ContactPage({
       
       {/* 1. Breadcrumb & Header */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
           <button
             onClick={() => onNavigate('home')}
-            className="hover:text-[#c59a45] transition"
+            className="hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] transition"
           >
             {isAr ? 'الرئيسية' : 'Home'}
           </button>
           <span>/</span>
-          <span className="text-[#c59a45]">{isAr ? 'تواصل معنا' : 'Contact Us'}</span>
+          <span className="text-[#c59a45] dark:text-[#dfb76c]">{isAr ? 'تواصل معنا' : 'Contact Us'}</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <TasamiLogo lang={lang} className="h-10 sm:h-12" />
-              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3 py-1 rounded-md inline-block">
+              <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3 py-1 rounded-md inline-block border border-[#c59a45]/25">
                 {isAr ? 'خدمة العملاء والاستشارات' : 'Customer Support & Inquiries'}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'تواصل مع فريق تسامي الأعمال' : 'Contact Tasami Business'}
             </h1>
-            <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
+            <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
               {isAr
                 ? 'يسعدنا الرد على استفساراتكم الهندسية، استقبال طلبات التسعير، وتحديد مواعيد المعاينات الميدانية لمشاريعكم.'
                 : 'We are delighted to assist with your engineering queries, quotation requests, and site inspections.'}

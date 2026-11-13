@@ -5,7 +5,7 @@ export default function CeoMessage({ lang, content }) {
   const t = content[lang].ceo;
 
   return (
-    <section id="ceo" className="py-20 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+    <section id="ceo" className="py-16 bg-white dark:bg-[#0b1120] relative overflow-hidden transition-colors">
       {/* Decorative background glow */}
       <div className="absolute top-0 right-1/4 w-72 h-72 bg-[#c59a45]/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -13,21 +13,21 @@ export default function CeoMessage({ lang, content }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <span className="text-xs font-black tracking-widest text-[#9a752a] uppercase bg-[#c59a45]/10 border border-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
+          <span className="text-xs font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 border border-[#c59a45]/25 px-3.5 py-1 rounded-md inline-block">
             {t.tag}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
             {t.title}
           </h2>
           <div className="w-16 h-1 bg-[#c59a45] mx-auto rounded-full"></div>
         </div>
 
         {/* Executive Card */}
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
+        <div className="bg-white dark:bg-[#131c31] rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             
             {/* CEO Profile Banner / Avatar Col */}
-            <div className="lg:col-span-4 bg-gradient-to-br from-slate-900 via-slate-800 to-[#221a0f] p-8 sm:p-10 text-white flex flex-col justify-between h-full relative overflow-hidden">
+            <div className="lg:col-span-4 bg-gradient-to-br from-[#0f2152] via-[#162d6c] to-[#0b1120] p-8 sm:p-10 text-white flex flex-col justify-between h-full relative overflow-hidden">
               {/* Subtle background pattern */}
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#c59a45_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
@@ -81,14 +81,14 @@ export default function CeoMessage({ lang, content }) {
             <div className="lg:col-span-8 p-8 sm:p-12 relative">
               <Quote className="w-16 h-16 text-[#c59a45]/15 absolute top-6 left-6 rtl:left-auto rtl:right-6 pointer-events-none" />
 
-              <div className="space-y-5 text-slate-700 leading-relaxed text-sm sm:text-base">
+              <div className="space-y-5 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
                 
                 {/* Highlighted Quote Header */}
-                <div className="p-4 rounded-2xl bg-amber-50/60 border-r-4 rtl:border-r-4 ltr:border-l-4 border-[#c59a45] text-slate-900 font-bold text-base sm:text-lg leading-snug">
+                <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-[#0b1120] border-r-4 rtl:border-r-4 ltr:border-l-4 border-[#c59a45] text-[#0f172a] dark:text-white font-bold text-base sm:text-lg leading-snug">
                   "{t.quote}"
                 </div>
 
-                <p className="font-medium text-slate-800">
+                <p className="font-medium text-[#0f172a] dark:text-slate-100">
                   {t.p1}
                 </p>
 
@@ -101,13 +101,13 @@ export default function CeoMessage({ lang, content }) {
                 </p>
 
                 {/* Closing signature */}
-                <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="text-slate-900 font-bold text-sm">
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="text-[#0f172a] dark:text-white font-bold text-sm">
                     {t.closing}
                   </div>
                   <div className="text-right rtl:text-right ltr:text-left">
-                    <span className="text-xs text-slate-500 block">{lang === 'ar' ? 'المدير التنفيذي' : 'Chief Executive Officer'}</span>
-                    <span className="text-sm font-black text-slate-900">{t.name}</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 block">{lang === 'ar' ? 'المدير التنفيذي' : 'Chief Executive Officer'}</span>
+                    <span className="text-sm font-black text-[#0f172a] dark:text-[#dfb76c]">{t.name}</span>
                   </div>
                 </div>
 

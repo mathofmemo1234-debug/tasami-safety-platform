@@ -54,30 +54,30 @@ export default function AboutPage({
       
       {/* 1. Breadcrumb & Header */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
+        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
           <button
             onClick={() => onNavigate('home')}
-            className="hover:text-[#c59a45] transition"
+            className="hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] transition"
           >
             {isAr ? 'الرئيسية' : 'Home'}
           </button>
           <span>/</span>
-          <span className="text-[#c59a45]">{isAr ? 'عن الشركة' : 'About Us'}</span>
+          <span className="text-[#c59a45] dark:text-[#dfb76c]">{isAr ? 'عن الشركة' : 'About Us'}</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-4">
               {/* Doubled Logo size */}
               <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
-              <span className="text-xs font-bold text-[#c59a45] tracking-widest uppercase bg-[#c59a45]/10 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/20">
+              <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/30">
                 {isAr ? 'الريادة المؤسسية' : 'Corporate Leadership'}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'عن تسامي الأعمال لأنظمة السلامة' : 'About Tasami Business for Safety Systems'}
             </h1>
-            <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
+            <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
               {isAr
                 ? 'تعرف على هويتنا، رؤيتنا، رسالتنا، وهيكل العمل الاحترافي الذي يقودنا نحو تحقيق أعلى معايير الأمان وحماية الأرواح والممتلكات.'
                 : 'Discover our corporate vision, leadership, and certified team driving excellence in fire safety.'}

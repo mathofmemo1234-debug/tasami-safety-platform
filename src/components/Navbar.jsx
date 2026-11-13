@@ -17,7 +17,9 @@ import {
   Calculator,
   ArrowRight,
   ArrowLeft,
-  Sparkles
+  Sparkles,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export default function Navbar({
@@ -25,6 +27,8 @@ export default function Navbar({
   onNavigate,
   lang,
   setLang,
+  darkMode = false,
+  onToggleDarkMode,
   content,
   onOpenConsultation
 }) {
@@ -124,7 +128,7 @@ export default function Navbar({
       sectionId: 'calculator-section',
       openCalculator: true,
       desc: lang === 'ar' ? 'احسب تقدير التكاليف والمتطلبات فورياً' : 'Instant budgetary & statutory estimator',
-      icon: <Calculator className="w-4 h-4 text-[#dfb76c]" />,
+      icon: <Calculator className="w-4 h-4 text-[#0b1120]" />,
       isSpecial: true
     },
   ];
@@ -132,10 +136,10 @@ export default function Navbar({
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-royal border-b border-[#c59a45]/30 text-white ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-md py-2 border-b border-slate-100'
-            : 'bg-white/95 backdrop-blur-sm py-2 sm:py-3 border-b border-slate-100'
+            ? 'shadow-xl py-2'
+            : 'shadow-md py-2 sm:py-3'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,10 +148,10 @@ export default function Navbar({
             {/* Logo - Prominently enlarged horizontal logo banner on all pages */}
             <button
               onClick={() => onNavigate('home')}
-              className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#c59a45]/40 rounded-xl py-1"
+              className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/50 rounded-2xl py-0.5"
               title="تسامي الأعمال لأنظمة السلامة"
             >
-              <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
+              <TasamiLogo isWhite={true} compact={true} lang={lang} className="h-14 sm:h-16 md:h-20" />
             </button>
 
             {/* Desktop Navigation Menu */}
@@ -158,8 +162,8 @@ export default function Navbar({
                 onClick={() => onNavigate('home')}
                 className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
                   currentPage === 'home'
-                    ? 'text-[#c59a45] bg-[#c59a45]/10 font-bold'
-                    : 'text-slate-700 hover:text-[#c59a45] hover:bg-slate-50'
+                    ? 'text-[#dfb76c] bg-[#c59a45]/20 border border-[#c59a45]/40 font-bold'
+                    : 'text-white/90 hover:text-[#dfb76c] hover:bg-white/10'
                 }`}
               >
                 {t.home}
@@ -171,34 +175,34 @@ export default function Navbar({
                   onClick={() => onNavigate('about')}
                   className={`flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
                     currentPage === 'about'
-                      ? 'text-[#c59a45] bg-[#c59a45]/10 font-bold'
-                      : 'text-slate-700 hover:text-[#c59a45] hover:bg-slate-50'
+                      ? 'text-[#dfb76c] bg-[#c59a45]/20 border border-[#c59a45]/40 font-bold'
+                      : 'text-white/90 hover:text-[#dfb76c] hover:bg-white/10'
                   }`}
                 >
                   <span>{t.about}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#c59a45] group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3.5 h-3.5 text-blue-200 group-hover:text-[#dfb76c] group-hover:rotate-180 transition-transform duration-200" />
                 </button>
 
                 {/* Dropdown Panel */}
                 <div className="absolute top-full right-0 rtl:right-0 ltr:left-0 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1 z-50 pointer-events-none group-hover:pointer-events-auto">
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50">
+                  <div className="bg-white dark:bg-[#131c31] rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700/80 p-2 space-y-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#1d4ed8] dark:text-[#60a5fa] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
                       {lang === 'ar' ? 'أقسام عن الشركة' : 'Company Highlights'}
                     </div>
                     {aboutSubItems.map((item, idx) => (
                       <button
                         key={idx}
                         onClick={() => onNavigate(item.page, item.sectionId)}
-                        className="w-full flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 transition group/item text-right rtl:text-right ltr:text-left"
+                        className="w-full flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/70 dark:hover:bg-slate-800/80 transition group/item text-right rtl:text-right ltr:text-left"
                       >
-                        <div className="w-7 h-7 rounded-lg bg-[#c59a45]/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:bg-[#c59a45] group-hover/item:text-white transition">
+                        <div className="w-7 h-7 rounded-lg bg-[#1d4ed8]/10 dark:bg-[#1d4ed8]/25 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:bg-[#c59a45] group-hover/item:text-white transition">
                           {item.icon}
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-slate-800 group-hover/item:text-[#c59a45] transition">
+                          <div className="text-xs font-bold text-[#0f172a] dark:text-white group-hover/item:text-[#1d4ed8] dark:group-hover/item:text-[#dfb76c] transition">
                             {item.label}
                           </div>
-                          <div className="text-[10px] text-slate-500 line-clamp-1">
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1">
                             {item.desc}
                           </div>
                         </div>
@@ -214,18 +218,18 @@ export default function Navbar({
                   onClick={() => onNavigate('services')}
                   className={`flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
                     currentPage === 'services'
-                      ? 'text-[#c59a45] bg-[#c59a45]/10 font-bold'
-                      : 'text-slate-700 hover:text-[#c59a45] hover:bg-slate-50'
+                      ? 'text-[#dfb76c] bg-[#c59a45]/20 border border-[#c59a45]/40 font-bold'
+                      : 'text-white/90 hover:text-[#dfb76c] hover:bg-white/10'
                   }`}
                 >
                   <span>{t.services}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#c59a45] group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3.5 h-3.5 text-blue-200 group-hover:text-[#dfb76c] group-hover:rotate-180 transition-transform duration-200" />
                 </button>
 
                 {/* Dropdown Panel */}
                 <div className="absolute top-full right-0 rtl:right-0 ltr:left-0 pt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1 z-50 pointer-events-none group-hover:pointer-events-auto">
-                  <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-50 flex items-center justify-between">
+                  <div className="bg-white dark:bg-[#131c31] rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700/80 p-2 space-y-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#1d4ed8] dark:text-[#60a5fa] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                       <span>{lang === 'ar' ? 'صفحة الخدمات وتفريعاتها' : 'Services & Sub-Branches'}</span>
                       <span className="text-[9px] text-[#c59a45] font-bold">{lang === 'ar' ? 'صفحة مستقلة' : 'Dedicated'}</span>
                     </div>
@@ -235,38 +239,38 @@ export default function Navbar({
                         onClick={() => onNavigate(item.page, item.sectionId, item.filter, item.openCalculator)}
                         className={`w-full flex items-start gap-2.5 p-2 rounded-xl transition group/item text-right rtl:text-right ltr:text-left ${
                           item.isSpecial
-                            ? 'bg-amber-50/50 hover:bg-amber-100/70 border border-[#c59a45]/20'
-                            : 'hover:bg-slate-50'
+                            ? 'bg-amber-50/70 dark:bg-[#c59a45]/10 hover:bg-amber-100/80 dark:hover:bg-[#c59a45]/20 border border-[#c59a45]/30'
+                            : 'hover:bg-blue-50/70 dark:hover:bg-slate-800/80'
                         }`}
                       >
                         <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition ${
                           item.isSpecial
                             ? 'bg-[#c59a45] text-white shadow-sm'
-                            : 'bg-slate-100 group-hover/item:bg-[#c59a45] group-hover/item:text-white'
+                            : 'bg-[#1d4ed8]/10 dark:bg-[#1d4ed8]/25 group-hover/item:bg-[#c59a45] group-hover/item:text-white'
                         }`}>
                           {item.icon}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-900 group-hover/item:text-[#c59a45] transition">
+                            <span className="text-xs font-bold text-[#0f172a] dark:text-white group-hover/item:text-[#1d4ed8] dark:group-hover/item:text-[#dfb76c] transition">
                               {item.label}
                             </span>
                             {item.isSpecial && (
-                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#c59a45] text-white font-bold">
+                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#c59a45] text-[#0b1120] font-bold">
                                 {lang === 'ar' ? 'حاسبة فورية' : 'CALC'}
                               </span>
                             )}
                           </div>
-                          <div className="text-[10px] text-slate-500 line-clamp-1">
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1">
                             {item.desc}
                           </div>
                         </div>
                       </button>
                     ))}
-                    <div className="pt-2 border-t border-slate-100 px-2 pb-1">
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 px-2 pb-1">
                       <button
                         onClick={() => onNavigate('services')}
-                        className="w-full py-2 text-center text-xs font-bold text-[#c59a45] hover:text-[#9a752a] bg-[#c59a45]/10 rounded-xl"
+                        className="w-full py-2 text-center text-xs font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] rounded-xl transition"
                       >
                         {lang === 'ar' ? 'الانتقال لصفحة الخدمات الكاملة ←' : 'Go to Full Services Page →'}
                       </button>
@@ -280,8 +284,8 @@ export default function Navbar({
                 onClick={() => onNavigate('products')}
                 className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
                   currentPage === 'products'
-                    ? 'text-[#c59a45] bg-[#c59a45]/10 font-bold'
-                    : 'text-slate-700 hover:text-[#c59a45] hover:bg-slate-50'
+                    ? 'text-[#dfb76c] bg-[#c59a45]/20 border border-[#c59a45]/40 font-bold'
+                    : 'text-white/90 hover:text-[#dfb76c] hover:bg-white/10'
                 }`}
               >
                 {t.products}
@@ -292,8 +296,8 @@ export default function Navbar({
                 onClick={() => onNavigate('contact')}
                 className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
                   currentPage === 'contact'
-                    ? 'text-[#c59a45] bg-[#c59a45]/10 font-bold'
-                    : 'text-slate-700 hover:text-[#c59a45] hover:bg-slate-50'
+                    ? 'text-[#dfb76c] bg-[#c59a45]/20 border border-[#c59a45]/40 font-bold'
+                    : 'text-white/90 hover:text-[#dfb76c] hover:bg-white/10'
                 }`}
               >
                 {t.contact}
@@ -301,13 +305,23 @@ export default function Navbar({
 
             </nav>
 
-            {/* Actions (Search, Lang, Consultation CTA) */}
-            <div className="hidden md:flex items-center gap-2.5">
+            {/* Actions (Dark Mode Toggle, Search, Lang, Consultation CTA) */}
+            <div className="hidden md:flex items-center gap-2">
+              {/* Dark / Light Mode Toggle */}
+              <button
+                onClick={onToggleDarkMode}
+                aria-label={darkMode ? (lang === 'ar' ? 'تفعيل الوضع الفاتح' : 'Switch to Light Mode') : (lang === 'ar' ? 'تفعيل الوضع الداكن' : 'Switch to Dark Mode')}
+                title={darkMode ? (lang === 'ar' ? 'الوضع الفاتح' : 'Light Mode') : (lang === 'ar' ? 'الوضع الداكن' : 'Dark Mode')}
+                className="p-2 text-white/90 hover:text-[#dfb76c] bg-white/10 hover:bg-white/20 border border-white/15 rounded-full transition-colors"
+              >
+                {darkMode ? <Sun className="w-4 h-4 text-[#dfb76c]" /> : <Moon className="w-4 h-4" />}
+              </button>
+
               {/* Search Toggle */}
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search"
-                className="p-2 text-slate-600 hover:text-[#c59a45] hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2 text-white/90 hover:text-[#dfb76c] bg-white/10 hover:bg-white/20 border border-white/15 rounded-full transition-colors"
               >
                 <Search className="w-4 h-4" />
               </button>
@@ -315,17 +329,17 @@ export default function Navbar({
               {/* Language Switcher */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-[#c59a45] bg-slate-100 hover:bg-slate-200 rounded-full transition"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white hover:text-[#dfb76c] bg-white/10 hover:bg-white/20 border border-white/15 rounded-full transition"
                 title="Switch Language"
               >
-                <Globe className="w-3.5 h-3.5 text-[#c59a45]" />
+                <Globe className="w-3.5 h-3.5 text-[#dfb76c]" />
                 <span>{lang === 'ar' ? 'EN' : 'العربية'}</span>
               </button>
 
               {/* Request Consultation CTA Button */}
               <button
                 onClick={onOpenConsultation}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-[#c59a45] hover:bg-[#dfb76c] shadow-sm transition-all transform hover:-translate-y-0.5"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-[#0b1120] bg-[#c59a45] hover:bg-[#dfb76c] shadow-md transition-all transform hover:-translate-y-0.5"
               >
                 <span>{t.requestConsultation}</span>
                 <ArrowIcon className="w-3.5 h-3.5" />
@@ -335,14 +349,21 @@ export default function Navbar({
             {/* Mobile / Tablet Menu Button */}
             <div className="flex items-center gap-2 lg:hidden">
               <button
+                onClick={onToggleDarkMode}
+                aria-label="Toggle theme"
+                className="p-1.5 bg-white/10 hover:bg-white/20 border border-white/15 rounded-lg text-white"
+              >
+                {darkMode ? <Sun className="w-4 h-4 text-[#dfb76c]" /> : <Moon className="w-4 h-4" />}
+              </button>
+              <button
                 onClick={toggleLanguage}
-                className="p-1.5 text-xs font-bold bg-slate-100 rounded-lg text-slate-700"
+                className="p-1.5 text-xs font-bold bg-white/10 hover:bg-white/20 border border-white/15 rounded-lg text-white"
               >
                 {lang === 'ar' ? 'EN' : 'ع'}
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-slate-700 hover:text-[#c59a45] focus:outline-none"
+                className="p-2 text-white hover:text-[#dfb76c] focus:outline-none"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -352,21 +373,21 @@ export default function Navbar({
 
         {/* Search Bar Overlay */}
         {searchOpen && (
-          <div className="border-t border-slate-200 bg-white/95 px-4 py-3 shadow-inner">
+          <div className="border-t border-white/15 bg-white dark:bg-[#131c31] px-4 py-3 shadow-xl">
             <form onSubmit={handleSearchSubmit} className="max-w-3xl mx-auto flex items-center gap-3">
-              <Search className="w-5 h-5 text-slate-400" />
+              <Search className="w-5 h-5 text-[#1d4ed8] dark:text-[#60a5fa]" />
               <input
                 type="text"
                 placeholder={lang === 'ar' ? 'ابحث في منتجات السلامة، كود البناء، المواسير، المضخات... (اضغط Enter للانتقال للمنتجات)' : 'Search products, pipes, sprinklers, alarms... (Press Enter)'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 bg-transparent border-none focus:outline-none text-xs sm:text-sm text-slate-800"
+                className="flex-1 bg-transparent border-none focus:outline-none text-xs sm:text-sm text-[#0f172a] dark:text-white placeholder:text-slate-400"
                 autoFocus
               />
               <button
                 type="button"
                 onClick={() => setSearchOpen(false)}
-                className="text-xs text-slate-400 hover:text-slate-600"
+                className="text-xs text-slate-500 dark:text-slate-400 hover:text-[#1d4ed8] dark:hover:text-[#dfb76c]"
               >
                 {lang === 'ar' ? 'إغلاق' : 'Close'}
               </button>
@@ -376,7 +397,7 @@ export default function Navbar({
 
         {/* Mobile Dropdown Menu with Full Accordions */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white shadow-2xl px-4 py-5 space-y-3 max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden border-t border-white/15 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-slate-100 shadow-2xl px-4 py-5 space-y-3 max-h-[85vh] overflow-y-auto">
             
             {/* 1. الرئيسية */}
             <button
@@ -384,28 +405,28 @@ export default function Navbar({
                 onNavigate('home');
                 setMobileMenuOpen(false);
               }}
-              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 ${
-                currentPage === 'home' ? 'text-[#c59a45]' : 'text-slate-800'
+              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 dark:border-slate-800 ${
+                currentPage === 'home' ? 'text-[#c59a45]' : 'text-[#0f172a] dark:text-slate-100'
               }`}
             >
               {t.home}
             </button>
 
             {/* 2. عن الشركة (مع أكورديون التفريعات) */}
-            <div className="border-b border-slate-100 pb-2">
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-2">
               <div className="flex items-center justify-between py-2">
                 <button
                   onClick={() => {
                     onNavigate('about');
                     setMobileMenuOpen(false);
                   }}
-                  className={`text-sm font-bold ${currentPage === 'about' ? 'text-[#c59a45]' : 'text-slate-800'}`}
+                  className={`text-sm font-bold ${currentPage === 'about' ? 'text-[#c59a45]' : 'text-[#0f172a] dark:text-slate-100'}`}
                 >
                   {t.about}
                 </button>
                 <button
                   onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                  className="p-1.5 text-slate-500 hover:text-[#c59a45]"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-[#c59a45]"
                   aria-label="Toggle About Submenu"
                 >
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileAboutOpen ? 'rotate-180 text-[#c59a45]' : ''}`} />
@@ -413,7 +434,7 @@ export default function Navbar({
               </div>
 
               {mobileAboutOpen && (
-                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-slate-50 p-2.5 rounded-xl">
+                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-slate-50 dark:bg-[#0b1120] p-2.5 rounded-xl">
                   {aboutSubItems.map((sub, idx) => (
                     <button
                       key={idx}
@@ -421,7 +442,7 @@ export default function Navbar({
                         onNavigate(sub.page, sub.sectionId);
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2 py-1.5 text-xs font-semibold text-slate-700 hover:text-[#c59a45] text-right rtl:text-right ltr:text-left"
+                      className="w-full flex items-center gap-2 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] text-right rtl:text-right ltr:text-left"
                     >
                       {sub.icon}
                       <span>{sub.label}</span>
@@ -432,20 +453,20 @@ export default function Navbar({
             </div>
 
             {/* 3. خدماتنا (مع أكورديون التفريعات) */}
-            <div className="border-b border-slate-100 pb-2">
+            <div className="border-b border-slate-100 dark:border-slate-800 pb-2">
               <div className="flex items-center justify-between py-2">
                 <button
                   onClick={() => {
                     onNavigate('services');
                     setMobileMenuOpen(false);
                   }}
-                  className={`text-sm font-bold ${currentPage === 'services' ? 'text-[#c59a45]' : 'text-slate-800'}`}
+                  className={`text-sm font-bold ${currentPage === 'services' ? 'text-[#c59a45]' : 'text-[#0f172a] dark:text-slate-100'}`}
                 >
                   {t.services}
                 </button>
                 <button
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                  className="p-1.5 text-slate-500 hover:text-[#c59a45]"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-[#c59a45]"
                   aria-label="Toggle Services Submenu"
                 >
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180 text-[#c59a45]' : ''}`} />
@@ -453,7 +474,7 @@ export default function Navbar({
               </div>
 
               {mobileServicesOpen && (
-                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-slate-50 p-2.5 rounded-xl">
+                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-slate-50 dark:bg-[#0b1120] p-2.5 rounded-xl">
                   {servicesSubItems.map((sub, idx) => (
                     <button
                       key={idx}
@@ -461,14 +482,14 @@ export default function Navbar({
                         onNavigate(sub.page, sub.sectionId, sub.filter, sub.openCalculator);
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center justify-between py-1.5 text-xs font-semibold text-slate-700 hover:text-[#c59a45] text-right rtl:text-right ltr:text-left"
+                      className="w-full flex items-center justify-between py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] text-right rtl:text-right ltr:text-left"
                     >
                       <div className="flex items-center gap-2">
                         {sub.icon}
                         <span>{sub.label}</span>
                       </div>
                       {sub.isSpecial && (
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#c59a45] text-white font-bold">
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#c59a45] text-[#0b1120] font-bold">
                           {lang === 'ar' ? 'حاسبة' : 'CALC'}
                         </span>
                       )}
@@ -484,12 +505,12 @@ export default function Navbar({
                 onNavigate('products');
                 setMobileMenuOpen(false);
               }}
-              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 flex items-center justify-between ${
-                currentPage === 'products' ? 'text-[#c59a45]' : 'text-slate-800'
+              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 dark:border-slate-800 flex items-center justify-between ${
+                currentPage === 'products' ? 'text-[#c59a45]' : 'text-[#0f172a] dark:text-slate-100'
               }`}
             >
               <span>{t.products}</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#c59a45]/15 text-[#9a752a] font-normal">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#1d4ed8]/10 dark:bg-[#1d4ed8]/30 text-[#1d4ed8] dark:text-[#60a5fa] font-semibold">
                 {lang === 'ar' ? 'الكتالوج الكامل' : 'Catalog'}
               </span>
             </button>
@@ -500,8 +521,8 @@ export default function Navbar({
                 onNavigate('contact');
                 setMobileMenuOpen(false);
               }}
-              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 ${
-                currentPage === 'contact' ? 'text-[#c59a45]' : 'text-slate-800'
+              className={`w-full text-right rtl:text-right ltr:text-left py-2.5 text-sm font-bold border-b border-slate-100 dark:border-slate-800 ${
+                currentPage === 'contact' ? 'text-[#c59a45]' : 'text-[#0f172a] dark:text-slate-100'
               }`}
             >
               {t.contact}
@@ -514,7 +535,7 @@ export default function Navbar({
                   setMobileMenuOpen(false);
                   onOpenConsultation();
                 }}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold text-slate-950 bg-[#c59a45] hover:bg-[#dfb76c] shadow"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold text-[#0b1120] bg-[#c59a45] hover:bg-[#dfb76c] shadow"
               >
                 <span>{t.requestConsultation}</span>
                 <ArrowIcon className="w-3.5 h-3.5" />
@@ -523,7 +544,7 @@ export default function Navbar({
           </div>
         )}
       </header>
-      <div className="h-24 sm:h-28 md:h-32"></div>
+      <div className="h-20 sm:h-24 md:h-28"></div>
     </>
   );
 }

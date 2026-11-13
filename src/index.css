@@ -13,8 +13,13 @@
   body {
     overflow-x: hidden;
     font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #1e293b; /* Softer, eye-friendly slate instead of harsh black */
+    color: #0f172a; /* High-contrast deep navy ink for crisp light-mode reading */
     line-height: 1.75; /* Comfortable breathing room for Arabic typography */
+  }
+
+  html.dark body {
+    color: #f1f5f9;
+    background-color: #0b1120;
   }
 
   /* Eye-friendly text hierarchy */
@@ -23,7 +28,7 @@
   }
 }
 
-/* Custom styling for luxury gold accents & subtle gradients */
+/* Custom styling for luxury gold accents & royal blue glass headers */
 .gold-gradient-text {
   background: linear-gradient(135deg, #dfb76c 0%, #c59a45 50%, #8f6e2b 100%);
   -webkit-background-clip: text;
@@ -35,18 +40,24 @@
 }
 
 .gold-border-glow {
-  border: 1px solid rgba(197, 154, 69, 0.25);
-  box-shadow: 0 4px 20px -2px rgba(197, 154, 69, 0.12);
+  border: 1px solid rgba(197, 154, 69, 0.3);
+  box-shadow: 0 4px 20px -2px rgba(197, 154, 69, 0.14);
+}
+
+.glass-royal {
+  background: linear-gradient(90deg, rgba(15, 33, 82, 0.97) 0%, rgba(22, 45, 108, 0.97) 50%, rgba(15, 33, 82, 0.97) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-dark {
-  background: rgba(15, 23, 42, 0.88);
+  background: rgba(11, 17, 32, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-light {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -60,9 +71,17 @@
   background: #f8fafc;
 }
 
+html.dark ::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1e293b;
 }
 
 ::-webkit-scrollbar-thumb:hover {

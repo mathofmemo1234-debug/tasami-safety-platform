@@ -11,21 +11,28 @@ export default {
         brand: {
           gold: {
             DEFAULT: '#c59a45',
-            light: '#dcb86a',
+            light: '#dfb76c',
             dark: '#9a752a',
             gradient: '#dfb76c'
           },
+          royal: {
+            DEFAULT: '#1d4ed8',
+            header: '#162d6c',
+            deep: '#0f2152',
+            hover: '#1e40af',
+            light: '#60a5fa'
+          },
           dark: {
-            DEFAULT: '#0f172a',
-            surface: '#1e293b',
-            deep: '#090d16',
-            card: '#161f30'
+            DEFAULT: '#0b1120',
+            surface: '#131c31',
+            deep: '#070b14',
+            card: '#162036'
           },
           accent: {
             orange: '#f97316',
             red: '#ef4444',
             green: '#10b981',
-            blue: '#2563eb'
+            blue: '#1d4ed8'
           }
         }
       },

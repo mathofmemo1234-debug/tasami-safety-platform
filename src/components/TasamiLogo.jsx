@@ -1,7 +1,7 @@
 import React from 'react';
 import logoImg from '../assets/logo.jpg';
 
-export default function TasamiLogo({ className = "h-20 sm:h-24 lg:h-28", isWhite = false, lang = "ar" }) {
+export default function TasamiLogo({ className = "h-20 sm:h-24 lg:h-28", isWhite = false, compact = false, lang = "ar" }) {
   const getFallbackSrc = () => {
     const baseUrl = import.meta.env.BASE_URL || './';
     const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
@@ -12,8 +12,10 @@ export default function TasamiLogo({ className = "h-20 sm:h-24 lg:h-28", isWhite
     <div className="flex items-center select-none">
       <div className={`transition-all duration-200 ${
         isWhite
-          ? 'bg-white p-3 sm:p-4 rounded-3xl shadow-md border border-slate-200/80 inline-flex items-center'
-          : 'flex items-center'
+          ? compact
+            ? 'bg-white px-2.5 py-1 rounded-2xl shadow-md border border-[#c59a45]/35 inline-flex items-center'
+            : 'bg-white p-3 sm:p-4 rounded-3xl shadow-md border border-slate-200/80 dark:border-[#c59a45]/30 inline-flex items-center'
+          : 'flex items-center dark:bg-white dark:p-2 dark:rounded-2xl'
       }`}>
         <img
           src={logoImg || getFallbackSrc()}

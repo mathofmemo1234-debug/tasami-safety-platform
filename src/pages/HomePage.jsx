@@ -114,40 +114,40 @@ export default function HomePage({
         onNavigateProducts={() => onNavigate('products')}
       />
 
-      {/* 2. Brief Company Highlight (Eye-friendly & uncrowded) */}
+      {/* 2. Brief Company Highlight (Eye-friendly & high-contrast) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200/80">
+        <div className="bg-white dark:bg-[#131c31] rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200/90 dark:border-slate-800 transition-colors">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
               <div className="flex flex-wrap items-center gap-4">
                 <TasamiLogo lang={lang} className="h-20 sm:h-24 md:h-28" />
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#c59a45]/10 text-[#9a752a] text-xs font-bold">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#c59a45]/10 dark:bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c] text-xs font-bold border border-[#c59a45]/25">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#c59a45]" />
                   <span>{isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami for Safety Systems'}</span>
                 </div>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white tracking-tight">
                 {isAr
                   ? 'شريككم الهندسي المعتمد لحماية الأرواح والمنشآت'
                   : 'Your Certified Engineering Partner in Safety & Life Protection'}
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-loose max-w-3xl">
+              <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-loose max-w-3xl">
                 {isAr
                   ? 'نتميز بتوفير حلول هندسية متكاملة تشمل التوريد والتركيب والصيانة لكافة أنظمة مكافحة الحريق والإنذار المبكر، وفق اشتراطات الدفاع المدني وكود البناء السعودي SBC، لضمان بيئة عمل آمنة ومستدامة.'
                   : 'We deliver comprehensive turnkey fire protection and alarm engineering solutions, ensuring full statutory compliance with Civil Defense and Saudi Building Code (SBC).'}
               </p>
-              <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-slate-700">
-                <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <span className="flex items-center gap-1.5 bg-white dark:bg-[#0b1120] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   {isAr ? 'ترخيص معتمد في منصة سلامة' : 'Civil Defense Accredited'}
                 </span>
-                <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+                <span className="flex items-center gap-1.5 bg-white dark:bg-[#0b1120] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
                   <Award className="w-4 h-4 text-[#c59a45]" />
                   {isAr ? 'مطابق لكود البناء السعودي SBC' : 'Saudi Building Code SBC'}
                 </span>
-                <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                <span className="flex items-center gap-1.5 bg-white dark:bg-[#0b1120] px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#1d4ed8] dark:text-[#60a5fa]" />
                   {isAr ? 'اعتمادات سابر والمواصفات السعودية' : 'Saber & SASO Approved'}
                 </span>
               </div>
@@ -156,12 +156,12 @@ export default function HomePage({
             <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center gap-3">
               <button
                 onClick={() => onNavigate('about')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 text-xs sm:text-sm font-bold transition shadow-sm"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-xs sm:text-sm font-bold transition shadow-sm"
               >
                 <span>{isAr ? 'تعرف على الشركة وفريق القيادة' : 'About Us & Leadership'}</span>
                 <ChevronIcon className="w-4 h-4" />
               </button>
-              <span className="text-xs text-slate-500 font-medium">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                 {isAr ? 'رسالة الرئيس التنفيذي، الرؤية، والهيكل' : 'CEO message, vision & organization'}
               </span>
             </div>
@@ -174,13 +174,13 @@ export default function HomePage({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
           <div className="space-y-2">
-            <span className="text-xs font-bold text-[#c59a45] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#c59a45] dark:text-[#dfb76c] uppercase tracking-wider">
               {isAr ? 'حلول وأنظمة متكاملة' : 'Integrated Systems'}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
               {isAr ? 'خدماتنا الهندسية المعتمدة' : 'Our Engineering Services'}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
               {isAr
                 ? 'استعراض سريع لأبرز مجالات عملنا، ويمكنك الانتقال لصفحة الخدمات للاطلاع على كافة التفريعات والمواصفات.'
                 : 'A quick overview of our primary domains. Explore the full services page for complete sub-branches.'}
@@ -189,7 +189,7 @@ export default function HomePage({
 
           <button
             onClick={() => onNavigate('services')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#c59a45] hover:text-[#9a752a] bg-[#c59a45]/10 hover:bg-[#c59a45]/20 px-4 py-2.5 rounded-xl transition self-start sm:self-auto"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] px-4 py-2.5 rounded-xl transition shadow-sm self-start sm:self-auto"
           >
             <span>{isAr ? 'عرض كافة الخدمات والتفريعات' : 'View All Services & Branches'}</span>
             <ArrowIcon className="w-4 h-4" />
@@ -202,29 +202,29 @@ export default function HomePage({
             <div
               key={srv.id}
               onClick={() => onNavigate('services')}
-              className="group bg-white rounded-2xl p-6 border border-slate-200/90 hover:border-[#c59a45]/60 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              className="group bg-white dark:bg-[#131c31] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-xl bg-blue-50/70 dark:bg-[#0b1120] border border-blue-100 dark:border-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform">
                     {srv.icon}
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#1d4ed8]/10 dark:bg-[#1d4ed8]/25 text-[#1d4ed8] dark:text-[#60a5fa]">
                     {srv.tag}
                   </span>
                 </div>
-                <h3 className="text-base font-bold text-slate-800 group-hover:text-[#c59a45] transition mb-1.5">
+                <h3 className="text-base font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition mb-1.5">
                   {srv.title}
                 </h3>
-                <p className="text-xs text-slate-500 font-semibold mb-2">
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mb-2">
                   {srv.subtitle}
                 </p>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {srv.desc}
                 </p>
               </div>
 
-              <div className="pt-5 mt-5 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#c59a45] group-hover:text-[#9a752a]">
+              <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#9a752a] dark:text-[#dfb76c]">
                 <span>{isAr ? 'تفاصيل الخدمة' : 'Service Details'}</span>
                 <ChevronIcon className="w-3.5 h-3.5 transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
               </div>
@@ -237,13 +237,13 @@ export default function HomePage({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
           <div className="space-y-2">
-            <span className="text-xs font-bold text-[#c59a45] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#c59a45] dark:text-[#dfb76c] uppercase tracking-wider">
               {isAr ? 'توريدات ومعدات أصلية' : 'Certified Supplies'}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
               {isAr ? 'كتالوج منتجات السلامة ومكافحة الحريق' : 'Fire Safety Products Catalog'}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
               {isAr
                 ? 'منتجات معتمدة من كبرى المصانع العالمية مع شهادات الاختبار والامتثال لسابر وكود البناء.'
                 : 'Approved products and systems with international certifications (UL, FM, Saber).'}
@@ -252,7 +252,7 @@ export default function HomePage({
 
           <button
             onClick={() => onNavigate('products')}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#c59a45] hover:text-[#9a752a] bg-[#c59a45]/10 hover:bg-[#c59a45]/20 px-4 py-2.5 rounded-xl transition self-start sm:self-auto"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] px-4 py-2.5 rounded-xl transition shadow-sm self-start sm:self-auto"
           >
             <span>{isAr ? 'تصفح كتالوج المنتجات بالكامل' : 'Explore Full Products Catalog'}</span>
             <ArrowIcon className="w-4 h-4" />
@@ -265,9 +265,9 @@ export default function HomePage({
             <div
               key={idx}
               onClick={() => onNavigate('products')}
-              className="group bg-white rounded-2xl overflow-hidden border border-slate-200/90 hover:border-[#c59a45]/60 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
+              className="group bg-white dark:bg-[#131c31] rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
             >
-              <div className="h-44 bg-slate-100 overflow-hidden relative">
+              <div className="h-44 bg-slate-100 dark:bg-[#0b1120] overflow-hidden relative">
                 <img
                   src={p.image}
                   alt={p.name}
@@ -277,20 +277,20 @@ export default function HomePage({
                     e.target.src = 'https://images.unsplash.com/photo-1599818497672-132d73f1d24c?auto=format&fit=crop&w=600&q=80';
                   }}
                 />
-                <span className="absolute top-3 right-3 rtl:right-3 ltr:left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-900/80 text-white backdrop-blur-sm">
+                <span className="absolute top-3 right-3 rtl:right-3 ltr:left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#162d6c]/90 text-white backdrop-blur-sm border border-[#c59a45]/30">
                   {p.category}
                 </span>
               </div>
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-800 group-hover:text-[#c59a45] transition mb-1.5 line-clamp-1">
+                  <h3 className="text-sm font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition mb-1.5 line-clamp-1">
                     {p.name}
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     {p.specs}
                   </p>
                 </div>
-                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#c59a45]">
+                <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-[#9a752a] dark:text-[#dfb76c]">
                   <span>{isAr ? 'عرض المواصفات والطلب' : 'View & Inquire'}</span>
                   <ChevronIcon className="w-3.5 h-3.5" />
                 </div>
@@ -301,8 +301,8 @@ export default function HomePage({
       </section>
 
       {/* 5. Trust & Accreditations Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 text-center space-y-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="rounded-3xl bg-[#0b1120] dark:bg-[#131c31] border border-[#1d4ed8]/30 text-white p-8 sm:p-12 text-center space-y-6 shadow-xl">
           <span className="text-xs font-bold text-[#dfb76c] tracking-widest uppercase">
             {isAr ? 'الامتثال والاعتماد الرسمي' : 'Official Accreditations'}
           </span>
@@ -312,20 +312,20 @@ export default function HomePage({
               : 'Civil Defense Licensed & Saudi Building Code (SBC) Certified'}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto pt-2">
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80 text-center">
-              <div className="text-sm font-bold text-slate-200">{isAr ? 'منصة سلامة' : 'Salamah'}</div>
+            <div className="bg-[#131c31] dark:bg-[#0b1120] p-4 rounded-xl border border-[#1d4ed8]/30 text-center">
+              <div className="text-sm font-bold text-slate-100">{isAr ? 'منصة سلامة' : 'Salamah'}</div>
               <div className="text-[11px] text-[#dfb76c]">{isAr ? 'ترخيص معتمد' : 'Civil Defense'}</div>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80 text-center">
-              <div className="text-sm font-bold text-slate-200">SBC</div>
+            <div className="bg-[#131c31] dark:bg-[#0b1120] p-4 rounded-xl border border-[#1d4ed8]/30 text-center">
+              <div className="text-sm font-bold text-slate-100">SBC</div>
               <div className="text-[11px] text-[#dfb76c]">{isAr ? 'كود البناء السعودي' : 'Saudi Code'}</div>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80 text-center">
-              <div className="text-sm font-bold text-slate-200">SABER</div>
+            <div className="bg-[#131c31] dark:bg-[#0b1120] p-4 rounded-xl border border-[#1d4ed8]/30 text-center">
+              <div className="text-sm font-bold text-slate-100">SABER</div>
               <div className="text-[11px] text-[#dfb76c]">{isAr ? 'مطابقة ومواصفات' : 'Certified'}</div>
             </div>
-            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80 text-center">
-              <div className="text-sm font-bold text-slate-200">UL / FM</div>
+            <div className="bg-[#131c31] dark:bg-[#0b1120] p-4 rounded-xl border border-[#1d4ed8]/30 text-center">
+              <div className="text-sm font-bold text-slate-100">UL / FM</div>
               <div className="text-[11px] text-[#dfb76c]">{isAr ? 'معايير عالمية' : 'Listed'}</div>
             </div>
           </div>
@@ -333,13 +333,13 @@ export default function HomePage({
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={onOpenConsultation}
-              className="px-6 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-slate-950 font-bold text-xs sm:text-sm transition shadow-sm"
+              className="px-6 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] font-bold text-xs sm:text-sm transition shadow-sm"
             >
               {isAr ? 'طلب استشارة هندسية فورية' : 'Request Engineering Consultation'}
             </button>
             <button
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm border border-slate-700 transition"
+              className="px-6 py-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-bold text-xs sm:text-sm transition shadow-sm"
             >
               {isAr ? 'معلومات التواصل والعناوين' : 'Contact & Locations'}
             </button>
