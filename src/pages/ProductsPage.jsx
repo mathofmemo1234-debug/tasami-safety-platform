@@ -54,9 +54,21 @@ export default function ProductsPage({
   });
 
   return (
-    <div className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div className="relative overflow-hidden">
+      {/* Full-Page Subtle Brand Background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.12] dark:opacity-[0.16]"
+        style={{ backgroundImage: "url('./images/tasami-products-bg.jpg')" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white/80 via-white/70 to-slate-50/90 dark:from-[#0b1120]/85 dark:via-[#0b1120]/75 dark:to-[#0b1120]/95"
+      />
+
+      <div className="relative z-10 py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       
-      {/* 1. Breadcrumb & Header */}
+      {/* 1. Breadcrumb & Header Banner */}
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
           <button
@@ -69,32 +81,45 @@ export default function ProductsPage({
           <span className="text-[#c59a45] dark:text-[#dfb76c]">{isAr ? 'منتجاتنا' : 'Products'}</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <TasamiLogo lang={lang} className="h-10 sm:h-12" />
-              <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3 py-1 rounded-md inline-block border border-[#c59a45]/25">
-                {isAr ? 'توريدات وأنظمة معتمدة' : 'Certified Procurement'}
-              </span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
-              {isAr ? 'كتالوج المنتجات ومعدات السلامة ومكافحة الحريق' : 'Fire Safety Products & Equipment Catalog'}
-            </h1>
-            <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-              {isAr
-                ? 'توريد موثوق ومباشر لكبرى المشاريع والمنشآت في المملكة، مصحوب بشهادات الجودة والمطابقة ومقاطع توضيحية لطريقة التنفيذ.'
-                : 'Direct certified procurement for kingdom-wide infrastructure with complete test certificates and installation guides.'}
-            </p>
-          </div>
+        <div className="relative overflow-hidden rounded-3xl border border-[#c59a45]/30 dark:border-[#c59a45]/25 bg-white/85 dark:bg-[#131c31]/85 backdrop-blur-md shadow-md p-6 sm:p-8">
+          <img
+            src="./images/tasami-products-bg.jpg"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute inset-0 w-full h-full object-cover object-[center_42%] opacity-25 dark:opacity-30"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white/95 via-white/80 to-white/50 rtl:bg-gradient-to-l ltr:bg-gradient-to-r dark:from-[#0b1120]/95 dark:via-[#0b1120]/80 dark:to-[#131c31]/55"
+          />
 
-          <div className="flex-shrink-0">
-            <button
-              onClick={() => onOpenConsultation(isAr ? 'طلب تسعير كميات وتوريدات عامة' : 'General Bulk Procurement Quote')}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] text-xs sm:text-sm font-bold transition shadow-sm"
-            >
-              <span>{isAr ? 'طلب تسعير كميات أو مناقصة' : 'Request Bulk Quote'}</span>
-              <ArrowIcon className="w-4 h-4" />
-            </button>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <TasamiLogo lang={lang} className="h-10 sm:h-12" />
+                <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3 py-1 rounded-md inline-block border border-[#c59a45]/25">
+                  {isAr ? 'توريدات وأنظمة معتمدة' : 'Certified Procurement'}
+                </span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
+                {isAr ? 'كتالوج المنتجات ومعدات السلامة ومكافحة الحريق' : 'Fire Safety Products & Equipment Catalog'}
+              </h1>
+              <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+                {isAr
+                  ? 'توريد موثوق ومباشر لكبرى المشاريع والمنشآت في المملكة، مصحوب بشهادات الجودة والمطابقة ومقاطع توضيحية لطريقة التنفيذ.'
+                  : 'Direct certified procurement for kingdom-wide infrastructure with complete test certificates and installation guides.'}
+              </p>
+            </div>
+
+            <div className="flex-shrink-0">
+              <button
+                onClick={() => onOpenConsultation(isAr ? 'طلب تسعير كميات وتوريدات عامة' : 'General Bulk Procurement Quote')}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] text-xs sm:text-sm font-bold transition shadow-sm"
+              >
+                <span>{isAr ? 'طلب تسعير كميات أو مناقصة' : 'Request Bulk Quote'}</span>
+                <ArrowIcon className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -395,6 +420,7 @@ export default function ProductsPage({
         </div>
       )}
 
+      </div>
     </div>
   );
 }
