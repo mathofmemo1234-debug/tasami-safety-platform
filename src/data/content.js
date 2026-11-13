@@ -462,8 +462,8 @@ export const content = {
       subtitle: "شركة مرخصة ومصرحة رسمياً من كافة الجهات الرقابية والتنظيمية في المملكة العربية السعودية",
       certifications: [
         { name: "سابر (SABER)", desc: "شهادات مطابقة المنتجات لمنصة سابر السعودية", image: "./images/profile/accred-2.jpg" },
-        { name: "UL Listed", desc: "معايير السلامة والجودة العالمية الأمريكية Underwriters Laboratories", image: "./images/profile/accred-3.jpg" },
-        { name: "FM Approved", desc: "اعتماد Factory Mutual العالمي المعتمد لأنظمة مكافحة الحريق", image: "./images/profile/accred-3.jpg" },
+        { name: "UL Listed", desc: "معايير السلامة والجودة العالمية الأمريكية Underwriters Laboratories", image: "./images/profile/accred-ul.jpg" },
+        { name: "FM Approved", desc: "اعتماد Factory Mutual العالمي المعتمد لأنظمة مكافحة الحريق", image: "./images/profile/accred-fm.jpg" },
         { name: "LPCB", desc: "شهادة مجلس اعتماد أبحاث وفحص الحماية البريطانية Loss Prevention Certification Board", image: "./images/profile/accred-1.jpg" }
       ],
       legalDocuments: [
@@ -1045,8 +1045,8 @@ export const content = {
       subtitle: "Fully licensed and accredited by all regulatory authorities in the Kingdom of Saudi Arabia",
       certifications: [
         { name: "SABER", desc: "Saudi Product Conformity Certification via SABER Platform", image: "./images/profile/accred-2.jpg" },
-        { name: "UL Listed", desc: "Underwriters Laboratories global safety benchmark certification", image: "./images/profile/accred-3.jpg" },
-        { name: "FM Approved", desc: "Factory Mutual world-renowned certification for fire protection equipment", image: "./images/profile/accred-3.jpg" },
+        { name: "UL Listed", desc: "Underwriters Laboratories global safety benchmark certification", image: "./images/profile/accred-ul.jpg" },
+        { name: "FM Approved", desc: "Factory Mutual world-renowned certification for fire protection equipment", image: "./images/profile/accred-fm.jpg" },
         { name: "LPCB", desc: "Loss Prevention Certification Board certification for security and fire systems", image: "./images/profile/accred-1.jpg" }
       ],
       legalDocuments: [
