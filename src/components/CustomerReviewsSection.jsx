@@ -12,21 +12,32 @@ import {
   subscribeCustomerReviews,
   submitCustomerReview
 } from '../services/firebase';
+import { getLocalUser } from '../services/auth';
 
 export default function CustomerReviewsSection({ lang = 'ar', content }) {
   const isAr = lang === 'ar';
   const cfg = content?.[lang]?.customerReviews || {};
   const [liveApproved, setLiveApproved] = useState([]);
 
+  const currentUser = getLocalUser();
+
   // Submission form state (always submitted with status: 'pending')
-  const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
+  const [name, setName] = useState(currentUser?.name || '');
+  const [company, setCompany] = useState(currentUser?.company || '');
   const [projectType, setProjectType] = useState('');
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submittedNotice, setSubmittedNotice] = useState('');
+
+  useEffect(() => {
+    const user = getLocalUser();
+    if (user) {
+      if (!name) setName(user.name || '');
+      if (!company) setCompany(user.company || '');
+    }
+  }, []);
 
   useEffect(() => {
     const unsub = subscribeCustomerReviews({
@@ -74,6 +85,9 @@ export default function CustomerReviewsSection({ lang = 'ar', content }) {
         rating,
         comment,
         lang,
+        userId: currentUser?.uid || null,
+        phone: currentUser?.phone || '',
+        email: currentUser?.email || '',
         status: 'pending' // Never published publicly until Admin approves
       });
       setName('');

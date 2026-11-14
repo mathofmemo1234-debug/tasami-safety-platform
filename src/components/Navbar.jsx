@@ -355,24 +355,24 @@ export default function Navbar({
                 <span>{lang === 'ar' ? 'EN' : 'العربية'}</span>
               </button>
 
-              {/* Visitor / Client Account Portal */}
+              {/* Visitor / Client Account Portal - Distinct, Clear & Flashy */}
               {currentUser ? (
                 <button
                   onClick={() => setProfileModalOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#c59a45]/20 hover:bg-[#c59a45]/30 text-[#dfb76c] border border-[#c59a45]/50 transition-all shadow-sm"
-                  title={isAr ? `الحساب الشخصي: ${currentUser.name}` : `My Account: ${currentUser.name}`}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#c59a45]/20 hover:bg-[#c59a45]/35 text-[#dfb76c] border border-[#c59a45]/50 transition-all shadow-sm"
+                  title={isAr ? `حساب الزائر: ${currentUser.name} (اضغط لإدارة الحساب والمفضلة والتقييم)` : `Visitor Account: ${currentUser.name}`}
                 >
                   <UserCheck className="w-3.5 h-3.5 text-[#dfb76c]" />
-                  <span className="max-w-[110px] truncate">{currentUser.name}</span>
+                  <span className="font-bold max-w-[120px] truncate">{currentUser.name}</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setAuthModalOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white/90 hover:text-[#0b1120] bg-white/10 hover:bg-gradient-to-r hover:from-[#c59a45] hover:to-[#dfb76c] border border-[#c59a45]/30 hover:border-[#dfb76c] transition-all duration-200 shadow-sm"
-                  title={isAr ? 'تسجيل الدخول أو إنشاء حساب للزوار' : 'Visitor Sign In / Register'}
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black text-[#0b1120] bg-gradient-to-r from-[#dfb76c] via-[#c59a45] to-[#dfb76c] hover:brightness-110 border border-[#dfb76c] shadow-[0_2px_12px_rgba(197,154,69,0.35)] transition-all duration-200"
+                  title={isAr ? 'بوابة الزوار: تسجيل الدخول أو فتح حساب جديد' : 'Visitor Portal: Sign In or Register'}
                 >
-                  <User className="w-3.5 h-3.5 text-[#dfb76c]" />
-                  <span className="hidden xl:inline">{isAr ? 'دخول / حساب جديد' : 'Sign In'}</span>
+                  <User className="w-3.5 h-3.5 text-[#0b1120]" />
+                  <span className="inline whitespace-nowrap">{isAr ? 'دخول الزوار / تسجيل' : 'Visitor Login'}</span>
                 </button>
               )}
 
@@ -626,10 +626,10 @@ export default function Navbar({
                     setMobileMenuOpen(false);
                     setAuthModalOpen(true);
                   }}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold bg-[#162d6c] text-white border border-[#c59a45]/40"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black text-[#0b1120] bg-gradient-to-r from-[#dfb76c] via-[#c59a45] to-[#dfb76c] shadow-md border border-[#dfb76c]"
                 >
-                  <User className="w-4 h-4 text-[#dfb76c]" />
-                  <span>{isAr ? 'تسجيل الدخول / إنشاء حساب زائر' : 'Visitor Sign In / Register'}</span>
+                  <User className="w-4 h-4 text-[#0b1120]" />
+                  <span>{isAr ? 'دخول الزوار / إنشاء حساب جديد' : 'Visitor Sign In / Register'}</span>
                 </button>
               )}
             </div>
@@ -665,6 +665,8 @@ export default function Navbar({
           user={currentUser}
           lang={lang}
           onLogout={() => setCurrentUser(null)}
+          onNavigateToProducts={() => onNavigate('products')}
+          onOpenConsultation={(svc) => onOpenConsultation?.(svc)}
         />
       </header>
       <div className="h-20 sm:h-24 md:h-28"></div>

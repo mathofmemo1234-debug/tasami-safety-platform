@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Package,
   ShieldCheck,
@@ -11,15 +11,37 @@ import {
   Box,
   Layers,
   Wrench,
-  Video
+  Video,
+  Heart
 } from 'lucide-react';
 import { getItemBrands } from '../utils/media';
+import { getLocalUser } from '../services/auth';
+import {
+  getFavorites,
+  toggleProductFavorite,
+  subscribeToFavorites
+} from '../services/favorites';
 
 export default function ProductsCatalogSection({ lang, content, onSelectService }) {
   const t = content[lang].productsCatalog;
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeVideo, setActiveVideo] = useState(null);
+
+  const currentUser = getLocalUser();
+  const [userFavs, setUserFavs] = useState(() => getFavorites(currentUser?.uid || 'guest'));
+
+  useEffect(() => {
+    const unsub = subscribeToFavorites(currentUser?.uid || 'guest', (list) => {
+      setUserFavs(list);
+    });
+    return () => unsub();
+  }, [currentUser]);
+
+  const handleToggleFav = (item) => {
+    const res = toggleProductFavorite(currentUser?.uid || 'guest', item);
+    setUserFavs(res.list);
+  };
 
   const categories = t.categories || [
     { id: 'all', name: lang === 'ar' ? 'جميع المنتجات' : 'All Products' },
@@ -142,6 +164,27 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+
+                {/* Favorite Heart Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleToggleFav(item);
+                  }}
+                  title={
+                    userFavs.some((f) => String(f.id) === String(item.id))
+                      ? (lang === 'ar' ? 'إزالة من المفضلة' : 'Remove from Favorites')
+                      : (lang === 'ar' ? 'إضافة إلى المفضلة' : 'Add to Favorites')
+                  }
+                  className={`absolute top-3 left-3 rtl:left-3 ltr:right-3 w-8 h-8 rounded-full flex items-center justify-center transition shadow-md z-10 ${
+                    userFavs.some((f) => String(f.id) === String(item.id))
+                      ? 'bg-rose-500 text-white scale-110 shadow-rose-500/50'
+                      : 'bg-black/50 hover:bg-black/75 text-white hover:text-rose-400'
+                  }`}
+                >
+                  <Heart className={`w-4 h-4 ${userFavs.some((f) => String(f.id) === String(item.id)) ? 'fill-current text-white' : ''}`} />
+                </button>
                 
                 {/* Specifications Pill */}
                 {item.specs && (

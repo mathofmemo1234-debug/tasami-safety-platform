@@ -546,6 +546,49 @@ export async function updateVisitorProfile(uid, updates = {}) {
 }
 
 /**
+ * Signs in or registers a visitor using their Google Account.
+ */
+export async function loginWithGoogle() {
+  if (!auth) throw new Error('خدمة المصادقة غير متاحة حالياً.');
+  const { GoogleAuthProvider, signInWithPopup } = await import('firebase/auth');
+  const provider = new GoogleAuthProvider();
+
+  try {
+    const cred = await signInWithPopup(auth, provider);
+    const fbUser = cred.user;
+
+    let profile = await fetchUserProfile(fbUser.uid);
+    if (!profile) {
+      profile = {
+        uid: fbUser.uid,
+        name: fbUser.displayName || fbUser.email?.split('@')[0] || 'زائر تسامي',
+        email: fbUser.email || '',
+        phone: fbUser.phoneNumber || '',
+        identifierType: 'google',
+        photoURL: fbUser.photoURL || '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      if (db) {
+        setDoc(doc(db, 'users', fbUser.uid), profile, { merge: true }).catch(() => {});
+      }
+    }
+
+    saveLocalUser(profile);
+    return profile;
+  } catch (err) {
+    console.error('Google Sign-in error:', err);
+    if (err.code === 'auth/popup-closed-by-user') {
+      throw new Error('تم إلغاء نافذة تسجيل الدخول من قِبل المستخدم.');
+    }
+    if (err.code === 'auth/unauthorized-domain') {
+      throw new Error('النطاق غير مصرح به في Firebase Console > Authorized domains.');
+    }
+    throw new Error(err.message || 'تعذر تسجيل الدخول عبر Google.');
+  }
+}
+
+/**
  * Signs out the current visitor.
  */
 export async function logoutVisitor() {

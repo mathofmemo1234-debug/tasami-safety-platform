@@ -21,13 +21,20 @@ import {
   Globe,
   Handshake,
   TrendingUp,
-  FileText
+  FileText,
+  Heart
 } from 'lucide-react';
 import TasamiLogo from '../components/TasamiLogo';
 import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
 import InlineVideoPlayer from '../components/InlineVideoPlayer';
 import ProductGalleryModal from '../components/ProductGalleryModal';
 import { getParagraphStyle } from '../utils/typography';
+import { getLocalUser } from '../services/auth';
+import {
+  getFavorites,
+  toggleProductFavorite,
+  subscribeToFavorites
+} from '../services/favorites';
 import {
   getProductImages,
   resolveProductVideoSource,
@@ -45,7 +52,9 @@ function ProductCard({
   content,
   lang,
   onOpenGallery,
-  onOpenConsultation
+  onOpenConsultation,
+  isFavorited,
+  onToggleFavorite
 }) {
   const images = getProductImages(item);
   const videoSource = resolveProductVideoSource(item);
@@ -111,6 +120,29 @@ function ProductCard({
                 } w-8 h-8 rounded-full bg-white/90 dark:bg-[#131c31]/90 text-slate-700 dark:text-white shadow border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-105 transition`}
               >
                 <Maximize2 className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Favorite Wishlist Heart Button */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onToggleFavorite) onToggleFavorite(item);
+                }}
+                title={
+                  isFavorited
+                    ? (isAr ? 'إزالة من المفضلة' : 'Remove from Favorites')
+                    : (isAr ? 'إضافة إلى المفضلة' : 'Add to Favorites')
+                }
+                className={`absolute top-2.5 ${
+                  isAr ? 'right-2.5' : 'left-2.5'
+                } w-8 h-8 rounded-full shadow border flex items-center justify-center transition-all z-10 ${
+                  isFavorited
+                    ? 'bg-rose-500 border-rose-500 text-white scale-110 shadow-rose-500/40'
+                    : 'bg-white/90 dark:bg-[#131c31]/90 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:text-rose-500'
+                }`}
+              >
+                <Heart className={`w-3.5 h-3.5 ${isFavorited ? 'fill-current text-white' : ''}`} />
               </button>
 
               {/* Angle Switch Arrows when multiple angles exist */}
@@ -327,6 +359,21 @@ export default function ProductsPage({
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeVideo, setActiveVideo] = useState(null);
   const [showBrandsModal, setShowBrandsModal] = useState(false);
+
+  const currentUser = getLocalUser();
+  const [favorites, setFavorites] = useState(() => getFavorites(currentUser?.uid || 'guest'));
+
+  useEffect(() => {
+    const unsub = subscribeToFavorites(currentUser?.uid || 'guest', (list) => {
+      setFavorites(list);
+    });
+    return () => unsub();
+  }, [currentUser]);
+
+  const handleToggleFavorite = (product) => {
+    const res = toggleProductFavorite(currentUser?.uid || 'guest', product);
+    setFavorites(res.list);
+  };
 
   const brochureUrl = getBrochureUrl(t);
   const catalogValues = getCatalogValues(t, isAr);
@@ -556,6 +603,8 @@ export default function ProductsPage({
             whatsappNumber={whatsappNumber}
             content={content}
             lang={lang}
+            isFavorited={favorites.some((f) => String(f.id) === String(item.id))}
+            onToggleFavorite={handleToggleFavorite}
             onOpenConsultation={onOpenConsultation}
             onOpenGallery={(product, mode, angleIndex) =>
               setGalleryModalState({ product, mode, angleIndex })
