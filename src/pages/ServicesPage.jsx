@@ -466,7 +466,7 @@ export default function ServicesPage({
                   <div className="w-8 h-8 rounded-lg bg-[#162d6c] dark:bg-[#1d4ed8] text-white font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
                     {idx + 1}
                   </div>
-                  <div className="space-y-1">
+                  <div className="space-y-1 flex-1">
                     <h3 className="text-sm sm:text-base font-extrabold text-[#0f172a] dark:text-white">
                       {row.name}
                     </h3>

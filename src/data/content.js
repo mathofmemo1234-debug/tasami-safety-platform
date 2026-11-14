@@ -561,9 +561,9 @@ export const content = {
       email: "makkah-branch@tasaami.com",
       address: "مكة المكرمة – الشوقية – شارع إبراهيم الخليل",
       addressEn: "Ibrahim Al Khalil St - Ash Shawqiyah - Makkah",
-      googleMapsUrl: "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7",
+      googleMapsUrl: "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA",
       googleBusinessUrl: "https://share.google/9AmZxrxPQL8I9od2U",
-      coordinates: "21.445570, 39.801060",
+      coordinates: "21.387370, 39.808065",
       socialLinks: [
         { platform: "LinkedIn (الشركة)", url: "https://www.linkedin.com/company/%D8%AA%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84/", label: "تسامي الأعمال | TASAMI BUSINESS" },
         { platform: "LinkedIn (المدير التنفيذي)", url: "https://www.linkedin.com/in/taha-hendy-650134b8/", label: "أ. طه هندي" },
@@ -1174,9 +1174,9 @@ export const content = {
       email: "makkah-branch@tasaami.com",
       address: "Makkah Al-Mukarramah – Ash Shawqiyah – Ibrahim Al Khalil Street",
       addressEn: "Ibrahim Al Khalil St - Ash Shawqiyah - Makkah",
-      googleMapsUrl: "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7",
+      googleMapsUrl: "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA",
       googleBusinessUrl: "https://share.google/9AmZxrxPQL8I9od2U",
-      coordinates: "21.445570, 39.801060",
+      coordinates: "21.387370, 39.808065",
       socialLinks: [
         { platform: "LinkedIn (Company)", url: "https://www.linkedin.com/company/%D8%AA%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84/", label: "Tasami Business | تسامي الأعمال" },
         { platform: "LinkedIn (CEO)", url: "https://www.linkedin.com/in/taha-hendy-650134b8/", label: "Taha Hendy" },

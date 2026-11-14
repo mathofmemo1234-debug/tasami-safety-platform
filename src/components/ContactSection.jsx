@@ -157,7 +157,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
 
                 {/* Address & Google Maps Navigation */}
                 <a
-                  href={c.googleMapsUrl || "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7"}
+                  href={c.googleMapsUrl || "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 hover:border-[#c59a45] dark:hover:border-[#dfb76c] flex items-start gap-4 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer block"
@@ -190,7 +190,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm relative h-48 bg-slate-100 dark:bg-[#0b1120]">
                     <iframe
                       title="موقع شركة تسامي الأعمال لأنظمة السلامة"
-                      src="https://maps.google.com/maps?q=21.445570,39.801060&hl=ar&z=15&output=embed"
+                      src={`https://maps.google.com/maps?q=${encodeURIComponent((c.coordinates || '21.387370,39.808065').replace(/\s+/g, ''))}&hl=${lang === 'ar' ? 'ar' : 'en'}&z=15&output=embed`}
                       className="w-full h-full border-0"
                       loading="lazy"
                       allowFullScreen

@@ -38,7 +38,8 @@ export default {
       },
       fontFamily: {
         cairo: ['Cairo', 'sans-serif'],
-        tajawal: ['Tajawal', 'sans-serif']
+        tajawal: ['Tajawal', 'sans-serif'],
+        farsi: ['Noto Nastaliq Urdu', 'Tajawal', 'Cairo', 'sans-serif']
       },
       boxShadow: {
         'gold-glow': '0 0 25px rgba(197, 154, 69, 0.25)',

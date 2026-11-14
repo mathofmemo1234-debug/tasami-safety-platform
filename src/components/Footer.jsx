@@ -99,7 +99,7 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
                 <a
-                  href={c.googleMapsUrl || "https://maps.app.goo.gl/pmKf7DfgsVCMkL6o7"}
+                  href={c.googleMapsUrl || "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#dfb76c] transition underline-offset-2 hover:underline"
