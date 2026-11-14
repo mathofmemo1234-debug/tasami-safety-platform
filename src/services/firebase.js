@@ -1,4 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import {
   getFirestore,
   doc,
@@ -55,6 +56,7 @@ export function saveActiveFirebaseConfig(cfg) {
 let app = null;
 let db = null;
 let storage = null;
+let auth = null;
 
 try {
   const cfg = getActiveFirebaseConfig();
@@ -65,11 +67,12 @@ try {
   }
   db = getFirestore(app);
   storage = getStorage(app);
+  auth = getAuth(app);
 } catch (err) {
   console.error('Firebase init error:', err);
 }
 
-export { app, db, storage };
+export { app, db, storage, auth };
 
 // Safe deep merge helper ensuring default structure and array safety
 function deepMerge(target, source) {

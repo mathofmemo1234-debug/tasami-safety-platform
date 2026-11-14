@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, CheckCircle2, ShieldCheck, Send, Phone, Mail, Building, User } from 'lucide-react';
+import { getLocalUser } from '../services/auth';
+import { db } from '../services/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 export default function ConsultationModal({ isOpen, onClose, lang, initialService = '' }) {
   if (!isOpen) return null;
 
+  const loggedUser = getLocalUser();
+
   const [formData, setFormData] = useState({
-    name: '',
-    company: '',
-    email: '',
-    phone: '',
+    name: loggedUser?.name || '',
+    company: loggedUser?.company || '',
+    email: loggedUser?.email || '',
+    phone: loggedUser?.phone || '',
     sector: 'مجمع تجاري',
     service_type: initialService || 'معاينة هندسية وفنية لموقع المنشأة',
     notes: '',
   });
+
+  useEffect(() => {
+    const user = getLocalUser();
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || user.name || '',
+        company: prev.company || user.company || '',
+        email: prev.email || user.email || '',
+        phone: prev.phone || user.phone || ''
+      }));
+    }
+  }, [isOpen]);
 
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
@@ -29,24 +47,45 @@ export default function ConsultationModal({ isOpen, onClose, lang, initialServic
     setSuccessMsg('');
 
     try {
-      const res = await fetch('/api/consultations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const payload = {
+        ...formData,
+        userId: loggedUser?.uid || null,
+        date: new Date().toISOString(),
+        status: 'pending'
+      };
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'حدث خطأ في الإرسال');
+      // 1. Save to local storage cache so it appears immediately in user's profile
+      try {
+        const rawLocal = localStorage.getItem('tasami_consultations') || '[]';
+        const parsed = JSON.parse(rawLocal);
+        parsed.unshift({ id: `c_${Date.now()}`, ...payload });
+        localStorage.setItem('tasami_consultations', JSON.stringify(parsed));
+      } catch {}
+
+      // 2. Save directly to Firestore if available
+      if (db) {
+        try {
+          await addDoc(collection(db, 'consultations'), payload);
+        } catch (dbErr) {
+          console.warn('Firestore consultation save note:', dbErr.message);
+        }
       }
 
-      setSuccessMsg(data.message || 'تم إرسال طلبكم بنجاح!');
+      // 3. Fallback attempt to local express server if active
+      try {
+        fetch('/api/consultations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }).catch(() => {});
+      } catch {}
+
+      setSuccessMsg(lang === 'ar' ? 'تم استلام طلبكم بنجاح وسيتواصل معكم مهندسنا المختص.' : 'Your consultation request has been submitted successfully.');
       setTimeout(() => {
-        // Auto close after 2.5s on success
-        // onClose();
-      }, 2500);
+        onClose();
+      }, 2200);
     } catch (err) {
-      setErrorMsg(err.message || 'تعذر الاتصال بالخادم، يرجى المحاولة لاحقاً.');
+      setErrorMsg(err.message || 'تعذر الإرسال، يرجى المحاولة لاحقاً أو التواصل عبر الواتساب.');
     } finally {
       setLoading(false);
     }

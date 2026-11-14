@@ -20,8 +20,13 @@ import {
   ArrowLeft,
   Sparkles,
   Sun,
-  Moon
+  Moon,
+  User,
+  UserCheck
 } from 'lucide-react';
+import VisitorAuthModal from './VisitorAuthModal';
+import UserProfileModal from './UserProfileModal';
+import { subscribeToVisitorAuth } from '../services/auth';
 
 export default function Navbar({
   currentPage = 'home',
@@ -40,6 +45,18 @@ export default function Navbar({
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+
+  // Visitor Authentication & Profile States
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToVisitorAuth((u) => {
+      setCurrentUser(u);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
@@ -338,6 +355,27 @@ export default function Navbar({
                 <span>{lang === 'ar' ? 'EN' : 'العربية'}</span>
               </button>
 
+              {/* Visitor / Client Account Portal */}
+              {currentUser ? (
+                <button
+                  onClick={() => setProfileModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#c59a45]/20 hover:bg-[#c59a45]/30 text-[#dfb76c] border border-[#c59a45]/50 transition-all shadow-sm"
+                  title={isAr ? `الحساب الشخصي: ${currentUser.name}` : `My Account: ${currentUser.name}`}
+                >
+                  <UserCheck className="w-3.5 h-3.5 text-[#dfb76c]" />
+                  <span className="max-w-[110px] truncate">{currentUser.name}</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => setAuthModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white/90 hover:text-[#0b1120] bg-white/10 hover:bg-gradient-to-r hover:from-[#c59a45] hover:to-[#dfb76c] border border-[#c59a45]/30 hover:border-[#dfb76c] transition-all duration-200 shadow-sm"
+                  title={isAr ? 'تسجيل الدخول أو إنشاء حساب للزوار' : 'Visitor Sign In / Register'}
+                >
+                  <User className="w-3.5 h-3.5 text-[#dfb76c]" />
+                  <span className="hidden xl:inline">{isAr ? 'دخول / حساب جديد' : 'Sign In'}</span>
+                </button>
+              )}
+
               {/* Admin Portal Trigger (Discreet & Elegant) */}
               <button
                 onClick={onOpenAdmin}
@@ -557,6 +595,45 @@ export default function Navbar({
               </span>
             </button>
 
+            {/* 7. حساب الزائر / العميل */}
+            <div className="py-2.5 border-b border-slate-100 dark:border-slate-800">
+              {currentUser ? (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setProfileModalOpen(true);
+                  }}
+                  className="w-full flex items-center justify-between p-2.5 rounded-xl bg-[#c59a45]/15 border border-[#c59a45]/30 text-right rtl:text-right ltr:text-left"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#c59a45] text-[#0b1120] font-black flex items-center justify-center text-xs">
+                      {currentUser.name ? currentUser.name[0].toUpperCase() : 'U'}
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-[#0f172a] dark:text-white">{currentUser.name}</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono" dir="ltr">
+                        {currentUser.phone || currentUser.email}
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-bold text-[#c59a45]">
+                    {isAr ? 'إدارة الحساب' : 'Profile'}
+                  </span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setAuthModalOpen(true);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold bg-[#162d6c] text-white border border-[#c59a45]/40"
+                >
+                  <User className="w-4 h-4 text-[#dfb76c]" />
+                  <span>{isAr ? 'تسجيل الدخول / إنشاء حساب زائر' : 'Visitor Sign In / Register'}</span>
+                </button>
+              )}
+            </div>
+
             {/* CTA */}
             <div className="pt-3">
               <button
@@ -572,6 +649,23 @@ export default function Navbar({
             </div>
           </div>
         )}
+
+        {/* Visitor Authentication Modal (Login / Register with Phone or Email) */}
+        <VisitorAuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+          lang={lang}
+          onSuccess={(u) => setCurrentUser(u)}
+        />
+
+        {/* Visitor Profile & Consultation History Modal */}
+        <UserProfileModal
+          isOpen={profileModalOpen}
+          onClose={() => setProfileModalOpen(false)}
+          user={currentUser}
+          lang={lang}
+          onLogout={() => setCurrentUser(null)}
+        />
       </header>
       <div className="h-20 sm:h-24 md:h-28"></div>
     </>

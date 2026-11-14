@@ -24,6 +24,9 @@ export default defineConfig({
             if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
               return 'vendor-react';
             }
+            if (id.includes('@firebase/auth') || id.includes('firebase/auth')) {
+              return 'vendor-firebase-auth';
+            }
             if (id.includes('@firebase/storage') || id.includes('firebase/storage')) {
               return 'vendor-firebase-storage';
             }

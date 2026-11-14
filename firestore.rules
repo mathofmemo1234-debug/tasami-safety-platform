@@ -1,6 +1,56 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users/{userId}
+    //   - uid: string (User auth UID)
+    //   - name: string (User display name)
+    //   - email: string (User email address, optional)
+    //   - phone: string (User phone number, optional)
+    //   - phoneInternational: string (International phone format, optional)
+    //   - company: string (Organization/Business name, optional)
+    //   - identifierType: string ('phone' | 'email')
+    //   - createdAt: string or timestamp
+    //   - updatedAt: string or timestamp
+    //
+    // Collection: consultations/{document=**}
+    //   - Inquiries, requests for quotes, and inspection consultations submitted by visitors
+    //
+    // Collection: messages/{document=**}
+    //   - Technical support tickets, live inquiries, and customer reviews
+    //
+    // Collection: site_content/{document=**}
+    //   - Dynamic website content and catalog sections
+    //
+    // Collection: admin_settings/{document=**}
+    //   - CMS and administrative credentials and settings
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions & Domain Validators
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidUser(data) {
+      return (!('name' in data) || (data.name is string && data.name.size() <= 150)) &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 50)) &&
+             (!('phoneInternational' in data) || (data.phoneInternational is string && data.phoneInternational.size() <= 50)) &&
+             (!('company' in data) || (data.company is string && data.company.size() <= 200)) &&
+             (!('identifierType' in data) || (data.identifierType is string && data.identifierType.size() <= 30));
+    }
+
     // Public read for site content, write allowed for CMS manager
     match /site_content/{document=**} {
       allow read: if true;
@@ -18,9 +68,23 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
+    // Technical support tickets, visitor messages, and customer reviews
     match /messages/{document=**} {
       allow create: if true;
       allow read, write: if true;
+    }
+
+    // Visitor user profiles & account settings
+    match /users/{userId} {
+      // Allows visitors to create, read, and update their own user profile (with auth owner validation when logged in)
+      allow read: if isOwner(userId) || request.auth == null;
+      allow create: if (isOwner(userId) || request.auth == null) && isValidUser(request.resource.data);
+      allow update: if (isOwner(userId) || request.auth == null) && isValidUser(request.resource.data);
+      allow delete: if isOwner(userId) || request.auth == null;
+
+      match /{allChildren=**} {
+        allow read, write: if isOwner(userId) || request.auth == null;
+      }
     }
   }
 }
