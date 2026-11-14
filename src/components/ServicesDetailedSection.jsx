@@ -1,4 +1,5 @@
 import React from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import { BellRing, Wind, Droplets, Flame, HardHat, Wrench, CheckCircle2, Shield, ArrowRight, ArrowLeft, Percent, BadgePercent } from 'lucide-react';
 
 export default function ServicesDetailedSection({ lang, content, onSelectService }) {
@@ -38,7 +39,7 @@ export default function ServicesDetailedSection({ lang, content, onSelectService
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             {t.title}
           </h2>
-          <p className="text-sm sm:text-base text-slate-400">
+          <p className="w-full text-sm sm:text-base text-slate-400" style={getParagraphStyle(content, lang, 'servicesCards')}>
             {t.subtitle}
           </p>
         </div>
@@ -48,9 +49,9 @@ export default function ServicesDetailedSection({ lang, content, onSelectService
           {t.categories.map((cat) => (
             <div
               key={cat.id}
-              className="bg-slate-800/90 border border-slate-700/80 hover:border-[#c59a45]/60 rounded-3xl p-7 flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group hover:-translate-y-1"
+              className="bg-slate-800/90 border border-slate-700/80 hover:border-[#c59a45]/60 rounded-3xl p-7 flex flex-col justify-between items-center text-center hover:shadow-2xl transition-all duration-300 group hover:-translate-y-1"
             >
-              <div>
+              <div className="flex flex-col items-center text-center w-full">
                 <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-700 group-hover:border-[#c59a45] flex items-center justify-center mb-5 transition-colors">
                   {getServiceIcon(cat.icon)}
                 </div>
@@ -63,12 +64,12 @@ export default function ServicesDetailedSection({ lang, content, onSelectService
                   {cat.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                <p className="w-full text-xs sm:text-sm text-slate-300 leading-relaxed font-normal" style={getParagraphStyle(content, lang, 'servicesCards')}>
                   {cat.desc}
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-center w-full">
                 <button
                   onClick={() => onSelectService(cat.title)}
                   className="text-xs font-bold text-[#dfb76c] hover:text-white flex items-center gap-1.5 transition"
@@ -83,13 +84,13 @@ export default function ServicesDetailedSection({ lang, content, onSelectService
 
         {/* 2. Structured Service Execution Matrix (جدول خدماتنا) */}
         <div className="bg-slate-800/60 border border-slate-700/80 rounded-3xl p-6 sm:p-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <div className="flex flex-col items-center text-center justify-between gap-4 mb-8">
+            <div className="flex flex-col items-center text-center w-full">
+              <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center justify-center gap-2">
                 <Shield className="w-6 h-6 text-[#dfb76c]" />
                 <span>{lang === 'ar' ? 'مصفوفة خدمات تسامي الشاملة' : 'Comprehensive Service Matrix'}</span>
               </h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="w-full text-xs text-slate-400 mt-1" style={getParagraphStyle(content, lang, 'servicesCards')}>
                 {lang === 'ar' ? 'خدمات احترافية متكاملة مدعومة بأفضل الأسعار وعروض خاصة للعملاء المميزين' : 'End-to-end turnkey services backed by competitive market pricing and VIP discounts'}
               </p>
             </div>

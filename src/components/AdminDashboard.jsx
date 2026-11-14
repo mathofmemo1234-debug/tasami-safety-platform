@@ -35,6 +35,14 @@ import {
   uploadMediaFile,
   FIREBASE_CONFIG
 } from '../services/firebase';
+import {
+  FONT_OPTIONS,
+  FONT_SIZE_OPTIONS,
+  ALIGN_OPTIONS,
+  COLOR_PRESETS,
+  PARAGRAPH_DEFINITIONS,
+  getParagraphStyle
+} from '../utils/typography';
 
 export default function AdminDashboard({
   isOpen,
@@ -67,6 +75,10 @@ export default function AdminDashboard({
 
   // Quick media upload state
   const [uploadedImages, setUploadedImages] = useState([]);
+
+  // Typography editor state
+  const [typoPageFilter, setTypoPageFilter] = useState('الكل');
+  const [syncTypoBothLangs, setSyncTypoBothLangs] = useState(true);
 
   // Sync when content changes externally
   useEffect(() => {
@@ -174,6 +186,63 @@ export default function AdminDashboard({
         current = current[pathArray[i]];
       }
       current[pathArray[pathArray.length - 1]] = value;
+      return next;
+    });
+  };
+
+  // Per-Paragraph Typography & Alignment Helpers
+  const updateParagraphStyle = (paraKey, field, value) => {
+    setLocalData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const targetLangs = syncTypoBothLangs ? ['ar', 'en'] : [langTab];
+      targetLangs.forEach((l) => {
+        if (!next[l]) next[l] = {};
+        if (!next[l].typography) next[l].typography = {};
+        if (!next[l].typography[paraKey]) next[l].typography[paraKey] = {};
+        next[l].typography[paraKey][field] = value;
+      });
+      return next;
+    });
+  };
+
+  const resetParagraphStyle = (paraKey) => {
+    setLocalData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const targetLangs = syncTypoBothLangs ? ['ar', 'en'] : [langTab];
+      targetLangs.forEach((l) => {
+        if (next[l]?.typography && next[l].typography[paraKey]) {
+          delete next[l].typography[paraKey];
+        }
+      });
+      return next;
+    });
+  };
+
+  const resetAllParagraphStyles = () => {
+    if (!window.confirm('هل تريد استعادة الخط والحجم واللون والمحاذاة الافتراضية لجميع الفقرات؟')) return;
+    setLocalData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const targetLangs = syncTypoBothLangs ? ['ar', 'en'] : [langTab];
+      targetLangs.forEach((l) => {
+        if (next[l]) next[l].typography = {};
+      });
+      return next;
+    });
+  };
+
+  const applyParagraphStyleToAll = (sourceKey) => {
+    if (!window.confirm('هل تريد تعميم تنسيق هذه الفقرة (نوع الخط والحجم والمحاذاة واللون) على جميع الفقرات؟')) return;
+    setLocalData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const sourceStyle = JSON.parse(JSON.stringify(next?.[langTab]?.typography?.[sourceKey] || {}));
+      const targetLangs = syncTypoBothLangs ? ['ar', 'en'] : [langTab];
+      targetLangs.forEach((l) => {
+        if (!next[l]) next[l] = {};
+        next[l].typography = {};
+        PARAGRAPH_DEFINITIONS.forEach((def) => {
+          next[l].typography[def.key] = { ...sourceStyle };
+        });
+      });
       return next;
     });
   };
@@ -438,6 +507,7 @@ export default function AdminDashboard({
           <div className="flex overflow-x-auto border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 gap-2 py-2">
             {[
               { id: 'visibility', name: '👁️ إظهار / إخفاء الأقسام والمستندات' },
+              { id: 'typography', name: '🎨 تنسيق الفقرات والخطوط', count: PARAGRAPH_DEFINITIONS.length },
               { id: 'products', name: '📦 كتالوج المنتجات', count: (localData[langTab]?.productsCatalog?.items || []).length },
               { id: 'services', name: '🛠️ الأنظمة والخدمات' },
               { id: 'licenses', name: '📜 التراخيص والاعتمادات', count: (localData[langTab]?.certificationsAndLicenses?.legalDocuments || []).length },
@@ -1198,6 +1268,237 @@ export default function AdminDashboard({
                   </div>
                 </div>
 
+              </div>
+            )}
+
+            {/* TAB: TYPOGRAPHY & ALIGNMENT (تنسيق الفقرات والخطوط) */}
+            {activeTab === 'typography' && (
+              <div className="space-y-6 animate-fade-in font-cairo">
+                {/* Header & Global Controls */}
+                <div className="bg-gradient-to-r from-[#162d6c]/10 via-[#c59a45]/15 to-transparent p-5 rounded-2xl border border-[#c59a45]/30 space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h4 className="text-base font-black text-[#0f172a] dark:text-white">
+                        التحكم الكامل بخطوط وحجم وموقع وألوان الفقرات
+                      </h4>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                        يمكنك تغيير نوع الخط، حجمه، محاذاته (وسط / يمين / يسار / ضبط)، ولونه لكل فقرة في جميع صفحات الموقع، ثم الضغط على «حفظ ونشر التعديلات».
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <label className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-700 text-xs font-bold text-[#0f172a] dark:text-white cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={syncTypoBothLangs}
+                          onChange={(e) => setSyncTypoBothLangs(e.target.checked)}
+                          className="accent-[#c59a45] w-4 h-4"
+                        />
+                        <span>تطبيق التغييرات على اللغتين (AR + EN) معاً</span>
+                      </label>
+
+                      <button
+                        type="button"
+                        onClick={resetAllParagraphStyles}
+                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-300 text-xs font-bold hover:bg-red-100 transition"
+                      >
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        <span>استعادة الافتراضي للكل</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Page Filter Tabs */}
+                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/70 dark:border-slate-700/70">
+                    {['الكل', ...Array.from(new Set(PARAGRAPH_DEFINITIONS.map(d => d.page)))].map((pageName) => (
+                      <button
+                        key={pageName}
+                        type="button"
+                        onClick={() => setTypoPageFilter(pageName)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                          typoPageFilter === pageName
+                            ? 'bg-[#162d6c] text-white shadow-sm'
+                            : 'bg-white dark:bg-[#131c31] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-[#c59a45]'
+                        }`}
+                      >
+                        {pageName}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Paragraph Cards Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {PARAGRAPH_DEFINITIONS
+                    .filter((def) => typoPageFilter === 'الكل' || def.page === typoPageFilter)
+                    .map((def) => {
+                      const cfg = localData?.[langTab]?.typography?.[def.key] || {};
+                      const resolvedStyle = getParagraphStyle(localData, langTab, def.key) || {};
+                      const currentFont = cfg.fontFamily || 'default';
+                      const currentSize = cfg.fontSize || 'default';
+                      const currentAlign = cfg.textAlign || 'center';
+                      const currentColor = cfg.color || '';
+
+                      return (
+                        <div
+                          key={def.key}
+                          className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-[#0b1120] space-y-4"
+                        >
+                          {/* Card Header */}
+                          <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800">
+                            <div>
+                              <span className="inline-block text-[10px] font-black px-2 py-0.5 rounded-md bg-[#c59a45]/15 text-[#9a752a] dark:text-[#dfb76c] mb-1">
+                                {def.page}
+                              </span>
+                              <h5 className="text-sm font-black text-[#0f172a] dark:text-white">
+                                {def.label}
+                              </h5>
+                            </div>
+
+                            <div className="flex items-center gap-1.5 flex-shrink-0">
+                              <button
+                                type="button"
+                                onClick={() => applyParagraphStyleToAll(def.key)}
+                                className="px-2.5 py-1 rounded-lg bg-[#162d6c]/10 dark:bg-[#162d6c]/40 text-[#162d6c] dark:text-[#93c5fd] hover:bg-[#162d6c] hover:text-white text-[10px] font-bold transition"
+                                title="نسخ هذا التنسيق إلى جميع الفقرات"
+                              >
+                                تعميم على الكل
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => resetParagraphStyle(def.key)}
+                                className="px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-red-100 hover:text-red-700 text-[10px] font-bold transition"
+                              >
+                                افتراضي
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Controls: Font, Size, Alignment, Color */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            {/* Font Family */}
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+                                نوع الخط
+                              </label>
+                              <select
+                                value={currentFont}
+                                onChange={(e) => updateParagraphStyle(def.key, 'fontFamily', e.target.value)}
+                                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white font-semibold focus:outline-none focus:ring-1 focus:ring-[#c59a45]"
+                              >
+                                {FONT_OPTIONS.map((opt) => (
+                                  <option key={opt.id} value={opt.id}>
+                                    {opt.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Font Size */}
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+                                حجم الخط
+                              </label>
+                              <select
+                                value={currentSize}
+                                onChange={(e) => updateParagraphStyle(def.key, 'fontSize', e.target.value)}
+                                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white font-semibold focus:outline-none focus:ring-1 focus:ring-[#c59a45]"
+                              >
+                                {FONT_SIZE_OPTIONS.map((opt) => (
+                                  <option key={opt.id} value={opt.id}>
+                                    {opt.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Alignment / Position */}
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+                                الموقع / المحاذاة
+                              </label>
+                              <div className="grid grid-cols-4 gap-1 bg-white dark:bg-[#131c31] p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                                {ALIGN_OPTIONS.map((opt) => (
+                                  <button
+                                    key={opt.id}
+                                    type="button"
+                                    onClick={() => updateParagraphStyle(def.key, 'textAlign', opt.id)}
+                                    className={`py-1.5 rounded-lg text-[11px] font-bold transition ${
+                                      currentAlign === opt.id
+                                        ? 'bg-[#c59a45] text-[#0b1120] shadow-sm'
+                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                    }`}
+                                  >
+                                    {opt.label}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Color Presets & Picker */}
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
+                                لون النص
+                              </label>
+                              <div className="flex flex-wrap items-center gap-1.5 bg-white dark:bg-[#131c31] px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                                {COLOR_PRESETS.filter(c => c.value).map((preset) => (
+                                  <button
+                                    key={preset.value}
+                                    type="button"
+                                    onClick={() => updateParagraphStyle(def.key, 'color', preset.value)}
+                                    title={preset.label}
+                                    className={`w-5 h-5 rounded-full border transition ${
+                                      currentColor === preset.value
+                                        ? 'ring-2 ring-[#c59a45] ring-offset-1 scale-110 border-white'
+                                        : 'border-slate-300 dark:border-slate-600 hover:scale-110'
+                                    }`}
+                                    style={{ backgroundColor: preset.value }}
+                                  />
+                                ))}
+                                <input
+                                  type="color"
+                                  value={currentColor || '#0f172a'}
+                                  onChange={(e) => updateParagraphStyle(def.key, 'color', e.target.value)}
+                                  title="اختيار لون مخصص"
+                                  className="w-6 h-6 p-0 border-0 rounded cursor-pointer bg-transparent"
+                                />
+                                {currentColor && (
+                                  <button
+                                    type="button"
+                                    onClick={() => updateParagraphStyle(def.key, 'color', '')}
+                                    className="text-[10px] font-bold text-slate-500 hover:text-red-600 mr-auto"
+                                  >
+                                    إلغاء اللون
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Live Preview */}
+                          <div
+                            className={`p-3.5 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 ${
+                              currentColor && ['#ffffff', '#e2e8f0', '#dfb76c'].includes(currentColor.toLowerCase())
+                                ? 'bg-slate-900'
+                                : 'bg-white dark:bg-[#131c31]'
+                            }`}
+                          >
+                            <span className="block text-[9px] font-bold text-slate-400 mb-1">
+                              معاينة مباشرة:
+                            </span>
+                            <p
+                              className="w-full text-sm text-slate-700 dark:text-slate-200 leading-relaxed"
+                              style={resolvedStyle}
+                            >
+                              {langTab === 'ar'
+                                ? 'نتميز بتوفير خدمات متكاملة تشمل توريد وتركيب وصيانة أحدث أنظمة الإطفاء والإنذار وفق أعلى المعايير.'
+                                : 'Integrated engineering solutions for fire protection, alarm, and life safety systems.'}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
               </div>
             )}
 

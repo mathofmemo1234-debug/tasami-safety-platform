@@ -1,5 +1,6 @@
 import React from 'react';
 import { Quote, ShieldCheck, Award, ExternalLink } from 'lucide-react';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function CeoMessage({ lang, content }) {
   const t = content[lang].ceo;
@@ -78,25 +79,34 @@ export default function CeoMessage({ lang, content }) {
             </div>
 
             {/* CEO Speech Text */}
-            <div className="lg:col-span-8 p-8 sm:p-12 relative">
+            <div className="lg:col-span-8 p-8 sm:p-12 relative text-center">
               <Quote className="w-16 h-16 text-[#c59a45]/15 absolute top-6 left-6 rtl:left-auto rtl:right-6 pointer-events-none" />
 
               <div className="space-y-5 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
                 
                 {/* Highlighted Quote Header */}
-                <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-[#0b1120] border-r-4 rtl:border-r-4 ltr:border-l-4 border-[#c59a45] text-[#0f172a] dark:text-white font-bold text-base sm:text-lg leading-snug">
+                <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-[#0b1120] border-b-4 border-[#c59a45] text-[#0f172a] dark:text-white font-bold text-base sm:text-lg leading-snug text-center">
                   "{t.quote}"
                 </div>
 
-                <p className="font-medium text-[#0f172a] dark:text-slate-100">
+                <p
+                  style={getParagraphStyle(content, lang, 'ceoMessage')}
+                  className="w-full font-medium text-[#0f172a] dark:text-slate-100"
+                >
                   {t.p1}
                 </p>
 
-                <p>
+                <p
+                  style={getParagraphStyle(content, lang, 'ceoMessage')}
+                  className="w-full"
+                >
                   {t.p2}
                 </p>
 
-                <p>
+                <p
+                  style={getParagraphStyle(content, lang, 'ceoMessage')}
+                  className="w-full"
+                >
                   {t.p3}
                 </p>
 

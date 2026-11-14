@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import SafetyCalculator from '../components/SafetyCalculator';
 import TasamiLogo from '../components/TasamiLogo';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function ServicesPage({
   lang,
@@ -284,9 +285,9 @@ export default function ServicesPage({
           <span className="text-[#c59a45] dark:text-[#dfb76c]">{isAr ? 'خدماتنا' : 'Our Services'}</span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-col items-center text-center gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="space-y-4 flex flex-col items-center w-full">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
               <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/30">
                 {isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami Engineering Solutions'}
@@ -295,14 +296,17 @@ export default function ServicesPage({
             <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'خدماتنا وتفريعاتها الهندسية المتكاملة' : 'Comprehensive Engineering Services & Sub-Branches'}
             </h1>
-            <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+            <p
+              style={getParagraphStyle(content, lang, 'servicesHeader')}
+              className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
+            >
               {isAr
                 ? 'نقدم منظومة متكاملة من حلول الوقاية ومكافحة الحرائق، مصممة وفق اشتراطات الدفاع المدني وكود البناء السعودي SBC، مع تفريعات متخصصة لكل قطاع.'
                 : 'Turnkey fire protection and early detection solutions tailored to statutory codes and industry standards.'}
             </p>
           </div>
 
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex flex-wrap items-center justify-center gap-3 flex-shrink-0">
             {vis.calculator !== false && (
               <button
                 onClick={() => setShowCalculator(!showCalculator)}
@@ -343,11 +347,11 @@ export default function ServicesPage({
       )}
 
       {/* 2. Sub-branches Categories Selector (Tabs) */}
-      <div className="space-y-4">
+      <div className="space-y-4 text-center">
         <div className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
           {isAr ? 'اختر التفريع الهندسي المطلوب:' : 'Filter by Sub-Branch:'}
         </div>
-        <div className="flex flex-wrap gap-2 sm:gap-2.5">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5">
           {branches.map((b) => (
             <button
               key={b.id}
@@ -384,12 +388,15 @@ export default function ServicesPage({
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition leading-snug">
+              <h3 className="text-lg font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition leading-snug text-center">
                 {srv.title}
               </h3>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p
+                style={getParagraphStyle(content, lang, 'servicesCards')}
+                className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+              >
                 {srv.desc}
               </p>
 
@@ -435,8 +442,8 @@ export default function ServicesPage({
       {/* 3.5 Integrated Service Stages & Commercial Advantages Table */}
       {Array.isArray(content[lang]?.coreServices?.serviceTable) && content[lang].coreServices.serviceTable.length > 0 && (
         <section className="rounded-3xl bg-white dark:bg-[#131c31] border border-slate-200/90 dark:border-slate-800 p-7 sm:p-10 shadow-sm space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
-            <div className="space-y-2">
+          <div className="flex flex-col items-center text-center gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
+            <div className="space-y-2 flex flex-col items-center">
               <span className="inline-flex items-center gap-1.5 text-xs font-extrabold px-3 py-1 rounded-full bg-[#c59a45]/10 dark:bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c]">
                 <Sparkles className="w-3.5 h-3.5" />
                 {isAr ? 'مراحل التنفيذ والمزايا التنافسية' : 'Execution Lifecycle & Commercial Advantages'}
@@ -445,7 +452,10 @@ export default function ServicesPage({
                 {isAr ? 'منهجية خدماتنا وعروضنا الخاصة لعملائنا' : 'How We Serve You & Special Client Offers'}
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md">
+            <p
+              style={getParagraphStyle(content, lang, 'servicesCards')}
+              className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto"
+            >
               {isAr
                 ? 'التزام متكامل يبدأ من المعاينة الأولية للموقع ويمتد لخدمات ما بعد البيع مع أسعار تنافسية وخصومات للعملاء المميزين.'
                 : 'An end-to-end commitment from initial site inspection through after-sales support, competitive bulk pricing, and VIP partner discounts.'}
@@ -462,15 +472,18 @@ export default function ServicesPage({
                     : 'bg-slate-50/80 dark:bg-[#0b1120] border-slate-200/80 dark:border-slate-800 hover:border-[#1d4ed8]/40 dark:hover:border-[#c59a45]/50'
                 }`}
               >
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#162d6c] dark:bg-[#1d4ed8] text-white font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="flex flex-col items-center text-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#162d6c] dark:bg-[#1d4ed8] text-white font-black text-xs flex items-center justify-center flex-shrink-0">
                     {idx + 1}
                   </div>
-                  <div className="space-y-1 flex-1">
+                  <div className="space-y-1 w-full">
                     <h3 className="text-sm sm:text-base font-extrabold text-[#0f172a] dark:text-white">
                       {row.name}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <p
+                      style={getParagraphStyle(content, lang, 'servicesCards')}
+                      className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+                    >
                       {row.detail}
                     </p>
                   </div>
@@ -488,7 +501,10 @@ export default function ServicesPage({
             ? 'هل تحتاج إلى دراسة هندسية خاصة بمشروعك؟'
             : 'Need a custom engineering study for your project?'}
         </h3>
-        <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+        <p
+          style={getParagraphStyle(content, lang, 'servicesCta')}
+          className="w-full text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed"
+        >
           {isAr
             ? 'فريقنا الهندسي في تسامي الأعمال على أتم الاستعداد لزيارة الموقع، فحص متطلبات كود البناء، وتقديم عرض فني ومالي متكامل ومعتمد.'
             : 'Our licensed engineers are ready to survey your facility, evaluate building codes, and prepare a statutory compliance proposal.'}

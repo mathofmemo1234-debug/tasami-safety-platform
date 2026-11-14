@@ -1,4 +1,5 @@
 import React from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import TasamiLogo from './TasamiLogo';
 import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2 } from 'lucide-react';
 
@@ -22,14 +23,14 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
           
           {/* Brand & Vision Col */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="lg:col-span-4 space-y-4 flex flex-col items-center text-center">
             <button onClick={() => navigate('home')} className="focus:outline-none">
               <TasamiLogo isWhite={true} lang={lang} className="h-16 sm:h-20 md:h-24" />
             </button>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-sm mt-3">
+            <p className="w-full text-xs text-slate-400 leading-relaxed max-w-sm mt-3 mx-auto" style={getParagraphStyle(content, lang, 'footerAbout')}>
               {t.aboutText}
             </p>
-            <div className="pt-2 flex flex-wrap items-center gap-2">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-2">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#131c31] border border-[#1d4ed8]/30 text-[11px] text-slate-200">
                 <ShieldCheck className="w-4 h-4 text-[#60a5fa]" />
                 <span>ترخيص الدفاع المدني (سلامة)</span>

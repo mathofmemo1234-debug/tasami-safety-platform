@@ -12,6 +12,7 @@ import {
   ArrowRight,
   ArrowLeft
 } from 'lucide-react';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function Hero({
   lang,
@@ -67,13 +68,19 @@ export default function Hero({
                   </>
                 )}
               </h1>
-              <p className="text-xl sm:text-2xl text-[#162d6c] dark:text-[#60a5fa] font-extrabold leading-relaxed">
+              <p
+                style={getParagraphStyle(content, lang, 'heroSubtitle')}
+                className="w-full text-xl sm:text-2xl text-[#162d6c] dark:text-[#60a5fa] font-extrabold leading-relaxed"
+              >
                 {isAr ? 'نحو بيئة آمنة خالية تماماً من المخاطر' : 'Towards a Hazard-Free Environment'}
               </p>
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto leading-loose">
+            <p
+              style={getParagraphStyle(content, lang, 'heroDescription')}
+              className="w-full text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto leading-loose"
+            >
               {t.description}
             </p>
 
@@ -210,7 +217,10 @@ export default function Hero({
                 <h3 className="font-extrabold text-xs sm:text-sm text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
+                <p
+                  style={getParagraphStyle(content, lang, 'heroPillars')}
+                  className="w-full text-[11px] text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed"
+                >
                   {feature.desc}
                 </p>
               </div>

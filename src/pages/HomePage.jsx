@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import Hero from '../components/Hero';
 import TasamiLogo from '../components/TasamiLogo';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function HomePage({
   lang,
@@ -124,8 +125,8 @@ export default function HomePage({
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#162d6c] via-[#c59a45] to-[#1d4ed8]"></div>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               
-              <div className="lg:col-span-8 space-y-4">
-                <div className="flex flex-wrap items-center gap-4">
+              <div className="lg:col-span-8 space-y-4 text-center flex flex-col items-center">
+                <div className="flex flex-wrap items-center justify-center gap-4">
                   <TasamiLogo lang={lang} className="h-20 sm:h-24 md:h-28" />
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#c59a45]/15 to-[#dfb76c]/10 dark:bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c] text-xs font-extrabold border border-[#c59a45]/35 shadow-sm">
                     <ShieldCheck className="w-4 h-4 text-[#c59a45]" />
@@ -137,12 +138,15 @@ export default function HomePage({
                     ? 'شريككم الهندسي المعتمد لحماية الأرواح والمنشآت'
                     : 'Your Certified Engineering Partner in Safety & Life Protection'}
                 </h2>
-                <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-loose max-w-3xl">
+                <p
+                  style={getParagraphStyle(content, lang, 'homeAbout')}
+                  className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-loose max-w-3xl mx-auto"
+                >
                   {isAr
                     ? 'نتميز بتوفير حلول هندسية متكاملة تشمل التوريد والتركيب والصيانة لكافة أنظمة مكافحة الحريق والإنذار المبكر، وفق اشتراطات الدفاع المدني وكود البناء السعودي SBC، لضمان بيئة عمل آمنة ومستدامة.'
                     : 'We deliver comprehensive turnkey fire protection and alarm engineering solutions, ensuring full statutory compliance with Civil Defense and Saudi Building Code (SBC).'}
                 </p>
-                <div className="pt-2 flex flex-wrap gap-3 text-xs font-bold text-slate-700 dark:text-slate-200">
+                <div className="pt-2 flex flex-wrap justify-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-200">
                   <span className="flex items-center gap-1.5 bg-slate-50 dark:bg-[#0b1120] px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     {isAr ? 'ترخيص معتمد في منصة سلامة' : 'Civil Defense Accredited'}
@@ -158,7 +162,7 @@ export default function HomePage({
                 </div>
               </div>
 
-              <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center gap-3">
+              <div className="lg:col-span-4 flex flex-col items-center justify-center gap-3 text-center">
                 <button
                   onClick={() => onNavigate('about')}
                   className="btn-flashy-royal w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-white text-xs sm:text-sm font-extrabold"
@@ -179,15 +183,18 @@ export default function HomePage({
       {/* 3. Services Highlights Section (Links to Dedicated Services Page) */}
       {vis.services !== false && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-            <div className="space-y-2">
+          <div className="flex flex-col items-center text-center mb-8 gap-4">
+            <div className="space-y-2 flex flex-col items-center">
               <span className="text-xs font-bold text-[#c59a45] dark:text-[#dfb76c] uppercase tracking-wider">
                 {isAr ? 'حلول وأنظمة متكاملة' : 'Integrated Systems'}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
                 {isAr ? 'خدماتنا الهندسية المعتمدة' : 'Our Engineering Services'}
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
+              <p
+                style={getParagraphStyle(content, lang, 'homeServicesHeader')}
+                className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
+              >
                 {isAr
                   ? 'استعراض سريع لأبرز مجالات عملنا، ويمكنك الانتقال لصفحة الخدمات للاطلاع على كافة التفريعات والمواصفات.'
                   : 'A quick overview of our primary domains. Explore the full services page for complete sub-branches.'}
@@ -196,7 +203,7 @@ export default function HomePage({
 
             <button
               onClick={() => onNavigate('services')}
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] px-4 py-2.5 rounded-xl transition shadow-sm self-start sm:self-auto"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] px-5 py-2.5 rounded-xl transition shadow-sm"
             >
               <span>{isAr ? 'عرض كافة الخدمات والتفريعات' : 'View All Services & Branches'}</span>
               <ArrowIcon className="w-4 h-4" />
@@ -209,7 +216,7 @@ export default function HomePage({
               <div
                 key={srv.id}
                 onClick={() => onNavigate('services')}
-                className="card-flashy group relative overflow-hidden bg-white dark:bg-[#131c31] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/75 cursor-pointer flex flex-col justify-between shadow-sm"
+                className="card-flashy group relative overflow-hidden bg-white dark:bg-[#131c31] rounded-2xl p-6 border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/75 cursor-pointer flex flex-col justify-between shadow-sm text-center"
               >
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1d4ed8] to-[#c59a45] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div>
@@ -224,10 +231,16 @@ export default function HomePage({
                   <h3 className="text-base font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition mb-1.5">
                     {srv.title}
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mb-2">
+                  <p
+                    style={getParagraphStyle(content, lang, 'homeServicesCards')}
+                    className="w-full text-xs text-slate-500 dark:text-slate-400 font-semibold mb-2"
+                  >
                     {srv.subtitle}
                   </p>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <p
+                    style={getParagraphStyle(content, lang, 'homeServicesCards')}
+                    className="w-full text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
+                  >
                     {srv.desc}
                   </p>
                 </div>
@@ -245,15 +258,18 @@ export default function HomePage({
       {/* 4. Products Preview Section (Links to Dedicated Products Page) */}
       {vis.products !== false && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-            <div className="space-y-2">
+          <div className="flex flex-col items-center text-center mb-8 gap-4">
+            <div className="space-y-2 flex flex-col items-center">
               <span className="text-xs font-bold text-[#c59a45] dark:text-[#dfb76c] uppercase tracking-wider">
                 {isAr ? 'توريدات ومعدات أصلية' : 'Certified Supplies'}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
                 {isAr ? 'كتالوج منتجات السلامة ومكافحة الحريق' : 'Fire Safety Products Catalog'}
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
+              <p
+                style={getParagraphStyle(content, lang, 'homeProductsHeader')}
+                className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
+              >
                 {isAr
                   ? 'منتجات معتمدة من كبرى المصانع العالمية مع شهادات الاختبار والامتثال لسابر وكود البناء.'
                   : 'Approved products and systems with international certifications (UL, FM, Saber).'}
@@ -262,7 +278,7 @@ export default function HomePage({
 
             <button
               onClick={() => onNavigate('products')}
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] px-4 py-2.5 rounded-xl transition shadow-sm self-start sm:self-auto"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-[#1d4ed8] hover:bg-[#1e40af] px-5 py-2.5 rounded-xl transition shadow-sm"
             >
               <span>{isAr ? 'تصفح كتالوج المنتجات بالكامل' : 'Explore Full Products Catalog'}</span>
               <ArrowIcon className="w-4 h-4" />
@@ -291,12 +307,15 @@ export default function HomePage({
                     {p.category}
                   </span>
                 </div>
-                <div className="p-5 flex-1 flex flex-col justify-between">
+                <div className="p-5 flex-1 flex flex-col justify-between text-center">
                   <div>
                     <h3 className="text-sm font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition mb-1.5 line-clamp-1">
                       {p.name}
                     </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">
+                    <p
+                      style={getParagraphStyle(content, lang, 'homeProductsCards')}
+                      className="w-full text-xs text-slate-600 dark:text-slate-400"
+                    >
                       {p.specs}
                     </p>
                   </div>

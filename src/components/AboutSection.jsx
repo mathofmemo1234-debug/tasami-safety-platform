@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, FileCheck2, Shield, Building2, Check, ArrowLeft, ArrowRight, ShieldCheck, Award } from 'lucide-react';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function AboutSection({ lang, content, onOpenConsultation }) {
   const t = content[lang].about;
@@ -51,9 +52,9 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
           </div>
 
           {/* Text and Story Side */}
-          <div className="lg:col-span-7 space-y-6 text-right rtl:text-right ltr:text-left">
-            <div className="space-y-3">
-              <div className="flex flex-wrap items-center gap-2.5">
+          <div className="lg:col-span-7 space-y-6 text-center flex flex-col items-center">
+            <div className="space-y-3 flex flex-col items-center w-full">
+              <div className="flex flex-wrap items-center justify-center gap-2.5">
                 <span className="text-sm font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
                   {t.tag}
                 </span>
@@ -69,38 +70,50 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
             </div>
 
             {t.foundingOrigin && (
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0b1120] border-s-4 border-[#c59a45] text-sm sm:text-base text-[#162d6c] dark:text-slate-200 leading-relaxed font-semibold">
+              <div className="w-full p-4 rounded-xl bg-slate-50 dark:bg-[#0b1120] border-b-4 border-[#c59a45] text-sm sm:text-base text-[#162d6c] dark:text-slate-200 leading-relaxed font-semibold text-center">
                 {t.foundingOrigin}
               </div>
             )}
 
-            <p className="text-base sm:text-lg text-[#0f172a] dark:text-slate-100 leading-relaxed font-semibold">
+            <p
+              style={getParagraphStyle(content, lang, 'aboutStory')}
+              className="w-full text-base sm:text-lg text-[#0f172a] dark:text-slate-100 leading-relaxed font-semibold"
+            >
               {t.lead}
             </p>
 
-            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            <p
+              style={getParagraphStyle(content, lang, 'aboutStory')}
+              className="w-full text-sm text-slate-700 dark:text-slate-300 leading-relaxed"
+            >
               {t.paragraph2}
             </p>
 
-            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            <p
+              style={getParagraphStyle(content, lang, 'aboutStory')}
+              className="w-full text-sm text-slate-700 dark:text-slate-300 leading-relaxed"
+            >
               {t.paragraph3}
             </p>
 
             {/* Saudi Vision 2030 Badge */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50/70 to-amber-50/50 dark:from-[#0b1120] dark:to-[#162036] border border-[#1d4ed8]/20 dark:border-[#c59a45]/30 flex items-center gap-4">
+            <div className="w-full p-4 rounded-2xl bg-gradient-to-r from-blue-50/70 to-amber-50/50 dark:from-[#0b1120] dark:to-[#162036] border border-[#1d4ed8]/20 dark:border-[#c59a45]/30 flex flex-col sm:flex-row items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-white dark:bg-[#131c31] shadow-sm flex items-center justify-center p-1.5 flex-shrink-0 border border-slate-100 dark:border-slate-700">
                 <div className="text-center font-black leading-none text-[#0f172a] dark:text-white">
                   <span className="text-[9px] block text-emerald-700 dark:text-emerald-400">رؤيـــة</span>
                   <span className="text-sm tracking-tighter">2030</span>
                 </div>
               </div>
-              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p
+                style={getParagraphStyle(content, lang, 'aboutStory')}
+                className="flex-1 w-full text-xs text-slate-700 dark:text-slate-300 leading-relaxed"
+              >
                 مساهمون فاعلون في تعزيز منظومة السلامة والوقاية الوطنية وفق تطلعات <strong className="text-[#0f172a] dark:text-white">رؤية السعودية 2030</strong> لتوفير بيئة خالية تماماً من المخاطر تحمي الأرواح والممتلكات.
               </p>
             </div>
 
             {/* Stats Row */}
-            <div className="pt-4 grid grid-cols-3 gap-4 border-t border-slate-100 dark:border-slate-800">
+            <div className="w-full pt-4 grid grid-cols-3 gap-4 border-t border-slate-100 dark:border-slate-800">
               {t.stats.map((stat, idx) => (
                 <div key={idx} className="p-4 rounded-xl bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-800 text-center hover:border-[#c59a45]/50 transition">
                   <div className="w-10 h-10 mx-auto rounded-full bg-blue-50 dark:bg-[#131c31] shadow-sm flex items-center justify-center mb-2">

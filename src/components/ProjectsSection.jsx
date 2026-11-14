@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import { Building2, Factory, Landmark, MapPin, ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 
 export default function ProjectsSection({ lang, content }) {
@@ -22,15 +23,15 @@ export default function ProjectsSection({ lang, content }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-          <div className="space-y-3">
+        <div className="flex flex-col items-center text-center mb-10 gap-4">
+          <div className="space-y-3 flex flex-col items-center text-center max-w-3xl mx-auto">
             <span className="text-xs font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
               {t.tag}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
               {t.title}
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
+            <p className="w-full text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto" style={getParagraphStyle(content, lang, 'projectsHeader')}>
               {t.subtitle}
             </p>
           </div>
@@ -87,9 +88,9 @@ export default function ProjectsSection({ lang, content }) {
               </div>
 
               {/* Project Details */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="p-6 flex-1 flex flex-col justify-between text-center">
                 <div>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <p className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" style={getParagraphStyle(content, lang, 'projectsHeader')}>
                     {project.desc}
                   </p>
                 </div>

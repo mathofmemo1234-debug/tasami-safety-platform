@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import { Sparkles, Palette, Type, Award, Eye, X, CheckCircle2, FileText } from 'lucide-react';
 
 export default function BrandIdentitySection({ lang, content }) {
@@ -21,8 +22,8 @@ export default function BrandIdentitySection({ lang, content }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
-          <div>
+        <div className="flex flex-col items-center text-center gap-4 mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#c59a45]/10 dark:bg-[#c59a45]/20 text-[#9a752a] dark:text-[#dfb76c] text-xs font-extrabold border border-[#c59a45]/30 mb-3">
               <Sparkles className="w-3.5 h-3.5" />
               <span>{isAr ? 'الهوية البصرية المؤسسية' : 'Corporate Brand Identity'}</span>
@@ -30,7 +31,7 @@ export default function BrandIdentitySection({ lang, content }) {
             <h2 className="text-2xl sm:text-3xl font-black text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'هوية تعكس التزامنا ببيئة أكثر أماناً' : 'A Brand Reflecting Uncompromising Safety'}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl">
+            <p className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl mx-auto" style={getParagraphStyle(content, lang, 'brandIdentity')}>
               {isAr
                 ? 'دليل الهوية البصرية الرسمية لشركة تسامي الأعمال لأنظمة السلامة: الألوان المعتمدة، الخطوط، ونماذج المطبوعات الرسمية.'
                 : 'Official visual identity guidelines: primary colors, typography, corporate stationary, and certified brand elements.'}
@@ -118,7 +119,7 @@ export default function BrandIdentitySection({ lang, content }) {
                       <span className="text-xs font-black text-[#1d4ed8] dark:text-[#dfb76c] font-sans">{f.name}</span>
                       <span className="text-[10px] text-slate-400 font-semibold">{f.script}</span>
                     </div>
-                    <p className="text-xs text-slate-700 dark:text-slate-300 font-bold truncate">
+                    <p className="w-full text-xs text-slate-700 dark:text-slate-300 font-bold truncate" style={getParagraphStyle(content, lang, 'brandIdentity')}>
                       {f.sample}
                     </p>
                   </div>

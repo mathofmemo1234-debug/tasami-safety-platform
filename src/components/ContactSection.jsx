@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Share2 } from 'lucide-react';
 
 export default function ContactSection({ lang, content, onOpenConsultation }) {
@@ -46,16 +47,16 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#c59a45_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-right rtl:lg:text-right ltr:lg:text-left">
+          <div className="flex flex-col items-center justify-center gap-6 text-center max-w-3xl mx-auto">
             
-            <div className="space-y-2">
+            <div className="space-y-3 flex flex-col items-center text-center w-full">
               <h3 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
                 {cta.title}
               </h3>
-              <p className="text-xs sm:text-sm font-mono tracking-widest text-[#dfb76c] uppercase">
+              <p className="w-full text-xs sm:text-sm font-mono tracking-widest text-[#dfb76c] uppercase">
                 {cta.subtitle}
               </p>
-              <p className="text-xs text-slate-200 max-w-xl">
+              <p className="w-full text-xs text-slate-200 max-w-xl mx-auto" style={getParagraphStyle(content, lang, 'contactBanner')}>
                 {cta.desc}
               </p>
             </div>
@@ -93,14 +94,14 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
             
             {/* Contact Channels */}
             <div className="lg:col-span-5 space-y-6">
-              <div>
+              <div className="text-center flex flex-col items-center">
                 <span className="text-xs font-black tracking-widest text-[#9a752a] dark:text-[#dfb76c] uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1 rounded-md inline-block">
                   {c.tag}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-[#0f172a] dark:text-white mt-3">
                   {c.title}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">
+                <p className="w-full text-sm text-slate-600 dark:text-slate-300 mt-2" style={getParagraphStyle(content, lang, 'contactBanner')}>
                   {c.subtitle}
                 </p>
               </div>
@@ -232,11 +233,11 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
 
             {/* Quick Inquiry Form */}
             <div className="lg:col-span-7 bg-white dark:bg-[#131c31] p-6 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
-              <h4 className="text-lg font-bold text-[#0f172a] dark:text-white mb-1 flex items-center gap-2">
+              <h4 className="text-lg font-bold text-[#0f172a] dark:text-white mb-1 flex items-center justify-center gap-2 text-center">
                 <MessageSquare className="w-5 h-5 text-[#1d4ed8] dark:text-[#60a5fa]" />
                 <span>{lang === 'ar' ? 'طلب عرض سعر / معاينة فورية للموقع' : 'Request Instant Quotation / Site Survey'}</span>
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
+              <p className="w-full text-xs text-slate-500 dark:text-slate-400 mb-6 text-center" style={getParagraphStyle(content, lang, 'contactBanner')}>
                 {lang === 'ar' ? 'أدخل بيانات موقعك ومشروعك وسيقوم المهندس المختص بالتواصل معك مباشرة:' : 'Provide your project specs and our engineering advisor will contact you directly:'}
               </p>
 

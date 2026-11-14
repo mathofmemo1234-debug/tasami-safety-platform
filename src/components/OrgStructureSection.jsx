@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Image, X } from 'lucide-react';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function OrgStructureSection({ lang, content }) {
   const t = content[lang].orgChart;
@@ -21,7 +22,10 @@ export default function OrgStructureSection({ lang, content }) {
           <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
             {t.title}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+          <p
+            style={getParagraphStyle(content, lang, 'orgChart')}
+            className="w-full text-sm sm:text-base text-slate-600 dark:text-slate-300"
+          >
             {t.subtitle}
           </p>
           <div className="pt-2">
@@ -82,10 +86,13 @@ export default function OrgStructureSection({ lang, content }) {
                     </span>
                   </div>
 
-                  <h4 className="font-bold text-base text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition-colors mb-1.5">
+                  <h4 className="font-bold text-base text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition-colors mb-1.5 text-center">
                     {dept.role}
                   </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <p
+                    style={getParagraphStyle(content, lang, 'orgChart')}
+                    className="w-full text-xs text-slate-600 dark:text-slate-300 leading-relaxed"
+                  >
                     {dept.desc}
                   </p>
                 </div>

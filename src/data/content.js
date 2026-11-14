@@ -614,7 +614,8 @@ export const content = {
       email: "makkah-branch@tasaami.com",
       allRightsReserved: "جميع الحقوق محفوظة © 2026 تسامي الأعمال لأنظمة السلامة (Tasami Business for Safety Systems).",
       visionQuote: "نسمو بالأمان نحو بيئة خالية تماماً من المخاطر بما يتوافق مع رؤية المملكة 2030."
-    }
+    },
+    typography: {}
   },
   en: {
     brand: {
@@ -1227,6 +1228,7 @@ export const content = {
       email: "makkah-branch@tasaami.com",
       allRightsReserved: "All Rights Reserved © 2026 Tasami Business Company.",
       visionQuote: "Elevating safety towards a completely hazard-free environment in line with Saudi Vision 2030."
-    }
+    },
+    typography: {}
   }
 };

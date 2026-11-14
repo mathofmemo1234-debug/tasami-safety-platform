@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import { ShieldCheck, Flame, AlertTriangle, ArrowRight, ArrowLeft, CheckCircle, Zap, Shield, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function AutomaticSuppressionSection({ lang, content, onSelectService }) {
@@ -22,7 +23,7 @@ export default function AutomaticSuppressionSection({ lang, content, onSelectSer
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             {t.title}
           </h2>
-          <p className="text-sm sm:text-base text-slate-600">
+          <p className="w-full text-sm sm:text-base text-slate-600" style={getParagraphStyle(content, lang, 'servicesCards')}>
             {t.subtitle}
           </p>
         </div>
@@ -52,15 +53,15 @@ export default function AutomaticSuppressionSection({ lang, content, onSelectSer
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
           
           {/* Card Top Banner */}
-          <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#221a0f] p-8 text-white flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[#c59a45]/20">
-            <div>
+          <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#221a0f] p-8 text-white flex flex-col items-center text-center justify-center gap-5 border-b border-[#c59a45]/20">
+            <div className="flex flex-col items-center text-center w-full max-w-2xl mx-auto">
               <span className="text-[11px] font-mono tracking-widest text-[#dfb76c] uppercase block">
                 {activeSystem.nameEn}
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-white mt-1">
                 {activeSystem.name}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+              <p className="w-full text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed" style={getParagraphStyle(content, lang, 'servicesCards')}>
                 {activeSystem.overview}
               </p>
             </div>
@@ -91,7 +92,7 @@ export default function AutomaticSuppressionSection({ lang, content, onSelectSer
             {activeSystem.warning && (
               <div className="p-4 rounded-2xl bg-rose-50 border-r-4 rtl:border-r-4 ltr:border-l-4 border-rose-500 flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm font-semibold text-rose-800 leading-relaxed">
+                <p className="w-full text-xs sm:text-sm font-semibold text-rose-800 leading-relaxed" style={getParagraphStyle(content, lang, 'servicesCards')}>
                   {activeSystem.warning}
                 </p>
               </div>

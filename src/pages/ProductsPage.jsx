@@ -14,6 +14,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import TasamiLogo from '../components/TasamiLogo';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function ProductsPage({
   lang,
@@ -93,9 +94,9 @@ export default function ProductsPage({
             className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white/95 via-white/80 to-white/50 rtl:bg-gradient-to-l ltr:bg-gradient-to-r dark:from-[#0b1120]/95 dark:via-[#0b1120]/80 dark:to-[#131c31]/55"
           />
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
+          <div className="relative z-10 flex flex-col items-center text-center gap-6">
+            <div className="space-y-3 flex flex-col items-center w-full">
+              <div className="flex flex-wrap items-center justify-center gap-3">
                 <TasamiLogo lang={lang} className="h-10 sm:h-12" />
                 <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3 py-1 rounded-md inline-block border border-[#c59a45]/25">
                   {isAr ? 'توريدات وأنظمة معتمدة' : 'Certified Procurement'}
@@ -104,7 +105,10 @@ export default function ProductsPage({
               <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
                 {isAr ? 'كتالوج المنتجات ومعدات السلامة ومكافحة الحريق' : 'Fire Safety Products & Equipment Catalog'}
               </h1>
-              <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
+              <p
+                style={getParagraphStyle(content, lang, 'productsHeader')}
+                className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
+              >
                 {isAr
                   ? 'توريد موثوق ومباشر لكبرى المشاريع والمنشآت في المملكة، مصحوب بشهادات الجودة والمطابقة ومقاطع توضيحية لطريقة التنفيذ.'
                   : 'Direct certified procurement for kingdom-wide infrastructure with complete test certificates and installation guides.'}
@@ -148,11 +152,11 @@ export default function ProductsPage({
         </div>
 
         {/* Sub-branch Categories (Tafree'at) */}
-        <div>
+        <div className="text-center">
           <div className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2.5">
             {isAr ? 'تفريعات وأقسام المنتجات:' : 'Product Sub-Categories:'}
           </div>
-          <div className="flex items-center justify-start sm:justify-center flex-wrap gap-2">
+          <div className="flex items-center justify-center flex-wrap gap-2">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -215,7 +219,7 @@ export default function ProductsPage({
             </div>
 
             {/* Content Details */}
-            <div className="p-5 flex-1 flex flex-col justify-between">
+            <div className="p-5 flex-1 flex flex-col justify-between text-center">
               <div>
                 <div className="flex items-center justify-between mb-1 text-[11px] font-mono text-slate-400 uppercase">
                   <span>{item.en}</span>
@@ -229,7 +233,10 @@ export default function ProductsPage({
                   {isAr ? item.ar : item.en}
                 </h3>
 
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                <p
+                  style={getParagraphStyle(content, lang, 'productsCards')}
+                  className="w-full text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3"
+                >
                   {item.desc}
                 </p>
               </div>

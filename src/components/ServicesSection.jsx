@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getParagraphStyle } from '../utils/typography';
 import { Flame, ShieldAlert, GraduationCap, Compass, CheckSquare, Activity, ArrowLeft, ArrowRight, X, CheckCircle2 } from 'lucide-react';
 
 export default function ServicesSection({ lang, content, onSelectService }) {
@@ -41,15 +42,15 @@ export default function ServicesSection({ lang, content, onSelectService }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
-          <div className="space-y-3">
+        <div className="flex flex-col items-center text-center mb-14 gap-4">
+          <div className="space-y-3 flex flex-col items-center text-center max-w-3xl mx-auto">
             <span className="text-xs font-black tracking-widest text-[#dfb76c] uppercase bg-[#c59a45]/20 border border-[#c59a45]/30 px-3.5 py-1 rounded-md inline-block">
               {t.tag}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
               {t.title}
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 max-w-2xl">
+            <p className="w-full text-sm sm:text-base text-slate-400 max-w-2xl mx-auto" style={getParagraphStyle(content, lang, 'servicesCards')}>
               {t.subtitle}
             </p>
           </div>
@@ -96,12 +97,12 @@ export default function ServicesSection({ lang, content, onSelectService }) {
               </div>
 
               {/* Card Body */}
-              <div className="p-6 pt-7 flex-1 flex flex-col justify-between">
+              <div className="p-6 pt-7 flex-1 flex flex-col justify-between text-center">
                 <div>
                   <h3 className="text-xl font-bold text-white group-hover:text-[#dfb76c] transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-2.5 leading-relaxed line-clamp-3">
+                  <p className="w-full text-xs sm:text-sm text-slate-400 mt-2.5 leading-relaxed line-clamp-3" style={getParagraphStyle(content, lang, 'servicesCards')}>
                     {service.shortDesc}
                   </p>
                 </div>

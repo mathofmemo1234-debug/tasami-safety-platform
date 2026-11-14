@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, Target, Compass, Sparkles, CheckCircle2, Shield, HeartHandshake, Zap, Award } from 'lucide-react';
+import { getParagraphStyle } from '../utils/typography';
 
 export default function VisionMissionValues({ lang, content }) {
   const mv = content[lang].missionVision;
@@ -31,7 +32,10 @@ export default function VisionMissionValues({ lang, content }) {
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             {lang === 'ar' ? 'الرسالة، الرؤية، الأهداف والقيم' : 'Mission, Vision, Goals & Values'}
           </h2>
-          <p className="text-sm sm:text-base text-slate-400">
+          <p
+            style={getParagraphStyle(content, lang, 'visionMission')}
+            className="w-full text-sm sm:text-base text-slate-400"
+          >
             {lang === 'ar'
               ? 'المبادئ الراسخة التي تحكم عملنا الهندسي وتلهمنا لصنع بيئة خالية تماماً من المخاطر'
               : 'The core tenets driving our engineering discipline towards a hazard-free future'}
@@ -65,12 +69,15 @@ export default function VisionMissionValues({ lang, content }) {
               </div>
             </div>
 
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
-              <p className="text-slate-300 leading-relaxed text-sm sm:text-base font-normal">
+            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between text-center">
+              <p
+                style={getParagraphStyle(content, lang, 'visionMission')}
+                className="w-full text-slate-300 leading-relaxed text-sm sm:text-base font-normal"
+              >
                 {mv.mission.content}
               </p>
 
-              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs font-semibold text-[#dfb76c]">
+              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-center gap-2 text-xs font-semibold text-[#dfb76c]">
                 <Sparkles className="w-4 h-4" />
                 <span>{lang === 'ar' ? 'العين الساهرة واليد الماهرة في عالم السلامة' : 'The watchful eye and the skilled hand'}</span>
               </div>
@@ -101,12 +108,15 @@ export default function VisionMissionValues({ lang, content }) {
               </div>
             </div>
 
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
-              <p className="text-slate-300 leading-relaxed text-sm sm:text-base font-normal">
+            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between text-center">
+              <p
+                style={getParagraphStyle(content, lang, 'visionMission')}
+                className="w-full text-slate-300 leading-relaxed text-sm sm:text-base font-normal"
+              >
                 {mv.vision.content}
               </p>
 
-              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center gap-2 text-xs font-semibold text-[#dfb76c]">
+              <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-center gap-2 text-xs font-semibold text-[#dfb76c]">
                 <Target className="w-4 h-4" />
                 <span>{lang === 'ar' ? 'سياج منيع لنحمي الإنسان ونعزز الأثر' : 'An impenetrable shield protecting humanity'}</span>
               </div>
@@ -140,11 +150,14 @@ export default function VisionMissionValues({ lang, content }) {
 
             <div className="p-6 sm:p-8 flex-1 space-y-4">
               {gv.goals.items.map((goal, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/50 hover:border-[#c59a45]/40 transition">
-                  <div className="w-6 h-6 rounded-full bg-[#c59a45]/20 text-[#dfb76c] flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5 font-mono">
+                <div key={idx} className="flex flex-col items-center text-center gap-2 p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/50 hover:border-[#c59a45]/40 transition">
+                  <div className="w-6 h-6 rounded-full bg-[#c59a45]/20 text-[#dfb76c] flex items-center justify-center flex-shrink-0 text-xs font-bold font-mono">
                     {idx + 1}
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  <p
+                    style={getParagraphStyle(content, lang, 'visionMission')}
+                    className="w-full text-xs sm:text-sm text-slate-300 leading-relaxed"
+                  >
                     {goal}
                   </p>
                 </div>
@@ -174,13 +187,18 @@ export default function VisionMissionValues({ lang, content }) {
 
             <div className="p-6 sm:p-8 flex-1 space-y-3.5">
               {gv.values.items.map((val, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/50 hover:border-[#c59a45]/40 transition flex items-start gap-3">
+                <div key={idx} className="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/50 hover:border-[#c59a45]/40 transition flex flex-col items-center text-center gap-2">
                   <div className="p-2 rounded-lg bg-slate-900 border border-slate-700/60 flex-shrink-0">
                     {valueIcons[idx % valueIcons.length]}
                   </div>
-                  <div>
+                  <div className="w-full">
                     <h4 className="text-sm font-bold text-white mb-0.5">{val.title}</h4>
-                    <p className="text-xs text-slate-400 leading-relaxed">{val.desc}</p>
+                    <p
+                      style={getParagraphStyle(content, lang, 'visionMission')}
+                      className="w-full text-xs text-slate-400 leading-relaxed"
+                    >
+                      {val.desc}
+                    </p>
                   </div>
                 </div>
               ))}
