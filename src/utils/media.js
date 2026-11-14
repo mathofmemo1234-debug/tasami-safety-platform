@@ -1,3 +1,5 @@
+import { content as defaultContent } from '../data/content';
+
 /**
  * Media helpers for multi-angle product galleries and inline video players.
  * Supports YouTube URLs/IDs, Vimeo URLs, and direct/uploaded MP4/WebM videos.
@@ -103,9 +105,57 @@ export function resolveProductVideoSource(item) {
   return String(item.videoUrl || item.videoId || '').trim();
 }
 
+const defaultItemsMap = (() => {
+  const map = {};
+  const arItems = defaultContent?.ar?.productsCatalog?.items || [];
+  for (const it of arItems) {
+    if (it?.id) map[it.id] = it;
+  }
+  return map;
+})();
+
+export function getItemBrands(item) {
+  if (Array.isArray(item?.brands) && item.brands.length > 0) {
+    return item.brands;
+  }
+  if (item?.id && defaultItemsMap[item.id]?.brands) {
+    return defaultItemsMap[item.id].brands;
+  }
+  return [];
+}
+
+export function getBrochureUrl(catalog) {
+  if (catalog?.brochureUrl) return catalog.brochureUrl;
+  return defaultContent?.ar?.productsCatalog?.brochureUrl || './docs/tasami-products-catalog.pdf';
+}
+
+export function getCatalogValues(catalog, isAr = true) {
+  if (Array.isArray(catalog?.values) && catalog.values.length > 0) {
+    return catalog.values;
+  }
+  return isAr
+    ? defaultContent?.ar?.productsCatalog?.values || []
+    : defaultContent?.en?.productsCatalog?.values || [];
+}
+
+export function getAllUniqueBrands(items = []) {
+  const set = new Set();
+  const list = items && items.length > 0 ? items : (defaultContent?.ar?.productsCatalog?.items || []);
+  for (const it of list) {
+    const brands = getItemBrands(it);
+    for (const b of brands) {
+      if (b && String(b).trim()) set.add(String(b).trim());
+    }
+  }
+  return Array.from(set);
+}
+
 export function getProductImages(item) {
   if (!item) return ['./images/product-1.jpg'];
   const list = [];
+  const defaultItem = item.id ? defaultItemsMap[item.id] : null;
+  const defaultBrochure = defaultItem?.image?.startsWith('./images/brochure/') ? defaultItem.image : null;
+
   if (item.image && String(item.image).trim()) {
     list.push(String(item.image).trim());
   }
@@ -116,6 +166,9 @@ export function getProductImages(item) {
         list.push(clean);
       }
     }
+  }
+  if (defaultBrochure && !list.includes(defaultBrochure)) {
+    list.unshift(defaultBrochure);
   }
   return list.length > 0 ? list : ['./images/product-1.jpg'];
 }

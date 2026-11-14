@@ -42,3 +42,11 @@ server/data/*.sqlite-wal
 
 
 *3D.html
+
+# Heavy local documents & working spreadsheets
+TASAMI BUSINESS  COMPANY.pdf
+*.xls
+*.xlsx
+DOC-*.docx
+doc_extracted.txt
+

@@ -13,6 +13,7 @@ import {
   Wrench,
   Video
 } from 'lucide-react';
+import { getItemBrands } from '../utils/media';
 
 export default function ProductsCatalogSection({ lang, content, onSelectService }) {
   const t = content[lang].productsCatalog;
@@ -133,6 +134,8 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
                 <img
                   src={item.image || './images/product-1.jpg'}
                   alt={item.ar}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.src = 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80';
                   }}
@@ -183,6 +186,26 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
                   <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
                     {item.desc}
                   </p>
+
+                  {(() => {
+                    const brands = getItemBrands(item);
+                    if (!brands || brands.length === 0) return null;
+                    return (
+                      <div className="mt-2.5 flex flex-wrap items-center gap-1">
+                        <span className="text-[10px] font-bold text-slate-400">
+                          {lang === 'ar' ? 'العلامات:' : 'Brands:'}
+                        </span>
+                        {brands.map((b) => (
+                          <span
+                            key={b}
+                            className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#c59a45]/10 text-[#9c7224] border border-[#c59a45]/30"
+                          >
+                            {b}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 {/* Actions Footer */}

@@ -13,4 +13,33 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    target: 'es2020',
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@firebase/storage') || id.includes('firebase/storage')) {
+              return 'vendor-firebase-storage';
+            }
+            if (id.includes('@firebase/firestore') || id.includes('firebase/firestore')) {
+              return 'vendor-firebase-firestore';
+            }
+            if (id.includes('firebase')) {
+              return 'vendor-firebase-core';
+            }
+            if (id.includes('lucide-react')) {
+              return 'vendor-icons';
+            }
+          }
+        },
+      },
+    },
+  },
 });
+

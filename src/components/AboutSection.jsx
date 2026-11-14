@@ -23,6 +23,8 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
               <img
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
                 alt="Corporate Headquarters"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-[480px] object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120]/95 via-[#0f2152]/40 to-transparent"></div>

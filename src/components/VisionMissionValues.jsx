@@ -52,6 +52,8 @@ export default function VisionMissionValues({ lang, content }) {
               <img
                 src={mv.mission.image || './images/about/mission-expressive.jpg'}
                 alt={mv.mission.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -92,6 +94,8 @@ export default function VisionMissionValues({ lang, content }) {
               <img
                 src={mv.vision.image || './images/about/vision-expressive.jpg'}
                 alt={mv.vision.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -137,6 +141,8 @@ export default function VisionMissionValues({ lang, content }) {
               <img
                 src={gv.goals.image || './images/about/goals-expressive.jpg'}
                 alt={gv.goals.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
@@ -174,6 +180,8 @@ export default function VisionMissionValues({ lang, content }) {
               <img
                 src={gv.values.image || './images/about/values-expressive.jpg'}
                 alt={gv.values.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>

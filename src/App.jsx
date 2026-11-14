@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import ConsultationModal from './components/ConsultationModal';
-import AdminDashboard from './components/AdminDashboard';
 import AnnouncementTicker from './components/AnnouncementTicker';
 import FloatingSupportDock from './components/FloatingSupportDock';
 import HomePage from './pages/HomePage';
-import ServicesPage from './pages/ServicesPage';
-import ProductsPage from './pages/ProductsPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
 import { content as initialFallbackContent } from './data/content';
 import { subscribeToLiveContent, getCachedLiveContent } from './services/firebase';
+
+// Code-split heavy administration suite, interactive modals and secondary pages for rapid initial load
+const ConsultationModal = lazy(() => import('./components/ConsultationModal'));
+const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const ProductsPage = lazy(() => import('./pages/ProductsPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+
 
 export default function App() {
   const [lang, setLang] = useState('ar');
@@ -170,55 +173,64 @@ export default function App() {
         onNavigate={navigateTo}
       />
 
-      {/* 2. Main Page Content View */}
+      {/* 2. Main Page Content View with smooth Suspense fallback */}
       <main className="flex-1">
-        {currentPage === 'home' && (
+        {currentPage === 'home' ? (
           <HomePage
             lang={lang}
             content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
           />
-        )}
+        ) : (
+          <Suspense
+            fallback={
+              <div className="min-h-[50vh] flex flex-col items-center justify-center py-24 gap-3">
+                <div className="w-9 h-9 border-3 border-[#c59a45] border-t-transparent rounded-full animate-spin"></div>
+                <span className="text-xs font-bold text-slate-500 font-cairo">جاري تحميل المحتوى...</span>
+              </div>
+            }
+          >
+            {currentPage === 'services' && (
+              <ServicesPage
+                lang={lang}
+                content={siteContent}
+                onNavigate={navigateTo}
+                onOpenConsultation={handleOpenConsultation}
+                targetSection={targetSection}
+                activeBranchFilter={activeBranchFilter}
+                openCalculator={openCalculator}
+              />
+            )}
 
-        {currentPage === 'services' && (
-          <ServicesPage
-            lang={lang}
-            content={siteContent}
-            onNavigate={navigateTo}
-            onOpenConsultation={handleOpenConsultation}
-            targetSection={targetSection}
-            activeBranchFilter={activeBranchFilter}
-            openCalculator={openCalculator}
-          />
-        )}
+            {currentPage === 'products' && (
+              <ProductsPage
+                lang={lang}
+                content={siteContent}
+                onNavigate={navigateTo}
+                onOpenConsultation={handleOpenConsultation}
+              />
+            )}
 
-        {currentPage === 'products' && (
-          <ProductsPage
-            lang={lang}
-            content={siteContent}
-            onNavigate={navigateTo}
-            onOpenConsultation={handleOpenConsultation}
-          />
-        )}
+            {currentPage === 'about' && (
+              <AboutPage
+                lang={lang}
+                content={siteContent}
+                onNavigate={navigateTo}
+                onOpenConsultation={handleOpenConsultation}
+                targetSection={targetSection}
+              />
+            )}
 
-        {currentPage === 'about' && (
-          <AboutPage
-            lang={lang}
-            content={siteContent}
-            onNavigate={navigateTo}
-            onOpenConsultation={handleOpenConsultation}
-            targetSection={targetSection}
-          />
-        )}
-
-        {currentPage === 'contact' && (
-          <ContactPage
-            lang={lang}
-            content={siteContent}
-            onNavigate={navigateTo}
-            onOpenConsultation={handleOpenConsultation}
-          />
+            {currentPage === 'contact' && (
+              <ContactPage
+                lang={lang}
+                content={siteContent}
+                onNavigate={navigateTo}
+                onOpenConsultation={handleOpenConsultation}
+              />
+            )}
+          </Suspense>
         )}
       </main>
 
@@ -230,24 +242,32 @@ export default function App() {
         onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
-      {/* Interactive Consultation Request Modal */}
-      <ConsultationModal
-        isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
-        lang={lang}
-        initialService={selectedServiceForConsultation}
-      />
+      {/* Interactive Consultation Request Modal - Lazy loaded */}
+      {isConsultationOpen && (
+        <Suspense fallback={null}>
+          <ConsultationModal
+            isOpen={isConsultationOpen}
+            onClose={() => setIsConsultationOpen(false)}
+            lang={lang}
+            initialService={selectedServiceForConsultation}
+          />
+        </Suspense>
+      )}
 
       {/* Global Floating WhatsApp & Technical Support Instant Q&A Dock */}
       <FloatingSupportDock lang={lang} content={siteContent} />
 
-      {/* Admin Dashboard to view and edit live site & Firebase */}
-      <AdminDashboard
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        currentContent={siteContent}
-        onContentUpdate={(updated) => setSiteContent(updated)}
-      />
+      {/* Admin Dashboard to view and edit live site & Firebase - Lazy loaded on-demand */}
+      {isAdminOpen && (
+        <Suspense fallback={null}>
+          <AdminDashboard
+            isOpen={isAdminOpen}
+            onClose={() => setIsAdminOpen(false)}
+            currentContent={siteContent}
+            onContentUpdate={(updated) => setSiteContent(updated)}
+          />
+        </Suspense>
+      )}
 
     </div>
   );

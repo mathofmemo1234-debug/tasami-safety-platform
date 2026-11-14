@@ -139,6 +139,8 @@ export default function Hero({
                   <img
                     src="./images/hero-tasami-engineer-clean.jpg"
                     alt="مهندس سلامة معتمد - شركة تسامي الأعمال لأنظمة السلامة"
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-[430px] object-cover group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       e.target.onerror = null;

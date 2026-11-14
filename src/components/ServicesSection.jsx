@@ -81,6 +81,8 @@ export default function ServicesSection({ lang, content, onSelectService }) {
                 <img
                   src={serviceImages[service.id]}
                   alt={service.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 filter brightness-90 group-hover:brightness-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>

@@ -78,6 +78,8 @@ export default function CertificatesLicensesSection({ lang, content }) {
                     <img
                       src={cert.image}
                       alt={cert.name}
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-full max-w-full object-contain"
                     />
                   ) : (
@@ -125,6 +127,8 @@ export default function CertificatesLicensesSection({ lang, content }) {
                         <img
                           src={doc.image}
                           alt={doc.title}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover rounded-md"
                         />
                       ) : (

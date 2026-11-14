@@ -16,7 +16,12 @@ import {
   ChevronRight,
   Maximize2,
   MessageCircle,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Download,
+  Globe,
+  Handshake,
+  TrendingUp,
+  FileText
 } from 'lucide-react';
 import TasamiLogo from '../components/TasamiLogo';
 import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
@@ -26,7 +31,11 @@ import { getParagraphStyle } from '../utils/typography';
 import {
   getProductImages,
   resolveProductVideoSource,
-  normalizeWhatsAppDigits
+  normalizeWhatsAppDigits,
+  getItemBrands,
+  getBrochureUrl,
+  getCatalogValues,
+  getAllUniqueBrands
 } from '../utils/media';
 
 function ProductCard({
@@ -226,6 +235,25 @@ function ProductCard({
               <span>{item.specs}</span>
             </div>
           )}
+          {(() => {
+            const brands = getItemBrands(item);
+            if (!brands || brands.length === 0) return null;
+            return (
+              <div className="mt-2 flex flex-wrap items-center gap-1">
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                  {isAr ? 'العلامات:' : 'Brands:'}
+                </span>
+                {brands.map((b) => (
+                  <span
+                    key={b}
+                    className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#c59a45]/10 dark:bg-[#c59a45]/20 text-[#9c7224] dark:text-[#dfb76c] border border-[#c59a45]/30"
+                  >
+                    {b}
+                  </span>
+                ))}
+              </div>
+            );
+          })()}
         </div>
 
         {/* Action Row: Inline Video / Expand Gallery / WhatsApp / Consultation */}
@@ -300,6 +328,11 @@ export default function ProductsPage({
   const [activeVideo, setActiveVideo] = useState(null);
   const [showBrandsModal, setShowBrandsModal] = useState(false);
 
+  const brochureUrl = getBrochureUrl(t);
+  const catalogValues = getCatalogValues(t, isAr);
+  const items = Array.isArray(t.items) ? t.items : [];
+  const uniqueBrands = getAllUniqueBrands(items);
+
   const categories = t.categories || [
     { id: 'all', name: isAr ? 'جميع المنتجات والمعدات' : 'All Products' },
     { id: 'networks', name: isAr ? 'شبكات الأنابيب والرشاشات' : 'Piping & Sprinklers' },
@@ -309,17 +342,17 @@ export default function ProductsPage({
     { id: 'pumps', name: isAr ? 'مضخات الحريق والمراوح' : 'Pumps & Fans' },
   ];
 
-  const items = Array.isArray(t.items) ? t.items : [];
-
   const filteredItems = items.filter((item) => {
     const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
     const q = searchTerm.toLowerCase();
+    const itemBrands = getItemBrands(item);
     const matchesSearch =
       !searchTerm ||
       (item.ar && item.ar.toLowerCase().includes(q)) ||
       (item.en && item.en.toLowerCase().includes(q)) ||
       (item.desc && item.desc.toLowerCase().includes(q)) ||
-      (item.specs && item.specs.toLowerCase().includes(q));
+      (item.specs && item.specs.toLowerCase().includes(q)) ||
+      (itemBrands && itemBrands.some((b) => b.toLowerCase().includes(q)));
     return matchesCategory && matchesSearch;
   });
 
@@ -385,7 +418,17 @@ export default function ProductsPage({
               />
             </div>
 
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={brochureUrl}
+                download="tasami-products-catalog.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#113163] hover:bg-[#1d4ed8] text-white text-xs sm:text-sm font-bold transition shadow-sm border border-[#c59a45]/40"
+              >
+                <Download className="w-4 h-4 text-[#dfb76c]" />
+                <span>{isAr ? 'تحميل كتالوج المنتجات (PDF)' : 'Download Products Catalog (PDF)'}</span>
+              </a>
               <button
                 onClick={() => onOpenConsultation(isAr ? 'طلب تسعير كميات وتوريدات عامة' : 'General Bulk Procurement Quote')}
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] text-xs sm:text-sm font-bold transition shadow-sm"
@@ -440,6 +483,61 @@ export default function ProductsPage({
                 }`}
               >
                 {cat.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Global Brands We Supply & Core Corporate Values Strip */}
+      <div className="rounded-2xl border border-[#c59a45]/30 bg-white/90 dark:bg-[#131c31]/90 backdrop-blur-sm p-6 shadow-sm space-y-5">
+        {/* Core Brochure Values Badges */}
+        {catalogValues.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+            {catalogValues.map((val) => {
+              const IconComponent =
+                val.id === 'borderless'
+                  ? Globe
+                  : val.id === 'partnership'
+                  ? Handshake
+                  : val.id === 'growth'
+                  ? TrendingUp
+                  : ShieldCheck;
+              return (
+                <div
+                  key={val.id}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 dark:bg-[#0b1120] border border-[#c59a45]/25 text-[#113163] dark:text-slate-200 text-xs font-bold shadow-xs"
+                >
+                  <IconComponent className="w-4 h-4 text-[#c59a45]" />
+                  <span>{val.title}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Unique Global Brands Chips */}
+        <div>
+          <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+            <h3 className="text-xs sm:text-sm font-extrabold text-[#0f172a] dark:text-white flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#c59a45]" />
+              <span>{t.brandsTitle || (isAr ? 'العلامات التجارية العالمية التي نوردها' : 'Global Brands We Supply')}</span>
+            </h3>
+            <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+              {uniqueBrands.length} {isAr ? 'علامة تجارية معتمدة' : 'Certified Global Brands'}
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {uniqueBrands.map((brand) => (
+              <button
+                key={brand}
+                type="button"
+                onClick={() => setSearchTerm(brand)}
+                title={isAr ? `تصفية المنتجات حسب ${brand}` : `Filter by ${brand}`}
+                className="px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-[#0b1120] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-[#c59a45] hover:text-[#c59a45] dark:hover:text-[#dfb76c] transition"
+              >
+                {brand}
               </button>
             ))}
           </div>

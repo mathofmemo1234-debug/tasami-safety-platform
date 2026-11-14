@@ -15,6 +15,7 @@ import {
 import InlineVideoPlayer from './InlineVideoPlayer';
 import {
   getProductImages,
+  getItemBrands,
   normalizeWhatsAppDigits,
   resolveProductVideoSource
 } from '../utils/media';
@@ -34,6 +35,7 @@ export default function ProductGalleryModal({
 }) {
   const images = getProductImages(product);
   const videoSource = resolveProductVideoSource(product);
+  const brands = getItemBrands(product);
 
   const [mode, setMode] = useState(
     initialMode === 'video' && videoSource ? 'video' : 'images'
@@ -326,6 +328,21 @@ export default function ProductGalleryModal({
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#113163]/10 dark:bg-[#c59a45]/15 text-[#113163] dark:text-[#dfb76c] text-xs font-bold">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>{product.specs}</span>
+                </div>
+              )}
+              {brands.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1 pt-1">
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                    {isAr ? 'العلامات المعتمدة:' : 'Certified Brands:'}
+                  </span>
+                  {brands.map((b) => (
+                    <span
+                      key={b}
+                      className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#c59a45]/15 text-[#9c7224] dark:text-[#dfb76c] border border-[#c59a45]/30"
+                    >
+                      {b}
+                    </span>
+                  ))}
                 </div>
               )}
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">

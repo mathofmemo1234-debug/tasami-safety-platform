@@ -65,6 +65,8 @@ export default function BrandIdentitySection({ lang, content }) {
               <img
                 src="./الهويه.jfif"
                 alt="دليل الهوية البصرية - شركة تسامي الأعمال لأنظمة السلامة"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-[460px] object-cover rounded-2xl group-hover:scale-[1.02] transition-transform duration-500 filter contrast-105"
                 onError={(e) => {
                   e.target.onerror = null;

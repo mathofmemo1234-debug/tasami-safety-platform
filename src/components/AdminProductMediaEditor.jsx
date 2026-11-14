@@ -277,6 +277,43 @@ export default function AdminProductMediaEditor({
           </div>
         )}
       </div>
+
+      {/* Certified Brands Editor */}
+      <div className="space-y-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+        <label className="block text-slate-600 dark:text-slate-300 font-bold text-xs">
+          العلامات التجارية المعتمدة (افصل بفاصلة):
+        </label>
+        <input
+          type="text"
+          value={Array.isArray(item.brands) ? item.brands.join(', ') : (item.brands || '')}
+          onChange={(e) => {
+            const raw = e.target.value;
+            const brandsArray = raw
+              .split(',')
+              .map((s) => s.trim())
+              .filter(Boolean);
+            onChangeItem({
+              ...item,
+              brands: brandsArray
+            });
+          }}
+          placeholder="مثال: LIFECO, Tyco, SFFECO"
+          className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white text-xs"
+          dir="ltr"
+        />
+        {Array.isArray(item.brands) && item.brands.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-1">
+            {item.brands.map((b) => (
+              <span
+                key={b}
+                className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#c59a45]/15 text-[#9c7224] dark:text-[#dfb76c] border border-[#c59a45]/30"
+              >
+                {b}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
