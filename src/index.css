@@ -22,7 +22,7 @@
     background-color: #0b1120;
   }
 
-  /* Distinct heading font (Cairo) & centered Farsi paragraph typography */
+  /* Distinct heading font (Cairo) & centered Calibri Bold paragraph typography */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
@@ -34,14 +34,11 @@
   }
 }
 
-/* Typographic variety: Persian / Nastaliq (الخط الفارسي) for Arabic paragraphs under main headings */
-html[lang="ar"] p:not(.font-mono):not(.font-sans) {
-  font-family: 'Noto Nastaliq Urdu', 'Tajawal', 'Cairo', sans-serif;
-  line-height: 2.35;
-}
-
-html[lang="en"] p:not(.font-mono):not(.font-sans) {
-  font-family: 'Tajawal', 'Cairo', sans-serif;
+/* Typographic variety: Calibri Bold (with Tajawal/Cairo fallback) for paragraphs under headings */
+p:not(.font-mono):not(.font-sans) {
+  font-family: 'Calibri', 'Tajawal', 'Cairo', sans-serif;
+  font-weight: 700;
+  line-height: 1.85;
 }
 
 /* Custom styling for luxury gold accents & royal blue glass headers */
