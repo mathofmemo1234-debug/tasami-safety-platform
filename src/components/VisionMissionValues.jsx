@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Eye, Target, Compass, Sparkles, CheckCircle2, Shield, HeartHandshake, Zap, Award } from 'lucide-react';
+import { FormattedParagraph } from './CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 
 export default function VisionMissionValues({ lang, content }) {
@@ -70,12 +71,13 @@ export default function VisionMissionValues({ lang, content }) {
             </div>
 
             <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between text-center">
-              <p
-                style={getParagraphStyle(content, lang, 'visionMission')}
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="visionMission"
                 className="w-full text-slate-300 leading-relaxed text-sm sm:text-base font-normal"
-              >
-                {mv.mission.content}
-              </p>
+                defaultText={mv.mission.content}
+              />
 
               <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-center gap-2 text-xs font-semibold text-[#dfb76c]">
                 <Sparkles className="w-4 h-4" />
@@ -109,12 +111,13 @@ export default function VisionMissionValues({ lang, content }) {
             </div>
 
             <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between text-center">
-              <p
-                style={getParagraphStyle(content, lang, 'visionMission')}
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="visionMission"
                 className="w-full text-slate-300 leading-relaxed text-sm sm:text-base font-normal"
-              >
-                {mv.vision.content}
-              </p>
+                defaultText={mv.vision.content}
+              />
 
               <div className="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-center gap-2 text-xs font-semibold text-[#dfb76c]">
                 <Target className="w-4 h-4" />

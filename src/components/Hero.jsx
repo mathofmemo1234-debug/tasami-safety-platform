@@ -13,6 +13,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { getParagraphStyle } from '../utils/typography';
+import { FormattedParagraph } from './CustomParagraphSlot';
 
 export default function Hero({
   lang,
@@ -68,21 +69,23 @@ export default function Hero({
                   </>
                 )}
               </h1>
-              <p
-                style={getParagraphStyle(content, lang, 'heroSubtitle')}
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="heroSubtitle"
                 className="w-full text-xl sm:text-2xl text-[#162d6c] dark:text-[#60a5fa] font-extrabold leading-relaxed"
-              >
-                {isAr ? 'نحو بيئة آمنة خالية تماماً من المخاطر' : 'Towards a Hazard-Free Environment'}
-              </p>
+                defaultText={isAr ? 'نحو بيئة آمنة خالية تماماً من المخاطر' : 'Towards a Hazard-Free Environment'}
+              />
             </div>
 
             {/* Description */}
-            <p
-              style={getParagraphStyle(content, lang, 'heroDescription')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="heroDescription"
               className="w-full text-sm sm:text-base text-slate-700 dark:text-slate-300 max-w-2xl mx-auto leading-loose"
-            >
-              {t.description}
-            </p>
+              defaultText={t.description}
+            />
 
             {/* Flashy Action Buttons */}
             <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">

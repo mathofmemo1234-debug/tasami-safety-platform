@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getParagraphStyle } from '../utils/typography';
+import CustomParagraphSlot, { FormattedParagraph } from './CustomParagraphSlot';
 import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Share2 } from 'lucide-react';
 
 export default function ContactSection({ lang, content, onOpenConsultation }) {
@@ -56,9 +56,13 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
               <p className="w-full text-xs sm:text-sm font-mono tracking-widest text-[#dfb76c] uppercase">
                 {cta.subtitle}
               </p>
-              <p className="w-full text-xs text-slate-200 max-w-xl mx-auto" style={getParagraphStyle(content, lang, 'contactBanner')}>
-                {cta.desc}
-              </p>
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="contactBanner"
+                className="w-full text-xs text-slate-200 max-w-xl mx-auto"
+                defaultText={cta.desc}
+              />
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-6">
@@ -87,6 +91,8 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
         </div>
       </div>
 
+      <CustomParagraphSlot placement="contact:afterBanner" lang={lang} content={content} className="pt-8" />
+
       {/* 2. Direct Contact Form & Channels */}
       <div className="py-16 bg-white dark:bg-[#0b1120] transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,9 +107,13 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                 <h3 className="text-2xl sm:text-3xl font-black text-[#0f172a] dark:text-white mt-3">
                   {c.title}
                 </h3>
-                <p className="w-full text-sm text-slate-600 dark:text-slate-300 mt-2" style={getParagraphStyle(content, lang, 'contactBanner')}>
-                  {c.subtitle}
-                </p>
+                <FormattedParagraph
+                  content={content}
+                  lang={lang}
+                  paraKey="contactBanner"
+                  className="w-full text-sm text-slate-600 dark:text-slate-300 mt-2"
+                  defaultText={c.subtitle}
+                />
               </div>
 
               <div className="space-y-4">
@@ -158,7 +168,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
 
                 {/* Address & Google Maps Navigation */}
                 <a
-                  href={c.googleMapsUrl || "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA"}
+                  href={c.googleMapsUrl || "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D8%AA%D8%B3%D8%A7%D9%85%D9%8A+%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84%E2%80%AD/@21.3872248,39.8077324,17z/data=!3m1!4b1!4m6!3m5!1s0x15c21b124251096f:0x5f3bed74fbe7b8f3!8m2!3d21.3872248!4d39.8077324!16s%2Fg%2F11zyn3z20n"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-4 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 hover:border-[#c59a45] dark:hover:border-[#dfb76c] flex items-start gap-4 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer block"
@@ -179,6 +189,14 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                     <div className="text-xs sm:text-sm font-bold text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] leading-snug mt-1 transition-colors">
                       {lang === 'ar' ? c.address : c.addressEn}
                     </div>
+                    <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-mono" dir="ltr">
+                      <span>{c.coordinates || '21.3872248, 39.8077324'}</span>
+                      {c.plusCode && (
+                        <span className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-[#0b1120] border border-slate-200 dark:border-slate-700">
+                          {c.plusCode}
+                        </span>
+                      )}
+                    </div>
                     <div className="mt-2 text-[11px] font-bold text-[#9a752a] dark:text-[#dfb76c] flex items-center gap-1.5">
                       <span>{lang === 'ar' ? 'عرض الاتجاهات والملاحة المباشرة' : 'Open live directions'}</span>
                       <span className="transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">←</span>
@@ -186,12 +204,14 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   </div>
                 </a>
 
+                <CustomParagraphSlot placement="contact:beforeMap" lang={lang} content={content} />
+
                 {/* Google Maps Interactive Embed Frame */}
                 {vis.map !== false && (
-                  <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm relative h-48 bg-slate-100 dark:bg-[#0b1120]">
+                  <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm relative h-56 bg-slate-100 dark:bg-[#0b1120]">
                     <iframe
                       title="موقع شركة تسامي الأعمال لأنظمة السلامة"
-                      src={`https://maps.google.com/maps?q=${encodeURIComponent((c.coordinates || '21.387370,39.808065').replace(/\s+/g, ''))}&hl=${lang === 'ar' ? 'ar' : 'en'}&z=15&output=embed`}
+                      src={`https://maps.google.com/maps?q=${encodeURIComponent(`${(c.coordinates || '21.3872248,39.8077324').replace(/\s+/g, '')} (${lang === 'ar' ? 'شركة تسامي الأعمال' : 'Tasami Business Company'})`)}&ll=${encodeURIComponent((c.coordinates || '21.3872248,39.8077324').replace(/\s+/g, ''))}&z=17&hl=${lang === 'ar' ? 'ar' : 'en'}&output=embed`}
                       className="w-full h-full border-0"
                       loading="lazy"
                       allowFullScreen
@@ -237,9 +257,13 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                 <MessageSquare className="w-5 h-5 text-[#1d4ed8] dark:text-[#60a5fa]" />
                 <span>{lang === 'ar' ? 'طلب عرض سعر / معاينة فورية للموقع' : 'Request Instant Quotation / Site Survey'}</span>
               </h4>
-              <p className="w-full text-xs text-slate-500 dark:text-slate-400 mb-6 text-center" style={getParagraphStyle(content, lang, 'contactBanner')}>
-                {lang === 'ar' ? 'أدخل بيانات موقعك ومشروعك وسيقوم المهندس المختص بالتواصل معك مباشرة:' : 'Provide your project specs and our engineering advisor will contact you directly:'}
-              </p>
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="contactBanner"
+                className="w-full text-xs text-slate-500 dark:text-slate-400 mb-6 text-center"
+                defaultText={lang === 'ar' ? 'أدخل بيانات موقعك ومشروعك وسيقوم المهندس المختص بالتواصل معك مباشرة:' : 'Provide your project specs and our engineering advisor will contact you directly:'}
+              />
 
               {submitted ? (
                 <div className="p-8 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-700/60 text-center space-y-3">

@@ -11,10 +11,277 @@ import {
   Sparkles,
   ArrowRight,
   ArrowLeft,
-  ChevronDown
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  MessageCircle,
+  Image as ImageIcon
 } from 'lucide-react';
 import TasamiLogo from '../components/TasamiLogo';
+import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
+import InlineVideoPlayer from '../components/InlineVideoPlayer';
+import ProductGalleryModal from '../components/ProductGalleryModal';
 import { getParagraphStyle } from '../utils/typography';
+import {
+  getProductImages,
+  resolveProductVideoSource,
+  normalizeWhatsAppDigits
+} from '../utils/media';
+
+function ProductCard({
+  item,
+  isAr,
+  whatsappNumber,
+  content,
+  lang,
+  onOpenGallery,
+  onOpenConsultation
+}) {
+  const images = getProductImages(item);
+  const videoSource = resolveProductVideoSource(item);
+  const [angleIdx, setAngleIdx] = useState(0);
+  const [playingInline, setPlayingInline] = useState(false);
+
+  const safeAngleIdx = Math.min(angleIdx, images.length - 1);
+  const title = isAr ? item.ar : item.en;
+  const altTitle = isAr ? item.en : item.ar;
+  const videoTitle = isAr ? (item.videoTitle || item.ar) : (item.videoTitleEn || item.en);
+
+  const waHref = `https://wa.me/${normalizeWhatsAppDigits(whatsappNumber)}?text=${encodeURIComponent(
+    isAr
+      ? `السلام عليكم، أستفسر عن المنتج: ${item.ar}`
+      : `Hello, inquiry regarding product: ${item.en}`
+  )}`;
+
+  return (
+    <div className="bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+      {/* Main Media Stage: Multi-Angle Photos OR Inline Video Player inside the Page */}
+      <div>
+        <div className="relative h-52 bg-gradient-to-b from-slate-100 to-slate-200/70 dark:from-[#0b1120] dark:to-[#131c31] overflow-hidden">
+          {playingInline && videoSource ? (
+            <div className="w-full h-full relative">
+              <InlineVideoPlayer
+                source={videoSource}
+                title={videoTitle}
+                poster={images[0]}
+                autoplay={true}
+                isAr={isAr}
+                className="w-full h-full"
+              />
+              <button
+                type="button"
+                onClick={() => setPlayingInline(false)}
+                className="absolute top-2 right-2 z-20 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/75 hover:bg-black text-white text-[10px] font-bold backdrop-blur-sm transition"
+              >
+                <ImageIcon className="w-3 h-3" />
+                <span>{isAr ? 'العودة للصور' : 'Photos'}</span>
+              </button>
+            </div>
+          ) : (
+            <>
+              <img
+                src={images[safeAngleIdx]}
+                alt={`${title} - ${isAr ? 'زاوية' : 'Angle'} ${safeAngleIdx + 1}`}
+                onClick={() => onOpenGallery(item, 'images', safeAngleIdx)}
+                className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105 cursor-pointer"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = './images/product-1.jpg';
+                }}
+              />
+
+              {/* Expand Full Studio Gallery Button */}
+              <button
+                type="button"
+                onClick={() => onOpenGallery(item, 'images', safeAngleIdx)}
+                title={isAr ? 'معرض الزوايا المكبر' : 'Open Multi-Angle Gallery'}
+                className={`absolute top-2.5 ${
+                  isAr ? 'left-2.5' : 'right-2.5'
+                } w-8 h-8 rounded-full bg-white/90 dark:bg-[#131c31]/90 text-slate-700 dark:text-white shadow border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:scale-105 transition`}
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+              </button>
+
+              {/* Angle Switch Arrows when multiple angles exist */}
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setAngleIdx((prev) => (prev - 1 + images.length) % images.length);
+                    }}
+                    aria-label={isAr ? 'الزاوية السابقة' : 'Previous angle'}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 dark:bg-[#131c31]/90 text-slate-800 dark:text-white shadow flex items-center justify-center opacity-85 hover:opacity-100 transition"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setAngleIdx((prev) => (prev + 1) % images.length);
+                    }}
+                    aria-label={isAr ? 'الزاوية التالية' : 'Next angle'}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 dark:bg-[#131c31]/90 text-slate-800 dark:text-white shadow flex items-center justify-center opacity-85 hover:opacity-100 transition"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </>
+              )}
+
+              {/* Inline Video Play Badge */}
+              {videoSource && (
+                <button
+                  type="button"
+                  onClick={() => setPlayingInline(true)}
+                  className="absolute bottom-2.5 right-2.5 rtl:right-2.5 ltr:left-2.5 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold shadow-lg transition transform hover:scale-105"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  <span>{isAr ? 'تشغيل الفيديو' : 'Play Video'}</span>
+                </button>
+              )}
+
+              {/* Multi-Angle Count Pill */}
+              {images.length > 1 && (
+                <span className="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/65 text-white text-[10px] font-bold backdrop-blur-sm">
+                  {safeAngleIdx + 1} / {images.length}
+                </span>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Multi-Angle Thumbnail Strip (Matches Attached Studio Reference) */}
+        {(images.length > 1 || videoSource) && (
+          <div className="px-3 py-2 bg-slate-50 dark:bg-[#0b1120]/70 border-y border-slate-100 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto">
+            {images.map((imgUrl, aIdx) => (
+              <button
+                key={`${imgUrl}_${aIdx}`}
+                type="button"
+                onClick={() => {
+                  setPlayingInline(false);
+                  setAngleIdx(aIdx);
+                }}
+                className={`shrink-0 w-10 h-10 rounded-lg overflow-hidden border-2 transition ${
+                  !playingInline && safeAngleIdx === aIdx
+                    ? 'border-[#113163] dark:border-[#c59a45] ring-1 ring-[#c59a45]/40'
+                    : 'border-slate-200 dark:border-slate-700 opacity-75 hover:opacity-100'
+                }`}
+              >
+                <img
+                  src={imgUrl}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = './images/product-1.jpg';
+                  }}
+                />
+              </button>
+            ))}
+
+            {videoSource && (
+              <button
+                type="button"
+                onClick={() => setPlayingInline((p) => !p)}
+                title={isAr ? 'تشغيل الفيديو داخل البطاقة' : 'Play video inline'}
+                className={`shrink-0 h-10 px-2 rounded-lg border-2 flex items-center justify-center gap-1 text-[10px] font-black transition ${
+                  playingInline
+                    ? 'border-red-600 bg-red-600 text-white'
+                    : 'border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300'
+                }`}
+              >
+                <Play className="w-3 h-3 fill-current" />
+                <span>{isAr ? 'فيديو' : 'Video'}</span>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Product Info */}
+      <div className="p-4 flex-1 flex flex-col justify-between gap-3">
+        <div>
+          <h3 className="text-sm sm:text-base font-black text-[#0f172a] dark:text-white leading-snug">
+            {title}
+          </h3>
+          {altTitle && (
+            <p className="text-[11px] font-semibold text-[#9c7224] dark:text-[#dfb76c] mt-0.5">
+              {altTitle}
+            </p>
+          )}
+          <p
+            style={getParagraphStyle(content, lang, 'productsCards')}
+            className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed line-clamp-3"
+          >
+            {item.desc}
+          </p>
+          {item.specs && (
+            <div className="mt-2.5 inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/70 text-[10px] font-bold text-[#113163] dark:text-slate-200">
+              <ShieldCheck className="w-3 h-3 text-[#c59a45] shrink-0" />
+              <span>{item.specs}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Action Row: Inline Video / Expand Gallery / WhatsApp / Consultation */}
+        <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            {videoSource && (
+              <button
+                type="button"
+                onClick={() => setPlayingInline((v) => !v)}
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/40 dark:hover:bg-red-950/70 text-red-700 dark:text-red-300 text-[11px] font-bold transition"
+              >
+                <Video className="w-3.5 h-3.5" />
+                <span>
+                  {playingInline
+                    ? isAr
+                      ? 'إيقاف'
+                      : 'Stop'
+                    : isAr
+                    ? 'تشغيل بالصفحة'
+                    : 'Play Inline'}
+                </span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => onOpenGallery(item, playingInline ? 'video' : 'images', safeAngleIdx)}
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold transition"
+            >
+              <Maximize2 className="w-3 h-3" />
+              <span>{isAr ? 'الزوايا' : 'Gallery'}</span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={isAr ? 'اطلب عبر واتس آب' : 'Order via WhatsApp'}
+              className="p-1.5 rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white transition"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+            </a>
+            <button
+              type="button"
+              onClick={() => onOpenConsultation?.(title)}
+              className="px-3 py-1.5 rounded-lg bg-[#113163] hover:bg-[#0d274e] text-white text-[11px] font-bold transition"
+            >
+              {isAr ? 'طلب سعر' : 'Quote'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ProductsPage({
   lang,
@@ -26,7 +293,9 @@ export default function ProductsPage({
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
 
   const t = content[lang].productsCatalog;
+  const whatsappNumber = content?.[lang]?.contact?.whatsapp || content?.[lang]?.contact?.phone1 || '966591684133';
   const [searchTerm, setSearchTerm] = useState('');
+  const [galleryModalState, setGalleryModalState] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeVideo, setActiveVideo] = useState(null);
   const [showBrandsModal, setShowBrandsModal] = useState(false);
@@ -105,14 +374,15 @@ export default function ProductsPage({
               <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
                 {isAr ? 'كتالوج المنتجات ومعدات السلامة ومكافحة الحريق' : 'Fire Safety Products & Equipment Catalog'}
               </h1>
-              <p
-                style={getParagraphStyle(content, lang, 'productsHeader')}
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="productsHeader"
                 className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-              >
-                {isAr
+                defaultText={isAr
                   ? 'توريد موثوق ومباشر لكبرى المشاريع والمنشآت في المملكة، مصحوب بشهادات الجودة والمطابقة ومقاطع توضيحية لطريقة التنفيذ.'
                   : 'Direct certified procurement for kingdom-wide infrastructure with complete test certificates and installation guides.'}
-              </p>
+              />
             </div>
 
             <div className="flex-shrink-0">
@@ -127,6 +397,8 @@ export default function ProductsPage({
           </div>
         </div>
       </div>
+
+      <CustomParagraphSlot placement="products:top" lang={lang} content={content} />
 
       {/* 2. Sub-branches & Search Filter */}
       <div className="space-y-6">
@@ -174,102 +446,37 @@ export default function ProductsPage({
         </div>
       </div>
 
+      <CustomParagraphSlot placement="products:beforeGrid" lang={lang} content={content} />
+
       {/* 3. Products Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredItems.map((item, idx) => (
-          <div
+          <ProductCard
             key={item.id || idx}
-            className="bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group"
-          >
-            {/* Image */}
-            <div className="relative h-48 bg-slate-100 dark:bg-[#0b1120] overflow-hidden">
-              <img
-                src={item.image || './images/product-1.jpg'}
-                alt={item.ar}
-                onError={(e) => {
-                  e.currentTarget.src = 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80';
-                }}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0b1120]/75 via-transparent to-transparent"></div>
-              
-              {/* Specs Badge */}
-              {item.specs && (
-                <div className="absolute top-3 right-3 rtl:right-3 ltr:left-3 bg-[#162d6c]/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] text-[#dfb76c] font-bold border border-[#c59a45]/30 font-mono">
-                  {item.specs}
-                </div>
-              )}
-
-              {/* Video Play Badge */}
-              {item.videoId && (
-                <button
-                  onClick={() =>
-                    setActiveVideo({
-                      videoId: item.videoId,
-                      title: isAr ? (item.videoTitle || item.ar) : (item.videoTitleEn || item.en),
-                      productName: isAr ? item.ar : item.en,
-                    })
-                  }
-                  className="absolute bottom-3 right-3 rtl:right-3 ltr:left-3 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold shadow-lg transition transform hover:scale-105"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>{isAr ? 'فيديو التركيب' : 'Watch Video'}</span>
-                </button>
-              )}
-            </div>
-
-            {/* Content Details */}
-            <div className="p-5 flex-1 flex flex-col justify-between text-center">
-              <div>
-                <div className="flex items-center justify-between mb-1 text-[11px] font-mono text-slate-400 uppercase">
-                  <span>{item.en}</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-0.5 text-[10px]">
-                    <Check className="w-3 h-3" />
-                    <span>{isAr ? 'معتمد' : 'Certified'}</span>
-                  </span>
-                </div>
-
-                <h3 className="font-bold text-base text-[#0f172a] dark:text-white group-hover:text-[#1d4ed8] dark:group-hover:text-[#dfb76c] transition mb-2">
-                  {isAr ? item.ar : item.en}
-                </h3>
-
-                <p
-                  style={getParagraphStyle(content, lang, 'productsCards')}
-                  className="w-full text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3"
-                >
-                  {item.desc}
-                </p>
-              </div>
-
-              {/* Footer Actions */}
-              <div className="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-                {item.videoId ? (
-                  <button
-                    onClick={() =>
-                      setActiveVideo({
-                        videoId: item.videoId,
-                        title: isAr ? (item.videoTitle || item.ar) : (item.videoTitleEn || item.en),
-                        productName: isAr ? item.ar : item.en,
-                      })
-                    }
-                    className="text-[11px] text-[#1d4ed8] dark:text-[#60a5fa] hover:underline font-bold flex items-center gap-1"
-                  >
-                    <Video className="w-3.5 h-3.5" />
-                    <span>{isAr ? 'طريقة التركيب' : 'Install Guide'}</span>
-                  </button>
-                ) : <div />}
-
-                <button
-                  onClick={() => onOpenConsultation(isAr ? `طلب تسعير منتج: ${item.ar}` : `Supply inquiry for: ${item.en}`)}
-                  className="px-3.5 py-1.5 rounded-lg bg-[#c59a45]/15 hover:bg-[#c59a45] text-[#9a752a] dark:text-[#dfb76c] hover:text-[#0b1120] text-xs font-bold transition"
-                >
-                  {isAr ? 'طلب تسعير' : 'Get Quote'}
-                </button>
-              </div>
-            </div>
-          </div>
+            item={item}
+            isAr={isAr}
+            whatsappNumber={whatsappNumber}
+            content={content}
+            lang={lang}
+            onOpenConsultation={onOpenConsultation}
+            onOpenGallery={(product, mode, angleIndex) =>
+              setGalleryModalState({ product, mode, angleIndex })
+            }
+          />
         ))}
       </div>
+
+      {galleryModalState && (
+        <ProductGalleryModal
+          product={galleryModalState.product}
+          initialMode={galleryModalState.mode}
+          initialAngleIndex={galleryModalState.angleIndex}
+          isAr={isAr}
+          whatsappNumber={whatsappNumber}
+          onClose={() => setGalleryModalState(null)}
+          onInquiry={(productTitle) => onOpenConsultation?.(productTitle)}
+        />
+      )}
 
       {filteredItems.length === 0 && (
         <div className="text-center py-16 bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200 dark:border-slate-800">
@@ -284,6 +491,8 @@ export default function ProductsPage({
           </button>
         </div>
       )}
+
+      <CustomParagraphSlot placement="products:afterGrid" lang={lang} content={content} />
 
       {/* 4. Quality Certifications Strip & Partner Brands Trigger */}
       <div className="p-6 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-center">
@@ -426,6 +635,8 @@ export default function ProductsPage({
           </div>
         </div>
       )}
+
+      <CustomParagraphSlot placement="products:bottom" lang={lang} content={content} />
 
       </div>
     </div>

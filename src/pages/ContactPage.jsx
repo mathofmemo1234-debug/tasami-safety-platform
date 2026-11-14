@@ -1,7 +1,7 @@
 import React from 'react';
 import ContactSection from '../components/ContactSection';
 import TasamiLogo from '../components/TasamiLogo';
-import { getParagraphStyle } from '../utils/typography';
+import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
 
 export default function ContactPage({
   lang,
@@ -38,17 +38,20 @@ export default function ContactPage({
             <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'تواصل مع فريق تسامي الأعمال' : 'Contact Tasami Business'}
             </h1>
-            <p
-              style={getParagraphStyle(content, lang, 'contactHeader')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="contactHeader"
               className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-            >
-              {isAr
+              defaultText={isAr
                 ? 'يسعدنا الرد على استفساراتكم الهندسية، استقبال طلبات التسعير، وتحديد مواعيد المعاينات الميدانية لمشاريعكم.'
                 : 'We are delighted to assist with your engineering queries, quotation requests, and site inspections.'}
-            </p>
+            />
           </div>
         </div>
       </div>
+
+      <CustomParagraphSlot placement="contact:top" lang={lang} content={content} />
 
       {/* 2. Contact Section Component */}
       <ContactSection
@@ -56,6 +59,8 @@ export default function ContactPage({
         content={content}
         onOpenConsultation={onOpenConsultation}
       />
+
+      <CustomParagraphSlot placement="contact:bottom" lang={lang} content={content} />
     </div>
   );
 }

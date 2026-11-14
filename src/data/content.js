@@ -309,8 +309,10 @@ export const content = {
           ar: "رشاشات الحريق المائية المعتمدة",
           en: "UL/FM Certified Fire Sprinklers",
           desc: "رشاشات مائية بكافة درجات الحرارة والاستجابات (Pendent, Upright, Sidewall) معتمدة UL/FM وكود البناء السعودي.",
-          image: "./images/product-1.jpg",
-          videoId: "cvpABJITn28",
+          image: "./images/products/sprinkler-1.jpg",
+          images: ["./images/products/sprinkler-1.jpg","./images/products/sprinkler-2.jpg","./images/products/sprinkler-3.jpg"],
+          videoId: "9BuuCj73xmA",
+          videoUrl: "https://www.youtube.com/watch?v=9BuuCj73xmA",
           videoTitle: "طريقة تركيب وتوزيع رشاشات الحريق وتجهيزات الأنابيب المعتمدة",
           videoTitleEn: "How Fire Sprinkler Systems Are Installed & Engineered",
           specs: "UL Listed / FM Approved / K-Factor 5.6 & 8.0"
@@ -322,7 +324,9 @@ export const content = {
           en: "Fire Protection Steel Piping",
           desc: "أنابيب حديدية مجلفنة وسوداء غير ملحومة ومعتمدة لتحمل الضغوط العالية للشبكات الرطبة والجافة.",
           image: "./images/product-2.jpg",
-          videoId: "UHo9BAs3kI0",
+          images: ["./images/product-2.jpg","./images/products/grooved-couplings-elbows.jpg","./images/products/sprinkler-2.jpg","./images/products/hanger-1.jpg"],
+          videoId: "cvpABJITn28",
+          videoUrl: "https://www.youtube.com/watch?v=cvpABJITn28",
           videoTitle: "شرح تجميع وتثبيت أنابيب وشبكات مكافحة الحريق بنظام الجروف الميكانيكي",
           videoTitleEn: "Fire Protection Piping Assembly & Grooved Joint Installation",
           specs: "ASTM A53 / Sch 40 & Sch 10 / صلب مجلفن"
@@ -333,8 +337,10 @@ export const content = {
           ar: "مواد التسنين والوصلات الملولبة",
           en: "Threading Materials",
           desc: "مواد التسنين وملحقات القلوظة المعتمدة، وشرائط ومواد إحكام الوصلات الملولبة ولقم التسنين المقاومة للضغط والحرارة في شبكات الإطفاء.",
-          image: "./images/product-4.jpg",
-          videoId: "UHo9BAs3kI0",
+          image: "./images/products/threading-fittings-sheet.jpg",
+          images: ["./images/products/threading-fittings-sheet.jpg","./images/products/grooved-tees-adapters.jpg","./images/product-5.jpg"],
+          videoId: "W2IadN8cNsI",
+          videoUrl: "https://www.youtube.com/watch?v=W2IadN8cNsI",
           videoTitle: "طرق التسنين وعزل الوصلات الملولبة في شبكات مكافحة الحريق",
           videoTitleEn: "Pipe Threading Materials & Sealed Joint Assembly for Fire Systems",
           specs: "NPT / BSPT Threading • UL/FM Sealants • NFPA 13"
@@ -345,8 +351,10 @@ export const content = {
           ar: "أجهزة ولوحات إنذار الحريق المعنونة",
           en: "Addressable Fire Alarm Systems",
           desc: "كواشف دخان وحرارة ليزرية، نقاط نداء يدوية، كواشف لهب، وسارينات إنذار مبرمجة مع لوحات تحكم ذكية.",
-          image: "./images/product-3.jpg",
+          image: "./images/products/alarm-1.jpg",
+          images: ["./images/products/alarm-1.jpg","./images/products/alarm-2.jpg","./images/products/alarm-3.jpg","./images/products/alarm-4.jpg"],
           videoId: "z8zvZxSSTLQ",
+          videoUrl: "https://www.youtube.com/watch?v=z8zvZxSSTLQ",
           videoTitle: "شرح عملي لطريقة تركيب وتوصيل لوحة إنذار الحريق المعنونة والكواشف الذكية",
           videoTitleEn: "Addressable Fire Alarm Panel & Detector Wiring and Testing",
           specs: "EN54 / UL 864 / شاشات تحكم لمسية معتمدة"
@@ -357,8 +365,10 @@ export const content = {
           ar: "وصلات وتجهيزات الجروف (Grooved Fittings)",
           en: "Mechanical Grooved Couplings & Tees",
           desc: "كوبلنجات ووصلات ميكانيكية سريعة التجميع ومقاومة للاهتزازات والضغوط حتى 500 PSI معتمدة عالمياً.",
-          image: "./images/product-4.jpg",
+          image: "./images/products/grooved-couplings-elbows.jpg",
+          images: ["./images/products/grooved-couplings-elbows.jpg","./images/products/grooved-tees-adapters.jpg","./images/product-2.jpg","./images/product-5.jpg"],
           videoId: "UHo9BAs3kI0",
+          videoUrl: "https://www.youtube.com/watch?v=UHo9BAs3kI0",
           videoTitle: "شرح تركيب وصلات الجروف الميكانيكية وفحص العزل الهيدروليكي",
           videoTitleEn: "Victaulic Grooved Coupling Installation & Torque Guide",
           specs: "Ductile Iron ASTM A536 / ضغط تشغيل حتى 500 PSI"
@@ -369,8 +379,10 @@ export const content = {
           ar: "محابس التحكم وصمامات الإنذار (OS&Y / Butterfly)",
           en: "UL/FM Control & Check Valves",
           desc: "محابس بوابة بساق صاعد OS&Y، محابس فراشة بمفاتيح مراقبة، ومحابس عدم رجوع وصمامات تخفيض الضغط.",
-          image: "./images/product-5.jpg",
-          videoId: "W2IadN8cNsI",
+          image: "./images/products/valve-1.jpg",
+          images: ["./images/products/valve-1.jpg","./images/products/valve-2.jpg","./images/products/valve-3.jpg"],
+          videoId: "gUaOqDgjYlk",
+          videoUrl: "https://www.youtube.com/watch?v=gUaOqDgjYlk",
           videoTitle: "طريقة تركيب وضبط محابس التحكم وصمامات الفراشة في شبكات الإطفاء",
           videoTitleEn: "Fire Protection Control Valve & Butterfly Valve Installation",
           specs: "UL/FM Certified / Flanged & Grooved / 175-300 PSI"
@@ -381,8 +393,10 @@ export const content = {
           ar: "مضخات الحريق المتكاملة (ديزل / كهرباء / جوكي)",
           en: "Certified UL/FM Fire Pump Packages",
           desc: "مضخات طرد مركزي مجزأة أفقياً وعمودية بكافة معدلات التدفق (500 إلى 2500 GPM) مع لوحات تحكم أوتوماتيكية.",
-          image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-          videoId: "Job8w2OhXBc",
+          image: "./images/products/pump-angle-1.jpg",
+          images: ["./images/products/pump-angle-1.jpg","./images/products/pump-angle-2.jpg","./images/products/pump-angle-3.jpg","./images/products/pump-angle-4.jpg","./images/products/pump-angle-5.jpg","./images/products/pump-angle-6.jpg"],
+          videoId: "rPID1GPl3Z4",
+          videoUrl: "https://www.youtube.com/watch?v=rPID1GPl3Z4",
           videoTitle: "شرح تركيب واختبار غرفة مضخات الحريق وتوصيل خطوط السحب والطرد",
           videoTitleEn: "Fire Pump Skid Assembly, Piping, and Flow Testing",
           specs: "NFPA 20 / UL 448 / FM 1311 / 500-2500 GPM"
@@ -393,8 +407,10 @@ export const content = {
           ar: "صناديق وخراطيم وطفايات الحريق",
           en: "Fire Hose Cabinets & Extinguishers",
           desc: "صناديق جدارية من الستانلس ستيل المقاوم للصدأ مع بكرات خراطيم مطاطية وسينثيتك وطفايات بودرة وغاز معتمدة.",
-          image: "./images/1f02a2dd-bd12-466e-b451-40c0c13b8ebc.jfif",
-          videoId: "cvpABJITn28",
+          image: "./images/products/cabinet-1.jpg",
+          images: ["./images/products/cabinet-1.jpg","./images/products/cabinet-2.jpg","./images/products/cabinet-3.jpg","./images/product-1.jpg","./images/products/extinguishers-powder-co2.jpg","./images/products/extinguishers-water-foam.jpg"],
+          videoId: "1U70HXBvb8c",
+          videoUrl: "https://www.youtube.com/watch?v=1U70HXBvb8c",
           videoTitle: "طريقة تركيب صندوق الحريق وتوصيل بكرة الخرطوم ومحبس الهبوط",
           videoTitleEn: "Fire Hose Reel Cabinet Installation & Pressure Connection",
           specs: "BS EN 671-1 / كود البناء السعودي SBC 801"
@@ -405,8 +421,10 @@ export const content = {
           ar: "أنظمة الإطفاء بالغازات النظيفة (FM-200 / NOVEC)",
           en: "Clean Agent Fire Extinguishing Systems",
           desc: "أسطوانات عالية الضغط مع مشغلات كهربائية وميكانيكية وشبكة فوهات غمر كلي لغرف السيرفرات ومراكز البيانات.",
-          image: "./images/3ada732e-c06f-40e9-ad06-bb80dc23d0a3.jfif",
+          image: "./images/products/gas-1.jpg",
+          images: ["./images/products/gas-1.jpg","./images/products/gas-2.jpg","./images/products/gas-3.jpg"],
           videoId: "ZatPdTk1Ulw",
+          videoUrl: "https://www.youtube.com/watch?v=ZatPdTk1Ulw",
           videoTitle: "شرح واختبار شبكة فوهات وأسطوانات الإطفاء بغاز FM-200 النظيف",
           videoTitleEn: "FM-200 Clean Agent System Installation & Piping Layout",
           specs: "NFPA 2001 / UL Listed / Zero Ozone Depletion"
@@ -417,8 +435,10 @@ export const content = {
           ar: "مراوح سحب الدخان وضغط سلالم الطوارئ",
           en: "High-Temp Smoke Extraction & Pressurization Fans",
           desc: "مراوح طرد محورية مقاومة لدرجات حرارة 400°C لمدة ساعتين لضمان خلو مسالك الهروب من الدخان أثناء الإخلاء.",
-          image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
-          videoId: "Job8w2OhXBc",
+          image: "./images/products/fan-1.jpg",
+          images: ["./images/products/fan-1.jpg","./images/products/fan-2.jpg","./images/products/fan-3.jpg"],
+          videoId: "H7s0NCQsL3I",
+          videoUrl: "https://www.youtube.com/watch?v=H7s0NCQsL3I",
           videoTitle: "طريقة تركيب وتثبيت مراوح سحب الدخان وضغط السلالم وقنوات التهوية",
           videoTitleEn: "Staircase Pressurization and Smoke Exhaust Fan Installation",
           specs: "F400 / 2 Hours Fire Rated / EN 12101-3"
@@ -429,8 +449,10 @@ export const content = {
           ar: "أبواب الطوارئ والهروب المقاومة للحريق",
           en: "Fire Rated Emergency Exit Doors",
           desc: "أبواب فولاذية مقاومة للحريق (60 إلى 120 دقيقة) مزودة بأقفال ذعر وهلع ومغلقات أوتوماتيكية معتمدة.",
-          image: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
-          videoId: "cvpABJITn28",
+          image: "./images/product-4.jpg",
+          images: ["./images/product-4.jpg","./images/products/door-steel-single-double.jpg","./images/products/door-glazed-exit.jpg"],
+          videoId: "u9z5TrHm0Nw",
+          videoUrl: "https://www.youtube.com/watch?v=u9z5TrHm0Nw",
           videoTitle: "طريقة تركيب أبواب الهروب المقاومة للحريق ومقابض الهلع Panic Bar",
           videoTitleEn: "UL Fire Rated Steel Door and Panic Exit Hardware Installation",
           specs: "UL 10C / NFPA 252 / 60-120 Min Rating"
@@ -441,8 +463,10 @@ export const content = {
           ar: "مهمات وتجهيزات الوقاية الشخصية (PPE)",
           en: "Personal Protective Equipment (PPE)",
           desc: "خوذات سلامة، نظارات واقية، قفازات حرارية، بدلات اقتحام حريق، وأحذية أمان بمقدمة فولاذية عازلة.",
-          image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80",
-          videoId: "z8zvZxSSTLQ",
+          image: "./images/product-3.jpg",
+          images: ["./images/product-3.jpg","./images/products/ppe-helmet-gloves.jpg","./images/products/ppe-vest-boots.jpg"],
+          videoId: "Job8w2OhXBc",
+          videoUrl: "https://www.youtube.com/watch?v=Job8w2OhXBc",
           videoTitle: "دليل استخدام وتطبيق معايير مهمات السلامة ومكافحة الحريق الميدانية",
           videoTitleEn: "PPE Usage Standards and Safety Compliance on Job Sites",
           specs: "ANSI Z89.1 / EN 397 / معايير السلامة المهنية"
@@ -453,8 +477,10 @@ export const content = {
           ar: "حوامل ومثبتات الأنابيب والتعليق الزلزالي",
           en: "Seismic Bracing & Pipe Hangers",
           desc: "حوامل كليفيس، مثبتات زلزالية، خوابير تمدد صلبة، وأطواق تثبيت معتمدة وفق اشتراطات كود NFPA 13.",
-          image: "./images/product-4.jpg",
-          videoId: "UHo9BAs3kI0",
+          image: "./images/products/hanger-1.jpg",
+          images: ["./images/products/hanger-1.jpg","./images/products/hanger-2.jpg","./images/product-2.jpg"],
+          videoId: "D8KKW1fR7u4",
+          videoUrl: "https://www.youtube.com/watch?v=D8KKW1fR7u4",
           videoTitle: "شرح عملي لتركيب حوامل ومثبتات مواسير الإطفاء والتعليق الزلزالي",
           videoTitleEn: "NFPA 13 Seismic Sway Bracing & Pipe Hanger Installation",
           specs: "UL Listed / FM 1950 / كود البناء السعودي SBC"
@@ -557,13 +583,15 @@ export const content = {
       title: "يسعدنا دائماً خدمتكم والتواصل معكم",
       subtitle: "نحن هنا لتقديم المعاينات الميدانية المتخصصة وتوريد أحدث أنظمة الإطفاء وتنفيذ مشاريعكم بأعلى معايير الجودة.",
       phone1: "+966 591684133",
+      whatsapp: "966591684133",
       phone2: "+966 533480098",
       email: "makkah-branch@tasaami.com",
-      address: "مكة المكرمة – الشوقية – شارع إبراهيم الخليل",
-      addressEn: "Ibrahim Al Khalil St - Ash Shawqiyah - Makkah",
-      googleMapsUrl: "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA",
+      address: "مكة المكرمة 24351 – الشوقية – شارع إبراهيم الخليل، شارع زيد بن حارثة",
+      addressEn: "Ibrahim Al Khalil St, Zaid bin Haritha St - Ash Shawqiyah - Makkah 24351",
+      plusCode: "9RP5+V3 مكة",
+      googleMapsUrl: "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D8%AA%D8%B3%D8%A7%D9%85%D9%8A+%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84%E2%80%AD/@21.3872248,39.8077324,17z/data=!3m1!4b1!4m6!3m5!1s0x15c21b124251096f:0x5f3bed74fbe7b8f3!8m2!3d21.3872248!4d39.8077324!16s%2Fg%2F11zyn3z20n",
       googleBusinessUrl: "https://share.google/9AmZxrxPQL8I9od2U",
-      coordinates: "21.387370, 39.808065",
+      coordinates: "21.3872248, 39.8077324",
       socialLinks: [
         { platform: "LinkedIn (الشركة)", url: "https://www.linkedin.com/company/%D8%AA%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84/", label: "تسامي الأعمال | TASAMI BUSINESS" },
         { platform: "LinkedIn (المدير التنفيذي)", url: "https://www.linkedin.com/in/taha-hendy-650134b8/", label: "أ. طه هندي" },
@@ -604,18 +632,106 @@ export const content = {
         "doc-vat": true
       }
     },
+    techSupport: {
+      enabled: true,
+      title: "الدعم الفني",
+      subtitle: "إجابات فورية ومباشرة من فريق السلامة والهندسة",
+      welcomeMessage: "أهلاً بك في الدعم الفني لشركة تسامي الأعمال للسلامة. ابحث عن إجابتك الفورية أو أرسل استفسارك الآن.",
+      faqs: [
+        {
+          id: "faq-1",
+          category: "التوريد والمشاريع",
+          question: "ما هي مدة التوريد وتنفيذ أنظمة السلامة ومكافحة الحريق؟",
+          answer: "يتم توفير وتوريد منتجات السلامة القياسية خلال 24 إلى 72 ساعة داخل مكة المكرمة وجدة، وللمشاريع الهندسية يتم إعداد جدول زمني دقيق بعد المعاينة الفنية مباشرة."
+        },
+        {
+          id: "faq-2",
+          category: "الاعتمادات والتراخيص",
+          question: "هل المنتجات والتركيبات معتمدة لدى الدفاع المدني وبوابة سلامة؟",
+          answer: "نعم، شركة تسامي الأعمال مرخصة رسمياً ومصنفة في بوابة سلامة، وجميع المضخات والرشاشات واللوحات والأنابيب مطابقة لـ SBC 801 ومعتمدة UL / FM / SABER."
+        },
+        {
+          id: "faq-3",
+          category: "عقود الصيانة",
+          question: "هل تقدمون عقود صيانة دورية ورفع تقارير سلامة للدفاع المدني؟",
+          answer: "نعم، نوفر عقود صيانة وقائية سنوية وربع سنوية شاملة الفحص وإصدار شهادات وتقارير الإنجاز الفنية المعتمدة إلكترونياً."
+        }
+      ]
+    },
+    customerReviews: {
+      enabled: true,
+      tag: "قيّمنا وآراء العملاء",
+      title: "ثقة عملائنا وشركاء النجاح",
+      subtitle: "آراء وتقييمات معتمدة من عملائنا في المشاريع التجارية والصناعية والسكنية، ولا يُنشر أي تقييم إلا بعد موافقة الإدارة.",
+      items: [
+        {
+          id: "rev-seed-1",
+          name: "م. خالد السلمي",
+          company: "مجموعة العمران التجارية - مكة",
+          projectType: "توريد وتركيب مضخات UL/FM",
+          rating: 5,
+          status: "approved",
+          comment: "سرعة مذهلة في التوريد والتركيب، واجتزنا فحص الدفاع المدني وبوابة سلامة من أول معاينة دون أي ملاحظات."
+        },
+        {
+          id: "rev-seed-2",
+          name: "أ. فهد القرشي",
+          company: "مستودعات الأفق اللوجستية",
+          projectType: "شبكة رشاشات وإنذار معنون",
+          rating: 5,
+          status: "approved",
+          comment: "فريق هندسي محترف ودعم فني سريع في الرد على جميع استفساراتنا الفنية وتدريب طاقم الموقع."
+        },
+        {
+          id: "rev-seed-3",
+          name: "د. سارة العتيبي",
+          company: "مركز الشفاء الطبي",
+          projectType: "نظام غاز نظيف FM-200 وصيانة دورية",
+          rating: 5,
+          status: "approved",
+          comment: "التزام كامل بالمواعيد ومعايير الجودة، ونتعامل مع تسامي الأعمال في عقود الصيانة السنوية بنجاح مستمر."
+        }
+      ]
+    },
+    announcementTicker: {
+      enabled: true,
+      speed: "medium",
+      includeApprovedReviews: true,
+      items: [
+        {
+          id: "ann-1",
+          badge: "تحديث الكتالوج",
+          text: "تم تحديث كتالوج المنتجات بصور متعددة الزوايا وفيديوهات تشغيل وشرح التركيب مباشرة داخل الصفحة",
+          linkPage: "products"
+        },
+        {
+          id: "ann-2",
+          badge: "الدعم الفني المباشر",
+          text: "خدمة الدعم الفني الفوري والواتس آب الموحد (+966 59 168 4133) متاحة للرد على استفسارات المشاريع والتوريدات",
+          linkPage: "contact"
+        },
+        {
+          id: "ann-3",
+          badge: "معتمد لدى الدفاع المدني",
+          text: "توريد وتنفيذ وصيانة أنظمة السلامة المعتمدة في بوابة سلامة ومواصفات UL / FM / SABER",
+          linkPage: "about"
+        }
+      ]
+    },
     footer: {
       aboutText: "تسامي الأعمال لأنظمة السلامة متخصصة في توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق وفق كود البناء السعودي وترخيص الدفاع المدني.",
       quickLinks: "روابط سريعة",
       ourServices: "أبرز الأنظمة",
       contactInfo: "بيانات التواصل",
-      address: "مكة المكرمة – الشوقية – شارع إبراهيم الخليل",
+      address: "مكة المكرمة 24351 – الشوقية – شارع إبراهيم الخليل، شارع زيد بن حارثة",
       phone: "+966 591684133 / +966 533480098",
       email: "makkah-branch@tasaami.com",
       allRightsReserved: "جميع الحقوق محفوظة © 2026 تسامي الأعمال لأنظمة السلامة (Tasami Business for Safety Systems).",
       visionQuote: "نسمو بالأمان نحو بيئة خالية تماماً من المخاطر بما يتوافق مع رؤية المملكة 2030."
     },
-    typography: {}
+    typography: {},
+    paragraphOverrides: {},
+    customParagraphs: []
   },
   en: {
     brand: {
@@ -923,8 +1039,10 @@ export const content = {
           ar: "رشاشات الحريق المائية المعتمدة",
           en: "UL/FM Certified Fire Sprinklers",
           desc: "Pendent, upright, and sidewall sprinkler heads across temperature ratings and K-factors compliant with SBC 801.",
-          image: "./images/product-1.jpg",
-          videoId: "cvpABJITn28",
+          image: "./images/products/sprinkler-1.jpg",
+          images: ["./images/products/sprinkler-1.jpg","./images/products/sprinkler-2.jpg","./images/products/sprinkler-3.jpg"],
+          videoId: "9BuuCj73xmA",
+          videoUrl: "https://www.youtube.com/watch?v=9BuuCj73xmA",
           videoTitle: "طريقة تركيب وتوزيع رشاشات الحريق الأوتوماتيكية وفق الكود السعودي",
           videoTitleEn: "How Fire Sprinkler Systems Are Installed & Engineered",
           specs: "UL Listed / FM Approved / K-Factor 5.6 & 8.0"
@@ -936,7 +1054,9 @@ export const content = {
           en: "Fire Protection Steel Piping",
           desc: "Black and galvanized seamless steel pipes approved for wet and dry fire sprinkler networks.",
           image: "./images/product-2.jpg",
-          videoId: "UHo9BAs3kI0",
+          images: ["./images/product-2.jpg","./images/products/grooved-couplings-elbows.jpg","./images/products/sprinkler-2.jpg","./images/products/hanger-1.jpg"],
+          videoId: "cvpABJITn28",
+          videoUrl: "https://www.youtube.com/watch?v=cvpABJITn28",
           videoTitle: "شرح تجميع وتثبيت أنابيب وشبكات مكافحة الحريق بنظام الجروف الميكانيكي",
           videoTitleEn: "Fire Protection Piping Assembly & Grooved Joint Installation",
           specs: "ASTM A53 / Sch 40 & Sch 10 / Galvanized Steel"
@@ -947,8 +1067,10 @@ export const content = {
           ar: "مواد التسنين والوصلات الملولبة",
           en: "Threading Materials",
           desc: "Approved pipe threading supplies, cutting dies, PTFE tapes, and high-pressure thread sealants ensuring leak-free fire piping joints.",
-          image: "./images/product-4.jpg",
-          videoId: "UHo9BAs3kI0",
+          image: "./images/products/threading-fittings-sheet.jpg",
+          images: ["./images/products/threading-fittings-sheet.jpg","./images/products/grooved-tees-adapters.jpg","./images/product-5.jpg"],
+          videoId: "W2IadN8cNsI",
+          videoUrl: "https://www.youtube.com/watch?v=W2IadN8cNsI",
           videoTitle: "طرق التسنين وعزل الوصلات الملولبة في شبكات مكافحة الحريق",
           videoTitleEn: "Pipe Threading Materials & Sealed Joint Assembly for Fire Systems",
           specs: "NPT / BSPT Threading • UL/FM Sealants • NFPA 13"
@@ -959,8 +1081,10 @@ export const content = {
           ar: "أجهزة ولوحات إنذار الحريق المعنونة",
           en: "Addressable Fire Alarm Systems",
           desc: "Addressable optical smoke and heat detectors, manual call points, strobes, and microprocessor panels.",
-          image: "./images/product-3.jpg",
+          image: "./images/products/alarm-1.jpg",
+          images: ["./images/products/alarm-1.jpg","./images/products/alarm-2.jpg","./images/products/alarm-3.jpg","./images/products/alarm-4.jpg"],
           videoId: "z8zvZxSSTLQ",
+          videoUrl: "https://www.youtube.com/watch?v=z8zvZxSSTLQ",
           videoTitle: "شرح عملي لطريقة تركيب وتوصيل لوحة إنذار الحريق المعنونة والكواشف الذكية",
           videoTitleEn: "Addressable Fire Alarm Panel & Detector Wiring and Testing",
           specs: "EN54 / UL 864 / Certified Touchscreen Control"
@@ -971,8 +1095,10 @@ export const content = {
           ar: "وصلات وتجهيزات الجروف (Grooved Fittings)",
           en: "Mechanical Grooved Couplings & Tees",
           desc: "UL/FM grooved couplings, elbows, and tees for rapid and reliable mechanical joining up to 500 PSI.",
-          image: "./images/product-4.jpg",
+          image: "./images/products/grooved-couplings-elbows.jpg",
+          images: ["./images/products/grooved-couplings-elbows.jpg","./images/products/grooved-tees-adapters.jpg","./images/product-2.jpg","./images/product-5.jpg"],
           videoId: "UHo9BAs3kI0",
+          videoUrl: "https://www.youtube.com/watch?v=UHo9BAs3kI0",
           videoTitle: "شرح تركيب وصلات الجروف الميكانيكية وفحص العزل الهيدروليكي",
           videoTitleEn: "Victaulic Grooved Coupling Installation & Torque Guide",
           specs: "Ductile Iron ASTM A536 / Up to 500 PSI"
@@ -983,8 +1109,10 @@ export const content = {
           ar: "محابس التحكم وصمامات الإنذار (OS&Y / Butterfly)",
           en: "UL/FM Control & Check Valves",
           desc: "OS&Y gate valves, butterfly valves with supervisory tamper switches, check valves, and alarm check valves.",
-          image: "./images/product-5.jpg",
-          videoId: "W2IadN8cNsI",
+          image: "./images/products/valve-1.jpg",
+          images: ["./images/products/valve-1.jpg","./images/products/valve-2.jpg","./images/products/valve-3.jpg"],
+          videoId: "gUaOqDgjYlk",
+          videoUrl: "https://www.youtube.com/watch?v=gUaOqDgjYlk",
           videoTitle: "طريقة تركيب وضبط محابس التحكم وصمامات الفراشة في شبكات الإطفاء",
           videoTitleEn: "Fire Protection Control Valve & Butterfly Valve Installation",
           specs: "UL/FM Certified / Flanged & Grooved / 175-300 PSI"
@@ -995,8 +1123,10 @@ export const content = {
           ar: "مضخات الحريق المتكاملة (ديزل / كهرباء / جوكي)",
           en: "Certified UL/FM Fire Pump Packages",
           desc: "UL/FM certified fire pump sets (Electric, Diesel, Jockey) across all flow rates (500 to 2,500 GPM).",
-          image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-          videoId: "Job8w2OhXBc",
+          image: "./images/products/pump-angle-1.jpg",
+          images: ["./images/products/pump-angle-1.jpg","./images/products/pump-angle-2.jpg","./images/products/pump-angle-3.jpg","./images/products/pump-angle-4.jpg","./images/products/pump-angle-5.jpg","./images/products/pump-angle-6.jpg"],
+          videoId: "rPID1GPl3Z4",
+          videoUrl: "https://www.youtube.com/watch?v=rPID1GPl3Z4",
           videoTitle: "شرح تركيب واختبار غرفة مضخات الحريق وتوصيل خطوط السحب والطرد",
           videoTitleEn: "Fire Pump Skid Assembly, Piping, and Flow Testing",
           specs: "NFPA 20 / UL 448 / FM 1311 / 500-2500 GPM"
@@ -1007,8 +1137,10 @@ export const content = {
           ar: "صناديق وخراطيم وطفايات الحريق",
           en: "Fire Hose Cabinets & Extinguishers",
           desc: "Stainless steel and epoxy cabinets with synthetic fire hoses and portable extinguishers.",
-          image: "./images/1f02a2dd-bd12-466e-b451-40c0c13b8ebc.jfif",
-          videoId: "cvpABJITn28",
+          image: "./images/products/cabinet-1.jpg",
+          images: ["./images/products/cabinet-1.jpg","./images/products/cabinet-2.jpg","./images/products/cabinet-3.jpg","./images/product-1.jpg","./images/products/extinguishers-powder-co2.jpg","./images/products/extinguishers-water-foam.jpg"],
+          videoId: "1U70HXBvb8c",
+          videoUrl: "https://www.youtube.com/watch?v=1U70HXBvb8c",
           videoTitle: "طريقة تركيب صندوق الحريق وتوصيل بكرة الخرطوم ومحبس الهبوط",
           videoTitleEn: "Fire Hose Reel Cabinet Installation & Pressure Connection",
           specs: "BS EN 671-1 / Saudi Building Code SBC 801"
@@ -1019,8 +1151,10 @@ export const content = {
           ar: "أنظمة الإطفاء بالغازات النظيفة (FM-200 / NOVEC)",
           en: "Clean Agent Fire Extinguishing Systems",
           desc: "Clean agent cylinders, manifold headers, and discharge nozzles for FM-200, Novec & CO₂ data vault protection.",
-          image: "./images/3ada732e-c06f-40e9-ad06-bb80dc23d0a3.jfif",
+          image: "./images/products/gas-1.jpg",
+          images: ["./images/products/gas-1.jpg","./images/products/gas-2.jpg","./images/products/gas-3.jpg"],
           videoId: "ZatPdTk1Ulw",
+          videoUrl: "https://www.youtube.com/watch?v=ZatPdTk1Ulw",
           videoTitle: "شرح تركيب أسطوانات وشبكة فوهات الإطفاء بغاز FM-200 لغرف السيرفرات",
           videoTitleEn: "FM-200 Clean Agent System Installation & Piping Layout",
           specs: "NFPA 2001 / UL Listed / Zero Ozone Depletion"
@@ -1031,8 +1165,10 @@ export const content = {
           ar: "مراوح سحب الدخان وضغط سلالم الطوارئ",
           en: "High-Temp Smoke Extraction & Pressurization Fans",
           desc: "High-temperature rated axial and centrifugal smoke extract and stairwell pressurization fans (400°C / 2h).",
-          image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
-          videoId: "Job8w2OhXBc",
+          image: "./images/products/fan-1.jpg",
+          images: ["./images/products/fan-1.jpg","./images/products/fan-2.jpg","./images/products/fan-3.jpg"],
+          videoId: "H7s0NCQsL3I",
+          videoUrl: "https://www.youtube.com/watch?v=H7s0NCQsL3I",
           videoTitle: "طريقة تركيب وتثبيت مراوح سحب الدخان وضغط السلالم وقنوات التهوية",
           videoTitleEn: "Staircase Pressurization and Smoke Exhaust Fan Installation",
           specs: "F400 / 2 Hours Fire Rated / EN 12101-3"
@@ -1043,8 +1179,10 @@ export const content = {
           ar: "أبواب الطوارئ والهروب المقاومة للحريق",
           en: "Fire Rated Emergency Exit Doors",
           desc: "Certified fire-rated steel doors equipped with panic bars, closers, and intumescent smoke seals.",
-          image: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80",
-          videoId: "cvpABJITn28",
+          image: "./images/product-4.jpg",
+          images: ["./images/product-4.jpg","./images/products/door-steel-single-double.jpg","./images/products/door-glazed-exit.jpg"],
+          videoId: "u9z5TrHm0Nw",
+          videoUrl: "https://www.youtube.com/watch?v=u9z5TrHm0Nw",
           videoTitle: "طريقة تركيب أبواب الهروب المقاومة للحريق ومقابض الهلع Panic Bar",
           videoTitleEn: "UL Fire Rated Steel Door and Panic Exit Hardware Installation",
           specs: "UL 10C / NFPA 252 / 60-120 Min Rating"
@@ -1055,8 +1193,10 @@ export const content = {
           ar: "مهمات وتجهيزات الوقاية الشخصية (PPE)",
           en: "Personal Protective Equipment (PPE)",
           desc: "Hard hats, safety glasses, fire-resistant gloves, safety boots, and high-visibility reflective vests.",
-          image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&w=800&q=80",
-          videoId: "z8zvZxSSTLQ",
+          image: "./images/product-3.jpg",
+          images: ["./images/product-3.jpg","./images/products/ppe-helmet-gloves.jpg","./images/products/ppe-vest-boots.jpg"],
+          videoId: "Job8w2OhXBc",
+          videoUrl: "https://www.youtube.com/watch?v=Job8w2OhXBc",
           videoTitle: "دليل استخدام وتطبيق معايير مهمات السلامة ومكافحة الحريق الميدانية",
           videoTitleEn: "PPE Usage Standards and Safety Compliance on Job Sites",
           specs: "ANSI Z89.1 / EN 397 / Industrial Safety"
@@ -1067,8 +1207,10 @@ export const content = {
           ar: "حوامل ومثبتات الأنابيب والتعليق الزلزالي",
           en: "Seismic Bracing & Pipe Hangers",
           desc: "Seismic and mechanical pipe hangers, clamps, and sway braces compliant with NFPA 13 mandates.",
-          image: "./images/product-4.jpg",
-          videoId: "UHo9BAs3kI0",
+          image: "./images/products/hanger-1.jpg",
+          images: ["./images/products/hanger-1.jpg","./images/products/hanger-2.jpg","./images/product-2.jpg"],
+          videoId: "D8KKW1fR7u4",
+          videoUrl: "https://www.youtube.com/watch?v=D8KKW1fR7u4",
           videoTitle: "شرح عملي لتركيب حوامل ومثبتات مواسير الإطفاء والتعليق الزلزالي",
           videoTitleEn: "NFPA 13 Seismic Sway Bracing & Pipe Hanger Installation",
           specs: "UL Listed / FM 1950 / Saudi Building Code SBC"
@@ -1171,13 +1313,15 @@ export const content = {
       title: "We Are Always Delighted to Assist You",
       subtitle: "Reach out to our engineering consultants for safety studies, supply requests, and turnkey project delivery.",
       phone1: "+966 591684133",
+      whatsapp: "966591684133",
       phone2: "+966 533480098",
       email: "makkah-branch@tasaami.com",
-      address: "Makkah Al-Mukarramah – Ash Shawqiyah – Ibrahim Al Khalil Street",
-      addressEn: "Ibrahim Al Khalil St - Ash Shawqiyah - Makkah",
-      googleMapsUrl: "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA",
+      address: "Makkah 24351 – Ash Shawqiyah – Ibrahim Al Khalil St, Zaid bin Haritha St",
+      addressEn: "Ibrahim Al Khalil St, Zaid bin Haritha St - Ash Shawqiyah - Makkah 24351",
+      plusCode: "9RP5+V3 Makkah",
+      googleMapsUrl: "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D8%AA%D8%B3%D8%A7%D9%85%D9%8A+%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84%E2%80%AD/@21.3872248,39.8077324,17z/data=!3m1!4b1!4m6!3m5!1s0x15c21b124251096f:0x5f3bed74fbe7b8f3!8m2!3d21.3872248!4d39.8077324!16s%2Fg%2F11zyn3z20n",
       googleBusinessUrl: "https://share.google/9AmZxrxPQL8I9od2U",
-      coordinates: "21.387370, 39.808065",
+      coordinates: "21.3872248, 39.8077324",
       socialLinks: [
         { platform: "LinkedIn (Company)", url: "https://www.linkedin.com/company/%D8%AA%D8%B3%D8%A7%D9%85%D9%8A-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84/", label: "Tasami Business | تسامي الأعمال" },
         { platform: "LinkedIn (CEO)", url: "https://www.linkedin.com/in/taha-hendy-650134b8/", label: "Taha Hendy" },
@@ -1218,17 +1362,84 @@ export const content = {
         "doc-vat": true
       }
     },
+    techSupport: {
+      enabled: true,
+      title: "Technical Support",
+      subtitle: "Instant answers directly from our safety engineering team",
+      welcomeMessage: "Welcome to Tasaami Safety Technical Support. Browse instant answers below or submit your question directly.",
+      faqs: [
+        {
+          id: "faq-1",
+          category: "Supply & Delivery",
+          question: "How fast can you supply and install fire protection equipment?",
+          answer: "Standard certified safety items are dispatched within 24-72 hours in Makkah and Jeddah, while turnkey engineered projects follow an approved schedule right after site survey."
+        },
+        {
+          id: "faq-2",
+          category: "Compliance",
+          question: "Are your systems Civil Defense & Salamah portal certified?",
+          answer: "Yes, Tasaami Al-Aamal is licensed on the Saudi Civil Defense Salamah portal and supplies UL, FM, SABER, and SBC 801 compliant systems."
+        }
+      ]
+    },
+    customerReviews: {
+      enabled: true,
+      tag: "Rate Us & Client Reviews",
+      title: "What Our Clients Say",
+      subtitle: "Verified ratings from our commercial, industrial, and residential clients — published only after admin approval.",
+      items: [
+        {
+          id: "rev-seed-1",
+          name: "Eng. Khalid Al-Sulami",
+          company: "Al-Omran Commercial Group - Makkah",
+          projectType: "UL/FM Fire Pump Package",
+          rating: 5,
+          status: "approved",
+          comment: "Fast supply and installation. We passed Civil Defense and Salamah inspection on the very first visit."
+        },
+        {
+          id: "rev-seed-2",
+          name: "Fahad Al-Qurashi",
+          company: "Al-Ofoq Logistics Warehouses",
+          projectType: "Sprinkler & Addressable Fire Alarm",
+          rating: 5,
+          status: "approved",
+          comment: "Highly professional engineering team with prompt technical support and training."
+        }
+      ]
+    },
+    announcementTicker: {
+      enabled: true,
+      speed: "medium",
+      includeApprovedReviews: true,
+      items: [
+        {
+          id: "ann-1",
+          badge: "Catalog Update",
+          text: "Updated product catalog now includes multi-angle photography and inline installation video players",
+          linkPage: "products"
+        },
+        {
+          id: "ann-2",
+          badge: "Live Support",
+          text: "Instant Technical Support popup & WhatsApp (+966 59 168 4133) are live for fast engineering assistance",
+          linkPage: "contact"
+        }
+      ]
+    },
     footer: {
       aboutText: "Tasami Business Company specializes in the supply, installation, and maintenance of cutting-edge fire suppression and detection systems compliant with SBC and Civil Defense.",
       quickLinks: "Quick Links",
       ourServices: "Core Systems",
       contactInfo: "Contact Details",
-      address: "Makkah Al-Mukarramah – Ash Shawqiyah – Ibrahim Al Khalil Street",
+      address: "Makkah 24351 – Ash Shawqiyah – Ibrahim Al Khalil St, Zaid bin Haritha St",
       phone: "+966 591684133 / +966 533480098",
       email: "makkah-branch@tasaami.com",
       allRightsReserved: "All Rights Reserved © 2026 Tasami Business Company.",
       visionQuote: "Elevating safety towards a completely hazard-free environment in line with Saudi Vision 2030."
     },
-    typography: {}
+    typography: {},
+    paragraphOverrides: {},
+    customParagraphs: []
   }
 };

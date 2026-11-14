@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FormattedParagraph } from './CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 import { Sparkles, Palette, Type, Award, Eye, X, CheckCircle2, FileText } from 'lucide-react';
 
@@ -31,11 +32,15 @@ export default function BrandIdentitySection({ lang, content }) {
             <h2 className="text-2xl sm:text-3xl font-black text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'هوية تعكس التزامنا ببيئة أكثر أماناً' : 'A Brand Reflecting Uncompromising Safety'}
             </h2>
-            <p className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl mx-auto" style={getParagraphStyle(content, lang, 'brandIdentity')}>
-              {isAr
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="brandIdentity"
+              className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl mx-auto"
+              defaultText={isAr
                 ? 'دليل الهوية البصرية الرسمية لشركة تسامي الأعمال لأنظمة السلامة: الألوان المعتمدة، الخطوط، ونماذج المطبوعات الرسمية.'
                 : 'Official visual identity guidelines: primary colors, typography, corporate stationary, and certified brand elements.'}
-            </p>
+            />
           </div>
 
           <button

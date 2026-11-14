@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Image, X } from 'lucide-react';
+import { FormattedParagraph } from './CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 
 export default function OrgStructureSection({ lang, content }) {
@@ -22,12 +23,13 @@ export default function OrgStructureSection({ lang, content }) {
           <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
             {t.title}
           </h2>
-          <p
-            style={getParagraphStyle(content, lang, 'orgChart')}
+          <FormattedParagraph
+            content={content}
+            lang={lang}
+            paraKey="orgChart"
             className="w-full text-sm sm:text-base text-slate-600 dark:text-slate-300"
-          >
-            {t.subtitle}
-          </p>
+            defaultText={t.subtitle}
+          />
           <div className="pt-2">
             <button
               onClick={() => setShowOrgImage(true)}

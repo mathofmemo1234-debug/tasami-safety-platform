@@ -1,6 +1,6 @@
 import React from 'react';
 import { Quote, ShieldCheck, Award, ExternalLink } from 'lucide-react';
-import { getParagraphStyle } from '../utils/typography';
+import { FormattedParagraph } from './CustomParagraphSlot';
 
 export default function CeoMessage({ lang, content }) {
   const t = content[lang].ceo;
@@ -89,26 +89,29 @@ export default function CeoMessage({ lang, content }) {
                   "{t.quote}"
                 </div>
 
-                <p
-                  style={getParagraphStyle(content, lang, 'ceoMessage')}
+                <FormattedParagraph
+                  content={content}
+                  lang={lang}
+                  paraKey="ceoMessage"
                   className="w-full font-medium text-[#0f172a] dark:text-slate-100"
-                >
-                  {t.p1}
-                </p>
+                  defaultText={t.p1}
+                />
 
-                <p
-                  style={getParagraphStyle(content, lang, 'ceoMessage')}
+                <FormattedParagraph
+                  content={content}
+                  lang={lang}
+                  paraKey="ceoMessage"
                   className="w-full"
-                >
-                  {t.p2}
-                </p>
+                  defaultText={t.p2}
+                />
 
-                <p
-                  style={getParagraphStyle(content, lang, 'ceoMessage')}
+                <FormattedParagraph
+                  content={content}
+                  lang={lang}
+                  paraKey="ceoMessage"
                   className="w-full"
-                >
-                  {t.p3}
-                </p>
+                  defaultText={t.p3}
+                />
 
                 {/* Closing signature */}
                 <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">

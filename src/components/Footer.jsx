@@ -1,5 +1,5 @@
 import React from 'react';
-import { getParagraphStyle } from '../utils/typography';
+import CustomParagraphSlot, { FormattedParagraph } from './CustomParagraphSlot';
 import TasamiLogo from './TasamiLogo';
 import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2 } from 'lucide-react';
 
@@ -17,6 +17,7 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
 
   return (
     <footer className="bg-[#0b1120] text-slate-300 pt-16 pb-12 border-t-2 border-[#162d6c]">
+      <CustomParagraphSlot placement="footer:top" lang={lang} content={content} className="mb-10" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Grid */}
@@ -27,9 +28,13 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
             <button onClick={() => navigate('home')} className="focus:outline-none">
               <TasamiLogo isWhite={true} lang={lang} className="h-16 sm:h-20 md:h-24" />
             </button>
-            <p className="w-full text-xs text-slate-400 leading-relaxed max-w-sm mt-3 mx-auto" style={getParagraphStyle(content, lang, 'footerAbout')}>
-              {t.aboutText}
-            </p>
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="footerAbout"
+              className="w-full text-xs text-slate-400 leading-relaxed max-w-sm mt-3 mx-auto"
+              defaultText={t.aboutText}
+            />
             <div className="pt-2 flex flex-wrap items-center justify-center gap-2">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#131c31] border border-[#1d4ed8]/30 text-[11px] text-slate-200">
                 <ShieldCheck className="w-4 h-4 text-[#60a5fa]" />
@@ -100,7 +105,7 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
                 <a
-                  href={c.googleMapsUrl || "https://maps.app.goo.gl/RP4JDp9WK9B3aFxXA"}
+                  href={c.googleMapsUrl || "https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D8%AA%D8%B3%D8%A7%D9%85%D9%8A+%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84%E2%80%AD/@21.3872248,39.8077324,17z/data=!3m1!4b1!4m6!3m5!1s0x15c21b124251096f:0x5f3bed74fbe7b8f3!8m2!3d21.3872248!4d39.8077324!16s%2Fg%2F11zyn3z20n"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#dfb76c] transition underline-offset-2 hover:underline"

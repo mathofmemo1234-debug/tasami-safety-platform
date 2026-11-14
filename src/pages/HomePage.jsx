@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import Hero from '../components/Hero';
 import TasamiLogo from '../components/TasamiLogo';
+import CustomerReviewsSection from '../components/CustomerReviewsSection';
+import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 
 export default function HomePage({
@@ -80,28 +82,28 @@ export default function HomePage({
   // 4 Featured Products Preview
   const previewProducts = [
     {
-      name: isAr ? 'لوحات إنذار الحريق الذكية التناظرية' : 'Addressable Fire Alarm Panels',
+      name: isAr ? 'لوحات إنذار الحريق الذكية المعنونة' : 'Addressable Fire Alarm Panels',
       category: isAr ? 'أنظمة الإنذار' : 'Alarms',
       specs: isAr ? '2 إلى 8 لوبات • معتمدة UL / LPCB' : '2-8 Loops • UL / LPCB Approved',
-      image: './images/product-1.jpg'
+      image: './images/products/alarm-1.jpg'
     },
     {
       name: isAr ? 'أسطوانات غاز FM-200 و NOVEC 1230' : 'Clean Agent Suppression Cylinders',
       category: isAr ? 'الإطفاء التلقائي' : 'Suppression',
       specs: isAr ? 'معتمدة UL/FM • صديقة للبيئة والبيانات' : 'UL/FM Certified • Zero Ozone Depletion',
-      image: './images/product-2.jpg'
+      image: './images/products/gas-1.jpg'
     },
     {
       name: isAr ? 'رؤوس رشاشات الحريق الأوتوماتيكية' : 'Automatic Fire Sprinkler Heads',
       category: isAr ? 'الشبكات المائية' : 'Sprinklers',
       specs: isAr ? 'درجات حرارة متعددة • نحاس معتمد UL/FM' : 'Multiple temp ratings • UL/FM Listed',
-      image: './images/product-3.jpg'
+      image: './images/products/sprinkler-1.jpg'
     },
     {
-      name: isAr ? 'صناديق ومحابس ومضخات الحريق' : 'Fire Hose Cabinets & Pump Sets',
+      name: isAr ? 'مضخات وصناديق ومحابس الحريق' : 'Fire Pump Sets & Hose Cabinets',
       category: isAr ? 'معدات الإطفاء' : 'Fire Equipment',
-      specs: isAr ? 'حديد غير قابل للصدأ • مواصفات الدفاع المدني' : 'Stainless steel • Civil Defense Approved',
-      image: './images/product-4.jpg'
+      specs: isAr ? 'مضخات UL/FM • مواصفات الدفاع المدني' : 'UL/FM Pump Sets • Civil Defense Approved',
+      image: './images/products/pump-angle-1.jpg'
     }
   ];
 
@@ -117,6 +119,8 @@ export default function HomePage({
           onNavigateProducts={() => onNavigate('products')}
         />
       )}
+
+      <CustomParagraphSlot placement="home:afterHero" lang={lang} content={content} />
 
       {/* 2. Brief Company Highlight (Executive Gold-Royal Frame) */}
       {vis.about !== false && (
@@ -138,14 +142,16 @@ export default function HomePage({
                     ? 'شريككم الهندسي المعتمد لحماية الأرواح والمنشآت'
                     : 'Your Certified Engineering Partner in Safety & Life Protection'}
                 </h2>
-                <p
-                  style={getParagraphStyle(content, lang, 'homeAbout')}
+                <FormattedParagraph
+                  content={content}
+                  lang={lang}
+                  paraKey="homeAbout"
                   className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-loose max-w-3xl mx-auto"
-                >
-                  {isAr
+                  defaultText={isAr
                     ? 'نتميز بتوفير حلول هندسية متكاملة تشمل التوريد والتركيب والصيانة لكافة أنظمة مكافحة الحريق والإنذار المبكر، وفق اشتراطات الدفاع المدني وكود البناء السعودي SBC، لضمان بيئة عمل آمنة ومستدامة.'
                     : 'We deliver comprehensive turnkey fire protection and alarm engineering solutions, ensuring full statutory compliance with Civil Defense and Saudi Building Code (SBC).'}
-                </p>
+                />
+                <CustomParagraphSlot placement="home:insideAbout" lang={lang} content={content} className="w-full" />
                 <div className="pt-2 flex flex-wrap justify-center gap-3 text-xs font-bold text-slate-700 dark:text-slate-200">
                   <span className="flex items-center gap-1.5 bg-slate-50 dark:bg-[#0b1120] px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -180,6 +186,8 @@ export default function HomePage({
         </section>
       )}
 
+      <CustomParagraphSlot placement="home:afterAbout" lang={lang} content={content} />
+
       {/* 3. Services Highlights Section (Links to Dedicated Services Page) */}
       {vis.services !== false && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -191,14 +199,15 @@ export default function HomePage({
               <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
                 {isAr ? 'خدماتنا الهندسية المعتمدة' : 'Our Engineering Services'}
               </h2>
-              <p
-                style={getParagraphStyle(content, lang, 'homeServicesHeader')}
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="homeServicesHeader"
                 className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
-              >
-                {isAr
+                defaultText={isAr
                   ? 'استعراض سريع لأبرز مجالات عملنا، ويمكنك الانتقال لصفحة الخدمات للاطلاع على كافة التفريعات والمواصفات.'
                   : 'A quick overview of our primary domains. Explore the full services page for complete sub-branches.'}
-              </p>
+              />
             </div>
 
             <button
@@ -255,6 +264,8 @@ export default function HomePage({
         </section>
       )}
 
+      <CustomParagraphSlot placement="home:afterServices" lang={lang} content={content} />
+
       {/* 4. Products Preview Section (Links to Dedicated Products Page) */}
       {vis.products !== false && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -266,14 +277,15 @@ export default function HomePage({
               <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] dark:text-white">
                 {isAr ? 'كتالوج منتجات السلامة ومكافحة الحريق' : 'Fire Safety Products Catalog'}
               </h2>
-              <p
-                style={getParagraphStyle(content, lang, 'homeProductsHeader')}
+              <FormattedParagraph
+                content={content}
+                lang={lang}
+                paraKey="homeProductsHeader"
                 className="w-full text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
-              >
-                {isAr
+                defaultText={isAr
                   ? 'منتجات معتمدة من كبرى المصانع العالمية مع شهادات الاختبار والامتثال لسابر وكود البناء.'
                   : 'Approved products and systems with international certifications (UL, FM, Saber).'}
-              </p>
+              />
             </div>
 
             <button
@@ -330,6 +342,8 @@ export default function HomePage({
         </section>
       )}
 
+      <CustomParagraphSlot placement="home:afterProducts" lang={lang} content={content} />
+
       {/* 5. Trust & Accreditations Banner (Cinematic Midnight Royal Spotlight) */}
       {vis.licenses !== false && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
@@ -383,6 +397,11 @@ export default function HomePage({
           </div>
         </section>
       )}
+
+      {/* 6. Customer Ratings & Reviews (Admin Moderation Enabled) */}
+      <CustomerReviewsSection lang={lang} content={content} />
+
+      <CustomParagraphSlot placement="home:afterLicenses" lang={lang} content={content} className="pb-12" />
     </div>
   );
 }

@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import SafetyCalculator from '../components/SafetyCalculator';
 import TasamiLogo from '../components/TasamiLogo';
+import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 
 export default function ServicesPage({
@@ -296,14 +297,15 @@ export default function ServicesPage({
             <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'خدماتنا وتفريعاتها الهندسية المتكاملة' : 'Comprehensive Engineering Services & Sub-Branches'}
             </h1>
-            <p
-              style={getParagraphStyle(content, lang, 'servicesHeader')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="servicesHeader"
               className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-            >
-              {isAr
+              defaultText={isAr
                 ? 'نقدم منظومة متكاملة من حلول الوقاية ومكافحة الحرائق، مصممة وفق اشتراطات الدفاع المدني وكود البناء السعودي SBC، مع تفريعات متخصصة لكل قطاع.'
                 : 'Turnkey fire protection and early detection solutions tailored to statutory codes and industry standards.'}
-            </p>
+            />
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3 flex-shrink-0">
@@ -326,6 +328,8 @@ export default function ServicesPage({
           </div>
         </div>
       </div>
+
+      <CustomParagraphSlot placement="services:top" lang={lang} content={content} />
 
       {/* Optional Interactive Safety Calculator Banner / Accordion */}
       {vis.calculator !== false && showCalculator && (
@@ -367,6 +371,8 @@ export default function ServicesPage({
           ))}
         </div>
       </div>
+
+      <CustomParagraphSlot placement="services:beforeGrid" lang={lang} content={content} />
 
       {/* 3. Detailed Services Cards Grid */}
       <div id="services-grid" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 scroll-mt-28">
@@ -439,6 +445,8 @@ export default function ServicesPage({
         ))}
       </div>
 
+      <CustomParagraphSlot placement="services:afterGrid" lang={lang} content={content} />
+
       {/* 3.5 Integrated Service Stages & Commercial Advantages Table */}
       {Array.isArray(content[lang]?.coreServices?.serviceTable) && content[lang].coreServices.serviceTable.length > 0 && (
         <section className="rounded-3xl bg-white dark:bg-[#131c31] border border-slate-200/90 dark:border-slate-800 p-7 sm:p-10 shadow-sm space-y-6">
@@ -494,6 +502,8 @@ export default function ServicesPage({
         </section>
       )}
 
+      <CustomParagraphSlot placement="services:afterTable" lang={lang} content={content} />
+
       {/* 4. Bottom Support CTA Card */}
       <div className="rounded-3xl bg-[#0b1120] dark:bg-[#131c31] border border-[#1d4ed8]/30 text-white p-8 sm:p-12 text-center space-y-4 shadow-xl">
         <h3 className="text-xl sm:text-2xl font-bold">
@@ -501,14 +511,15 @@ export default function ServicesPage({
             ? 'هل تحتاج إلى دراسة هندسية خاصة بمشروعك؟'
             : 'Need a custom engineering study for your project?'}
         </h3>
-        <p
-          style={getParagraphStyle(content, lang, 'servicesCta')}
+        <FormattedParagraph
+          content={content}
+          lang={lang}
+          paraKey="servicesCta"
           className="w-full text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed"
-        >
-          {isAr
+          defaultText={isAr
             ? 'فريقنا الهندسي في تسامي الأعمال على أتم الاستعداد لزيارة الموقع، فحص متطلبات كود البناء، وتقديم عرض فني ومالي متكامل ومعتمد.'
             : 'Our licensed engineers are ready to survey your facility, evaluate building codes, and prepare a statutory compliance proposal.'}
-        </p>
+        />
         <div className="pt-2">
           <button
             onClick={() => onOpenConsultation(isAr ? 'دراسة هندسية متكاملة' : 'Full Engineering Study')}
@@ -518,6 +529,8 @@ export default function ServicesPage({
           </button>
         </div>
       </div>
+
+      <CustomParagraphSlot placement="services:bottom" lang={lang} content={content} />
 
     </div>
   );

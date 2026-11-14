@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FormattedParagraph } from './CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 import { Building2, Factory, Landmark, MapPin, ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 
@@ -31,9 +32,13 @@ export default function ProjectsSection({ lang, content }) {
             <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] dark:text-white tracking-tight">
               {t.title}
             </h2>
-            <p className="w-full text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto" style={getParagraphStyle(content, lang, 'projectsHeader')}>
-              {t.subtitle}
-            </p>
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="projectsHeader"
+              className="w-full text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto"
+              defaultText={t.subtitle}
+            />
           </div>
 
           {/* Filter Pills */}

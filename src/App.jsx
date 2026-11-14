@@ -3,17 +3,19 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ConsultationModal from './components/ConsultationModal';
 import AdminDashboard from './components/AdminDashboard';
+import AnnouncementTicker from './components/AnnouncementTicker';
+import FloatingSupportDock from './components/FloatingSupportDock';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import ProductsPage from './pages/ProductsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import { content as initialFallbackContent } from './data/content';
-import { subscribeToLiveContent } from './services/firebase';
+import { subscribeToLiveContent, getCachedLiveContent } from './services/firebase';
 
 export default function App() {
   const [lang, setLang] = useState('ar');
-  const [siteContent, setSiteContent] = useState(initialFallbackContent);
+  const [siteContent, setSiteContent] = useState(() => getCachedLiveContent() || initialFallbackContent);
   const [darkMode, setDarkMode] = useState(() => {
     try {
       return localStorage.getItem('tasami-theme') === 'dark';
@@ -161,6 +163,13 @@ export default function App() {
         onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
+      {/* Global Animated Announcement & Reviews Ticker */}
+      <AnnouncementTicker
+        lang={lang}
+        content={siteContent}
+        onNavigate={navigateTo}
+      />
+
       {/* 2. Main Page Content View */}
       <main className="flex-1">
         {currentPage === 'home' && (
@@ -228,6 +237,9 @@ export default function App() {
         lang={lang}
         initialService={selectedServiceForConsultation}
       />
+
+      {/* Global Floating WhatsApp & Technical Support Instant Q&A Dock */}
+      <FloatingSupportDock lang={lang} content={siteContent} />
 
       {/* Admin Dashboard to view and edit live site & Firebase */}
       <AdminDashboard

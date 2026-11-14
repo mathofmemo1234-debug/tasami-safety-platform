@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, FileCheck2, Shield, Building2, Check, ArrowLeft, ArrowRight, ShieldCheck, Award } from 'lucide-react';
+import { FormattedParagraph } from './CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
 
 export default function AboutSection({ lang, content, onOpenConsultation }) {
@@ -75,26 +76,29 @@ export default function AboutSection({ lang, content, onOpenConsultation }) {
               </div>
             )}
 
-            <p
-              style={getParagraphStyle(content, lang, 'aboutStory')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="aboutStory"
               className="w-full text-base sm:text-lg text-[#0f172a] dark:text-slate-100 leading-relaxed font-semibold"
-            >
-              {t.lead}
-            </p>
+              defaultText={t.lead}
+            />
 
-            <p
-              style={getParagraphStyle(content, lang, 'aboutStory')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="aboutStory"
               className="w-full text-sm text-slate-700 dark:text-slate-300 leading-relaxed"
-            >
-              {t.paragraph2}
-            </p>
+              defaultText={t.paragraph2}
+            />
 
-            <p
-              style={getParagraphStyle(content, lang, 'aboutStory')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="aboutStory"
               className="w-full text-sm text-slate-700 dark:text-slate-300 leading-relaxed"
-            >
-              {t.paragraph3}
-            </p>
+              defaultText={t.paragraph3}
+            />
 
             {/* Saudi Vision 2030 Badge */}
             <div className="w-full p-4 rounded-2xl bg-gradient-to-r from-blue-50/70 to-amber-50/50 dark:from-[#0b1120] dark:to-[#162036] border border-[#1d4ed8]/20 dark:border-[#c59a45]/30 flex flex-col sm:flex-row items-center gap-4">

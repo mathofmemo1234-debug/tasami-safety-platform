@@ -35,14 +35,11 @@ import {
   uploadMediaFile,
   FIREBASE_CONFIG
 } from '../services/firebase';
-import {
-  FONT_OPTIONS,
-  FONT_SIZE_OPTIONS,
-  ALIGN_OPTIONS,
-  COLOR_PRESETS,
-  PARAGRAPH_DEFINITIONS,
-  getParagraphStyle
-} from '../utils/typography';
+import { PARAGRAPH_DEFINITIONS } from '../utils/typography';
+import TypographyManagerTab from './TypographyManagerTab';
+import TechSupportAdminTab from './TechSupportAdminTab';
+import ReviewsTickerAdminTab from './ReviewsTickerAdminTab';
+import AdminProductMediaEditor from './AdminProductMediaEditor';
 
 export default function AdminDashboard({
   isOpen,
@@ -50,8 +47,6 @@ export default function AdminDashboard({
   currentContent,
   onContentUpdate
 }) {
-  if (!isOpen) return null;
-
   // Authentication states
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
@@ -86,6 +81,8 @@ export default function AdminDashboard({
       setLocalData(JSON.parse(JSON.stringify(currentContent)));
     }
   }, [currentContent]);
+
+  if (!isOpen) return null;
 
   // Handle Login Check
   const handleLogin = async (e) => {
@@ -146,10 +143,10 @@ export default function AdminDashboard({
       if (result.success) {
         onContentUpdate(localData);
         setSaveStatus({
-          state: 'success',
+          state: result.localOnly ? 'warning' : 'success',
           message: result.message || 'تم حفظ جميع التعديلات ونشرها بنجاح!'
         });
-        setTimeout(() => setSaveStatus({ state: 'idle', message: '' }), 3500);
+        setTimeout(() => setSaveStatus({ state: 'idle', message: '' }), result.localOnly ? 8000 : 3500);
       } else {
         setSaveStatus({ state: 'error', message: 'تعذر الحفظ: ' + result.error });
       }
@@ -158,17 +155,20 @@ export default function AdminDashboard({
     }
   };
 
-  // Generic Image Upload Handler
+  // Generic Media Upload Handler (Images & Videos)
   const handleFileUpload = async (file, onComplete) => {
     if (!file) return;
     setUploadingImage(true);
     try {
-      const res = await uploadMediaFile(file);
+      const folder = String(file.type || '').startsWith('video/') ? 'site_videos' : 'site_images';
+      const res = await uploadMediaFile(file, folder);
       if (res.success) {
         onComplete(res.url);
-        setUploadedImages(prev => [res.url, ...prev]);
+        if (!String(file.type || '').startsWith('video/')) {
+          setUploadedImages(prev => [res.url, ...prev]);
+        }
       } else {
-        alert('تعذر رفع الصورة: ' + res.error);
+        alert('تعذر رفع الملف: ' + res.error);
       }
     } catch (e) {
       alert('خطأ أثناء الرفع: ' + e.message);
@@ -255,9 +255,11 @@ export default function AdminDashboard({
       ar: 'منتج أمان جديد',
       en: 'New Safety Product',
       desc: 'وصف تفصيلي للمنتج ومواصفاته الفنية...',
-      image: './images/product-1.jpg',
+      image: './images/products/sprinkler-1.jpg',
+      images: ['./images/products/sprinkler-1.jpg'],
       specs: 'معتمد SBC / UL',
       videoId: '',
+      videoUrl: '',
       videoTitle: '',
       videoTitleEn: ''
     };
@@ -493,10 +495,15 @@ export default function AdminDashboard({
           {saveStatus.message && (
             <div className={`px-4 py-2 text-xs font-bold flex items-center justify-between ${
               saveStatus.state === 'success' ? 'bg-emerald-500 text-white' :
+              saveStatus.state === 'warning' ? 'bg-amber-500 text-[#0b1120]' :
               saveStatus.state === 'error' ? 'bg-red-500 text-white' : 'bg-[#c59a45] text-[#0b1120]'
             }`}>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" />
+                {saveStatus.state === 'warning' || saveStatus.state === 'error' ? (
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                ) : (
+                  <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                )}
                 <span>{saveStatus.message}</span>
               </div>
               <button onClick={() => setSaveStatus({ state: 'idle', message: '' })} className="underline text-[10px]">إغلاق</button>
@@ -504,10 +511,12 @@ export default function AdminDashboard({
           )}
 
           {/* Navigation Category Tabs */}
-          <div className="flex overflow-x-auto border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 gap-2 py-2">
+          <div className="flex flex-wrap shrink-0 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 gap-1.5 py-2.5">
             {[
               { id: 'visibility', name: '👁️ إظهار / إخفاء الأقسام والمستندات' },
-              { id: 'typography', name: '🎨 تنسيق الفقرات والخطوط', count: PARAGRAPH_DEFINITIONS.length },
+              { id: 'support', name: '🎧 الدعم الفني' },
+              { id: 'reviews', name: '⭐ قيّمنا وشريط الإعلانات' },
+              { id: 'typography', name: '🎨 تنسيق الفقرات والخطوط', count: PARAGRAPH_DEFINITIONS.length + ((localData[langTab]?.customParagraphs || []).length) },
               { id: 'products', name: '📦 كتالوج المنتجات', count: (localData[langTab]?.productsCatalog?.items || []).length },
               { id: 'services', name: '🛠️ الأنظمة والخدمات' },
               { id: 'licenses', name: '📜 التراخيص والاعتمادات', count: (localData[langTab]?.certificationsAndLicenses?.legalDocuments || []).length },
@@ -659,7 +668,7 @@ export default function AdminDashboard({
                           />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 gap-2">
                           <div>
                             <label className="block text-slate-500 dark:text-slate-400 mb-1 font-semibold">
                               المعايير والشهادات:
@@ -675,60 +684,17 @@ export default function AdminDashboard({
                               className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white"
                             />
                           </div>
-
-                          <div>
-                            <label className="block text-slate-500 dark:text-slate-400 mb-1 font-semibold">
-                              معرف يوتيوب (Video ID):
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="مثال: UHo9BAs3kI0"
-                              value={item.videoId || ''}
-                              onChange={(e) => {
-                                const updated = [...localData[langTab].productsCatalog.items];
-                                updated[idx].videoId = e.target.value;
-                                updateNested([langTab, 'productsCatalog', 'items'], updated);
-                              }}
-                              className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono"
-                            />
-                          </div>
                         </div>
 
-                        <div>
-                          <label className="block text-slate-500 dark:text-slate-400 mb-1 font-semibold">
-                            رابط الصورة (URL أو رفع ملف):
-                          </label>
-                          <div className="flex gap-2">
-                            <input
-                              type="text"
-                              value={item.image || ''}
-                              onChange={(e) => {
-                                const updated = [...localData[langTab].productsCatalog.items];
-                                updated[idx].image = e.target.value;
-                                updateNested([langTab, 'productsCatalog', 'items'], updated);
-                              }}
-                              className="flex-1 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono text-[11px]"
-                            />
-                            <label className="px-3 py-1.5 bg-[#c59a45] hover:bg-[#dfb76c] text-[#0b1120] rounded-lg font-bold flex items-center gap-1 cursor-pointer">
-                              <Upload className="w-3.5 h-3.5" />
-                              <span>رفع</span>
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => {
-                                  if (e.target.files?.[0]) {
-                                    handleFileUpload(e.target.files[0], (url) => {
-                                      const updated = [...localData[langTab].productsCatalog.items];
-                                      updated[idx].image = url;
-                                      updateNested([langTab, 'productsCatalog', 'items'], updated);
-                                    });
-                                  }
-                                }}
-                              />
-                            </label>
-                          </div>
-                        </div>
+                        <AdminProductMediaEditor
+                          item={item}
+                          onChangeItem={(updatedItem) => {
+                            const updated = [...localData[langTab].productsCatalog.items];
+                            updated[idx] = updatedItem;
+                            updateNested([langTab, 'productsCatalog', 'items'], updated);
+                          }}
+                          onUploadFile={handleFileUpload}
+                        />
                       </div>
                     </div>
                   ))}
@@ -994,13 +960,66 @@ export default function AdminDashboard({
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono"
                     />
                   </div>
+                  <div>
+                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">رقم الواتس آب الرسمي (الزر العائم العام):</label>
+                    <input
+                      type="text"
+                      dir="ltr"
+                      value={localData[langTab]?.contact?.whatsapp || localData[langTab]?.contact?.phone1 || '966591684133'}
+                      onChange={(e) => updateNested([langTab, 'contact', 'whatsapp'], e.target.value)}
+                      placeholder="966591684133"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono"
+                    />
+                  </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">العنوان ومقر الشركة:</label>
+                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">العنوان ومقر الشركة (عربي):</label>
                     <input
                       type="text"
                       value={localData[langTab]?.contact?.address || ''}
                       onChange={(e) => updateNested([langTab, 'contact', 'address'], e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">العنوان بالإنجليزية (Address EN):</label>
+                    <input
+                      type="text"
+                      dir="ltr"
+                      value={localData[langTab]?.contact?.addressEn || ''}
+                      onChange={(e) => updateNested([langTab, 'contact', 'addressEn'], e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">الإحداثيات الدقيقة (Lat, Lng):</label>
+                    <input
+                      type="text"
+                      dir="ltr"
+                      value={localData[langTab]?.contact?.coordinates || ''}
+                      onChange={(e) => updateNested([langTab, 'contact', 'coordinates'], e.target.value)}
+                      placeholder="21.3872248, 39.8077324"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">الرمز الإضافي (Plus Code):</label>
+                    <input
+                      type="text"
+                      dir="ltr"
+                      value={localData[langTab]?.contact?.plusCode || ''}
+                      onChange={(e) => updateNested([langTab, 'contact', 'plusCode'], e.target.value)}
+                      placeholder="9RP5+V3 مكة"
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-slate-500 dark:text-slate-400 mb-1 font-bold">رابط الموقع على خرائط Google (Maps URL):</label>
+                    <input
+                      type="text"
+                      dir="ltr"
+                      value={localData[langTab]?.contact?.googleMapsUrl || ''}
+                      onChange={(e) => updateNested([langTab, 'contact', 'googleMapsUrl'], e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-mono text-[11px]"
                     />
                   </div>
                 </div>
@@ -1271,235 +1290,40 @@ export default function AdminDashboard({
               </div>
             )}
 
-            {/* TAB: TYPOGRAPHY & ALIGNMENT (تنسيق الفقرات والخطوط) */}
+            {/* TAB: TECHNICAL SUPPORT (الدعم الفني وإدارة الأسئلة الفورية) */}
+            {activeTab === 'support' && (
+              <TechSupportAdminTab
+                localData={localData}
+                langTab={langTab}
+                updateNested={updateNested}
+              />
+            )}
+
+            {/* TAB: REVIEWS MODERATION & ANNOUNCEMENT TICKER */}
+            {activeTab === 'reviews' && (
+              <ReviewsTickerAdminTab
+                localData={localData}
+                langTab={langTab}
+                updateNested={updateNested}
+              />
+            )}
+
+            {/* TAB: TYPOGRAPHY & ALIGNMENT (تنسيق الفقرات والخطوط وإضافة فقرات جديدة) */}
             {activeTab === 'typography' && (
-              <div className="space-y-6 animate-fade-in font-cairo">
-                {/* Header & Global Controls */}
-                <div className="bg-gradient-to-r from-[#162d6c]/10 via-[#c59a45]/15 to-transparent p-5 rounded-2xl border border-[#c59a45]/30 space-y-4">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                      <h4 className="text-base font-black text-[#0f172a] dark:text-white">
-                        التحكم الكامل بخطوط وحجم وموقع وألوان الفقرات
-                      </h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                        يمكنك تغيير نوع الخط، حجمه، محاذاته (وسط / يمين / يسار / ضبط)، ولونه لكل فقرة في جميع صفحات الموقع، ثم الضغط على «حفظ ونشر التعديلات».
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-2">
-                      <label className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-700 text-xs font-bold text-[#0f172a] dark:text-white cursor-pointer select-none">
-                        <input
-                          type="checkbox"
-                          checked={syncTypoBothLangs}
-                          onChange={(e) => setSyncTypoBothLangs(e.target.checked)}
-                          className="accent-[#c59a45] w-4 h-4"
-                        />
-                        <span>تطبيق التغييرات على اللغتين (AR + EN) معاً</span>
-                      </label>
-
-                      <button
-                        type="button"
-                        onClick={resetAllParagraphStyles}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-300 text-xs font-bold hover:bg-red-100 transition"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" />
-                        <span>استعادة الافتراضي للكل</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Page Filter Tabs */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/70 dark:border-slate-700/70">
-                    {['الكل', ...Array.from(new Set(PARAGRAPH_DEFINITIONS.map(d => d.page)))].map((pageName) => (
-                      <button
-                        key={pageName}
-                        type="button"
-                        onClick={() => setTypoPageFilter(pageName)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                          typoPageFilter === pageName
-                            ? 'bg-[#162d6c] text-white shadow-sm'
-                            : 'bg-white dark:bg-[#131c31] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-[#c59a45]'
-                        }`}
-                      >
-                        {pageName}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Paragraph Cards Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {PARAGRAPH_DEFINITIONS
-                    .filter((def) => typoPageFilter === 'الكل' || def.page === typoPageFilter)
-                    .map((def) => {
-                      const cfg = localData?.[langTab]?.typography?.[def.key] || {};
-                      const resolvedStyle = getParagraphStyle(localData, langTab, def.key) || {};
-                      const currentFont = cfg.fontFamily || 'default';
-                      const currentSize = cfg.fontSize || 'default';
-                      const currentAlign = cfg.textAlign || 'center';
-                      const currentColor = cfg.color || '';
-
-                      return (
-                        <div
-                          key={def.key}
-                          className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-[#0b1120] space-y-4"
-                        >
-                          {/* Card Header */}
-                          <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-slate-200 dark:border-slate-800">
-                            <div>
-                              <span className="inline-block text-[10px] font-black px-2 py-0.5 rounded-md bg-[#c59a45]/15 text-[#9a752a] dark:text-[#dfb76c] mb-1">
-                                {def.page}
-                              </span>
-                              <h5 className="text-sm font-black text-[#0f172a] dark:text-white">
-                                {def.label}
-                              </h5>
-                            </div>
-
-                            <div className="flex items-center gap-1.5 flex-shrink-0">
-                              <button
-                                type="button"
-                                onClick={() => applyParagraphStyleToAll(def.key)}
-                                className="px-2.5 py-1 rounded-lg bg-[#162d6c]/10 dark:bg-[#162d6c]/40 text-[#162d6c] dark:text-[#93c5fd] hover:bg-[#162d6c] hover:text-white text-[10px] font-bold transition"
-                                title="نسخ هذا التنسيق إلى جميع الفقرات"
-                              >
-                                تعميم على الكل
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => resetParagraphStyle(def.key)}
-                                className="px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-red-100 hover:text-red-700 text-[10px] font-bold transition"
-                              >
-                                افتراضي
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Controls: Font, Size, Alignment, Color */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                            {/* Font Family */}
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
-                                نوع الخط
-                              </label>
-                              <select
-                                value={currentFont}
-                                onChange={(e) => updateParagraphStyle(def.key, 'fontFamily', e.target.value)}
-                                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white font-semibold focus:outline-none focus:ring-1 focus:ring-[#c59a45]"
-                              >
-                                {FONT_OPTIONS.map((opt) => (
-                                  <option key={opt.id} value={opt.id}>
-                                    {opt.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-
-                            {/* Font Size */}
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
-                                حجم الخط
-                              </label>
-                              <select
-                                value={currentSize}
-                                onChange={(e) => updateParagraphStyle(def.key, 'fontSize', e.target.value)}
-                                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-white font-semibold focus:outline-none focus:ring-1 focus:ring-[#c59a45]"
-                              >
-                                {FONT_SIZE_OPTIONS.map((opt) => (
-                                  <option key={opt.id} value={opt.id}>
-                                    {opt.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-
-                            {/* Alignment / Position */}
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
-                                الموقع / المحاذاة
-                              </label>
-                              <div className="grid grid-cols-4 gap-1 bg-white dark:bg-[#131c31] p-1 rounded-xl border border-slate-200 dark:border-slate-700">
-                                {ALIGN_OPTIONS.map((opt) => (
-                                  <button
-                                    key={opt.id}
-                                    type="button"
-                                    onClick={() => updateParagraphStyle(def.key, 'textAlign', opt.id)}
-                                    className={`py-1.5 rounded-lg text-[11px] font-bold transition ${
-                                      currentAlign === opt.id
-                                        ? 'bg-[#c59a45] text-[#0b1120] shadow-sm'
-                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-                                    }`}
-                                  >
-                                    {opt.label}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Color Presets & Picker */}
-                            <div>
-                              <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1">
-                                لون النص
-                              </label>
-                              <div className="flex flex-wrap items-center gap-1.5 bg-white dark:bg-[#131c31] px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
-                                {COLOR_PRESETS.filter(c => c.value).map((preset) => (
-                                  <button
-                                    key={preset.value}
-                                    type="button"
-                                    onClick={() => updateParagraphStyle(def.key, 'color', preset.value)}
-                                    title={preset.label}
-                                    className={`w-5 h-5 rounded-full border transition ${
-                                      currentColor === preset.value
-                                        ? 'ring-2 ring-[#c59a45] ring-offset-1 scale-110 border-white'
-                                        : 'border-slate-300 dark:border-slate-600 hover:scale-110'
-                                    }`}
-                                    style={{ backgroundColor: preset.value }}
-                                  />
-                                ))}
-                                <input
-                                  type="color"
-                                  value={currentColor || '#0f172a'}
-                                  onChange={(e) => updateParagraphStyle(def.key, 'color', e.target.value)}
-                                  title="اختيار لون مخصص"
-                                  className="w-6 h-6 p-0 border-0 rounded cursor-pointer bg-transparent"
-                                />
-                                {currentColor && (
-                                  <button
-                                    type="button"
-                                    onClick={() => updateParagraphStyle(def.key, 'color', '')}
-                                    className="text-[10px] font-bold text-slate-500 hover:text-red-600 mr-auto"
-                                  >
-                                    إلغاء اللون
-                                  </button>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Live Preview */}
-                          <div
-                            className={`p-3.5 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 ${
-                              currentColor && ['#ffffff', '#e2e8f0', '#dfb76c'].includes(currentColor.toLowerCase())
-                                ? 'bg-slate-900'
-                                : 'bg-white dark:bg-[#131c31]'
-                            }`}
-                          >
-                            <span className="block text-[9px] font-bold text-slate-400 mb-1">
-                              معاينة مباشرة:
-                            </span>
-                            <p
-                              className="w-full text-sm text-slate-700 dark:text-slate-200 leading-relaxed"
-                              style={resolvedStyle}
-                            >
-                              {langTab === 'ar'
-                                ? 'نتميز بتوفير خدمات متكاملة تشمل توريد وتركيب وصيانة أحدث أنظمة الإطفاء والإنذار وفق أعلى المعايير.'
-                                : 'Integrated engineering solutions for fire protection, alarm, and life safety systems.'}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
+              <TypographyManagerTab
+                localData={localData}
+                setLocalData={setLocalData}
+                langTab={langTab}
+                syncTypoBothLangs={syncTypoBothLangs}
+                setSyncTypoBothLangs={setSyncTypoBothLangs}
+                typoPageFilter={typoPageFilter}
+                setTypoPageFilter={setTypoPageFilter}
+                updateNested={updateNested}
+                updateParagraphStyle={updateParagraphStyle}
+                resetParagraphStyle={resetParagraphStyle}
+                resetAllParagraphStyles={resetAllParagraphStyles}
+                applyParagraphStyleToAll={applyParagraphStyleToAll}
+              />
             )}
 
           </div>

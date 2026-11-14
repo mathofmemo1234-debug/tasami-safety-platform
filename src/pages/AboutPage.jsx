@@ -21,7 +21,7 @@ import CertificatesLicensesSection from '../components/CertificatesLicensesSecti
 import ProjectsSection from '../components/ProjectsSection';
 import BrandIdentitySection from '../components/BrandIdentitySection';
 import TasamiLogo from '../components/TasamiLogo';
-import { getParagraphStyle } from '../utils/typography';
+import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
 
 export default function AboutPage({
   lang,
@@ -80,17 +80,20 @@ export default function AboutPage({
             <h1 className="text-3xl sm:text-4xl font-bold text-[#0f172a] dark:text-white tracking-tight">
               {isAr ? 'عن شركة تسامي الأعمال لأنظمة السلامة' : 'About Tasami Business for Safety Systems'}
             </h1>
-            <p
-              style={getParagraphStyle(content, lang, 'aboutHeader')}
+            <FormattedParagraph
+              content={content}
+              lang={lang}
+              paraKey="aboutHeader"
               className="w-full text-slate-700 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
-            >
-              {isAr
+              defaultText={isAr
                 ? 'تعرف على هويتنا، رؤيتنا، رسالتنا، وهيكل العمل الاحترافي الذي يقودنا نحو تحقيق أعلى معايير الأمان وحماية الأرواح والممتلكات.'
                 : 'Discover our corporate vision, leadership, and certified team driving excellence in fire safety.'}
-            </p>
+            />
           </div>
         </div>
       </div>
+
+      <CustomParagraphSlot placement="about:top" lang={lang} content={content} />
 
       {/* 2. Main Company Story & Background */}
       {vis.about !== false && (
@@ -103,6 +106,8 @@ export default function AboutPage({
         </div>
       )}
 
+      <CustomParagraphSlot placement="about:afterStory" lang={lang} content={content} />
+
       {/* 3. Executive CEO Message */}
       {vis.ceo !== false && (
         <div className="scroll-mt-28">
@@ -112,6 +117,8 @@ export default function AboutPage({
           />
         </div>
       )}
+
+      <CustomParagraphSlot placement="about:afterCeo" lang={lang} content={content} />
 
       {/* 4. Vision, Mission & Core Values */}
       {(vis.missionVision !== false || vis.goalsValues !== false) && (
@@ -123,6 +130,8 @@ export default function AboutPage({
         </div>
       )}
 
+      <CustomParagraphSlot placement="about:afterVision" lang={lang} content={content} />
+
       {/* 5. Organizational Structure */}
       {vis.orgChart !== false && (
         <div className="scroll-mt-28">
@@ -132,6 +141,8 @@ export default function AboutPage({
           />
         </div>
       )}
+
+      <CustomParagraphSlot placement="about:afterOrgChart" lang={lang} content={content} />
 
       {/* 6. Brand Identity Section */}
       {vis.brandIdentity !== false && (
@@ -143,6 +154,8 @@ export default function AboutPage({
         </div>
       )}
 
+      <CustomParagraphSlot placement="about:afterBrand" lang={lang} content={content} />
+
       {/* 7. Accreditations & Licenses */}
       {vis.licenses !== false && (
         <div className="scroll-mt-28">
@@ -153,6 +166,8 @@ export default function AboutPage({
         </div>
       )}
 
+      <CustomParagraphSlot placement="about:afterLicenses" lang={lang} content={content} />
+
       {/* 8. Featured Projects */}
       {vis.projects !== false && (
         <div className="scroll-mt-28">
@@ -162,6 +177,8 @@ export default function AboutPage({
           />
         </div>
       )}
+
+      <CustomParagraphSlot placement="about:bottom" lang={lang} content={content} />
 
     </div>
   );
