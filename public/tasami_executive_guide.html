@@ -872,6 +872,79 @@
       </div>
     </section>
 
+    <!-- NEW SECTION: PWA Universal App & Smart QR Code -->
+    <section class="section-wrap">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          تطبيق تسامي للأجهزة الذكية (PWA) والباركود السريع (Universal Mobile QR Code)
+        </h2>
+        <span class="section-badge" style="background: rgba(197, 154, 69, 0.2); color: var(--gold-dark); border: 1px solid var(--gold);">
+          يعمل على كافة أنظمة الجوال والكمبيوتر
+        </span>
+      </div>
+
+      <!-- PWA Showcase Banner -->
+      <div style="background: white; border-radius: var(--radius-xl); border: 1px solid var(--slate-200); box-shadow: var(--shadow-premium); padding: 2rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;" class="pwa-showcase-box">
+        <!-- QR Code Stage -->
+        <div style="text-align: center; background: linear-gradient(145deg, #0b1c3a, #162d6c); padding: 1.5rem; border-radius: 1.25rem; border: 2px solid var(--gold); box-shadow: 0 10px 25px rgba(11,28,58,0.2); flex-shrink: 0;">
+          <div style="background: white; padding: 0.75rem; border-radius: 1rem; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+            <img src="./tasami-qr.png" alt="Tasami QR Code" style="width: 160px; height: 160px; object-fit: contain; display: block;" onerror="this.onerror=null;this.src='./website_qr.svg';">
+          </div>
+          <div style="margin-top: 0.85rem; color: var(--gold-light); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.5px;">
+            امسح بالكاميرا للتثبيت الفوري
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <a href="./tasami-qr.png" download="tasami-safety-qr.png" target="_blank" class="btn btn-gold" style="font-size: 0.75rem; padding: 0.4rem 0.85rem; width: 100%; justify-content: center;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              تنزيل صورة الباركود
+            </a>
+          </div>
+        </div>
+
+        <!-- PWA Details -->
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.15); color: var(--emerald-600); border: 1px solid var(--emerald-500); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800; margin-bottom: 0.5rem;">
+              <span>جاهز للتثبيت والاستخدام المباشر</span>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 900; color: var(--primary-dark); line-height: 1.4;">
+              تطبيق ويب تقدمي (PWA) معتمد بديل كامل لتطبيقات المتاجر التقليدية
+            </h3>
+            <p style="font-size: 0.875rem; color: var(--slate-600); line-height: 1.7; margin-top: 0.35rem;">
+              تم تزويد المنصة بملف التكوين الرسمي <code style="font-family: 'JetBrains Mono', monospace; background: var(--slate-100); padding: 0.2rem 0.4rem; border-radius: 0.35rem; font-size: 0.8rem; color: var(--primary);">manifest.json</code> وحزمة أيقونات عالية الدقة وشاشة إقلاع كاملة، مع محرك <code style="font-family: 'JetBrains Mono', monospace; background: var(--slate-100); padding: 0.2rem 0.4rem; border-radius: 0.35rem; font-size: 0.8rem; color: var(--primary);">sw.js (Service Worker)</code>، مما يمنح شركة تسامي تطبيقاً أصلياً يظهر كأيقونة مستقلة على شاشة هاتف العميل.
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 1rem; border-radius: 1rem;">
+              <h4 style="font-size: 0.875rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.35rem;">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                توفير رسوم المتاجر 100%
+              </h4>
+              <p style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5;">لا حاجة لدفع اشتراكات سنوية لمتجر آبل ($99/سنة) أو جوجل، وتحديثات التطبيق فورية بدون انتظار مراجعات.</p>
+            </div>
+
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 1rem; border-radius: 1rem;">
+              <h4 style="font-size: 0.875rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.35rem;">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                العمل دون إنترنت (Offline)
+              </h4>
+              <p style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5;">يحتفظ التطبيق بنسخة سريعة مخبأة من الكتالوج وأرقام التواصل حتى في حال ضعف شبكة الجوال في المواقع والمشاريع.</p>
+            </div>
+
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 1rem; border-radius: 1rem;">
+              <h4 style="font-size: 0.875rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.35rem;">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                شاشة كاملة وتثبيت بلمسة
+              </h4>
+              <p style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5;">يعمل كبرنامج مدمج بدون شريط المتصفح (Standalone)، ويدعم أندرويد وآيفون وهواوي وأجهزة الكمبيوتر Windows/Mac.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION: VISITOR EXPERIENCE -->
     <section class="section-wrap">
       <div class="section-header">

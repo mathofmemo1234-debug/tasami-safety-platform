@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomParagraphSlot, { FormattedParagraph } from './CustomParagraphSlot';
 import TasamiLogo from './TasamiLogo';
-import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2 } from 'lucide-react';
+import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2, QrCode, Download } from 'lucide-react';
 
 export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
   const t = content[lang].footer;
@@ -171,6 +171,47 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
             </div>
           </div>
 
+        </div>
+
+        {/* PWA App Installation & Barcode Scanner Card */}
+        <div className="my-8 p-4 sm:p-5 rounded-2xl bg-[#0b162c] border border-[#c59a45]/35 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left">
+            <div className="p-2 bg-white rounded-2xl shadow-md border border-[#c59a45]/40 flex-shrink-0">
+              <img
+                src="./tasami-qr.png"
+                alt="Tasami QR Barcode"
+                className="w-20 h-20 object-contain"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = './website_qr.svg';
+                }}
+              />
+            </div>
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <span className="text-xs sm:text-sm font-black text-white">
+                  {lang === 'ar' ? 'تطبيق تسامي للأجهزة الذكية (PWA App)' : 'Tasami Smart PWA App'}
+                </span>
+                <span className="text-[10px] bg-gradient-to-r from-[#dfb76c] to-[#c59a45] text-slate-950 font-black px-2 py-0.5 rounded-full shadow">
+                  iOS & Android & Desktop
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 max-w-lg leading-relaxed">
+                {lang === 'ar'
+                  ? 'امسح الباركود بكاميرا جوالك لفتح وتثبيت التطبيق مباشرة كأيقونة على شاشتك الرئيسية، يعمل بسرعة فائقة وبدون وسيط متجر تطبيقات.'
+                  : 'Scan the QR code with your mobile camera to instantly install the app on your home screen without app store hassle.'}
+              </p>
+            </div>
+          </div>
+          <a
+            href="./tasami-qr.png"
+            download="tasami-safety-qr.png"
+            target="_blank"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-[#c59a45] hover:text-[#0b1120] text-white text-xs font-bold border border-white/20 hover:border-[#c59a45] transition-all shadow-sm flex-shrink-0"
+          >
+            <Download className="w-4 h-4 text-[#dfb76c] group-hover:text-[#0b1120]" />
+            <span>{lang === 'ar' ? 'تنزيل باركود المنصة (PNG)' : 'Download QR Code'}</span>
+          </a>
         </div>
 
         {/* Bottom Bar: Copyright & Vision */}

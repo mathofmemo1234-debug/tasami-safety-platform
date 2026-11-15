@@ -3,7 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="./logo.jpg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#113163" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="تسامي للسلامة" />
+    <meta name="application-name" content="تسامي للسلامة" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>تسامي الأعمال لأنظمة السلامة | TASAMI BUSINESS FOR SAFETY SYSTEMS</title>
     <meta name="description" content="شركة سعودية متخصصة في تقديم حلول متكاملة في مجال الأمن والسلامة، نلتزم بأعلى المعايير العالمية ونحقق تطلعات رؤية المملكة 2030." />
     <!-- High-Performance DNS preconnect for Google Fonts -->
@@ -23,5 +31,12 @@
   <body class="bg-white dark:bg-[#0b1120] text-[#0f172a] dark:text-slate-100 font-cairo antialiased transition-colors duration-300 selection:bg-[#c59a45]/25 selection:text-[#9a752a] dark:selection:text-[#dfb76c]">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

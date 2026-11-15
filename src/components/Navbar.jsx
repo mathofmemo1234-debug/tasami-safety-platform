@@ -22,10 +22,12 @@ import {
   Sun,
   Moon,
   User,
-  UserCheck
+  UserCheck,
+  QrCode
 } from 'lucide-react';
 import VisitorAuthModal from './VisitorAuthModal';
 import UserProfileModal from './UserProfileModal';
+import PwaInstallModal from './PwaInstallModal';
 import { subscribeToVisitorAuth } from '../services/auth';
 
 export default function Navbar({
@@ -50,6 +52,7 @@ export default function Navbar({
   const [currentUser, setCurrentUser] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [isPwaModalOpen, setIsPwaModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = subscribeToVisitorAuth((u) => {
@@ -376,6 +379,16 @@ export default function Navbar({
                 </button>
               )}
 
+              {/* PWA & QR Code Install Trigger */}
+              <button
+                onClick={() => setIsPwaModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white/95 hover:text-[#0b1120] bg-[#c59a45]/20 hover:bg-[#dfb76c] border border-[#c59a45]/60 hover:border-[#dfb76c] transition-all duration-200 shadow-sm"
+                title={isAr ? 'تثبيت التطبيق على الجوال والكمبيوتر ومسح الباركود' : 'Install App / Scan QR'}
+              >
+                <QrCode className="w-3.5 h-3.5 text-[#dfb76c] group-hover:text-[#0b1120]" />
+                <span className="hidden lg:inline text-[11px] font-black">{isAr ? 'تثبيت التطبيق | باركود' : 'App / QR'}</span>
+              </button>
+
               {/* Admin Portal Trigger (Discreet & Elegant) */}
               <button
                 onClick={onOpenAdmin}
@@ -634,6 +647,30 @@ export default function Navbar({
               )}
             </div>
 
+            {/* Mobile PWA Install & QR Trigger */}
+            <div className="pt-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsPwaModalOpen(true);
+                }}
+                className="w-full flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-[#113163] to-[#1a4485] text-white font-bold text-xs shadow-md border border-[#c59a45]/50 hover:brightness-110 transition"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-[#dfb76c]">
+                    <QrCode className="w-4 h-4" />
+                  </div>
+                  <div className="text-right rtl:text-right ltr:text-left">
+                    <div className="text-xs font-black">{isAr ? 'تثبيت تطبيق تسامي للسلامة' : 'Install Tasami Safety App'}</div>
+                    <div className="text-[10px] text-slate-300">{isAr ? 'يعمل كأيقونة مستقلة وبدون متجر' : 'Standalone app for all phones'}</div>
+                  </div>
+                </div>
+                <span className="text-[10px] bg-[#c59a45] text-slate-950 font-black px-2 py-0.5 rounded-full shadow">
+                  تثبيت | PWA
+                </span>
+              </button>
+            </div>
+
             {/* CTA */}
             <div className="pt-3">
               <button
@@ -667,6 +704,13 @@ export default function Navbar({
           onLogout={() => setCurrentUser(null)}
           onNavigateToProducts={() => onNavigate('products')}
           onOpenConsultation={(svc) => onOpenConsultation?.(svc)}
+        />
+
+        {/* PWA App Installation & QR Code Modal */}
+        <PwaInstallModal
+          isOpen={isPwaModalOpen}
+          onClose={() => setIsPwaModalOpen(false)}
+          lang={lang}
         />
       </header>
       <div className="h-20 sm:h-24 md:h-28"></div>
