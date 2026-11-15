@@ -642,6 +642,7 @@ export const content = {
       projects: true,
       contact: true,
       map: true,
+      videos: true,
       documents: {
         "doc-misa": true,
         "doc-cr-ar": true,
@@ -1393,6 +1394,7 @@ export const content = {
       projects: true,
       contact: true,
       map: true,
+      videos: true,
       documents: {
         "doc-misa": true,
         "doc-cr-ar": true,

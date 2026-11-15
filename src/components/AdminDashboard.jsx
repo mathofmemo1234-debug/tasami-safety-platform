@@ -558,13 +558,42 @@ export default function AdminDashboard({
                       إضافة، تعديل، حذف المنتجات وتغيير الصور والمواصفات الفنية وروابط فيديو التركيب
                     </p>
                   </div>
-                  <button
-                    onClick={addProduct}
-                    className="btn-flashy-royal inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white shadow-sm"
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>إضافة منتج جديد</span>
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => handleToggleSection('videos')}
+                      className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-sm border ${
+                        localData[langTab]?.visibility?.videos !== false
+                          ? 'bg-rose-50 hover:bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800'
+                          : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+                      }`}
+                      title={
+                        localData[langTab]?.visibility?.videos !== false
+                          ? 'اضغط لإخفاء جميع فيديوهات المنتجات عن زوار الموقع'
+                          : 'اضغط لإظهار فيديوهات المنتجات للزوار'
+                      }
+                    >
+                      {localData[langTab]?.visibility?.videos !== false ? (
+                        <>
+                          <EyeOff className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                          <span>إخفاء الفيديوهات (معروضة)</span>
+                        </>
+                      ) : (
+                        <>
+                          <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                          <span>إظهار الفيديوهات (مخفية)</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      onClick={addProduct}
+                      className="btn-flashy-royal inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white shadow-sm"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>إضافة منتج جديد</span>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1167,7 +1196,8 @@ export default function AdminDashboard({
                       { key: 'orgChart', title: 'الهيكل التنظيمي (Organizational Chart)', desc: 'المخطط الهيكلي لأقسام الشركة الفنية والإدارية' },
                       { key: 'brandIdentity', title: 'الهوية البصرية الرسمية (Brand Identity)', desc: 'عرض ألوان الهوية ولوحة الخطوط والمطبوعات المعتمدة' },
                       { key: 'services', title: 'الأنظمة والخدمات (Services)', desc: 'أنظمة الإطفاء والإنذار والتوريد والتركيب والصيانة' },
-                      { key: 'products', title: 'كتالوج المنتجات والمعدات (Products)', desc: 'قائمة منتجات ومهمات السلامة ومقاطع الفيديو التوضيحية' },
+                      { key: 'products', title: 'كتالوج المنتجات والمعدات (Products)', desc: 'قائمة منتجات ومهمات السلامة المعروضة في الكتالوج' },
+                      { key: 'videos', title: 'فيديوهات المنتجات والتشغيل (Product Videos)', desc: 'إظهار أو إخفاء مقاطع فيديو التركيب والتشغيل داخل بطاقات المنتجات والمعرض' },
                       { key: 'licenses', title: 'التراخيص والاعتمادات (Certificates)', desc: 'شهادات الدفاع المدني، كود البناء، سابر، والمستندات الرسمية' },
                       { key: 'calculator', title: 'حاسبة متطلبات السلامة (Calculator)', desc: 'حاسبة التقدير الأولي للتكاليف والأنظمة الإلزامية' },
                       { key: 'projects', title: 'سابقة الأعمال والمشاريع (Projects)', desc: 'المشاريع المنفذة وتطبيقات أنظمة السلامة' },

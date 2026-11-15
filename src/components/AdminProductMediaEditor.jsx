@@ -184,14 +184,30 @@ export default function AdminProductMediaEditor({
             </label>
 
             {videoSource && (
-              <button
-                type="button"
-                onClick={() => setShowVideoPreview((v) => !v)}
-                className="px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[10px] font-bold flex items-center gap-1"
-              >
-                {showVideoPreview ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-                <span>{showVideoPreview ? 'إخفاء المعاينة' : 'معاينة الفيديو'}</span>
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={() => onChangeItem({ ...item, hideVideo: !item.hideVideo })}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 border transition ${
+                    item.hideVideo
+                      ? 'bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/60 dark:text-amber-300'
+                      : 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-300'
+                  }`}
+                  title={item.hideVideo ? 'فيديو هذا المنتج مخفي حالياً عن الزوار' : 'فيديو هذا المنتج معروض للزوار'}
+                >
+                  {item.hideVideo ? <EyeOff className="w-3 h-3 text-amber-600" /> : <Eye className="w-3 h-3 text-emerald-600" />}
+                  <span>{item.hideVideo ? 'فيديو المنتج: مخفي' : 'إخفاء فيديو المنتج'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowVideoPreview((v) => !v)}
+                  className="px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[10px] font-bold flex items-center gap-1"
+                >
+                  {showVideoPreview ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                  <span>{showVideoPreview ? 'إخفاء المعاينة' : 'معاينة الفيديو'}</span>
+                </button>
+              </>
             )}
           </div>
         </div>

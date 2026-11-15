@@ -30,11 +30,13 @@ export default function ProductGalleryModal({
   initialAngleIndex = 0,
   isAr = true,
   whatsappNumber = '966591684133',
+  isVideosGloballyVisible = true,
   onClose,
   onInquiry
 }) {
   const images = getProductImages(product);
-  const videoSource = resolveProductVideoSource(product);
+  const isVideoAllowed = isVideosGloballyVisible !== false && product?.hideVideo !== true;
+  const videoSource = isVideoAllowed ? resolveProductVideoSource(product) : '';
   const brands = getItemBrands(product);
 
   const [mode, setMode] = useState(

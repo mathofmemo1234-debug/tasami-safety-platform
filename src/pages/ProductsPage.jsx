@@ -54,10 +54,12 @@ function ProductCard({
   onOpenGallery,
   onOpenConsultation,
   isFavorited,
-  onToggleFavorite
+  onToggleFavorite,
+  isVideosGloballyVisible = true
 }) {
   const images = getProductImages(item);
-  const videoSource = resolveProductVideoSource(item);
+  const isVideoAllowed = isVideosGloballyVisible !== false && item.hideVideo !== true;
+  const videoSource = isVideoAllowed ? resolveProductVideoSource(item) : '';
   const [angleIdx, setAngleIdx] = useState(0);
   const [playingInline, setPlayingInline] = useState(false);
 
@@ -354,6 +356,9 @@ export default function ProductsPage({
 
   const t = content?.[lang]?.productsCatalog || content?.ar?.productsCatalog || {};
   const whatsappNumber = content?.[lang]?.contact?.whatsapp || content?.[lang]?.contact?.phone1 || '966591684133';
+  const isVideosGloballyVisible =
+    content?.[lang]?.visibility?.videos !== false &&
+    content?.ar?.visibility?.videos !== false;
   const [searchTerm, setSearchTerm] = useState('');
   const [galleryModalState, setGalleryModalState] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -614,6 +619,7 @@ export default function ProductsPage({
             whatsappNumber={whatsappNumber}
             content={content}
             lang={lang}
+            isVideosGloballyVisible={isVideosGloballyVisible}
             isFavorited={Array.isArray(favorites) && favorites.some((f) => String(f?.id || f) === String(item?.id))}
             onToggleFavorite={handleToggleFavorite}
             onOpenConsultation={onOpenConsultation}
@@ -631,6 +637,7 @@ export default function ProductsPage({
           initialAngleIndex={galleryModalState.angleIndex}
           isAr={isAr}
           whatsappNumber={whatsappNumber}
+          isVideosGloballyVisible={isVideosGloballyVisible}
           onClose={() => setGalleryModalState(null)}
           onInquiry={(productTitle) => onOpenConsultation?.(productTitle)}
         />
