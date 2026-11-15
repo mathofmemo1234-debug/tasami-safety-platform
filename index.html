@@ -42,62 +42,17 @@
       html.splash-dismissed #tasami-splash-screen {
         display: none !important;
       }
-
-      /* تموجات صدمية دائرية فلاشية متتالية (Concentric Flash Shockwaves) */
-      @keyframes tasamiShockwave {
-        0% {
-          transform: scale(0.65);
-          opacity: 0.95;
-          border-color: #ffd700;
-          box-shadow: 0 0 25px #ffd700, inset 0 0 20px #38bdf8;
-        }
-        50% {
-          opacity: 0.75;
-          border-color: #38bdf8;
-          box-shadow: 0 0 45px #38bdf8, inset 0 0 30px #ffd700;
-        }
-        100% {
-          transform: scale(2.7);
-          opacity: 0;
-          border-color: #f59e0b;
-          box-shadow: 0 0 70px transparent;
-        }
-      }
-
-      /* نبض وهج فلاشي عالي التباين والألوان الناصعة */
-      @keyframes tasamiFlashGlow {
+      @keyframes tasamiGlowPulse {
         0%, 100% {
           transform: scale(1);
-          filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.75)) drop-shadow(0 0 70px rgba(56, 189, 248, 0.55));
+          opacity: 0.35;
         }
         50% {
-          transform: scale(1.08);
-          filter: drop-shadow(0 0 65px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 110px rgba(56, 189, 248, 0.85));
+          transform: scale(1.15);
+          opacity: 0.7;
         }
       }
-
-      /* حركة عائمة للشعار العملاق لإبراز الهيبة والفخامة */
-      @keyframes tasamiFloatMotion {
-        0%, 100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-10px) rotate(0.8deg);
-        }
-      }
-
-      /* انعكاس ضوئي سريع فلاشي يمر عبر الشعار (Light Sweep Flare) */
-      @keyframes tasamiLightSweep {
-        0% {
-          transform: translateX(-140%) skewX(-25deg);
-        }
-        35%, 100% {
-          transform: translateX(180%) skewX(-25deg);
-        }
-      }
-
-      /* مؤشر تقدم ليزري فلاشي بألوان ذهبية ناصعة */
-      @keyframes tasamiLaserProgress {
+      @keyframes tasamiProgressAnim {
         0% {
           transform: translateX(100%);
         }
@@ -108,74 +63,19 @@
           transform: translateX(-100%);
         }
       }
-
-      /* حركة أعمدة نبض الرادار والجاهزية */
-      @keyframes tasamiEqBar {
-        0%, 100% { height: 4px; }
-        50% { height: 16px; }
+      @keyframes tasamiRingSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
-
-      /* جسيمات ضوئية ذهبية متطايرة (Floating Sparkles) */
-      @keyframes tasamiSparkleFloat {
-        0% {
-          transform: translateY(0) scale(0.6);
-          opacity: 0;
-        }
-        50% {
-          opacity: 0.9;
-        }
-        100% {
-          transform: translateY(-90px) scale(1.2);
-          opacity: 0;
-        }
+      .tasami-glow-pulse {
+        animation: tasamiGlowPulse 2.8s ease-in-out infinite;
       }
-
-      /* دوران حلقات الطاقة الكونية المحيطة */
-      @keyframes tasamiEnergySpin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+      .tasami-progress-bar {
+        animation: tasamiProgressAnim 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
       }
-
-      .tasami-shockwave-1 { animation: tasamiShockwave 3.2s cubic-bezier(0.1, 0.7, 0.1, 1) infinite; }
-      .tasami-shockwave-2 { animation: tasamiShockwave 3.2s cubic-bezier(0.1, 0.7, 0.1, 1) 0.8s infinite; }
-      .tasami-shockwave-3 { animation: tasamiShockwave 3.2s cubic-bezier(0.1, 0.7, 0.1, 1) 1.6s infinite; }
-      .tasami-shockwave-4 { animation: tasamiShockwave 3.2s cubic-bezier(0.1, 0.7, 0.1, 1) 2.4s infinite; }
-
-      .tasami-float-hero {
-        animation: tasamiFloatMotion 4s ease-in-out infinite;
+      .tasami-ring-spin {
+        animation: tasamiRingSpin 32s linear infinite;
       }
-      .tasami-hero-glow {
-        animation: tasamiFlashGlow 2.4s ease-in-out infinite;
-      }
-      .tasami-flare-sweep {
-        animation: tasamiLightSweep 3s ease-in-out infinite;
-      }
-      .tasami-laser-bar {
-        animation: tasamiLaserProgress 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-      }
-      .tasami-spin-fast {
-        animation: tasamiEnergySpin 20s linear infinite;
-      }
-      .tasami-spin-reverse {
-        animation: tasamiEnergySpin 30s linear infinite reverse;
-      }
-
-      .tasami-sparkle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: #fde047;
-        border-radius: 9999px;
-        box-shadow: 0 0 10px #fde047, 0 0 20px #38bdf8;
-        animation: tasamiSparkleFloat 2.6s infinite ease-out;
-        pointer-events: none;
-      }
-
-      .tasami-eq-1 { animation: tasamiEqBar 0.6s ease-in-out infinite; }
-      .tasami-eq-2 { animation: tasamiEqBar 0.9s ease-in-out infinite 0.15s; }
-      .tasami-eq-3 { animation: tasamiEqBar 0.7s ease-in-out infinite 0.3s; }
-      .tasami-eq-4 { animation: tasamiEqBar 1.1s ease-in-out infinite 0.1s; }
-      .tasami-eq-5 { animation: tasamiEqBar 0.8s ease-in-out infinite 0.25s; }
 
       /* تلاشي تدريجي فائق السلاسة والنعومة (Ultra-smooth 60fps GPU Crossfade) */
       #tasami-splash-screen {
@@ -206,58 +106,37 @@
   </head>
   <body class="bg-white dark:bg-[#0b1120] text-[#0f172a] dark:text-slate-100 font-cairo antialiased transition-colors duration-300 selection:bg-[#c59a45]/25 selection:text-[#9a752a] dark:selection:text-[#dfb76c]">
     
-    <!-- ==================== الشاشة الترحيبية الفلاشية العملاقة لهوية تسامي لأنظمة السلامة ==================== -->
-    <div id="tasami-splash-screen" dir="rtl" class="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#040711] text-white overflow-hidden select-none">
+    <!-- ==================== الشاشة الترحيبية لهوية تسامي لأنظمة السلامة ==================== -->
+    <div id="tasami-splash-screen" dir="rtl" class="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#070b14] text-white overflow-hidden select-none">
       
-      <!-- هالات وتأثيرات إضاءة فلاشية ناصعة وعريضة جداً (Vivid Neon & Electric Aurora Glow) -->
-      <div class="absolute -top-40 right-1/4 w-[750px] h-[750px] bg-gradient-to-br from-blue-500/35 via-cyan-400/25 to-transparent rounded-full blur-[170px] pointer-events-none"></div>
-      <div class="absolute -bottom-40 left-1/4 w-[750px] h-[750px] bg-gradient-to-tr from-amber-400/35 via-yellow-300/25 to-transparent rounded-full blur-[170px] pointer-events-none"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.12)_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none"></div>
+      <!-- هالات وتأثيرات إضاءة هندسية فاخرة تبرز الهوية الملكية (Royal Navy & Brand Gold) -->
+      <div class="absolute -top-32 right-1/4 w-[500px] h-[500px] bg-[#162d6c]/25 rounded-full blur-[140px] pointer-events-none"></div>
+      <div class="absolute -bottom-32 left-1/4 w-[500px] h-[500px] bg-[#c59a45]/20 rounded-full blur-[140px] pointer-events-none"></div>
       
-      <!-- تموجات صدمية متتالية كروية ومضيئة (Concentric Ripple Shockwaves) -->
-      <div class="absolute w-[360px] h-[360px] md:w-[440px] md:h-[440px] rounded-full border-2 border-amber-400 pointer-events-none tasami-shockwave-1"></div>
-      <div class="absolute w-[360px] h-[360px] md:w-[440px] md:h-[440px] rounded-full border-2 border-cyan-400 pointer-events-none tasami-shockwave-2"></div>
-      <div class="absolute w-[360px] h-[360px] md:w-[440px] md:h-[440px] rounded-full border-2 border-amber-300 pointer-events-none tasami-shockwave-3"></div>
-      <div class="absolute w-[360px] h-[360px] md:w-[440px] md:h-[440px] rounded-full border-2 border-blue-400 pointer-events-none tasami-shockwave-4"></div>
-
-      <!-- حلقات ليزرية هندسية عملاقة تدور بحركة ديناميكية سريعة -->
-      <div class="absolute w-[620px] h-[620px] md:w-[780px] md:h-[780px] rounded-full border border-cyan-500/35 pointer-events-none tasami-spin-fast opacity-60">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-amber-400 rounded-full shadow-[0_0_20px_#f59e0b]"></div>
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 bg-cyan-400 rounded-full shadow-[0_0_20px_#06b6d4]"></div>
-        <div class="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_15px_#fff]"></div>
+      <!-- حلقة هندسية تدور بنعومة في الخلفية تدل على معايير الدقة والسلامة الهندسة -->
+      <div class="absolute w-[440px] h-[440px] rounded-full border border-slate-800/60 pointer-events-none tasami-ring-spin opacity-40">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#c59a45] rounded-full shadow-[0_0_12px_#c59a45]"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6]"></div>
       </div>
-      <div class="absolute w-[740px] h-[740px] md:w-[920px] md:h-[920px] rounded-full border-2 border-dashed border-amber-400/30 pointer-events-none tasami-spin-reverse opacity-45"></div>
+      <div class="absolute w-[560px] h-[560px] rounded-full border border-dashed border-[#c59a45]/15 pointer-events-none tasami-ring-spin opacity-30" style="animation-direction: reverse; animation-duration: 48s;"></div>
 
-      <!-- الحاوية المركزية العملاقة للشعار والهوية (Double Sized Hero Container) -->
-      <div class="relative z-10 flex flex-col items-center text-center px-4 max-w-2xl tasami-float-hero">
+      <!-- الحاوية المركزية للشعار والهوية -->
+      <div class="relative z-10 flex flex-col items-center text-center px-6 max-w-lg">
         
-        <!-- بطاقة الشعار العملاقة (مكبرة بمقدار الضعف 2X) مع الوهج الفلاشي الناصع والتفاعل الحي -->
-        <div id="tasami-card-hero" class="relative flex items-center justify-center mb-7 transition-transform duration-200 ease-out">
+        <!-- بطاقة الشعار المحاطة بهالة التوهج الذهبية -->
+        <div class="relative flex items-center justify-center mb-7">
+          <!-- هالة التوهج النبضية -->
+          <div class="absolute w-36 h-36 rounded-full bg-gradient-to-tr from-[#c59a45]/30 to-blue-600/20 blur-2xl tasami-glow-pulse pointer-events-none"></div>
           
-          <!-- جسيمات ضوئية متطايرة حية (Floating Sparkles) -->
-          <div class="tasami-sparkle" style="top: 10%; left: -15%; animation-delay: 0.2s;"></div>
-          <div class="tasami-sparkle" style="top: 80%; left: -25%; animation-delay: 0.9s;"></div>
-          <div class="tasami-sparkle" style="top: 20%; right: -20%; animation-delay: 1.4s;"></div>
-          <div class="tasami-sparkle" style="top: 85%; right: -15%; animation-delay: 2.1s;"></div>
-          
-          <!-- هالة التوهج الفلاشية الناصعة خلف الشعار -->
-          <div class="absolute w-72 h-72 md:w-84 md:h-84 rounded-full bg-gradient-to-tr from-amber-400/45 via-yellow-300/35 to-cyan-400/40 blur-3xl tasami-hero-glow pointer-events-none"></div>
-          
-          <!-- الإطار الخارجي الفاخر المضاعف مع وميض حواف الذهب والأزرق الكهربائي -->
-          <div class="relative p-1.5 md:p-2 rounded-[38px] bg-gradient-to-br from-amber-300 via-amber-500 to-blue-500 shadow-[0_0_70px_rgba(251,191,36,0.7),0_0_120px_rgba(56,189,248,0.5)]">
-            
-            <!-- الحاوية الداخلية للشعار (مقاس مضاعف 2X: w-56 h-56 إلى w-64 h-64) -->
-            <div class="relative w-52 h-52 sm:w-60 sm:h-60 md:w-64 md:h-64 rounded-[32px] bg-gradient-to-b from-[#0c152a] via-[#070d1a] to-[#030610] border-2 border-amber-300 flex items-center justify-center p-5 md:p-6 backdrop-blur-2xl overflow-hidden group shadow-2xl">
+          <!-- الإطار الخارجي الفاخر للشعار -->
+          <div class="relative p-1 rounded-3xl bg-gradient-to-br from-[#dfb76c] via-[#9a752a]/40 to-slate-800 shadow-[0_0_35px_rgba(197,154,69,0.3)]">
+            <div class="w-28 h-28 md:w-32 md:h-32 rounded-[22px] bg-[#0b1120] border border-slate-700/60 flex items-center justify-center p-3.5 backdrop-blur-md overflow-hidden group">
+              <!-- صورة شعار شركة تسامي المعتمد مع الاحتياط لأيقونة الأمان -->
+              <img src="./logo.jpg" alt="تسامي لأنظمة السلامة" class="w-full h-full object-contain rounded-xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]" onerror="this.style.display='none'; document.getElementById('tasami-fallback-icon').style.display='block';" />
               
-              <!-- وميض الانعكاس الضوئي الفلاشي السريع عبر الشعار -->
-              <div class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none tasami-flare-sweep"></div>
-              
-              <!-- صورة شعار شركة تسامي المعتمد بحجم مضاعف وفائق الوضوح -->
-              <img src="./logo.jpg" alt="تسامي لأنظمة السلامة" class="w-full h-full object-contain rounded-2xl drop-shadow-[0_8px_25px_rgba(0,0,0,0.85)] filter brightness-110 contrast-110" onerror="this.style.display='none'; document.getElementById('tasami-fallback-icon').style.display='block';" />
-              
-              <!-- أيقونة سلامة احتياطية عملاقة في حال تعذر تحميل الصورة -->
-              <div id="tasami-fallback-icon" class="hidden text-amber-400 drop-shadow-[0_0_35px_rgba(251,191,36,1)]">
-                <svg class="w-28 h-28 md:w-32 md:h-32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <!-- أيقونة سلامة احتياطية في حال تعذر تحميل الصورة محلياً -->
+              <div id="tasami-fallback-icon" class="hidden text-[#dfb76c]">
+                <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
                   <path d="M12 8v5"/>
                   <path d="M12 16h.01"/>
@@ -266,63 +145,51 @@
             </div>
           </div>
 
-          <!-- شارة درع الأمان النابضة الفلاشية المثبتة أسفل الشعار مع مؤشر نبضي حي -->
-          <div class="absolute -bottom-4 px-5 py-1.5 rounded-full bg-[#0b1426] border-2 border-amber-300 text-xs md:text-sm font-black text-amber-200 shadow-[0_0_30px_rgba(251,191,36,0.9)] flex items-center gap-2 backdrop-blur-md">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-            <span class="tracking-wide">أنظمة أمان وسلامة معتمدة 100%</span>
+          <!-- شارة درع الأمان المصغرة المثبتة أسفل الشعار -->
+          <div class="absolute -bottom-2.5 px-3 py-0.5 rounded-full bg-[#131c31] border border-[#c59a45]/60 text-[11px] font-bold text-[#dfb76c] shadow-lg flex items-center gap-1.5 backdrop-blur-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>أنظمة سلامة معتمدة</span>
           </div>
         </div>
 
-        <!-- الاسم الرسمي للمنصة والعلامة التجارية (كبير وناصع بألوان فلاشية متوهجة) -->
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-400 mb-2 font-cairo tracking-wide drop-shadow-[0_0_35px_rgba(251,191,36,0.65)]">
+        <!-- الاسم الرسمي للمنصة والعلامة التجارية -->
+        <h1 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#dfb76c] mb-1.5 font-cairo tracking-wide drop-shadow-sm">
           شركة تسامي الأعمال لأنظمة السلامة
         </h1>
         
-        <p class="text-sm sm:text-base md:text-lg font-extrabold tracking-[0.25em] text-cyan-300 font-sans uppercase mb-5 drop-shadow-[0_0_20px_rgba(6,182,212,0.6)]">
+        <p class="text-xs md:text-sm font-semibold tracking-wider text-slate-400 font-sans uppercase mb-4 text-[#94a3b8]">
           TASAMI BUSINESS FOR SAFETY SYSTEMS
         </p>
 
-        <!-- شارات التميز والموثوقية الناصعة والمكبرة -->
-        <div class="flex flex-wrap items-center justify-center gap-2.5 mb-6">
-          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-slate-900/90 border border-amber-400/60 text-xs md:text-sm text-amber-200 font-bold shadow-[0_0_15px_rgba(251,191,36,0.3)]">
-            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        <!-- شارات التميز والموثوقية الدالة على الهوية -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-7">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-700/50 text-[11px] text-slate-300 font-medium">
+            <svg class="w-3.5 h-3.5 text-[#dfb76c]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
             معتمد وفق كود البناء السعودي SBC
           </span>
-          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-slate-900/90 border border-cyan-400/60 text-xs md:text-sm text-cyan-200 font-bold shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-            <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-700/50 text-[11px] text-slate-300 font-medium">
+            <svg class="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            حلول هندسية متطورة لمكافحة الحريق والإنذار
+            حلول هندسية لمكافحة الحريق والإنذار
           </span>
         </div>
 
-        <!-- عداد الجاهزية والنسبة المئوية الحي (Live Dynamic System Initialization) -->
-        <div class="flex items-center justify-between w-64 sm:w-80 md:w-96 mb-1.5 px-1 text-xs md:text-sm font-extrabold text-amber-300">
-          <div class="flex items-center gap-2">
-            <!-- أعمدة نبض الرادار الحية المتراقصة -->
-            <div class="flex items-end gap-0.5 h-4 text-cyan-400">
-              <span class="w-1 bg-cyan-400 rounded-full tasami-eq-1"></span>
-              <span class="w-1 bg-amber-400 rounded-full tasami-eq-2"></span>
-              <span class="w-1 bg-blue-400 rounded-full tasami-eq-3"></span>
-              <span class="w-1 bg-cyan-300 rounded-full tasami-eq-4"></span>
-              <span class="w-1 bg-amber-300 rounded-full tasami-eq-5"></span>
-            </div>
-            <span id="tasami-status-label" class="tracking-wide text-slate-200">تهيئة أنظمة الأمان الذكية...</span>
-          </div>
-          <span id="tasami-percentage-counter" class="text-cyan-300 font-mono text-sm md:text-base font-black tracking-wider drop-shadow-[0_0_12px_#38bdf8]">0%</span>
+        <!-- مؤشر التحميل والانسيابية الدقيقة -->
+        <div class="w-56 h-1 bg-slate-800/90 rounded-full overflow-hidden border border-slate-700/40 relative shadow-inner mb-3">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#dfb76c] to-transparent w-full h-full tasami-progress-bar"></div>
         </div>
 
-        <!-- مؤشر التقدم الليزري الفلاشي الحي العريض والمضيء -->
-        <div class="w-64 sm:w-80 md:w-96 h-2.5 bg-slate-900/95 rounded-full overflow-hidden border-2 border-amber-400/70 relative shadow-[0_0_30px_rgba(251,191,36,0.6)] mb-4">
-          <div id="tasami-progress-fill" class="h-full bg-gradient-to-r from-cyan-400 via-amber-300 to-yellow-400 rounded-full transition-all duration-100 ease-out shadow-[0_0_20px_#fde047]" style="width: 4%;"></div>
-        </div>
+        <p class="text-[11px] text-slate-400 tracking-wide font-normal mb-3">
+          جاري تجهيز بيئة الحماية والسلامة المتكاملة...
+        </p>
 
-        <!-- زر الدخول المباشر الفلاشي الناصع -->
-        <button id="tasami-enter-site-btn" type="button" class="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-950 font-black text-sm md:text-base tracking-wider shadow-[0_0_35px_rgba(251,191,36,0.7)] hover:shadow-[0_0_60px_rgba(251,191,36,1)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2.5 cursor-pointer group">
+        <!-- زر الدخول المباشر والتلاشي التدريجي السلس -->
+        <button id="tasami-enter-site-btn" type="button" class="px-5 py-2 rounded-xl bg-gradient-to-r from-[#c59a45] via-[#dfb76c] to-[#c59a45] text-[#070b14] font-bold text-xs tracking-wider shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 cursor-pointer group">
           <span>الدخول إلى الموقع الآن</span>
-          <svg class="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1.5" viewBox="0 0 20 20" fill="currentColor">
+          <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-x-1" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
         </button>
@@ -337,7 +204,8 @@
         if (!splash) return;
 
         var STORAGE_KEY = 'tasami_splash_viewed';
-        var FADE_TIME = 1300; // مدة التلاشي التدريجي الهادئ (1.3 ثانية كاملة)
+        var DISPLAY_TIME = 1500; // مدة استقرار الشاشة 1.5 ثانية
+        var FADE_TIME = 1300;    // مدة التلاشي التدريجي الهادئ (1.3 ثانية كاملة)
 
         // التحقق من الزيارة السابقة في نفس الجلسة
         try {
@@ -375,65 +243,6 @@
           }, FADE_TIME);
         };
 
-        // العداد الرقمي التفاعلي الحي من 0% إلى 100%
-        var counterElem = document.getElementById('tasami-percentage-counter');
-        var fillElem = document.getElementById('tasami-progress-fill');
-        var statusElem = document.getElementById('tasami-status-label');
-        var percent = 0;
-        var duration = 1600; // 1.6 ثانية للوصول لـ 100%
-        var startTime = null;
-
-        var statusMessages = [
-          { at: 0, text: 'تهيئة أنظمة الأمان والسلامة...' },
-          { at: 28, text: 'مطابقة معايير كود البناء SBC...' },
-          { at: 65, text: 'مزامنة حلول الإطفاء والإنذار...' },
-          { at: 92, text: 'اكتملت الجاهزية بنجاح ✓' }
-        ];
-
-        function updateProgress(timestamp) {
-          if (isFading) return;
-          if (!startTime) startTime = timestamp;
-          var elapsed = timestamp - startTime;
-          percent = Math.min(Math.floor((elapsed / duration) * 100), 100);
-
-          if (counterElem) counterElem.textContent = percent + '%';
-          if (fillElem) fillElem.style.width = percent + '%';
-
-          for (var i = statusMessages.length - 1; i >= 0; i--) {
-            if (percent >= statusMessages[i].at) {
-              if (statusElem && statusElem.textContent !== statusMessages[i].text) {
-                statusElem.textContent = statusMessages[i].text;
-                if (percent >= 92) {
-                  statusElem.classList.add('text-emerald-300');
-                  statusElem.classList.remove('text-slate-200');
-                }
-              }
-              break;
-            }
-          }
-
-          if (percent < 100) {
-            requestAnimationFrame(updateProgress);
-          } else {
-            // عند الوصول لـ 100% يبدأ التلاشي التدريجي فوراً بنعومة
-            setTimeout(startGradualCrossfade, 350);
-          }
-        }
-        requestAnimationFrame(updateProgress);
-
-        // التفاعل الحركي 3D عند تحريك الفأرة أو لمس الشاشة (3D Interactive Tilt)
-        var heroCard = document.getElementById('tasami-card-hero');
-        if (heroCard && window.matchMedia('(pointer: fine)').matches) {
-          window.addEventListener('mousemove', function(e) {
-            var x = (e.clientX / window.innerWidth - 0.5) * 22;
-            var y = (e.clientY / window.innerHeight - 0.5) * -22;
-            heroCard.style.transform = 'perspective(900px) rotateY(' + x + 'deg) rotateX(' + y + 'deg)';
-          });
-          window.addEventListener('mouseleave', function() {
-            heroCard.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg)';
-          });
-        }
-
         // زر الدخول التفاعلي
         var enterBtn = document.getElementById('tasami-enter-site-btn');
         if (enterBtn) {
@@ -448,8 +257,17 @@
           startGradualCrossfade();
         });
 
+        // المؤقت التلقائي بعد استقرار الشاشة
+        var timerHandle = setTimeout(startGradualCrossfade, DISPLAY_TIME);
+
+        // إلغاء التأخير إذا اكتمل تحميل كل موارد الصفحة
+        window.addEventListener('load', function() {
+          clearTimeout(timerHandle);
+          setTimeout(startGradualCrossfade, 1200);
+        });
+
         // صمام أمان لضمان عدم بقاء الشاشة تحت أي ظرف
-        setTimeout(startGradualCrossfade, 5000);
+        setTimeout(startGradualCrossfade, 4500);
       })();
     </script>
     <!-- ==================== نهاية الشاشة الترحيبية ==================== -->
