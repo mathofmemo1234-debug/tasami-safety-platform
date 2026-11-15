@@ -636,7 +636,8 @@ export function subscribeToVisitorAuth(callback) {
         } else {
           // If Firebase reports no user, only clear if active user was a Firebase user
           const current = getLocalUser();
-          if (current && !current.uid.startsWith('u_') && !current.uid.startsWith('local_')) {
+          const uid = String(current?.uid || '');
+          if (current && uid && !uid.startsWith('u_') && !uid.startsWith('local_')) {
             saveLocalUser(null);
             callback(null);
           }

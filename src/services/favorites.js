@@ -18,7 +18,7 @@ export function getFavorites(userId) {
     const raw = localStorage.getItem(getStorageKey(userId));
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
   } catch {
     return [];
   }
@@ -29,13 +29,14 @@ export function getFavorites(userId) {
  */
 export function saveFavorites(userId, list) {
   try {
-    localStorage.setItem(getStorageKey(userId), JSON.stringify(list));
-    window.dispatchEvent(new CustomEvent('tasami-favorites-updated', { detail: { userId, list } }));
+    const safeList = Array.isArray(list) ? list.filter(Boolean) : [];
+    localStorage.setItem(getStorageKey(userId), JSON.stringify(safeList));
+    window.dispatchEvent(new CustomEvent('tasami-favorites-updated', { detail: { userId: userId || 'guest', list: safeList } }));
 
-    // Sync to Firestore if authenticated user
-    if (db && userId && !userId.startsWith('local_')) {
+    // Sync to Firestore if authenticated real user (not guest or offline fallback)
+    if (db && userId && typeof userId === 'string' && userId !== 'guest' && !userId.startsWith('local_')) {
       updateDoc(doc(db, 'users', userId), {
-        favorites: list,
+        favorites: safeList,
         updatedAt: new Date().toISOString()
       }).catch((err) => {
         console.warn('Could not sync favorites to Firestore:', err);
@@ -52,7 +53,7 @@ export function saveFavorites(userId, list) {
 export function isProductFavorited(userId, productId) {
   if (!productId) return false;
   const list = getFavorites(userId);
-  return list.some((item) => String(item.id || item) === String(productId));
+  return list.some((item) => String(item?.id || item) === String(productId));
 }
 
 /**
@@ -61,13 +62,13 @@ export function isProductFavorited(userId, productId) {
 export function toggleProductFavorite(userId, product) {
   if (!product || !product.id) return { list: [], isAdded: false };
   const current = getFavorites(userId);
-  const exists = current.some((it) => String(it.id) === String(product.id));
+  const exists = current.some((it) => String(it?.id || it) === String(product.id));
 
   let updated = [];
   let isAdded = false;
 
   if (exists) {
-    updated = current.filter((it) => String(it.id) !== String(product.id));
+    updated = current.filter((it) => String(it?.id || it) !== String(product.id));
     isAdded = false;
   } else {
     const minifiedProduct = {
@@ -88,14 +89,15 @@ export function toggleProductFavorite(userId, product) {
 }
 
 /**
- * Subscribes to favorites updates.
+ * Subscribes to favorites updates across tabs and window events.
  */
 export function subscribeToFavorites(userId, callback) {
-  callback(getFavorites(userId));
+  const safeUserId = userId || 'guest';
 
   const handleUpdate = (e) => {
-    if (!userId || e.detail?.userId === userId) {
-      callback(e.detail?.list || getFavorites(userId));
+    const eventUserId = e.detail?.userId || 'guest';
+    if (eventUserId === safeUserId || !e.detail) {
+      callback(e.detail?.list || getFavorites(safeUserId));
     }
   };
 

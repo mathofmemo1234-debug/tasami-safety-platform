@@ -29,7 +29,7 @@ import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomPar
 import InlineVideoPlayer from '../components/InlineVideoPlayer';
 import ProductGalleryModal from '../components/ProductGalleryModal';
 import { getParagraphStyle } from '../utils/typography';
-import { getLocalUser } from '../services/auth';
+import { getLocalUser, subscribeToVisitorAuth } from '../services/auth';
 import {
   getFavorites,
   toggleProductFavorite,
@@ -352,7 +352,7 @@ export default function ProductsPage({
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
 
-  const t = content[lang].productsCatalog;
+  const t = content?.[lang]?.productsCatalog || content?.ar?.productsCatalog || {};
   const whatsappNumber = content?.[lang]?.contact?.whatsapp || content?.[lang]?.contact?.phone1 || '966591684133';
   const [searchTerm, setSearchTerm] = useState('');
   const [galleryModalState, setGalleryModalState] = useState(null);
@@ -360,18 +360,29 @@ export default function ProductsPage({
   const [activeVideo, setActiveVideo] = useState(null);
   const [showBrandsModal, setShowBrandsModal] = useState(false);
 
-  const currentUser = getLocalUser();
-  const [favorites, setFavorites] = useState(() => getFavorites(currentUser?.uid || 'guest'));
+  const [currentUserId, setCurrentUserId] = useState(() => getLocalUser()?.uid || 'guest');
+  const [favorites, setFavorites] = useState(() => getFavorites(currentUserId));
 
+  // Sync with auth changes (login/logout/switch account)
   useEffect(() => {
-    const unsub = subscribeToFavorites(currentUser?.uid || 'guest', (list) => {
-      setFavorites(list);
+    const unsubAuth = subscribeToVisitorAuth((u) => {
+      const uid = u?.uid || 'guest';
+      setCurrentUserId(uid);
+      setFavorites(getFavorites(uid));
     });
-    return () => unsub();
-  }, [currentUser]);
+    return () => unsubAuth();
+  }, []);
+
+  // Listen to favorite toggles with stable primitive ID dependency
+  useEffect(() => {
+    const unsubFavs = subscribeToFavorites(currentUserId, (list) => {
+      setFavorites(Array.isArray(list) ? list : []);
+    });
+    return () => unsubFavs();
+  }, [currentUserId]);
 
   const handleToggleFavorite = (product) => {
-    const res = toggleProductFavorite(currentUser?.uid || 'guest', product);
+    const res = toggleProductFavorite(currentUserId, product);
     setFavorites(res.list);
   };
 
@@ -603,7 +614,7 @@ export default function ProductsPage({
             whatsappNumber={whatsappNumber}
             content={content}
             lang={lang}
-            isFavorited={favorites.some((f) => String(f.id) === String(item.id))}
+            isFavorited={Array.isArray(favorites) && favorites.some((f) => String(f?.id || f) === String(item?.id))}
             onToggleFavorite={handleToggleFavorite}
             onOpenConsultation={onOpenConsultation}
             onOpenGallery={(product, mode, angleIndex) =>

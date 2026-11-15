@@ -15,7 +15,7 @@ import {
   Heart
 } from 'lucide-react';
 import { getItemBrands } from '../utils/media';
-import { getLocalUser } from '../services/auth';
+import { getLocalUser, subscribeToVisitorAuth } from '../services/auth';
 import {
   getFavorites,
   toggleProductFavorite,
@@ -23,23 +23,32 @@ import {
 } from '../services/favorites';
 
 export default function ProductsCatalogSection({ lang, content, onSelectService }) {
-  const t = content[lang].productsCatalog;
+  const t = content?.[lang]?.productsCatalog || content?.ar?.productsCatalog || {};
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeVideo, setActiveVideo] = useState(null);
 
-  const currentUser = getLocalUser();
-  const [userFavs, setUserFavs] = useState(() => getFavorites(currentUser?.uid || 'guest'));
+  const [currentUserId, setCurrentUserId] = useState(() => getLocalUser()?.uid || 'guest');
+  const [userFavs, setUserFavs] = useState(() => getFavorites(currentUserId));
 
   useEffect(() => {
-    const unsub = subscribeToFavorites(currentUser?.uid || 'guest', (list) => {
-      setUserFavs(list);
+    const unsubAuth = subscribeToVisitorAuth((u) => {
+      const uid = u?.uid || 'guest';
+      setCurrentUserId(uid);
+      setUserFavs(getFavorites(uid));
     });
-    return () => unsub();
-  }, [currentUser]);
+    return () => unsubAuth();
+  }, []);
+
+  useEffect(() => {
+    const unsubFavs = subscribeToFavorites(currentUserId, (list) => {
+      setUserFavs(Array.isArray(list) ? list : []);
+    });
+    return () => unsubFavs();
+  }, [currentUserId]);
 
   const handleToggleFav = (item) => {
-    const res = toggleProductFavorite(currentUser?.uid || 'guest', item);
+    const res = toggleProductFavorite(currentUserId, item);
     setUserFavs(res.list);
   };
 
@@ -173,17 +182,17 @@ export default function ProductsCatalogSection({ lang, content, onSelectService 
                     handleToggleFav(item);
                   }}
                   title={
-                    userFavs.some((f) => String(f.id) === String(item.id))
+                    Array.isArray(userFavs) && userFavs.some((f) => String(f?.id || f) === String(item?.id))
                       ? (lang === 'ar' ? 'إزالة من المفضلة' : 'Remove from Favorites')
                       : (lang === 'ar' ? 'إضافة إلى المفضلة' : 'Add to Favorites')
                   }
                   className={`absolute top-3 left-3 rtl:left-3 ltr:right-3 w-8 h-8 rounded-full flex items-center justify-center transition shadow-md z-10 ${
-                    userFavs.some((f) => String(f.id) === String(item.id))
+                    Array.isArray(userFavs) && userFavs.some((f) => String(f?.id || f) === String(item?.id))
                       ? 'bg-rose-500 text-white scale-110 shadow-rose-500/50'
                       : 'bg-black/50 hover:bg-black/75 text-white hover:text-rose-400'
                   }`}
                 >
-                  <Heart className={`w-4 h-4 ${userFavs.some((f) => String(f.id) === String(item.id)) ? 'fill-current text-white' : ''}`} />
+                  <Heart className={`w-4 h-4 ${Array.isArray(userFavs) && userFavs.some((f) => String(f?.id || f) === String(item?.id)) ? 'fill-current text-white' : ''}`} />
                 </button>
                 
                 {/* Specifications Pill */}

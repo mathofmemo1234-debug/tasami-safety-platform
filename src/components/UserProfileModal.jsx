@@ -76,16 +76,20 @@ export default function UserProfileModal({
 
   // Subscribe to Favorites
   useEffect(() => {
-    if (!user) return;
+    if (!user?.uid) {
+      setFavorites([]);
+      return;
+    }
+    setFavorites(getFavorites(user.uid));
     const unsub = subscribeToFavorites(user.uid, (list) => {
-      setFavorites(list);
+      setFavorites(Array.isArray(list) ? list : []);
     });
     return () => unsub();
-  }, [user]);
+  }, [user?.uid]);
 
   // Subscribe to Reviews submitted by this user
   useEffect(() => {
-    if (!isOpen || !user) return;
+    if (!isOpen || !user?.uid) return;
     const unsub = subscribeCustomerReviews({
       approvedOnly: false,
       onUpdate: (allReviews) => {
@@ -99,11 +103,11 @@ export default function UserProfileModal({
       }
     });
     return () => unsub();
-  }, [isOpen, user]);
+  }, [isOpen, user?.uid, user?.phone, user?.name]);
 
   // Fetch Consultations
   useEffect(() => {
-    if (!isOpen || !user) return;
+    if (!isOpen || !user?.uid) return;
 
     async function loadRequests() {
       setLoadingRequests(true);
