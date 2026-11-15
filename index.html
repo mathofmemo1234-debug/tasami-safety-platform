@@ -27,8 +27,191 @@
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Montserrat:wght@600;700&display=swap">
     </noscript>
+
+    <!-- حماية فورية مانعة للوميض (Anti-Flicker Pre-check) للشاشة الترحيبية -->
+    <script>
+      (function() {
+        try {
+          if (sessionStorage.getItem('tasami_splash_viewed') === 'true') {
+            document.documentElement.classList.add('splash-dismissed');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <style id="tasami-splash-styles">
+      html.splash-dismissed #tasami-splash-screen {
+        display: none !important;
+      }
+      @keyframes tasamiGlowPulse {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 0.35;
+        }
+        50% {
+          transform: scale(1.15);
+          opacity: 0.7;
+        }
+      }
+      @keyframes tasamiProgressAnim {
+        0% {
+          transform: translateX(100%);
+        }
+        50% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+      @keyframes tasamiRingSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .tasami-glow-pulse {
+        animation: tasamiGlowPulse 2.8s ease-in-out infinite;
+      }
+      .tasami-progress-bar {
+        animation: tasamiProgressAnim 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      }
+      .tasami-ring-spin {
+        animation: tasamiRingSpin 32s linear infinite;
+      }
+      .splash-fade-out {
+        opacity: 0 !important;
+        transform: scale(1.04) !important;
+        filter: blur(4px) !important;
+        pointer-events: none !important;
+        transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      }
+    </style>
   </head>
   <body class="bg-white dark:bg-[#0b1120] text-[#0f172a] dark:text-slate-100 font-cairo antialiased transition-colors duration-300 selection:bg-[#c59a45]/25 selection:text-[#9a752a] dark:selection:text-[#dfb76c]">
+    
+    <!-- ==================== الشاشة الترحيبية لهوية تسامي لأنظمة السلامة ==================== -->
+    <div id="tasami-splash-screen" dir="rtl" class="fixed inset-0 z-[999999] flex flex-col items-center justify-center bg-[#070b14] text-white overflow-hidden select-none" style="transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s cubic-bezier(0.4, 0, 0.2, 1);">
+      
+      <!-- هالات وتأثيرات إضاءة هندسية فاخرة تبرز الهوية الملكية (Royal Navy & Brand Gold) -->
+      <div class="absolute -top-32 right-1/4 w-[500px] h-[500px] bg-[#162d6c]/25 rounded-full blur-[140px] pointer-events-none"></div>
+      <div class="absolute -bottom-32 left-1/4 w-[500px] h-[500px] bg-[#c59a45]/20 rounded-full blur-[140px] pointer-events-none"></div>
+      
+      <!-- حلقة هندسية تدور بنعومة في الخلفية تدل على معايير الدقة والسلامة الهندسة -->
+      <div class="absolute w-[440px] h-[440px] rounded-full border border-slate-800/60 pointer-events-none tasami-ring-spin opacity-40">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#c59a45] rounded-full shadow-[0_0_12px_#c59a45]"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6]"></div>
+      </div>
+      <div class="absolute w-[560px] h-[560px] rounded-full border border-dashed border-[#c59a45]/15 pointer-events-none tasami-ring-spin opacity-30" style="animation-direction: reverse; animation-duration: 48s;"></div>
+
+      <!-- الحاوية المركزية للشعار والهوية -->
+      <div class="relative z-10 flex flex-col items-center text-center px-6 max-w-lg">
+        
+        <!-- بطاقة الشعار المحاطة بهالة التوهج الذهبية -->
+        <div class="relative flex items-center justify-center mb-7">
+          <!-- هالة التوهج النبضية -->
+          <div class="absolute w-36 h-36 rounded-full bg-gradient-to-tr from-[#c59a45]/30 to-blue-600/20 blur-2xl tasami-glow-pulse pointer-events-none"></div>
+          
+          <!-- الإطار الخارجي الفاخر للشعار -->
+          <div class="relative p-1 rounded-3xl bg-gradient-to-br from-[#dfb76c] via-[#9a752a]/40 to-slate-800 shadow-[0_0_35px_rgba(197,154,69,0.3)]">
+            <div class="w-28 h-28 md:w-32 md:h-32 rounded-[22px] bg-[#0b1120] border border-slate-700/60 flex items-center justify-center p-3.5 backdrop-blur-md overflow-hidden group">
+              <!-- صورة شعار شركة تسامي المعتمد مع الاحتياط لأيقونة الأمان -->
+              <img src="./logo.jpg" alt="تسامي لأنظمة السلامة" class="w-full h-full object-contain rounded-xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]" onerror="this.style.display='none'; document.getElementById('tasami-fallback-icon').style.display='block';" />
+              
+              <!-- أيقونة سلامة احتياطية في حال تعذر تحميل الصورة محلياً -->
+              <div id="tasami-fallback-icon" class="hidden text-[#dfb76c]">
+                <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+                  <path d="M12 8v5"/>
+                  <path d="M12 16h.01"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- شارة درع الأمان المصغرة المثبتة أسفل الشعار -->
+          <div class="absolute -bottom-2.5 px-3 py-0.5 rounded-full bg-[#131c31] border border-[#c59a45]/60 text-[11px] font-bold text-[#dfb76c] shadow-lg flex items-center gap-1.5 backdrop-blur-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>أنظمة سلامة معتمدة</span>
+          </div>
+        </div>
+
+        <!-- الاسم الرسمي للمنصة والعلامة التجارية -->
+        <h1 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#dfb76c] mb-1.5 font-cairo tracking-wide drop-shadow-sm">
+          شركة تسامي الأعمال لأنظمة السلامة
+        </h1>
+        
+        <p class="text-xs md:text-sm font-semibold tracking-wider text-slate-400 font-sans uppercase mb-4 text-[#94a3b8]">
+          TASAMI BUSINESS FOR SAFETY SYSTEMS
+        </p>
+
+        <!-- شارات التميز والموثوقية الدالة على الهوية -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-7">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-700/50 text-[11px] text-slate-300 font-medium">
+            <svg class="w-3.5 h-3.5 text-[#dfb76c]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            معتمد وفق كود البناء السعودي SBC
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-700/50 text-[11px] text-slate-300 font-medium">
+            <svg class="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            حلول هندسية لمكافحة الحريق والإنذار
+          </span>
+        </div>
+
+        <!-- مؤشر التحميل والانسيابية الدقيقة -->
+        <div class="w-56 h-1 bg-slate-800/90 rounded-full overflow-hidden border border-slate-700/40 relative shadow-inner mb-3">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#dfb76c] to-transparent w-full h-full tasami-progress-bar"></div>
+        </div>
+
+        <p class="text-[11px] text-slate-400 tracking-wide font-normal">
+          جاري تجهيز بيئة الحماية والسلامة المتكاملة...
+        </p>
+
+      </div>
+    </div>
+
+    <!-- متحكم الشاشة الترحيبية وتجربة المستخدم -->
+    <script>
+      (function manageTasamiSplash() {
+        var splash = document.getElementById('tasami-splash-screen');
+        if (!splash) return;
+
+        var STORAGE_KEY = 'tasami_splash_viewed';
+        var DISPLAY_TIME = 1500; // 1.5 ثانية
+        var FADE_TIME = 700;     // 700 جزء من الثانية
+
+        // في حال تم عرضها سابقاً في نفس الجلسة، تحذف فوراً
+        try {
+          if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
+            splash.remove();
+            return;
+          }
+          sessionStorage.setItem(STORAGE_KEY, 'true');
+        } catch (e) {
+          // التعامل الآمن مع أي بيئة تمنع التخزين المؤقت
+        }
+
+        // بدء المؤقت بعد جاهزية المستند
+        var startFadeTimer = function() {
+          setTimeout(function() {
+            splash.classList.add('splash-fade-out');
+            setTimeout(function() {
+              if (splash && splash.parentNode) {
+                splash.remove();
+              }
+            }, FADE_TIME);
+          }, DISPLAY_TIME);
+        };
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          startFadeTimer();
+        } else {
+          window.addEventListener('DOMContentLoaded', startFadeTimer);
+        }
+      })();
+    </script>
+    <!-- ==================== نهاية الشاشة الترحيبية ==================== -->
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
