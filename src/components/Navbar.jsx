@@ -173,7 +173,7 @@ export default function Navbar({
               className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#dfb76c]/50 rounded-2xl py-0.5"
               title="تسامي الأعمال لأنظمة السلامة"
             >
-              <TasamiLogo isWhite={true} compact={true} lang={lang} className="h-14 sm:h-16 md:h-20" />
+              <TasamiLogo content={content} isWhite={true} compact={true} lang={lang} className="h-14 sm:h-16 md:h-20" />
             </button>
 
             {/* Desktop Navigation Menu */}

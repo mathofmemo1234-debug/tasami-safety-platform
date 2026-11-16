@@ -72,7 +72,7 @@ export default function AboutPage({
           <div className="space-y-4 flex flex-col items-center w-full">
             <div className="flex flex-wrap items-center justify-center gap-4">
               {/* Doubled Logo size */}
-              <TasamiLogo lang={lang} className="h-16 sm:h-20 md:h-24" />
+              <TasamiLogo content={content} lang={lang} className="h-16 sm:h-20 md:h-24" />
               <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3.5 py-1.5 rounded-xl inline-block border border-[#c59a45]/30">
                 {isAr ? 'الريادة المؤسسية' : 'Corporate Leadership'}
               </span>

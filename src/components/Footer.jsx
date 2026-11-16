@@ -26,7 +26,7 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
           {/* Brand & Vision Col */}
           <div className="lg:col-span-4 space-y-4 flex flex-col items-center text-center">
             <button onClick={() => navigate('home')} className="focus:outline-none">
-              <TasamiLogo isWhite={true} lang={lang} className="h-16 sm:h-20 md:h-24" />
+              <TasamiLogo content={content} isWhite={true} lang={lang} className="h-16 sm:h-20 md:h-24" />
             </button>
             <FormattedParagraph
               content={content}

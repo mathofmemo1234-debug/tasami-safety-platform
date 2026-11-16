@@ -462,7 +462,7 @@ export default function ProductsPage({
           <div className="relative z-10 flex flex-col items-center text-center gap-6">
             <div className="space-y-3 flex flex-col items-center w-full">
               <div className="flex flex-wrap items-center justify-center gap-3">
-                <TasamiLogo lang={lang} className="h-10 sm:h-12" />
+                <TasamiLogo content={content} lang={lang} className="h-10 sm:h-12" />
                 <span className="text-xs font-bold text-[#9a752a] dark:text-[#dfb76c] tracking-widest uppercase bg-[#c59a45]/10 dark:bg-[#c59a45]/20 px-3 py-1 rounded-md inline-block border border-[#c59a45]/25">
                   {isAr ? 'توريدات وأنظمة معتمدة' : 'Certified Procurement'}
                 </span>

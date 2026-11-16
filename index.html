@@ -132,7 +132,7 @@
           <div class="relative p-1 rounded-3xl bg-gradient-to-br from-[#dfb76c] via-[#9a752a]/40 to-slate-800 shadow-[0_0_35px_rgba(197,154,69,0.3)]">
             <div class="w-28 h-28 md:w-32 md:h-32 rounded-[22px] bg-[#0b1120] border border-slate-700/60 flex items-center justify-center p-3.5 backdrop-blur-md overflow-hidden group">
               <!-- صورة شعار شركة تسامي المعتمد مع الاحتياط لأيقونة الأمان -->
-              <img src="./logo.jpg" alt="تسامي لأنظمة السلامة" class="w-full h-full object-contain rounded-xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]" onerror="this.style.display='none'; document.getElementById('tasami-fallback-icon').style.display='block';" />
+              <img id="tasami-splash-logo-img" src="./logo.jpg" alt="تسامي لأنظمة السلامة" class="w-full h-full object-contain rounded-xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]" onerror="this.style.display='none'; document.getElementById('tasami-fallback-icon').style.display='block';" />
               
               <!-- أيقونة سلامة احتياطية في حال تعذر تحميل الصورة محلياً -->
               <div id="tasami-fallback-icon" class="hidden text-[#dfb76c]">
@@ -206,6 +206,24 @@
         var STORAGE_KEY = 'tasami_splash_viewed';
         var DISPLAY_TIME = 1500; // مدة استقرار الشاشة 1.5 ثانية
         var FADE_TIME = 1300;    // مدة التلاشي التدريجي الهادئ (1.3 ثانية كاملة)
+
+        // مزامنة فورية لشعار المنصة المخصص وأيقونة المتصفح من الذاكرة المحلية
+        try {
+          var customLogo = localStorage.getItem('tasami_custom_logo');
+          if (!customLogo) {
+            var live = localStorage.getItem('tasami_live_content');
+            if (live) {
+              var parsed = JSON.parse(live);
+              customLogo = parsed?.ar?.brand?.logoUrl || parsed?.en?.brand?.logoUrl || parsed?.brand?.logoUrl;
+            }
+          }
+          if (customLogo) {
+            var splashImg = document.getElementById('tasami-splash-logo-img');
+            if (splashImg) splashImg.src = customLogo;
+            var fav = document.querySelector("link[rel*='icon']");
+            if (fav) fav.href = customLogo;
+          }
+        } catch (e) {}
 
         // التحقق من الزيارة السابقة في نفس الجلسة
         try {

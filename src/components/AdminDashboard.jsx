@@ -40,6 +40,7 @@ import TypographyManagerTab from './TypographyManagerTab';
 import TechSupportAdminTab from './TechSupportAdminTab';
 import ReviewsTickerAdminTab from './ReviewsTickerAdminTab';
 import AdminProductMediaEditor from './AdminProductMediaEditor';
+import LogoManagerTab from './LogoManagerTab';
 
 export default function AdminDashboard({
   isOpen,
@@ -513,6 +514,7 @@ export default function AdminDashboard({
           {/* Navigation Category Tabs */}
           <div className="flex flex-wrap shrink-0 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 gap-1.5 py-2.5">
             {[
+              { id: 'logo', name: '🎯 شعار الشركة (اللوجو)' },
               { id: 'visibility', name: '👁️ إظهار / إخفاء الأقسام والمستندات' },
               { id: 'support', name: '🎧 الدعم الفني' },
               { id: 'reviews', name: '⭐ قيّمنا وشريط الإعلانات' },
@@ -949,6 +951,34 @@ export default function AdminDashboard({
             {/* TAB 4: BRAND & CONTACT INFO */}
             {activeTab === 'brand' && (
               <div className="bg-white dark:bg-[#131c31] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-[#c59a45]/30">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#0b1120] border border-[#c59a45]/40 flex items-center justify-center p-1 shadow-sm overflow-hidden flex-shrink-0">
+                      <img
+                        src={localData[langTab]?.brand?.logoUrl || './logo.jpg'}
+                        alt="Logo"
+                        className="w-full h-full object-contain"
+                        onError={(e) => { e.target.src = './logo.jpg'; }}
+                      />
+                    </div>
+                    <div>
+                      <h5 className="text-xs font-black text-[#0f172a] dark:text-white">
+                        شعار الشركة الرسمي (Company Logo)
+                      </h5>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                        يمكنك تغيير الشعار، رفعه من جهازك أو تعديل طريقة عرضه من الاستوديو المخصص
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('logo')}
+                    className="btn-flashy-gold px-4 py-2 rounded-xl text-xs font-black text-[#0b1120] whitespace-nowrap self-start sm:self-auto shadow-sm flex items-center gap-1.5"
+                  >
+                    <span>فتح استوديو تغيير الشعار 🎯</span>
+                  </button>
+                </div>
+
                 <h4 className="font-black text-base text-[#0f172a] dark:text-white">
                   معلومات وهوية الشركة والتواصل الرسمي
                 </h4>
@@ -1318,6 +1348,18 @@ export default function AdminDashboard({
                 </div>
 
               </div>
+            )}
+
+            {/* TAB: LOGO STUDIO (إدارة الشعار الرسمي للشركة) */}
+            {activeTab === 'logo' && (
+              <LogoManagerTab
+                localData={localData}
+                langTab={langTab}
+                updateNested={updateNested}
+                onUploadFile={handleFileUpload}
+                onSaveNow={handleSaveAll}
+                saveStatus={saveStatus}
+              />
             )}
 
             {/* TAB: TECHNICAL SUPPORT (الدعم الفني وإدارة الأسئلة الفورية) */}
