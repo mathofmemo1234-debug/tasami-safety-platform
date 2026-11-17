@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CustomParagraphSlot, { FormattedParagraph } from './CustomParagraphSlot';
-import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Share2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare, Share2, Globe } from 'lucide-react';
 
 export default function ContactSection({ lang, content, onOpenConsultation }) {
   const t = content[lang];
@@ -157,12 +157,35 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                   <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-[#1d4ed8]/20 text-[#1d4ed8] dark:text-[#60a5fa] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="flex-1 space-y-1.5">
                     <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">{lang === 'ar' ? 'البريد الإلكتروني الرسمي' : 'Official Email'}</span>
-                    <a href={`mailto:${c.email}`} className="text-sm font-bold text-[#0f172a] dark:text-white hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] font-sans">
-                      {c.email}
+                    <a href={`mailto:${c.email || 'info@tasaami.com'}`} className="text-sm font-bold text-[#0f172a] dark:text-white hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] font-sans block">
+                      {c.email || 'info@tasaami.com'}
                     </a>
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block mt-0.5">فرع مكة المكرمة • الرد والاستجابة السريعة</span>
+                    {c.branchEmail && (
+                      <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
+                        <span className="text-slate-500 dark:text-slate-400">{lang === 'ar' ? 'فرع مكة المكرمة:' : 'Makkah Branch:'}</span>
+                        <a href={`mailto:${c.branchEmail}`} className="font-semibold text-slate-700 dark:text-slate-300 hover:text-[#dfb76c] font-sans">
+                          {c.branchEmail}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Official Domain & Portal */}
+                <div className="p-4 rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 flex items-start gap-4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-[#c59a45]/20 text-[#c59a45] dark:text-[#dfb76c] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Globe className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">{lang === 'ar' ? 'البوابة والنطاق الإلكتروني' : 'Official Domain & Portal'}</span>
+                    <a href="https://tasaami.com" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-[#0f172a] dark:text-white hover:text-[#1d4ed8] dark:hover:text-[#dfb76c] font-sans block">
+                      Tasaami.com
+                    </a>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400 block mt-0.5">
+                      {lang === 'ar' ? 'البوابة الرسمية المعتمدة لحلول وأنظمة السلامة' : 'Certified Official Portal for Safety Systems'}
+                    </span>
                   </div>
                 </div>
 

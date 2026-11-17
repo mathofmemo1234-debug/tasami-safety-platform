@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomParagraphSlot, { FormattedParagraph } from './CustomParagraphSlot';
 import TasamiLogo from './TasamiLogo';
-import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2, QrCode, Download } from 'lucide-react';
+import { ShieldCheck, Award, Phone, Mail, MapPin, ExternalLink, Share2, QrCode, Download, Globe } from 'lucide-react';
 
 export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
   const t = content[lang].footer;
@@ -133,9 +133,22 @@ export default function Footer({ lang, content, onOpenAdmin, onNavigate }) {
                   </a>
                 </div>
               </div>
+              <div className="flex items-start gap-2">
+                <Mail className="w-4 h-4 text-[#c59a45] flex-shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-0.5">
+                  <a href={`mailto:${t.email || 'info@tasaami.com'}`} className="hover:text-[#dfb76c] font-bold text-slate-200 transition font-sans">{t.email || 'info@tasaami.com'}</a>
+                  {t.branchEmail && (
+                    <a href={`mailto:${t.branchEmail}`} className="text-[11px] text-slate-400 hover:text-white transition font-sans">
+                      {t.branchEmail}
+                    </a>
+                  )}
+                </div>
+              </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#c59a45] flex-shrink-0" />
-                <a href={`mailto:${t.email}`} className="hover:text-white transition">{t.email}</a>
+                <Globe className="w-4 h-4 text-[#c59a45] flex-shrink-0" />
+                <a href="https://tasaami.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#dfb76c] font-bold text-white transition font-sans">
+                  Tasaami.com
+                </a>
               </div>
             </div>
 

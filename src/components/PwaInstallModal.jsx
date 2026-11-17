@@ -57,7 +57,7 @@ export default function PwaInstallModal({ isOpen, onClose, lang = 'ar' }) {
   };
 
   const handleCopyLink = () => {
-    const url = 'https://tasami-safety.vercel.app';
+    const url = 'https://tasaami.com';
     if (navigator.clipboard) {
       navigator.clipboard.writeText(url);
       setCopied(true);
@@ -255,7 +255,7 @@ export default function PwaInstallModal({ isOpen, onClose, lang = 'ar' }) {
             <input
               type="text"
               readOnly
-              value="https://tasami-safety.vercel.app"
+              value="https://tasaami.com"
               className="flex-1 px-3 py-2 rounded-xl bg-slate-100 dark:bg-[#0b1120] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-mono"
               dir="ltr"
             />
