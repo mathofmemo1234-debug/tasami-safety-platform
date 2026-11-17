@@ -132,7 +132,7 @@ export default function LogoManagerTab({
         setIsUploading(false);
         setUploadProgressMsg('');
         applyNewLogo(url, 'تم رفع وتطبيق الشعار الجديد بنجاح!');
-      });
+      }, { isLogo: true });
     } else {
       // Fallback local reader
       const reader = new FileReader();

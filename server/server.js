@@ -12,7 +12,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '25mb' }));
+
+// Static uploads directory (shared with public/uploads for Vite frontend)
+const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+app.use('/uploads', express.static(uploadsDir));
 
 // Initialize SQLite database
 const dbDir = path.join(__dirname, 'data');
@@ -63,6 +70,38 @@ db.exec(`
 console.log('✅ SQLite Database initialized at:', dbPath);
 
 // Routes
+// 0. Upload image endpoint
+app.post('/api/upload', (req, res) => {
+  try {
+    const { image, filename } = req.body;
+    if (!image) {
+      return res.status(400).json({ error: 'لم يتم إرسال بيانات الصورة' });
+    }
+    const matches = String(image).match(/^data:([A-Za-z0-9-+/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return res.status(400).json({ error: 'تنسيق Base64 غير صالح' });
+    }
+    const mime = matches[1];
+    const base64Data = matches[2];
+    const ext = mime.includes('png') ? 'png' : mime.includes('svg') ? 'svg' : (mime.includes('jpeg') || mime.includes('jpg')) ? 'jpg' : 'webp';
+    const cleanName = (filename || 'image').replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const safeFilename = `${Date.now()}_${cleanName}.${ext}`;
+    const filePath = path.join(uploadsDir, safeFilename);
+
+    fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+    const fileUrl = `./uploads/${safeFilename}`;
+
+    res.json({
+      success: true,
+      url: fileUrl,
+      filename: safeFilename
+    });
+  } catch (err) {
+    console.error('Error in /api/upload:', err);
+    res.status(500).json({ error: 'فشل حفظ الصورة على الخادم' });
+  }
+});
+
 // 1. Submit consultation request
 app.post('/api/consultations', (req, res) => {
   try {

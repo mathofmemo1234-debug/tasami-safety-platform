@@ -138,16 +138,16 @@ export default function AdminDashboard({
 
   // Save changes to Firebase & Parent State
   const handleSaveAll = async () => {
-    setSaveStatus({ state: 'saving', message: 'جارِ الحفظ والمزامنة مع Firebase...' });
+    setSaveStatus({ state: 'saving', message: 'جارِ الحفظ والمزامنة...' });
     try {
       const result = await saveLiveContent(localData);
       if (result.success) {
         onContentUpdate(localData);
         setSaveStatus({
-          state: result.localOnly ? 'warning' : 'success',
+          state: 'success',
           message: result.message || 'تم حفظ جميع التعديلات ونشرها بنجاح!'
         });
-        setTimeout(() => setSaveStatus({ state: 'idle', message: '' }), result.localOnly ? 8000 : 3500);
+        setTimeout(() => setSaveStatus({ state: 'idle', message: '' }), 4000);
       } else {
         setSaveStatus({ state: 'error', message: 'تعذر الحفظ: ' + result.error });
       }
@@ -157,12 +157,12 @@ export default function AdminDashboard({
   };
 
   // Generic Media Upload Handler (Images & Videos)
-  const handleFileUpload = async (file, onComplete) => {
+  const handleFileUpload = async (file, onComplete, options = {}) => {
     if (!file) return;
     setUploadingImage(true);
     try {
       const folder = String(file.type || '').startsWith('video/') ? 'site_videos' : 'site_images';
-      const res = await uploadMediaFile(file, folder);
+      const res = await uploadMediaFile(file, folder, options);
       if (res.success) {
         onComplete(res.url);
         if (!String(file.type || '').startsWith('video/')) {

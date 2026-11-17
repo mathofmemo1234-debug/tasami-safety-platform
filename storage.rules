@@ -1,0 +1,25 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules for Tasami Safety Platform
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Website media assets (logos, products catalog, certificates, hero images)
+    match /site_images/{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Website videos and media clips
+    match /site_videos/{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Default rule: Allow reading and uploading public media assets
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
