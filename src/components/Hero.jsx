@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   ShieldCheck,
   Settings,
@@ -8,8 +8,6 @@ import {
   Award,
   ArrowRight,
   ArrowLeft,
-  Pause,
-  Play,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
@@ -23,11 +21,97 @@ export default function Hero({
   onNavigateServices,
   onNavigateProducts
 }) {
-  const [motionPaused, setMotionPaused] = useState(false);
+  const [heroImgSrc, setHeroImgSrc] = useState('./images/hero-tasami-engineer-clean.jpg');
+  const [playCycle, setPlayCycle] = useState(1);
+  const [playMode, setPlayMode] = useState('initial'); // 'initial' | 'hover'
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const timerRef = useRef(null);
+  const mountedAtRef = useRef(Date.now());
+  const pointerLeftRef = useRef(true);
+
   const isAr = lang === 'ar';
   const t = content[lang].hero;
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
   const ChevronIcon = isAr ? ChevronLeft : ChevronRight;
+
+  const triggerReplay = useCallback((mode = 'initial') => {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      setIsPlaying(false);
+      return;
+    }
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    setPlayMode(mode);
+    setIsPlaying(true);
+    setPlayCycle((c) => c + 1);
+    timerRef.current = setTimeout(() => {
+      setIsPlaying(false);
+      timerRef.current = null;
+    }, 3200);
+  }, []);
+
+  useEffect(() => {
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      setIsPlaying(false);
+      return undefined;
+    }
+
+    timerRef.current = setTimeout(() => {
+      setIsPlaying(false);
+      timerRef.current = null;
+    }, 3200);
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleHeroReplay = () => {
+      if (Date.now() - mountedAtRef.current > 400) {
+        triggerReplay('initial');
+      }
+    };
+    const handlePageShow = (e) => {
+      if (e.persisted) {
+        triggerReplay('initial');
+      }
+    };
+
+    window.addEventListener('tasami-hero-replay', handleHeroReplay);
+    window.addEventListener('pageshow', handlePageShow);
+    return () => {
+      window.removeEventListener('tasami-hero-replay', handleHeroReplay);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, [triggerReplay]);
+
+  const handleShowcaseMouseEnter = () => {
+    if (!isPlaying && pointerLeftRef.current) {
+      pointerLeftRef.current = false;
+      triggerReplay('hover');
+    }
+  };
+
+  const handleShowcaseMouseLeave = () => {
+    pointerLeftRef.current = true;
+  };
 
   const pillarIcons = [
     <BellRing className="w-5 h-5 text-[#002366] dark:text-[#D4AF37]" />,
@@ -40,7 +124,8 @@ export default function Hero({
     {
       id: 'alarm',
       posClass: 'left-[31%] top-[28%]',
-      delay: '0s',
+      hudDelay: '1.55s',
+      radarDelay: '1.65s',
       Icon: BellRing,
       filter: 'alarm-smoke',
       popoverClass: 'hover-popover-down top-full pt-2 left-0',
@@ -53,7 +138,8 @@ export default function Hero({
     {
       id: 'suppression',
       posClass: 'left-[16%] top-[48%]',
-      delay: '1.1s',
+      hudDelay: '1.80s',
+      radarDelay: '1.90s',
       Icon: Flame,
       filter: 'suppression',
       popoverClass: 'hover-popover-up bottom-full pb-2 left-0',
@@ -66,7 +152,8 @@ export default function Hero({
     {
       id: 'pumps',
       posClass: 'left-[43%] top-[60%]',
-      delay: '2.1s',
+      hudDelay: '2.05s',
+      radarDelay: '2.15s',
       Icon: ShieldCheck,
       filter: 'sprinklers-pumps',
       popoverClass: 'hover-popover-up bottom-full pb-2 -translate-x-1/2 left-1/2',
@@ -239,45 +326,84 @@ export default function Hero({
 
           </div>
 
-          {/* Showcase Visual Column - Lightweight GPU Technical Motion + Telemetry HUD */}
+          {/* Showcase Visual Column - Apple-Style 3D Foldable Unfold + Self-Stopping Safety Telemetry */}
           <div className="lg:col-span-6">
             <div
-              className={`mx-auto max-w-md lg:max-w-none rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] shadow-[0_20px_50px_-24px_rgba(0,35,102,0.18)] ${
-                motionPaused ? 'hero-motion-paused' : ''
-              }`}
+              onMouseEnter={handleShowcaseMouseEnter}
+              onMouseLeave={handleShowcaseMouseLeave}
+              className="mx-auto max-w-md lg:max-w-none rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] shadow-[0_20px_50px_-24px_rgba(0,35,102,0.18)]"
             >
               {/* Visual Stage */}
               <div className="relative h-[320px] sm:h-[380px] lg:h-[400px]">
-                {/* Clipped Image + Pure GPU Technical Motion Layer */}
-                <div className="absolute inset-0 rounded-t-2xl overflow-hidden bg-[#0b1120]">
+                {/* Clipped 3D Unfold & Single-Sweep Engineering Layer */}
+                <div
+                  key={`stage-${playCycle}`}
+                  dir="ltr"
+                  className="hero-fold-stage absolute inset-0 rounded-t-2xl overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200/60 dark:from-[#0b1120] dark:to-[#131c31]"
+                >
+                  {/* Unified Native Crisp Resting Image */}
                   <img
-                    src="./images/hero-tasami-engineer-clean.jpg"
+                    src={heroImgSrc}
                     alt="مهندس سلامة معتمد - شركة تسامي الأعمال لأنظمة السلامة"
                     fetchpriority="high"
                     decoding="async"
-                    className="hero-ken-burns w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = './images/showcase/hero-engineer.jpg';
+                    className={`${
+                      playMode === 'hover' ? 'hero-final-img-hover' : 'hero-final-img-initial'
+                    } absolute inset-0 w-full h-full object-cover`}
+                    onError={() => setHeroImgSrc('./images/showcase/hero-engineer.jpg')}
+                  />
+
+                  {/* Left Folding Wing */}
+                  <div
+                    aria-hidden="true"
+                    className={`${
+                      playMode === 'hover' ? 'hero-fold-left-hover' : 'hero-fold-left-initial'
+                    } absolute top-0 left-0 w-1/2 h-full overflow-hidden pointer-events-none shadow-[8px_0_24px_rgba(0,0,0,0.22)] border-r border-white/25`}
+                  >
+                    <img
+                      src={heroImgSrc}
+                      alt=""
+                      decoding="async"
+                      className="w-[200%] max-w-none h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Right Folding Wing */}
+                  <div
+                    aria-hidden="true"
+                    className={`${
+                      playMode === 'hover' ? 'hero-fold-right-hover' : 'hero-fold-right-initial'
+                    } absolute top-0 left-1/2 w-1/2 h-full overflow-hidden pointer-events-none shadow-[-8px_0_24px_rgba(0,0,0,0.22)] border-l border-white/25`}
+                  >
+                    <img
+                      src={heroImgSrc}
+                      alt=""
+                      decoding="async"
+                      className="w-[200%] max-w-none h-full object-cover"
+                      style={{ transform: 'translateX(-50%)' }}
+                    />
+                  </div>
+
+                  {/* Specular Fold Glass Glint */}
+                  <div
+                    aria-hidden="true"
+                    className="hero-fold-sheen absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        'linear-gradient(105deg, transparent 34%, rgba(255,255,255,0.42) 49%, rgba(212,175,55,0.22) 55%, transparent 68%)'
                     }}
                   />
 
-                  {/* Subtle Atmospheric Vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070b14]/55 via-transparent to-[#070b14]/25 pointer-events-none" />
+                  {/* Whisper-Light Bottom Edge Scrim Only (Keeps Photo Crystal Clear) */}
+                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#070b14]/35 to-transparent pointer-events-none" />
 
-                  {/* Skyline-Scoped Engineering Grid */}
-                  <div className="absolute inset-0 hero-skyline-grid pointer-events-none" />
+                  {/* Single Technical Safety Scan Beam (Left Skyline Once Only) */}
+                  <div
+                    aria-hidden="true"
+                    className="hero-scan-once absolute top-0 left-0 w-[56%] h-20 pointer-events-none bg-gradient-to-b from-transparent via-[#D4AF37]/15 to-[#D4AF37]/30 border-b border-[#D4AF37]/80"
+                  />
 
-                  {/* Sweeping Technical Scan Beam */}
-                  <div className="absolute inset-x-0 top-0 h-24 hero-scan-beam pointer-events-none bg-gradient-to-b from-transparent via-[#D4AF37]/15 to-[#D4AF37]/30 border-b border-[#D4AF37]/75" />
-
-                  {/* Precision Corner Viewfinder Hairlines */}
-                  <span className="absolute top-2.5 left-2.5 w-4 h-4 border-t border-l border-[#D4AF37]/70 pointer-events-none" />
-                  <span className="absolute top-2.5 right-2.5 w-4 h-4 border-t border-r border-[#D4AF37]/70 pointer-events-none" />
-                  <span className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b border-l border-[#D4AF37]/70 pointer-events-none" />
-                  <span className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b border-r border-[#D4AF37]/70 pointer-events-none" />
-
-                  {/* Lightweight SVG Telemetry Links Connecting Skyline Sensors */}
+                  {/* Lightweight SVG Telemetry Links (Draws Once & Settles Calmly) */}
                   <svg
                     viewBox="0 0 100 100"
                     preserveAspectRatio="none"
@@ -289,25 +415,29 @@ export default function Hero({
                       fill="none"
                       stroke="#D4AF37"
                       strokeWidth="0.35"
-                      strokeOpacity="0.55"
-                      className="hero-telemetry-line"
+                      strokeOpacity="0.6"
+                      className="hero-telemetry-draw-once"
                     />
                     <path
                       d="M 31 28 L 43 60"
                       fill="none"
                       stroke="#60a5fa"
                       strokeWidth="0.25"
-                      strokeOpacity="0.4"
-                      className="hero-telemetry-line"
+                      strokeOpacity="0.45"
+                      className="hero-telemetry-draw-once"
                     />
                   </svg>
                 </div>
 
                 {/* Unclipped Interactive HUD Overlay */}
-                <div className="absolute inset-0 z-10 pointer-events-none">
-                  {/* Top-Left Live Telemetry Status Pill */}
-                  <div className="absolute top-3.5 left-3.5 pointer-events-auto inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b1120]/65 backdrop-blur-md border border-white/15 text-[10px] sm:text-[11px] font-semibold text-white">
-                    <span className={`w-1.5 h-1.5 rounded-full bg-emerald-400 ${motionPaused ? '' : 'animate-pulse'}`} />
+                <div key={`hud-${playCycle}`} className="absolute inset-0 z-10 pointer-events-none">
+                  {/* Top-Left Frosted-Glass Live Status Pill */}
+                  <div
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    style={{ animationDelay: '1.25s' }}
+                    className="hero-hud-enter absolute top-3.5 left-3.5 pointer-events-auto inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b1120]/65 backdrop-blur-md border border-white/15 text-[10px] sm:text-[11px] font-semibold text-white"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>{isAr ? 'رصد سلامة هندسي • SBC 801' : 'Active Safety Scan • SBC 801'}</span>
                   </div>
 
@@ -317,7 +447,9 @@ export default function Hero({
                     return (
                       <div
                         key={node.id}
-                        className={`pointer-events-auto group absolute -translate-x-1/2 -translate-y-1/2 ${node.posClass}`}
+                        dir={isAr ? 'rtl' : 'ltr'}
+                        style={{ animationDelay: node.hudDelay }}
+                        className={`hero-hud-enter pointer-events-auto group absolute -translate-x-1/2 -translate-y-1/2 ${node.posClass}`}
                       >
                         <button
                           type="button"
@@ -327,8 +459,8 @@ export default function Hero({
                         >
                           <span
                             aria-hidden="true"
-                            style={{ animationDelay: node.delay }}
-                            className="hero-radar-ring absolute inset-0 rounded-full border border-[#D4AF37]/75 pointer-events-none"
+                            style={{ animationDelay: node.radarDelay }}
+                            className="hero-radar-once absolute inset-0 rounded-full border border-[#D4AF37]/80 pointer-events-none"
                           />
                           <NodeIcon className="w-3.5 h-3.5 relative z-10" />
                         </button>
@@ -357,34 +489,33 @@ export default function Hero({
                     );
                   })}
 
-                  {/* Apple-style Play / Pause Motion Control */}
-                  <div className="absolute bottom-3.5 left-3.5 pointer-events-auto group">
-                    <button
-                      type="button"
-                      onClick={() => setMotionPaused((prev) => !prev)}
-                      aria-label={
-                        motionPaused
-                          ? isAr
-                            ? 'تشغيل الحركة التقنية'
-                            : 'Resume Technical Motion'
-                          : isAr
-                          ? 'إيقاف الحركة مؤقتاً'
-                          : 'Pause Motion'
-                      }
-                      className="w-8 h-8 rounded-full bg-[#0b1120]/65 hover:bg-[#0b1120]/90 backdrop-blur-md text-white border border-white/20 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
-                    >
-                      {motionPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
-                    </button>
+                  {/* Bottom-Left Apple-Glass Accreditation Capsule (No Pause Button) */}
+                  <div
+                    dir={isAr ? 'rtl' : 'ltr'}
+                    style={{ animationDelay: '2.2s' }}
+                    className="hero-hud-enter absolute bottom-3.5 left-3.5 pointer-events-auto group"
+                  >
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0b1120]/60 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white/95 cursor-default">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                      <span>{isAr ? 'معتمد • UL / FM • سلامة' : 'Certified • UL / FM • Salamah'}</span>
+                    </div>
 
-                    <div className="hover-popover-up hidden sm:block absolute bottom-full pb-2 left-0 w-44 z-30 text-start">
-                      <div className="rounded-lg bg-[#0b1120]/90 backdrop-blur-md border border-white/15 px-2.5 py-1.5 text-[11px] font-semibold text-white whitespace-nowrap shadow-lg">
-                        {motionPaused
-                          ? isAr
-                            ? 'تشغيل الحركة التقنية'
-                            : 'Resume Technical Motion'
-                          : isAr
-                          ? 'إيقاف الحركة مؤقتاً'
-                          : 'Pause Motion'}
+                    <div className="hover-popover-up hidden sm:block absolute bottom-full pb-2 left-0 w-60 z-30 text-start">
+                      <div className="rounded-xl bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-700/80 shadow-xl p-3 space-y-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[10px] font-bold text-[#C5A059] dark:text-[#D4AF37]">
+                            SBC 801 • UL / FM
+                          </span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        </div>
+                        <div className="text-xs font-bold text-[#002366] dark:text-white">
+                          {isAr ? 'تسامي الأعمال لأنظمة السلامة' : 'Tasami Business Safety Systems'}
+                        </div>
+                        <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300 text-start font-normal">
+                          {isAr
+                            ? 'منشأة مرخصة في بوابة سلامة لتنفيذ وصيانة أنظمة الحريق وفق كود البناء السعودي.'
+                            : 'Licensed on Salama portal for SBC 801 compliant fire protection engineering & maintenance.'}
+                        </p>
                       </div>
                     </div>
                   </div>

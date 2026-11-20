@@ -95,6 +95,9 @@ export default function App() {
       const { page, section } = parseRoute();
       setCurrentPage(page);
       setTargetSection(section);
+      if (page === 'home') {
+        window.dispatchEvent(new CustomEvent('tasami-hero-replay'));
+      }
 
       if (section) {
         setTimeout(() => {
@@ -132,6 +135,9 @@ export default function App() {
   const navigateTo = (page, sectionId = null, filter = null, shouldOpenCalc = false, knowledgeTab = null) => {
     setCurrentPage(page);
     setTargetSection(sectionId);
+    if (page === 'home') {
+      window.dispatchEvent(new CustomEvent('tasami-hero-replay'));
+    }
     
     if (page === 'services' && filter) {
       setActiveBranchFilter(filter);

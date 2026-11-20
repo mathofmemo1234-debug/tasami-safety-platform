@@ -279,11 +279,30 @@ html.dark .card-flashy:hover {
   .animate-dropdown-flash-right,
   .animate-explorer-in,
   .dropdown-flash-item,
-  .hero-ken-burns,
-  .hero-scan-beam,
-  .hero-radar-ring,
-  .hero-telemetry-line {
+  .hero-fold-right-initial,
+  .hero-fold-left-initial,
+  .hero-fold-right-hover,
+  .hero-fold-left-hover,
+  .hero-final-img-initial,
+  .hero-final-img-hover,
+  .hero-fold-sheen,
+  .hero-scan-once,
+  .hero-telemetry-draw-once,
+  .hero-hud-enter,
+  .hero-radar-once {
     animation: none !important;
+  }
+  .hero-final-img-initial,
+  .hero-final-img-hover {
+    opacity: 1 !important;
+  }
+  .hero-fold-right-initial,
+  .hero-fold-left-initial,
+  .hero-fold-right-hover,
+  .hero-fold-left-hover,
+  .hero-fold-sheen,
+  .hero-scan-once {
+    display: none !important;
   }
   .dropdown-flash-panel,
   .hover-popover-down,
@@ -294,64 +313,145 @@ html.dark .card-flashy:hover {
   }
 }
 
-/* Lightweight GPU-only Hero Technical Safety Motion */
-@keyframes heroTechKenBurns {
-  0% { transform: scale(1) translate3d(0, 0, 0); }
-  100% { transform: scale(1.06) translate3d(-1.2%, -0.8%, 0); }
+/* Apple-style One-Shot 3D Foldable Unfold & Technical Safety Reveal */
+.hero-fold-stage {
+  perspective: 1400px;
+  transform-style: preserve-3d;
 }
 
-@keyframes heroScanSweep {
-  0% { transform: translateY(-100%); opacity: 0; }
-  12% { opacity: 0.9; }
-  82% { opacity: 0.85; }
-  100% { transform: translateY(105%); opacity: 0; }
+@keyframes heroUnfoldRightInitial {
+  0% { transform: translateX(-48%) scale(0.9) rotateY(-14deg); filter: brightness(0.96); opacity: 1; }
+  32% { transform: translateX(-20%) scale(0.96) rotateY(-5deg); filter: blur(0.8px) brightness(0.98); opacity: 1; }
+  78% { transform: translateX(0%) scale(1) rotateY(0deg); filter: blur(0px) brightness(1); opacity: 1; }
+  92% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; }
+  100% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 0; }
 }
 
-@keyframes heroRadarPulse {
-  0% { transform: scale(0.85); opacity: 0.75; }
-  75% { transform: scale(2.15); opacity: 0; }
-  100% { transform: scale(2.15); opacity: 0; }
+@keyframes heroUnfoldLeftInitial {
+  0% { transform: translateX(48%) scale(0.9) rotateY(86deg); opacity: 0.2; filter: blur(2.5px) brightness(0.84); }
+  40% { transform: translateX(14%) scale(0.96) rotateY(26deg); opacity: 0.94; filter: blur(1px) brightness(0.96); }
+  78% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; filter: blur(0px) brightness(1); }
+  92% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; }
+  100% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 0; }
 }
 
-@keyframes heroTelemetryFlow {
-  from { stroke-dashoffset: 48; }
-  to { stroke-dashoffset: 0; }
+@keyframes heroFinalImgInitial {
+  0%, 76% { opacity: 0; }
+  90%, 100% { opacity: 1; }
 }
 
-.hero-ken-burns {
-  will-change: transform;
-  animation: heroTechKenBurns 18s ease-in-out infinite alternate;
+@keyframes heroUnfoldRightHover {
+  0% { transform: translateX(0%) scale(1) rotateY(0deg); filter: blur(0px); opacity: 1; }
+  24% { transform: translateX(-34%) scale(0.92) rotateY(-12deg); filter: blur(0.8px); opacity: 1; }
+  80% { transform: translateX(0%) scale(1) rotateY(0deg); filter: blur(0px); opacity: 1; }
+  92% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; }
+  100% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 0; }
 }
 
-.hero-scan-beam {
+@keyframes heroUnfoldLeftHover {
+  0% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; filter: blur(0px) brightness(1); }
+  24% { transform: translateX(34%) scale(0.92) rotateY(72deg); opacity: 0.45; filter: blur(2px) brightness(0.88); }
+  52% { transform: translateX(10%) scale(0.97) rotateY(20deg); opacity: 0.96; filter: blur(0.8px) brightness(0.97); }
+  80% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; filter: blur(0px) brightness(1); }
+  92% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 1; }
+  100% { transform: translateX(0%) scale(1) rotateY(0deg); opacity: 0; }
+}
+
+@keyframes heroFinalImgHover {
+  0% { opacity: 1; }
+  4%, 78% { opacity: 0; }
+  90%, 100% { opacity: 1; }
+}
+
+@keyframes heroFoldSheen {
+  0% { transform: translateX(-110%); opacity: 0; }
+  35% { opacity: 0.9; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+
+@keyframes heroScanOnce {
+  0% { transform: translateY(-110%); opacity: 0; }
+  18% { opacity: 0.85; }
+  82% { opacity: 0.75; }
+  100% { transform: translateY(340%); opacity: 0; }
+}
+
+@keyframes heroTelemetryDrawOnce {
+  0% { stroke-dashoffset: 68; opacity: 0; }
+  15% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes heroHudEnter {
+  0% { opacity: 0; transform: translateY(8px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes heroRadarOnce {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(2.25); opacity: 0; }
+}
+
+.hero-fold-right-initial {
+  transform-origin: left center;
+  backface-visibility: hidden;
   will-change: transform, opacity;
-  animation: heroScanSweep 6.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: heroUnfoldRightInitial 1.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-radar-ring {
+.hero-fold-left-initial {
+  transform-origin: right center;
+  backface-visibility: hidden;
   will-change: transform, opacity;
-  animation: heroRadarPulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: heroUnfoldLeftInitial 1.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-telemetry-line {
-  stroke-dasharray: 3.5 3.5;
-  animation: heroTelemetryFlow 12s linear infinite;
+.hero-final-img-initial {
+  will-change: opacity;
+  animation: heroFinalImgInitial 1.45s linear both;
 }
 
-.hero-skyline-grid {
-  background-image:
-    linear-gradient(to right, rgba(212, 175, 55, 0.14) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(212, 175, 55, 0.14) 1px, transparent 1px);
-  background-size: 28px 28px;
-  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 48%, transparent 74%);
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 48%, transparent 74%);
+.hero-fold-right-hover {
+  transform-origin: left center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  animation: heroUnfoldRightHover 1.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-motion-paused .hero-ken-burns,
-.hero-motion-paused .hero-scan-beam,
-.hero-motion-paused .hero-radar-ring,
-.hero-motion-paused .hero-telemetry-line {
-  animation-play-state: paused !important;
+.hero-fold-left-hover {
+  transform-origin: right center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  animation: heroUnfoldLeftHover 1.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-final-img-hover {
+  will-change: opacity;
+  animation: heroFinalImgHover 1.55s linear both;
+}
+
+.hero-fold-sheen {
+  will-change: transform, opacity;
+  animation: heroFoldSheen 1.2s ease-out 0.18s both;
+}
+
+.hero-scan-once {
+  will-change: transform, opacity;
+  animation: heroScanOnce 1.05s cubic-bezier(0.4, 0, 0.2, 1) 1.22s both;
+}
+
+.hero-telemetry-draw-once {
+  stroke-dasharray: 68;
+  animation: heroTelemetryDrawOnce 0.95s ease-out 1.35s both;
+}
+
+.hero-hud-enter {
+  animation: heroHudEnter 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-radar-once {
+  will-change: transform, opacity;
+  animation: heroRadarOnce 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Apple-style Pure CSS Hover Preview Popovers */
