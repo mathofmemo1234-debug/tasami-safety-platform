@@ -246,16 +246,16 @@ export default function FloatingSupportDock({
           </button>
         )}
 
-        {/* WhatsApp Icon-Only Link */}
+        {/* WhatsApp Icon-Only Link (Official WhatsApp Brand Green #25D366) */}
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={isAr ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}
           title={isAr ? `واتساب (${displayPrimaryPhone})` : `WhatsApp (${displayPrimaryPhone})`}
-          className="group relative w-12 h-12 rounded-full bg-[#C5A059] hover:bg-[#b58f47] text-white border border-[#C5A059] shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#002366]"
+          className="group relative w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white border border-[#25D366] shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#25D366]/50"
         >
-          <WhatsAppIcon className="w-5 h-5" />
+          <WhatsAppIcon className="w-6 h-6" />
           <span
             className={`hidden sm:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 absolute top-1/2 -translate-y-1/2 ${
               isAr ? 'left-14' : 'right-14'
@@ -272,7 +272,7 @@ export default function FloatingSupportDock({
           dir={isAr ? 'rtl' : 'ltr'}
           className={`fixed bottom-20 sm:bottom-24 ${
             isAr ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
-          } z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-h-[80vh] flex flex-col rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200/90 dark:border-slate-700 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200`}
+          } z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-h-[80vh] flex flex-col rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200/90 dark:border-slate-700 shadow-2xl overflow-hidden animate-dropdown-flash`}
         >
           {/* Popup Header */}
           <div className="bg-[#002366] px-4 py-3.5 text-white flex items-center justify-between gap-3 border-b border-[#C5A059]/40">
@@ -403,7 +403,7 @@ export default function FloatingSupportDock({
                           )}
                         </button>
                         {expanded && (
-                          <div className="px-3 pb-3 pt-2 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800 leading-relaxed bg-white dark:bg-[#0b1120]">
+                          <div className="px-3 pb-3 pt-2 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800 leading-relaxed bg-white dark:bg-[#0b1120] animate-dropdown-flash">
                             {faq.answer}
                           </div>
                         )}
@@ -639,7 +639,7 @@ export default function FloatingSupportDock({
                 href={`https://wa.me/${secondaryWaDigits}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-500 hover:text-[#002366] dark:hover:text-[#D4AF37] font-semibold"
+                className="text-slate-500 hover:text-[#25D366] font-semibold transition-colors"
                 title={isAr ? 'الرقم الاحتياطي' : 'Secondary WhatsApp'}
               >
                 {isAr ? 'رقم بديل' : 'Alt Line'}
@@ -648,7 +648,7 @@ export default function FloatingSupportDock({
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#C5A059] hover:bg-[#b58f47] text-white font-semibold transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-semibold transition-colors"
               >
                 <WhatsAppIcon className="w-3 h-3" />
                 <span>{isAr ? 'واتساب مباشر' : 'Direct WhatsApp'}</span>

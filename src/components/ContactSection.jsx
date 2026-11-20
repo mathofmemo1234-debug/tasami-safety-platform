@@ -145,7 +145,7 @@ export default function ContactSection({ lang, content, onOpenConsultation }) {
                       href="https://wa.me/966591684133"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-emerald-700 dark:text-emerald-400 hover:underline font-bold"
+                      className="text-[#25D366] hover:text-[#1EBE5D] hover:underline font-bold transition-colors"
                     >
                       محادثة فورية عبر واتساب 💬
                     </a>

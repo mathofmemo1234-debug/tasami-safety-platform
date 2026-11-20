@@ -213,11 +213,11 @@ export default function Navbar({
                   }`}
                 >
                   <span>{t.about}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#C5A059] group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#C5A059] group-hover:rotate-180 transition-transform duration-150" />
                 </button>
 
                 {/* Dropdown Panel */}
-                <div className="absolute top-full right-0 rtl:right-0 ltr:left-0 pt-2.5 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1 z-50 pointer-events-none group-hover:pointer-events-auto">
+                <div className="dropdown-flash-panel absolute top-full right-0 rtl:right-0 ltr:left-0 pt-2.5 w-72 z-50">
                   <div className="bg-white dark:bg-[#131c31] rounded-2xl shadow-lg border border-slate-200/80 dark:border-slate-800 p-2 space-y-1">
                     <div className="px-3 py-1.5 text-[10px] font-bold text-[#002366] dark:text-[#D4AF37] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
                       {lang === 'ar' ? 'أقسام عن الشركة' : 'Company Highlights'}
@@ -226,7 +226,7 @@ export default function Navbar({
                       <button
                         key={idx}
                         onClick={() => onNavigate(item.page, item.sectionId)}
-                        className="w-full flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition group/item text-right rtl:text-right ltr:text-left"
+                        className="dropdown-flash-item w-full flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition group/item text-right rtl:text-right ltr:text-left"
                       >
                         <div className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:border-[#C5A059] transition">
                           {item.icon}
@@ -256,11 +256,11 @@ export default function Navbar({
                   }`}
                 >
                   <span>{t.services}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#C5A059] group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#C5A059] group-hover:rotate-180 transition-transform duration-150" />
                 </button>
 
                 {/* Dropdown Panel */}
-                <div className="absolute top-full right-0 rtl:right-0 ltr:left-0 pt-2.5 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1 z-50 pointer-events-none group-hover:pointer-events-auto">
+                <div className="dropdown-flash-panel absolute top-full right-0 rtl:right-0 ltr:left-0 pt-2.5 w-80 z-50">
                   <div className="bg-white dark:bg-[#131c31] rounded-2xl shadow-lg border border-slate-200/80 dark:border-slate-800 p-2 space-y-1">
                     <div className="px-3 py-1.5 text-[10px] font-bold text-[#002366] dark:text-[#D4AF37] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                       <span>{lang === 'ar' ? 'صفحة الخدمات وتفريعاتها' : 'Services & Sub-Branches'}</span>
@@ -270,7 +270,7 @@ export default function Navbar({
                       <button
                         key={idx}
                         onClick={() => onNavigate(item.page, item.sectionId, item.filter, item.openCalculator)}
-                        className={`w-full flex items-start gap-2.5 p-2 rounded-xl transition group/item text-right rtl:text-right ltr:text-left ${
+                        className={`dropdown-flash-item w-full flex items-start gap-2.5 p-2 rounded-xl transition group/item text-right rtl:text-right ltr:text-left ${
                           item.isSpecial
                             ? 'bg-white dark:bg-[#0b1120] border border-[#C5A059]/45 hover:border-[#C5A059]'
                             : 'hover:bg-slate-50 dark:hover:bg-slate-800/80'
@@ -451,7 +451,7 @@ export default function Navbar({
 
         {/* Search Bar Overlay */}
         {searchOpen && (
-          <div className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 py-3 shadow-sm">
+          <div className="animate-dropdown-flash border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] px-4 py-3 shadow-sm">
             <form onSubmit={handleSearchSubmit} className="max-w-3xl mx-auto flex items-center gap-3">
               <Search className="w-5 h-5 text-[#002366] dark:text-[#D4AF37]" />
               <input
@@ -475,7 +475,7 @@ export default function Navbar({
 
         {/* Mobile Dropdown Menu with Full Accordions */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-slate-100 shadow-lg px-4 py-5 space-y-3 max-h-[85vh] overflow-y-auto">
+          <div className="animate-dropdown-flash lg:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] text-[#0f172a] dark:text-slate-100 shadow-lg px-4 py-5 space-y-3 max-h-[85vh] overflow-y-auto">
             
             {/* 1. الرئيسية */}
             <button
@@ -507,12 +507,12 @@ export default function Navbar({
                   className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-[#C5A059]"
                   aria-label="Toggle About Submenu"
                 >
-                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileAboutOpen ? 'rotate-180 text-[#C5A059]' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-150 ${mobileAboutOpen ? 'rotate-180 text-[#C5A059]' : ''}`} />
                 </button>
               </div>
 
               {mobileAboutOpen && (
-                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-white dark:bg-[#0b1120] border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl">
+                <div className="animate-dropdown-flash pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-white dark:bg-[#0b1120] border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl">
                   {aboutSubItems.map((sub, idx) => (
                     <button
                       key={idx}
@@ -520,7 +520,7 @@ export default function Navbar({
                         onNavigate(sub.page, sub.sectionId);
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] text-right rtl:text-right ltr:text-left"
+                      className="dropdown-flash-item w-full flex items-center gap-2 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] text-right rtl:text-right ltr:text-left"
                     >
                       {sub.icon}
                       <span>{sub.label}</span>
@@ -547,12 +547,12 @@ export default function Navbar({
                   className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-[#C5A059]"
                   aria-label="Toggle Services Submenu"
                 >
-                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180 text-[#C5A059]' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-150 ${mobileServicesOpen ? 'rotate-180 text-[#C5A059]' : ''}`} />
                 </button>
               </div>
 
               {mobileServicesOpen && (
-                <div className="pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-white dark:bg-[#0b1120] border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl">
+                <div className="animate-dropdown-flash pr-4 rtl:pr-4 ltr:pl-4 space-y-1.5 mt-1 bg-white dark:bg-[#0b1120] border border-slate-100 dark:border-slate-800 p-2.5 rounded-xl">
                   {servicesSubItems.map((sub, idx) => (
                     <button
                       key={idx}
@@ -560,7 +560,7 @@ export default function Navbar({
                         onNavigate(sub.page, sub.sectionId, sub.filter, sub.openCalculator);
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center justify-between py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] text-right rtl:text-right ltr:text-left"
+                      className="dropdown-flash-item w-full flex items-center justify-between py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] text-right rtl:text-right ltr:text-left"
                     >
                       <div className="flex items-center gap-2">
                         <span className={sub.isSpecial ? 'p-1 rounded bg-[#C5A059]' : ''}>{sub.icon}</span>

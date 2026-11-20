@@ -180,6 +180,13 @@ function CascadingPanel({
     };
   }, [coords, anchorRect, parentPanelRect, level]);
 
+  const animClass =
+    level === 0
+      ? 'animate-dropdown-flash'
+      : coords?.openSide === 'left'
+      ? 'animate-dropdown-flash-left'
+      : 'animate-dropdown-flash-right';
+
   return (
     <>
       {bridgeStyle && (
@@ -202,7 +209,7 @@ function CascadingPanel({
           zIndex: 60 + level,
           visibility: coords ? 'visible' : 'hidden'
         }}
-        className="animate-explorer-in bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-[0_14px_40px_-10px_rgba(0,35,102,0.14)] dark:shadow-2xl p-1.5"
+        className={`${coords ? animClass : ''} bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-[0_14px_40px_-10px_rgba(0,35,102,0.14)] dark:shadow-2xl p-1.5`}
       >
         <div className="max-h-[70vh] overflow-y-auto space-y-0.5 pe-0.5">
           {items.map((item) => {
@@ -210,7 +217,7 @@ function CascadingPanel({
             const isActive = activeItemId === item.id;
             const Icon = item.icon;
 
-            const rowClasses = `w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl text-start transition-colors duration-100 ${
+            const rowClasses = `dropdown-flash-item w-full flex items-center justify-between gap-2 px-2.5 py-2 rounded-xl text-start transition-colors duration-100 ${
               isActive
                 ? 'bg-[#002366]/5 dark:bg-[#0b1120] text-[#002366] dark:text-[#D4AF37]'
                 : 'text-[#0f172a] dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-[#0b1120]/70 hover:text-[#002366] dark:hover:text-[#D4AF37]'
@@ -221,7 +228,9 @@ function CascadingPanel({
                 <div className="flex items-center gap-2.5 min-w-0">
                   <span
                     className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 transition-colors ${
-                      isActive
+                      item.isWhatsApp
+                        ? 'border-[#25D366]/40 bg-white dark:bg-[#0b1120] text-[#25D366]'
+                        : isActive
                         ? 'border-[#C5A059] bg-white dark:bg-[#131c31] text-[#C5A059]'
                         : 'border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-[#002366] dark:text-[#D4AF37]'
                     }`}
@@ -788,7 +797,8 @@ export default function SiteExplorerMenu({
             subtitle: primaryPhone,
             icon: MessageCircle,
             href: waUrl,
-            external: true
+            external: true,
+            isWhatsApp: true
           },
           {
             id: 'cnt-phone',
@@ -850,7 +860,7 @@ export default function SiteExplorerMenu({
     if (!currentAtLevel) {
       applyHover();
     } else {
-      switchTimerRef.current = setTimeout(applyHover, 75);
+      switchTimerRef.current = setTimeout(applyHover, 45);
     }
   };
 
@@ -959,7 +969,7 @@ export default function SiteExplorerMenu({
       {isOpen && !isDesktop && (
         <div
           dir={isAr ? 'rtl' : 'ltr'}
-          className="fixed inset-x-3 top-[66px] sm:top-[74px] max-h-[76vh] flex flex-col bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xl z-[65] overflow-hidden animate-explorer-in"
+          className="animate-dropdown-flash fixed inset-x-3 top-[66px] sm:top-[74px] max-h-[76vh] flex flex-col bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xl z-[65] overflow-hidden"
         >
           {/* Breadcrumb / Header Bar */}
           <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 bg-white dark:bg-[#0b1120]">
@@ -1004,7 +1014,16 @@ export default function SiteExplorerMenu({
           </div>
 
           {/* Drill-Down List */}
-          <div className="flex-1 overflow-y-auto p-2 space-y-1">
+          <div
+            key={currentMobileNode?.id || 'root'}
+            className={`flex-1 overflow-y-auto p-2 space-y-1 ${
+              currentMobileNode
+                ? isAr
+                  ? 'animate-dropdown-flash-left'
+                  : 'animate-dropdown-flash-right'
+                : ''
+            }`}
+          >
             {currentMobileItems.map((item) => {
               const hasChildren = Array.isArray(item.children) && item.children.length > 0;
               const Icon = item.icon;
@@ -1012,7 +1031,7 @@ export default function SiteExplorerMenu({
               return (
                 <div
                   key={item.id}
-                  className="flex items-center gap-1 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-slate-800 hover:bg-slate-50/70 dark:hover:bg-[#0b1120]/60 transition-colors"
+                  className="dropdown-flash-item flex items-center gap-1 rounded-xl border border-transparent hover:border-slate-100 dark:hover:border-slate-800 hover:bg-slate-50/70 dark:hover:bg-[#0b1120]/60 transition-colors"
                 >
                   {item.href ? (
                     <a
@@ -1022,7 +1041,13 @@ export default function SiteExplorerMenu({
                       onClick={() => handleSelectItem(item)}
                       className="flex-1 flex items-center gap-2.5 p-2.5 text-start min-w-0"
                     >
-                      <span className="w-8 h-8 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center shrink-0 text-[#002366] dark:text-[#D4AF37]">
+                      <span
+                        className={`w-8 h-8 rounded-lg border bg-white dark:bg-[#0b1120] flex items-center justify-center shrink-0 ${
+                          item.isWhatsApp
+                            ? 'border-[#25D366]/40 text-[#25D366]'
+                            : 'border-slate-200/80 dark:border-slate-700 text-[#002366] dark:text-[#D4AF37]'
+                        }`}
+                      >
                         {Icon ? <Icon className="w-4 h-4" /> : <Layers className="w-4 h-4" />}
                       </span>
                       <div className="min-w-0 flex-1">
