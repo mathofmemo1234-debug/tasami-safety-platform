@@ -1,33 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- 1. الصفحة الرئيسية (Home Page) -->
   <url>
     <loc>https://tasaami.com/</loc>
-    <lastmod>2026-11-17</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://tasaami.com/logo.jpg</image:loc>
+      <image:title>شركة تسامي الأعمال لأنظمة السلامة ومكافحة الحريق</image:title>
+      <image:caption>شعار وهوية شركة تسامي الأعمال لأنظمة السلامة المعتمدة في المملكة العربية السعودية</image:caption>
+    </image:image>
   </url>
+
+  <!-- 2. الخدمات الهندسية وعقود الدفاع المدني (Services & Civil Defense) -->
   <url>
-    <loc>https://tasaami.com/#about</loc>
-    <lastmod>2026-11-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tasaami.com/#services</loc>
-    <lastmod>2026-11-17</lastmod>
+    <loc>https://tasaami.com/services</loc>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
+
+  <!-- 3. استيراد وتوريد منتجات ومعدات السلامة (Products & Safety Equipment Supply) -->
   <url>
-    <loc>https://tasaami.com/#products</loc>
-    <lastmod>2026-11-17</lastmod>
+    <loc>https://tasaami.com/products</loc>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
+
+  <!-- 4. عن الشركة والاعتمادات والتراخيص (About, Accreditations & Leadership) -->
   <url>
-    <loc>https://tasaami.com/#contact</loc>
-    <lastmod>2026-11-17</lastmod>
+    <loc>https://tasaami.com/about</loc>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
+
+  <!-- 5. التواصل وطلب المعاينة الهندسية (Contact & Engineering Inspection) -->
+  <url>
+    <loc>https://tasaami.com/contact</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 6. مركز اشتراطات الدفاع المدني وعقود سلامة (Civil Defense & Maintenance Knowledge Hub) -->
+  <url>
+    <loc>https://tasaami.com/civil-defense-requirements</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 7. دليل أنظمة الإطفاء التلقائي والغازات النظيفة (Fire Suppression Systems Guide) -->
+  <url>
+    <loc>https://tasaami.com/fire-suppression-systems</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 8. كتالوج توريد مهمات الوقاية وأنابيب الإطفاء (Safety Equipment & PPE Supply) -->
+  <url>
+    <loc>https://tasaami.com/safety-equipment-supply</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
 </urlset>

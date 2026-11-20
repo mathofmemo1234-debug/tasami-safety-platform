@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Headphones,
-  MessageCircle,
   Send,
   Search,
   ChevronDown,
@@ -49,7 +48,7 @@ const DEFAULT_FAQS_AR = [
     category: 'الدعم الفني',
     question: 'كيف يمكنني الحصول على عرض سعر فني أو معاينة موقع؟',
     answer:
-      'يمكنك إرسال سؤالك أو مخطط المشروع هنا مباشرة، أو التواصل الفوري معنا عبر زر الواتس آب الموحد (+966 59 168 4133) وسيرد عليك المهندس المختص.'
+      'يمكنك إرسال سؤالك أو مخطط المشروع هنا مباشرة، أو التواصل الفوري معنا عبر زر الواتساب (+966 59 168 4133) وسيرد عليك المهندس المختص.'
   }
 ];
 
@@ -76,6 +75,19 @@ const DEFAULT_FAQS_EN = [
       'Yes, we provide scheduled preventive maintenance and certified digital compliance reports for all commercial, residential, and industrial facilities.'
   }
 ];
+
+function WhatsAppIcon({ className = 'w-5 h-5' }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.82 14.07c-.24.69-1.41 1.32-1.96 1.4-.52.08-1.18.11-1.9-.12-.44-.14-1-.33-1.72-.64-3.03-1.31-5.01-4.37-5.16-4.57-.15-.2-1.23-1.64-1.23-3.13 0-1.49.78-2.22 1.05-2.52.27-.3.6-.38.8-.38h.58c.19 0 .44-.07.69.53.26.62.88 2.15.96 2.3.08.15.13.33.03.53-.1.2-.15.33-.3.5-.15.18-.32.4-.45.54-.15.15-.31.31-.13.61.18.3.78 1.29 1.68 2.09 1.15 1.03 2.12 1.35 2.42 1.5.3.15.48.13.66-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.74.82 2.04.97.3.15.5.22.57.34.07.12.07.7-.17 1.39z" />
+    </svg>
+  );
+}
 
 export default function FloatingSupportDock({
   lang = 'ar',
@@ -198,62 +210,59 @@ export default function FloatingSupportDock({
   };
 
   const popupEnabled = supportCfg.enabled !== false;
+  const supportLabel = supportCfg.title || (isAr ? 'الدعم الفني' : 'Technical Support');
+  const whatsappLabel = isAr ? 'واتساب الشركة' : 'WhatsApp';
 
   return (
     <>
-      {/* Global Floating Dock: WhatsApp + Technical Support */}
+      {/* Global Floating Dock: Icons-Only (Royal Blue Support + Gold WhatsApp) */}
       <div
-        className={`fixed bottom-5 ${
-          isAr ? 'left-5' : 'right-5'
-        } z-40 flex flex-col gap-3 items-start`}
+        className={`fixed bottom-4 sm:bottom-6 ${
+          isAr ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
+        } z-40 flex flex-col gap-2.5 items-center`}
       >
-        {/* Technical Support Popup Trigger Button */}
+        {/* Technical Support Icon-Only Button */}
         {popupEnabled && (
           <button
             type="button"
             onClick={() => setIsOpen((v) => !v)}
-            aria-label={isAr ? 'الدعم الفني' : 'Technical Support'}
-            className="group relative flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#113163] hover:bg-[#0d274e] text-white shadow-xl shadow-[#113163]/30 border border-[#c59a45]/60 transition-all duration-300 hover:-translate-y-0.5"
+            aria-label={supportLabel}
+            title={supportLabel}
+            className="group relative w-12 h-12 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white border border-[#C5A059]/60 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
           >
-            <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-[#c59a45] text-[#0b1120]">
-              <Headphones className="w-4 h-4" />
-              {answeredCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center shadow">
-                  {answeredCount}
-                </span>
-              )}
-            </div>
-            <div className="text-start leading-tight">
-              <span className="block text-xs font-black tracking-wide">
-                {supportCfg.title || (isAr ? 'الدعم الفني' : 'Technical Support')}
+            <Headphones className="w-5 h-5" />
+            {answeredCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C5A059] text-white text-[10px] font-bold flex items-center justify-center">
+                {answeredCount}
               </span>
-              <span className="block text-[10px] text-[#e8c682] font-semibold">
-                {isAr ? 'رد فوري على استفساراتك' : 'Instant Q&A Help'}
-              </span>
-            </div>
+            )}
+            <span
+              className={`hidden sm:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 absolute top-1/2 -translate-y-1/2 ${
+                isAr ? 'left-14' : 'right-14'
+              } whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#002366] text-white text-[11px] font-semibold shadow-md border border-[#C5A059]/40`}
+            >
+              {supportLabel}
+            </span>
           </button>
         )}
 
-        {/* Global Floating WhatsApp Button (Company Number) */}
+        {/* WhatsApp Icon-Only Link */}
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={isAr ? 'تواصل عبر واتس آب تسامي الأعمال' : 'Chat on WhatsApp'}
-          className="group relative flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#25D366] hover:bg-[#1ebe5d] text-white shadow-xl shadow-emerald-600/35 border border-white/25 transition-all duration-300 hover:-translate-y-0.5"
+          aria-label={isAr ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}
+          title={isAr ? `واتساب (${displayPrimaryPhone})` : `WhatsApp (${displayPrimaryPhone})`}
+          className="group relative w-12 h-12 rounded-full bg-[#C5A059] hover:bg-[#b58f47] text-white border border-[#C5A059] shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#002366]"
         >
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-white/20">
-            <MessageCircle className="w-5 h-5 fill-current" />
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-xl bg-white/40 opacity-50" />
+          <WhatsAppIcon className="w-5 h-5" />
+          <span
+            className={`hidden sm:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 absolute top-1/2 -translate-y-1/2 ${
+              isAr ? 'left-14' : 'right-14'
+            } whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#002366] text-white text-[11px] font-semibold shadow-md border border-[#C5A059]/40`}
+          >
+            {whatsappLabel}
           </span>
-          <div className="text-start leading-tight">
-            <span className="block text-xs font-black">
-              {isAr ? 'واتس آب الشركة' : 'WhatsApp Us'}
-            </span>
-            <span className="block text-[10px] font-mono font-bold text-white/95" dir="ltr">
-              {displayPrimaryPhone}
-            </span>
-          </div>
         </a>
       </div>
 
@@ -261,31 +270,30 @@ export default function FloatingSupportDock({
       {popupEnabled && isOpen && (
         <div
           dir={isAr ? 'rtl' : 'ltr'}
-          className={`fixed bottom-24 ${
+          className={`fixed bottom-20 sm:bottom-24 ${
             isAr ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
-          } z-50 w-[calc(100vw-2rem)] sm:w-[420px] max-h-[82vh] flex flex-col rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200`}
+          } z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-h-[80vh] flex flex-col rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200/90 dark:border-slate-700 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200`}
         >
           {/* Popup Header */}
-          <div className="bg-gradient-to-r from-[#0b1120] via-[#113163] to-[#1a4380] px-4 py-3.5 text-white flex items-center justify-between gap-3 border-b border-[#c59a45]/40">
+          <div className="bg-[#002366] px-4 py-3.5 text-white flex items-center justify-between gap-3 border-b border-[#C5A059]/40">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#c59a45]/20 border border-[#c59a45]/60 flex items-center justify-center text-[#dfb76c]">
-                <Headphones className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-xl bg-white/10 border border-[#C5A059]/60 flex items-center justify-center text-[#D4AF37]">
+                <Headphones className="w-4 h-4" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-black text-sm sm:text-base">
-                    {supportCfg.title || (isAr ? 'الدعم الفني' : 'Technical Support')}
+                  <h3 className="font-bold text-sm">
+                    {supportLabel}
                   </h3>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    {isAr ? 'متصل الآن' : 'Online'}
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 text-[#D4AF37] text-[10px] font-semibold">
+                    {isAr ? 'متصل' : 'Online'}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300">
+                <p className="text-[11px] text-white/75">
                   {supportCfg.subtitle ||
                     (isAr
-                      ? 'إجابات فورية ومباشرة من فريق السلامة والهندسة'
-                      : 'Instant answers directly from our engineering team')}
+                      ? 'إجابات فورية من فريق السلامة والهندسة'
+                      : 'Instant answers from our engineering team')}
                 </p>
               </div>
             </div>
@@ -300,14 +308,14 @@ export default function FloatingSupportDock({
           </div>
 
           {/* Mode Tabs */}
-          <div className="grid grid-cols-2 bg-slate-100 dark:bg-[#131c31] p-1 border-b border-slate-200 dark:border-slate-800 text-xs font-bold">
+          <div className="grid grid-cols-2 bg-white dark:bg-[#131c31] p-1 border-b border-slate-200/80 dark:border-slate-800 text-xs font-semibold">
             <button
               type="button"
               onClick={() => setActiveMode('instant')}
               className={`py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition ${
                 activeMode === 'instant'
-                  ? 'bg-white dark:bg-[#0f172a] text-[#113163] dark:text-[#dfb76c] shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-[#113163]'
+                  ? 'bg-[#002366] text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-[#002366]'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -318,14 +326,14 @@ export default function FloatingSupportDock({
               onClick={() => setActiveMode('live')}
               className={`py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition ${
                 activeMode === 'live'
-                  ? 'bg-white dark:bg-[#0f172a] text-[#113163] dark:text-[#dfb76c] shadow-sm'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-[#113163]'
+                  ? 'bg-[#002366] text-white'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-[#002366]'
               }`}
             >
               <HelpCircle className="w-3.5 h-3.5" />
               <span>{isAr ? 'اسأل الدعم الفني' : 'Ask Support'}</span>
               {tickets.length > 0 && (
-                <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#113163] text-white">
+                <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-[#C5A059] text-white">
                   {tickets.length}
                 </span>
               )}
@@ -333,11 +341,11 @@ export default function FloatingSupportDock({
           </div>
 
           {/* Popup Body */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/70 dark:bg-[#0b1120]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-white dark:bg-[#0b1120]">
             {activeMode === 'instant' ? (
               <>
                 {/* Welcome Banner */}
-                <div className="p-3 rounded-xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                <div className="p-3 rounded-xl bg-white dark:bg-[#131c31] border border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   {supportCfg.welcomeMessage ||
                     (isAr
                       ? 'أهلاً بك في الدعم الفني لشركة تسامي الأعمال. ابحث عن إجابتك الفورية أدناه أو أرسل سؤالك مباشرة للفريق المختص.'
@@ -360,7 +368,7 @@ export default function FloatingSupportDock({
                     }
                     className={`w-full ${
                       isAr ? 'pr-9 pl-3' : 'pl-9 pr-3'
-                    } py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]`}
+                    } py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#131c31] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#002366]`}
                   />
                 </div>
 
@@ -371,31 +379,31 @@ export default function FloatingSupportDock({
                     return (
                       <div
                         key={faq.id}
-                        className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131c31] overflow-hidden"
+                        className="rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] overflow-hidden"
                       >
                         <button
                           type="button"
                           onClick={() => setOpenFaqId(expanded ? null : faq.id)}
-                          className="w-full p-3 flex items-start justify-between gap-2 text-start hover:bg-slate-50 dark:hover:bg-slate-800/40 transition"
+                          className="w-full p-3 flex items-start justify-between gap-2 text-start hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition"
                         >
                           <div>
                             {faq.category && (
-                              <span className="inline-block text-[10px] font-bold text-[#9c7224] dark:text-[#dfb76c] mb-0.5">
+                              <span className="inline-block text-[10px] font-semibold text-[#C5A059] dark:text-[#D4AF37] mb-0.5">
                                 {faq.category}
                               </span>
                             )}
-                            <p className="text-xs font-bold text-[#0f172a] dark:text-white leading-snug">
+                            <p className="text-xs font-bold text-[#002366] dark:text-white leading-snug">
                               {faq.question}
                             </p>
                           </div>
                           {expanded ? (
-                            <ChevronUp className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                            <ChevronUp className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
                           ) : (
                             <ChevronDown className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                           )}
                         </button>
                         {expanded && (
-                          <div className="px-3 pb-3 pt-1 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800 leading-relaxed bg-slate-50/70 dark:bg-[#0b1120]/60">
+                          <div className="px-3 pb-3 pt-2 text-xs text-slate-600 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800 leading-relaxed bg-white dark:bg-[#0b1120]">
                             {faq.answer}
                           </div>
                         )}
@@ -416,7 +424,7 @@ export default function FloatingSupportDock({
                 <button
                   type="button"
                   onClick={() => setActiveMode('live')}
-                  className="w-full py-2.5 px-4 rounded-xl bg-[#113163] hover:bg-[#0d274e] text-white text-xs font-black flex items-center justify-center gap-2 shadow transition"
+                  className="w-full py-2.5 px-4 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>
@@ -431,7 +439,7 @@ export default function FloatingSupportDock({
                 {/* Live Submit Form */}
                 <form
                   onSubmit={handleSubmitQuestion}
-                  className="bg-white dark:bg-[#131c31] rounded-xl p-3 border border-slate-200 dark:border-slate-800 space-y-2.5"
+                  className="bg-white dark:bg-[#131c31] rounded-xl p-3 border border-slate-200/80 dark:border-slate-800 space-y-2.5"
                 >
                   <div className="grid grid-cols-2 gap-2">
                     <input
@@ -439,14 +447,14 @@ export default function FloatingSupportDock({
                       value={visitorName}
                       onChange={(e) => setVisitorName(e.target.value)}
                       placeholder={isAr ? 'الاسم (اختياري)' : 'Name (optional)'}
-                      className="px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
+                      className="px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#002366]"
                     />
                     <input
                       type="tel"
                       value={visitorPhone}
                       onChange={(e) => setVisitorPhone(e.target.value)}
-                      placeholder={isAr ? 'رقم الجوال / واتس آب' : 'Phone / WhatsApp'}
-                      className="px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
+                      placeholder={isAr ? 'رقم الجوال / واتساب' : 'Phone / WhatsApp'}
+                      className="px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#002366]"
                       dir="ltr"
                     />
                   </div>
@@ -454,7 +462,7 @@ export default function FloatingSupportDock({
                   <select
                     value={questionCategory}
                     onChange={(e) => setQuestionCategory(e.target.value)}
-                    className="w-full px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs font-semibold text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
+                    className="w-full px-2.5 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-xs font-semibold text-[#0f172a] dark:text-white outline-none focus:border-[#002366]"
                   >
                     <option value={isAr ? 'استفسار فني عن منتج' : 'Technical Product Inquiry'}>
                       {isAr ? 'استفسار فني عن منتج' : 'Technical Product Inquiry'}
@@ -480,13 +488,13 @@ export default function FloatingSupportDock({
                         ? 'اكتب سؤالك الفوري هنا وسيتم الرد عليك مباشرة...'
                         : 'Write your question here for an instant support reply...'
                     }
-                    className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
+                    className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#002366]"
                   />
 
                   <button
                     type="submit"
                     disabled={submitting || !questionText.trim()}
-                    className="w-full py-2 px-4 rounded-xl bg-gradient-to-r from-[#113163] to-[#1a4380] hover:opacity-95 text-white text-xs font-black flex items-center justify-center gap-2 transition disabled:opacity-50"
+                    className="w-full py-2 px-4 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>
@@ -501,7 +509,7 @@ export default function FloatingSupportDock({
                   </button>
 
                   {submitFeedback && (
-                    <p className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+                    <p className="text-[11px] font-semibold text-[#002366] dark:text-[#D4AF37]">
                       {submitFeedback}
                     </p>
                   )}
@@ -509,7 +517,7 @@ export default function FloatingSupportDock({
 
                 {/* Conversation Thread History */}
                 <div className="space-y-2.5">
-                  <h4 className="text-[11px] font-black text-slate-500 dark:text-slate-400 uppercase">
+                  <h4 className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase">
                     {isAr ? 'محادثاتك وردود الدعم الفني' : 'Your Support Conversations'}
                   </h4>
 
@@ -523,38 +531,38 @@ export default function FloatingSupportDock({
                     tickets.map((ticket) => (
                       <div
                         key={ticket.id}
-                        className="rounded-xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 p-3 space-y-2"
+                        className="rounded-xl bg-white dark:bg-[#131c31] border border-slate-200/80 dark:border-slate-800 p-3 space-y-2"
                       >
                         <div className="flex items-center justify-between gap-2 text-[10px]">
-                          <span className="font-bold text-[#9c7224] dark:text-[#dfb76c]">
+                          <span className="font-bold text-[#C5A059] dark:text-[#D4AF37]">
                             {ticket.category}
                           </span>
                           <span
-                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold ${
+                            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-semibold border ${
                               ticket.status === 'answered'
-                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300'
+                                ? 'border-[#C5A059]/60 text-[#002366] dark:text-[#D4AF37]'
                                 : ticket.status === 'closed'
-                                ? 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
-                                : 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300'
+                                ? 'border-slate-200 text-slate-500 dark:border-slate-700 dark:text-slate-400'
+                                : 'border-[#002366]/25 text-[#002366] dark:text-slate-300'
                             }`}
                           >
                             {ticket.status === 'answered' ? (
                               <>
-                                <CheckCircle2 className="w-3 h-3" />
+                                <CheckCircle2 className="w-3 h-3 text-[#C5A059]" />
                                 {isAr ? 'تم الرد' : 'Replied'}
                               </>
                             ) : ticket.status === 'closed' ? (
                               isAr ? 'مغلق' : 'Closed'
                             ) : (
                               <>
-                                <Clock className="w-3 h-3" />
+                                <Clock className="w-3 h-3 text-[#C5A059]" />
                                 {isAr ? 'بانتظار الرد' : 'Pending'}
                               </>
                             )}
                           </span>
                         </div>
 
-                        <div className="p-2.5 rounded-lg bg-[#113163]/5 dark:bg-[#113163]/25 text-xs font-semibold text-[#0f172a] dark:text-white">
+                        <div className="p-2.5 rounded-lg border border-slate-100 dark:border-slate-800 text-xs font-semibold text-[#002366] dark:text-white">
                           {ticket.question}
                         </div>
 
@@ -562,13 +570,13 @@ export default function FloatingSupportDock({
                           ticket.replies.map((rep) => (
                             <div
                               key={rep.id}
-                              className={`p-2.5 rounded-lg text-xs leading-relaxed ${
+                              className={`p-2.5 rounded-lg text-xs leading-relaxed border ${
                                 rep.sender === 'admin'
-                                  ? 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-emerald-950 dark:text-emerald-100'
-                                  : 'bg-slate-100 dark:bg-slate-800/70 text-slate-800 dark:text-slate-200'
+                                  ? 'border-[#C5A059]/50 bg-white dark:bg-[#0b1120] text-[#002366] dark:text-slate-100'
+                                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-slate-700 dark:text-slate-200'
                               }`}
                             >
-                              <div className="text-[10px] font-black mb-0.5 opacity-80">
+                              <div className="text-[10px] font-bold mb-0.5 text-[#C5A059]">
                                 {rep.sender === 'admin'
                                   ? isAr
                                     ? 'رد الدعم الفني:'
@@ -601,12 +609,12 @@ export default function FloatingSupportDock({
                               placeholder={
                                 isAr ? 'أضف متابعة...' : 'Add follow-up...'
                               }
-                              className="flex-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[11px] text-[#0f172a] dark:text-white outline-none"
+                              className="flex-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-[11px] text-[#0f172a] dark:text-white outline-none focus:border-[#002366]"
                             />
                             <button
                               type="button"
                               onClick={() => handleVisitorReply(ticket.id)}
-                              className="px-2.5 py-1.5 rounded-lg bg-[#113163] text-white text-[11px] font-bold"
+                              className="px-2.5 py-1.5 rounded-lg bg-[#002366] hover:bg-[#1D4ED8] text-white text-[11px] font-bold transition-colors"
                             >
                               <Send className="w-3.5 h-3.5" />
                             </button>
@@ -621,9 +629,9 @@ export default function FloatingSupportDock({
           </div>
 
           {/* Quick WhatsApp Footer inside Popup */}
-          <div className="px-4 py-2.5 bg-slate-100 dark:bg-[#131c31] border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 text-[11px]">
+          <div className="px-4 py-2.5 bg-white dark:bg-[#131c31] border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-2 text-[11px]">
             <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 font-semibold">
-              <Phone className="w-3.5 h-3.5 text-[#c59a45]" />
+              <Phone className="w-3.5 h-3.5 text-[#C5A059]" />
               <span dir="ltr">{displayPrimaryPhone}</span>
             </div>
             <div className="flex items-center gap-2">
@@ -631,7 +639,7 @@ export default function FloatingSupportDock({
                 href={`https://wa.me/${secondaryWaDigits}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-500 hover:text-emerald-600 font-bold"
+                className="text-slate-500 hover:text-[#002366] dark:hover:text-[#D4AF37] font-semibold"
                 title={isAr ? 'الرقم الاحتياطي' : 'Secondary WhatsApp'}
               >
                 {isAr ? 'رقم بديل' : 'Alt Line'}
@@ -640,10 +648,10 @@ export default function FloatingSupportDock({
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black transition"
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#C5A059] hover:bg-[#b58f47] text-white font-semibold transition-colors"
               >
-                <MessageCircle className="w-3 h-3" />
-                <span>{isAr ? 'واتس آب مباشر' : 'Direct WhatsApp'}</span>
+                <WhatsAppIcon className="w-3 h-3" />
+                <span>{isAr ? 'واتساب مباشر' : 'Direct WhatsApp'}</span>
                 <ExternalLink className="w-2.5 h-2.5" />
               </a>
             </div>

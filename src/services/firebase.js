@@ -16,6 +16,7 @@ import {
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { content as defaultContent } from '../data/content';
+import { UI_CONFIG } from '../config/siteConfig';
 import {
   compressImageFile,
   deepOptimizePayload,
@@ -141,6 +142,9 @@ const LEGACY_ADDRESS_AR = 'مكة المكرمة – الشوقية – شارع
 const LEGACY_ADDRESS_EN_1 = 'Ibrahim Al Khalil St - Ash Shawqiyah - Makkah';
 const LEGACY_ADDRESS_EN_2 = 'Makkah Al-Mukarramah – Ash Shawqiyah – Ibrahim Al Khalil Street';
 
+const LEGACY_HERO_DESC_AR = 'نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية وفق أعلى المعايير المحلية والعالمية.';
+const LEGACY_HERO_DESC_EN = 'We excel in providing turnkey solutions including the supply, installation, and maintenance of cutting-edge fire fighting and fire alarm systems tailored for industrial, commercial, and residential sectors under the highest Saudi and international standards.';
+
 function migrateLocationFields(merged) {
   ['ar', 'en'].forEach((l) => {
     const c = merged?.[l]?.contact;
@@ -169,6 +173,18 @@ function migrateLocationFields(merged) {
     const defF = defaultContent[l].footer;
     if (f && (f.address === LEGACY_ADDRESS_AR || f.address === LEGACY_ADDRESS_EN_2)) {
       f.address = defF.address;
+    }
+
+    // Migrate legacy announcementTicker records so the bar defaults to hidden unless explicitly toggled in Admin
+    const ticker = merged?.[l]?.announcementTicker;
+    if (ticker && ticker.adminControlledV2 !== true) {
+      ticker.enabled = UI_CONFIG.showAnnouncementBarByDefault;
+    }
+
+    // Upgrade exact-match legacy verbose hero description to concise Apple/Microsoft copy while preserving custom edits
+    const hero = merged?.[l]?.hero;
+    if (hero && (hero.description === LEGACY_HERO_DESC_AR || hero.description === LEGACY_HERO_DESC_EN)) {
+      hero.description = defaultContent[l].hero.description;
     }
 
     // Upgrade legacy/mismatched product images & missing multi-angle galleries while preserving custom admin edits

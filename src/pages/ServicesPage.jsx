@@ -18,6 +18,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import SafetyCalculator from '../components/SafetyCalculator';
+import CivilDefenseKnowledgeHub from '../components/CivilDefenseKnowledgeHub';
 import TasamiLogo from '../components/TasamiLogo';
 import CustomParagraphSlot, { FormattedParagraph } from '../components/CustomParagraphSlot';
 import { getParagraphStyle } from '../utils/typography';
@@ -69,7 +70,7 @@ export default function ServicesPage({
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [targetSection, showCalculator]);
+  }, [targetSection, showCalculator, activeBranch]);
 
   // Sub-branches definition
   const branches = [
@@ -379,7 +380,8 @@ export default function ServicesPage({
         {filteredServices.map((srv) => (
           <div
             key={srv.id}
-            className="bg-white dark:bg-[#131c31] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+            id={`service-${srv.id}`}
+            className="bg-white dark:bg-[#131c31] rounded-2xl p-7 border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group scroll-mt-28"
           >
             <div className="space-y-4">
               
@@ -446,6 +448,13 @@ export default function ServicesPage({
       </div>
 
       <CustomParagraphSlot placement="services:afterGrid" lang={lang} content={content} />
+
+      {/* 3.4 Authoritative Civil Defense, SBC 801 & Suppression Systems Knowledge Hub (AEO / GEO) */}
+      <CivilDefenseKnowledgeHub
+        lang={lang}
+        content={content}
+        onOpenConsultation={onOpenConsultation}
+      />
 
       {/* 3.5 Integrated Service Stages & Commercial Advantages Table */}
       {Array.isArray(content[lang]?.coreServices?.serviceTable) && content[lang].coreServices.serviceTable.length > 0 && (

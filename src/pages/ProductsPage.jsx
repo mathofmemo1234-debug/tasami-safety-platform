@@ -75,7 +75,10 @@ function ProductCard({
   )}`;
 
   return (
-    <div className="bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+    <div
+      id={`product-${item.id}`}
+      className="bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-[#c59a45]/70 hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group scroll-mt-28"
+    >
       {/* Main Media Stage: Multi-Angle Photos OR Inline Video Player inside the Page */}
       <div>
         <div className="relative h-52 bg-gradient-to-b from-slate-100 to-slate-200/70 dark:from-[#0b1120] dark:to-[#131c31] overflow-hidden">
@@ -349,7 +352,9 @@ export default function ProductsPage({
   lang,
   content,
   onNavigate,
-  onOpenConsultation
+  onOpenConsultation,
+  targetSection = null,
+  activeCategoryFilter = null
 }) {
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
@@ -361,9 +366,33 @@ export default function ProductsPage({
     content?.ar?.visibility?.videos !== false;
   const [searchTerm, setSearchTerm] = useState('');
   const [galleryModalState, setGalleryModalState] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState(activeCategoryFilter || 'all');
   const [activeVideo, setActiveVideo] = useState(null);
   const [showBrandsModal, setShowBrandsModal] = useState(false);
+
+  // Sync active category when navigated via deep-link / Site Explorer
+  useEffect(() => {
+    if (activeCategoryFilter) {
+      setActiveCategory(activeCategoryFilter);
+      setSearchTerm('');
+    }
+  }, [activeCategoryFilter, targetSection]);
+
+  // Smoothly scroll to targeted product card or section
+  useEffect(() => {
+    if (targetSection) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetSection);
+        if (el) {
+          const headerOffset = 105;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+      }, 160);
+      return () => clearTimeout(timer);
+    }
+  }, [targetSection, activeCategory]);
 
   const [currentUserId, setCurrentUserId] = useState(() => getLocalUser()?.uid || 'guest');
   const [favorites, setFavorites] = useState(() => getFavorites(currentUserId));
@@ -506,6 +535,34 @@ export default function ProductsPage({
 
       <CustomParagraphSlot placement="products:top" lang={lang} content={content} />
 
+      {/* AEO / GEO Direct Procurement & Import Authority Banner */}
+      <div className="rounded-2xl bg-white dark:bg-[#131c31] border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1.5 max-w-3xl">
+            <div className="flex items-center gap-2 text-xs font-black text-[#9a752a] dark:text-[#dfb76c]">
+              <ShieldCheck className="w-4 h-4" />
+              <span>{isAr ? 'قطاع الاستيراد والتوريد المعتمد للمشاريع (Direct Supply Authority)' : 'Certified Direct Procurement & Supply Authority'}</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+              {isAr
+                ? 'توفر شركة «تسامي الأعمال» خدمات استيراد وتوريد مباشرة لكافة مستلزمات مكافحة الحريق والإنذار ومهمات الوقاية الشخصية (PPE) للمقاولين وكبرى المشاريع في المملكة. نلتزم بأعلى معايير الجودة العالمية (UL Listed / FM Approved / LPCB) والمطابقة التامة لاشتراطات كود البناء السعودي SBC 801 ومنصة سابر (SABER) مع توفير كميات المشاريع بأسعار تنافسية وتسليم فوري.'
+                : 'Tasami Business provides direct import and procurement of turnkey fire protection, alarm systems, and PPE for contractors and infrastructure projects across Saudi Arabia. Fully compliant with SBC 801, SASO SABER, UL, FM, and LPCB standards with competitive bulk pricing and rapid fulfillment.'}
+            </p>
+          </div>
+          <div className="flex flex-wrap md:flex-col gap-2 shrink-0">
+            <span className="px-3 py-1 rounded-lg bg-slate-100 dark:bg-[#0b1120] text-[11px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              ✓ {isAr ? 'تسجيل سابر SABER' : 'SABER Registered'}
+            </span>
+            <span className="px-3 py-1 rounded-lg bg-slate-100 dark:bg-[#0b1120] text-[11px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              ✓ {isAr ? 'معتمد UL & FM' : 'UL & FM Certified'}
+            </span>
+            <span className="px-3 py-1 rounded-lg bg-slate-100 dark:bg-[#0b1120] text-[11px] font-bold text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              ✓ {isAr ? 'كود SBC 801' : 'SBC 801 Code'}
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* 2. Sub-branches & Search Filter */}
       <div className="space-y-6">
         
@@ -610,7 +667,7 @@ export default function ProductsPage({
       <CustomParagraphSlot placement="products:beforeGrid" lang={lang} content={content} />
 
       {/* 3. Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div id="products-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 scroll-mt-28">
         {filteredItems.map((item, idx) => (
           <ProductCard
             key={item.id || idx}

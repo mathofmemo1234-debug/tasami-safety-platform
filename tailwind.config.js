@@ -11,12 +11,15 @@ export default {
         brand: {
           gold: {
             DEFAULT: '#c59a45',
+            primary: '#C5A059',
+            bright: '#D4AF37',
             light: '#dfb76c',
             dark: '#9a752a',
             gradient: '#dfb76c'
           },
           royal: {
             DEFAULT: '#1d4ed8',
+            primary: '#002366',
             header: '#162d6c',
             deep: '#0f2152',
             hover: '#1e40af',

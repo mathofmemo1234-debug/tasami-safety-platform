@@ -17,6 +17,7 @@ import {
   updateCustomerReview,
   deleteCustomerReview
 } from '../services/firebase';
+import { UI_CONFIG } from '../config/siteConfig';
 
 export default function ReviewsTickerAdminTab({
   localData,
@@ -59,11 +60,16 @@ export default function ReviewsTickerAdminTab({
   };
 
   const tickerCfg = localData?.[langTab]?.announcementTicker || {
-    enabled: true,
+    enabled: UI_CONFIG.showAnnouncementBarByDefault,
     speed: 'medium',
     includeApprovedReviews: true,
     items: []
   };
+
+  const isTickerEnabled =
+    tickerCfg.adminControlledV2 === true
+      ? Boolean(tickerCfg.enabled)
+      : UI_CONFIG.showAnnouncementBarByDefault;
 
   const pendingCount = useMemo(
     () => reviews.filter((r) => r.status === 'pending').length,
@@ -626,11 +632,17 @@ export default function ReviewsTickerAdminTab({
                 <label className="flex items-center gap-2 font-bold cursor-pointer">
                   <input
                     type="checkbox"
-                    checked={tickerCfg.enabled !== false}
-                    onChange={(e) => updateTickerField('enabled', e.target.checked)}
+                    checked={isTickerEnabled}
+                    onChange={(e) =>
+                      updateNested([langTab, 'announcementTicker'], {
+                        ...tickerCfg,
+                        enabled: e.target.checked,
+                        adminControlledV2: true
+                      })
+                    }
                     className="w-4 h-4 accent-[#c59a45]"
                   />
-                  <span>تفعيل الشريط المتحرك</span>
+                  <span>إظهار شريط الإعلانات المتحرك في الواجهة الرئيسية</span>
                 </label>
                 <label className="flex items-center gap-2 font-bold cursor-pointer">
                   <input
@@ -654,6 +666,9 @@ export default function ReviewsTickerAdminTab({
                 </select>
               </div>
             </div>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              الشريط مخفي افتراضياً في الواجهة الرئيسية للحفاظ على الهدوء البصري، ويمكنك إظهاره أو إخفاؤه من هنا أو عبر <code className="font-mono text-[#002366] dark:text-[#dfb76c]">UI_CONFIG.showAnnouncementBarByDefault</code> في ملف الإعدادات.
+            </p>
           </div>
 
           <div className="flex items-center justify-between">

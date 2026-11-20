@@ -1,3 +1,5 @@
+import { UI_CONFIG } from '../config/siteConfig';
+
 export const content = {
   ar: {
     brand: {
@@ -31,15 +33,15 @@ export const content = {
     hero: {
       badge: "تسامي الأعمال لأنظمة السلامة | TASAMI BUSINESS FOR SAFETY SYSTEMS",
       title: "حلول متكاملة في أنظمة الإطفاء والإنذار من الحريق",
-      subtitle: "نحو بيئة آمنة خالية تماماً من المخاطر",
-      description: "نتميز بتوفير خدمات متكاملة تشمل توريد، تركيب، وصيانة أحدث أنظمة الإطفاء والإنذار من الحريق، مصممة لتلبية احتياجات مختلف القطاعات من منشآت صناعية وتجارية وسكنية وفق أعلى المعايير المحلية والعالمية.",
-      ctaPrimary: "طلب معاينة وتوريد",
+      subtitle: "بيئة آمنة خالية من المخاطر",
+      description: "توريد وتركيب وصيانة أنظمة الإطفاء والإنذار وفق اشتراطات الدفاع المدني وكود البناء السعودي.",
+      ctaPrimary: "طلب معاينة هندسية",
       ctaSecondary: "استعراض أنظمة الإطفاء",
       features: [
-        { title: "أنظمة إنذار الحريق", desc: "كواشف متطورة، أجهزة تنبيه، وربط بلوحات التحكم الذكية" },
-        { title: "أنظمة التحكم بالدخان", desc: "سحب الدخان، تعويض الهواء، وضغط سلالم الهروب" },
-        { title: "شبكات الإطفاء المائية", desc: "تمديد الأنابيب، الرشاشات، المضخات، وصناديق الحريق" },
-        { title: "أنظمة الإطفاء التلقائي", desc: "FM-200، NOVEC 1230، أيروسول، مطابخ تجارية، وCO₂" },
+        { title: "أنظمة إنذار الحريق", desc: "كواشف ذكية ولوحات تحكم معتمدة" },
+        { title: "أنظمة التحكم بالدخان", desc: "سحب الدخان وضغط سلالم الطوارئ" },
+        { title: "شبكات الإطفاء المائية", desc: "رشاشات ومضخات معتمدة UL/FM" },
+        { title: "أنظمة الإطفاء التلقائي", desc: "FM-200 وNOVEC والمطابخ التجارية" },
       ]
     },
     about: {
@@ -687,7 +689,7 @@ export const content = {
       enabled: true,
       tag: "قيّمنا وآراء العملاء",
       title: "ثقة عملائنا وشركاء النجاح",
-      subtitle: "آراء وتقييمات معتمدة من عملائنا في المشاريع التجارية والصناعية والسكنية، ولا يُنشر أي تقييم إلا بعد موافقة الإدارة.",
+      subtitle: "تقييمات معتمدة من عملائنا بعد تنفيذ مشاريع وتوريدات السلامة.",
       items: [
         {
           id: "rev-seed-1",
@@ -719,7 +721,7 @@ export const content = {
       ]
     },
     announcementTicker: {
-      enabled: true,
+      enabled: UI_CONFIG.showAnnouncementBarByDefault,
       speed: "medium",
       includeApprovedReviews: true,
       items: [
@@ -793,15 +795,15 @@ export const content = {
     hero: {
       badge: "TASAMI BUSINESS FOR SAFETY SYSTEMS | Fire & Safety Engineering",
       title: "Integrated Fire Protection & Detection Systems",
-      subtitle: "Towards an environment completely free of risks and hazards",
-      description: "We excel in providing turnkey solutions including the supply, installation, and maintenance of cutting-edge fire fighting and fire alarm systems tailored for industrial, commercial, and residential sectors under the highest Saudi and international standards.",
-      ctaPrimary: "Request Quote & Survey",
+      subtitle: "Towards a Hazard-Free Environment",
+      description: "Turnkey supply, installation, and maintenance of fire fighting and alarm systems compliant with Civil Defense and SBC.",
+      ctaPrimary: "Request Site Survey",
       ctaSecondary: "Explore Suppression Systems",
       features: [
-        { title: "Fire Alarm Systems", desc: "Early warning sensors, notification appliances & intelligent control panels" },
-        { title: "Smoke Control", desc: "Extraction fans, air makeup, and stairwell pressurization systems" },
-        { title: "Water Sprinkler Networks", desc: "Piping, sprinklers, fire hose cabinets, valves, and certified pumps" },
-        { title: "Automatic Suppression", desc: "FM-200, NOVEC 1230, Aerosol, Commercial Kitchens & CO₂" },
+        { title: "Fire Alarm Systems", desc: "Smart detectors and certified control panels" },
+        { title: "Smoke Control", desc: "Smoke extraction and stairwell pressurization" },
+        { title: "Water Sprinkler Networks", desc: "UL/FM pumps, sprinklers, and hydrant lines" },
+        { title: "Automatic Suppression", desc: "FM-200, NOVEC 1230, aerosol & kitchens" },
       ]
     },
     about: {
@@ -1439,7 +1441,7 @@ export const content = {
       enabled: true,
       tag: "Rate Us & Client Reviews",
       title: "What Our Clients Say",
-      subtitle: "Verified ratings from our commercial, industrial, and residential clients — published only after admin approval.",
+      subtitle: "Verified ratings from our fire-safety project and supply clients.",
       items: [
         {
           id: "rev-seed-1",
@@ -1462,7 +1464,7 @@ export const content = {
       ]
     },
     announcementTicker: {
-      enabled: true,
+      enabled: UI_CONFIG.showAnnouncementBarByDefault,
       speed: "medium",
       includeApprovedReviews: true,
       items: [

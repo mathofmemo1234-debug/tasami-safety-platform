@@ -50,8 +50,23 @@ export default function App() {
     }
   }, [darkMode]);
 
-  // Multi-page navigation state
-  const parseHash = () => {
+  // Multi-page navigation state supporting both clean pathnames and hash routes
+  const parseRoute = () => {
+    // 1. Check clean pathname first (e.g. /services, /products, /about, /contact)
+    const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+    
+    if (path === 'civil-defense-requirements' || path === 'fire-suppression-systems') {
+      return { page: 'services', section: path === 'civil-defense-requirements' ? 'maintenance' : 'suppression' };
+    }
+    if (path === 'safety-equipment-supply') {
+      return { page: 'products', section: null };
+    }
+    if (['services', 'products', 'about', 'contact'].includes(path)) {
+      const hashRaw = window.location.hash.replace(/^#\/?/, '').trim();
+      return { page: path, section: hashRaw || null };
+    }
+
+    // 2. Fall back to hash (e.g. #services, #about#ceo)
     const raw = window.location.hash.replace(/^#\/?/, '').trim();
     if (!raw) return { page: 'home', section: null };
     
@@ -66,16 +81,18 @@ export default function App() {
     return { page: 'home', section: null };
   };
 
-  const initial = parseHash();
+  const initial = parseRoute();
   const [currentPage, setCurrentPage] = useState(initial.page);
   const [targetSection, setTargetSection] = useState(initial.section);
   const [activeBranchFilter, setActiveBranchFilter] = useState(null);
+  const [activeProductCategory, setActiveProductCategory] = useState('all');
+  const [activeKnowledgeTab, setActiveKnowledgeTab] = useState(null);
   const [openCalculator, setOpenCalculator] = useState(false);
 
-  // Sync with browser back/forward and hash changes
+  // Sync with browser back/forward, popstate, and hash changes
   useEffect(() => {
-    const handleHashChange = () => {
-      const { page, section } = parseHash();
+    const handleLocationChange = () => {
+      const { page, section } = parseRoute();
       setCurrentPage(page);
       setTargetSection(section);
 
@@ -94,8 +111,12 @@ export default function App() {
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   // Handle document language & direction attribute dynamically
@@ -108,12 +129,18 @@ export default function App() {
   }, [lang]);
 
   // Comprehensive, robust navigation function
-  const navigateTo = (page, sectionId = null, filter = null, shouldOpenCalc = false) => {
+  const navigateTo = (page, sectionId = null, filter = null, shouldOpenCalc = false, knowledgeTab = null) => {
     setCurrentPage(page);
     setTargetSection(sectionId);
     
-    if (filter) {
+    if (page === 'services' && filter) {
       setActiveBranchFilter(filter);
+    }
+    if (page === 'products' && filter) {
+      setActiveProductCategory(filter);
+    }
+    if (knowledgeTab) {
+      setActiveKnowledgeTab(knowledgeTab);
     }
     if (shouldOpenCalc !== undefined) {
       setOpenCalculator(Boolean(shouldOpenCalc));
@@ -131,7 +158,7 @@ export default function App() {
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) {
-          const headerOffset = 115;
+          const headerOffset = 100;
           const elementPosition = el.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
           window.scrollTo({
@@ -139,7 +166,7 @@ export default function App() {
             behavior: 'smooth'
           });
         }
-      }, 180);
+      }, 200);
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -181,6 +208,7 @@ export default function App() {
             content={siteContent}
             onNavigate={navigateTo}
             onOpenConsultation={handleOpenConsultation}
+            activeKnowledgeTab={activeKnowledgeTab}
           />
         ) : (
           <Suspense
@@ -209,6 +237,8 @@ export default function App() {
                 content={siteContent}
                 onNavigate={navigateTo}
                 onOpenConsultation={handleOpenConsultation}
+                targetSection={targetSection}
+                activeCategoryFilter={activeProductCategory}
               />
             )}
 
