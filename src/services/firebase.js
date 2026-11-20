@@ -108,6 +108,7 @@ function deepMerge(target, source) {
 }
 
 const FIRESTORE_WRITE_TIMEOUT_MS = 7000;
+const FIRESTORE_READ_TIMEOUT_MS = 5000;
 const FIRESTORE_AUTH_TIMEOUT_MS = 4000;
 const STORAGE_UPLOAD_TIMEOUT_MS = 4000;
 
@@ -521,6 +522,58 @@ export async function updateAdminPassword(newPassword) {
 // ============================================================
 const SUPPORT_LOCAL_KEY = 'tasami_support_tickets';
 const SUPPORT_SESSION_KEY = 'tasami_support_session_id';
+const SUPPORT_ADMIN_NAME_KEY = 'tasami_support_admin_name';
+const SUPPORT_VISITOR_NAME_KEY = 'tasami_support_visitor_name';
+
+export const DEFAULT_SUPPORT_ADMIN_NAME = 'إدارة الدعم الفني - تسامي';
+export const SUPPORT_TYPING_TTL_MS = 6500;
+
+export function getSupportAdminName(fallback = DEFAULT_SUPPORT_ADMIN_NAME) {
+  try {
+    const val = localStorage.getItem(SUPPORT_ADMIN_NAME_KEY);
+    if (val && val.trim()) return val.trim();
+  } catch {}
+  return fallback;
+}
+
+export function saveSupportAdminName(name) {
+  try {
+    const clean = String(name || '').trim();
+    if (clean) {
+      localStorage.setItem(SUPPORT_ADMIN_NAME_KEY, clean);
+    } else {
+      localStorage.removeItem(SUPPORT_ADMIN_NAME_KEY);
+    }
+  } catch {}
+}
+
+export function getSupportVisitorName(fallback = '') {
+  try {
+    const val = localStorage.getItem(SUPPORT_VISITOR_NAME_KEY);
+    if (val && val.trim()) return val.trim();
+  } catch {}
+  return fallback;
+}
+
+export function saveSupportVisitorName(name) {
+  try {
+    const clean = String(name || '').trim();
+    if (clean) {
+      localStorage.setItem(SUPPORT_VISITOR_NAME_KEY, clean);
+    } else {
+      localStorage.removeItem(SUPPORT_VISITOR_NAME_KEY);
+    }
+  } catch {}
+}
+
+export function isSupportTypingActive(typingEntry, nowMs = Date.now()) {
+  return Boolean(
+    typingEntry &&
+      typingEntry.active === true &&
+      typingEntry.updatedAt &&
+      nowMs - Number(typingEntry.updatedAt) < SUPPORT_TYPING_TTL_MS
+  );
+}
 
 export function getOrCreateSupportSessionId() {
   try {
@@ -546,10 +599,12 @@ function readLocalSupportTickets() {
   }
 }
 
-function writeLocalSupportTickets(tickets) {
+function writeLocalSupportTickets(tickets, { silent = false } = {}) {
   try {
     localStorage.setItem(SUPPORT_LOCAL_KEY, JSON.stringify(tickets));
-    window.dispatchEvent(new CustomEvent('tasami-support-updated'));
+    if (!silent) {
+      window.dispatchEvent(new CustomEvent('tasami-support-updated'));
+    }
   } catch {}
 }
 
@@ -617,22 +672,33 @@ export async function submitSupportTicket({
   return { success: true, ticket: savedTicket, synced };
 }
 
-export async function appendSupportReply(ticketId, { sender = 'admin', senderName = 'الدعم الفني', text, status }) {
+export async function appendSupportReply(ticketId, { sender = 'admin', senderName, text, status }) {
   const cleanText = String(text || '').trim();
   if (!ticketId || !cleanText) return { success: false };
 
+  const cleanSenderName =
+    String(senderName || '').trim() ||
+    (sender === 'admin' ? DEFAULT_SUPPORT_ADMIN_NAME : 'زائر الموقع');
+
   const now = new Date().toISOString();
+  const nowMs = Date.now();
   const newReply = {
-    id: `rep_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
+    id: `rep_${nowMs}_${Math.random().toString(36).slice(2, 5)}`,
     sender,
-    senderName,
+    senderName: cleanSenderName,
     text: cleanText,
     createdAt: now
   };
 
+  const clearedTyping = {
+    active: false,
+    name: cleanSenderName,
+    updatedAt: nowMs
+  };
+
   const nextStatus = status || (sender === 'admin' ? 'answered' : 'open');
 
-  // Update local cache immediately
+  // Update local cache immediately and clear sender typing indicator
   const localTickets = readLocalSupportTickets();
   const nextLocal = localTickets.map((t) => {
     if (t.id !== ticketId) return t;
@@ -640,6 +706,10 @@ export async function appendSupportReply(ticketId, { sender = 'admin', senderNam
       ...t,
       status: nextStatus,
       updatedAt: now,
+      typing: {
+        ...(t.typing || {}),
+        [sender]: clearedTyping
+      },
       replies: [...(Array.isArray(t.replies) ? t.replies : []), newReply]
     };
   });
@@ -654,7 +724,8 @@ export async function appendSupportReply(ticketId, { sender = 'admin', senderNam
         updateDoc(docRef, {
           replies: [...existingReplies, newReply],
           status: nextStatus,
-          updatedAt: now
+          updatedAt: now,
+          [`typing.${sender}`]: clearedTyping
         }),
         FIRESTORE_WRITE_TIMEOUT_MS,
         'انتهت مهلة حفظ الرد'
@@ -662,6 +733,52 @@ export async function appendSupportReply(ticketId, { sender = 'admin', senderNam
       return { success: true, synced: true };
     } catch (err) {
       console.warn('Firestore reply fallback:', err);
+    }
+  }
+
+  return { success: true, localOnly: true };
+}
+
+export async function setSupportTypingStatus(ticketId, { role = 'visitor', active = false, name = '' } = {}) {
+  if (!ticketId || (role !== 'admin' && role !== 'visitor')) {
+    return { success: false };
+  }
+
+  const cleanName =
+    String(name || '').trim() ||
+    (role === 'admin' ? getSupportAdminName() : 'زائر الموقع');
+  const nowMs = Date.now();
+  const typingPayload = {
+    active: Boolean(active),
+    name: cleanName,
+    updatedAt: nowMs
+  };
+
+  const localTickets = readLocalSupportTickets();
+  const nextLocal = localTickets.map((t) => {
+    if (t.id !== ticketId) return t;
+    return {
+      ...t,
+      typing: {
+        ...(t.typing || {}),
+        [role]: typingPayload
+      }
+    };
+  });
+  writeLocalSupportTickets(nextLocal);
+
+  if (db && !String(ticketId).startsWith('local_')) {
+    try {
+      await withTimeout(
+        updateDoc(doc(db, 'messages', ticketId), {
+          [`typing.${role}`]: typingPayload
+        }),
+        FIRESTORE_WRITE_TIMEOUT_MS,
+        'انتهت مهلة تحديث حالة الكتابة'
+      );
+      return { success: true, synced: true };
+    } catch (err) {
+      console.warn('Firestore typing status warning:', err);
     }
   }
 
@@ -740,7 +857,7 @@ export function subscribeSupportTickets({ sessionId = null, onUpdate }) {
           const merged = mergeTicketsList(remote, relevantLocal);
           if (!sessionId) {
             // Cache merged remote list locally for offline continuity
-            writeLocalSupportTickets(mergeTicketsList(remote, allLocal));
+            writeLocalSupportTickets(mergeTicketsList(remote, allLocal), { silent: true });
           }
           onUpdate(merged);
         },

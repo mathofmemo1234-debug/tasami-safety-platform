@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import {
   Headphones,
   MessageSquare,
@@ -8,15 +8,22 @@ import {
   CheckCircle2,
   Clock,
   Archive,
-  Phone,
   Sparkles,
-  MessageCircle
+  MessageCircle,
+  User,
+  Pencil,
+  Check
 } from 'lucide-react';
 import {
   subscribeSupportTickets,
   appendSupportReply,
   updateSupportTicketStatus,
-  deleteSupportTicket
+  deleteSupportTicket,
+  setSupportTypingStatus,
+  isSupportTypingActive,
+  getSupportAdminName,
+  saveSupportAdminName,
+  DEFAULT_SUPPORT_ADMIN_NAME
 } from '../services/firebase';
 import { normalizeWhatsAppDigits } from '../utils/media';
 
@@ -36,6 +43,22 @@ export default function TechSupportAdminTab({
   const [statusFilter, setStatusFilter] = useState('all');
   const [replyDrafts, setReplyDrafts] = useState({});
   const [busyId, setBusyId] = useState(null);
+  const [nowMs, setNowMs] = useState(() => Date.now());
+  const [adminAgentName, setAdminAgentName] = useState(() =>
+    getSupportAdminName(
+      localData?.[langTab]?.techSupport?.adminAgentName || DEFAULT_SUPPORT_ADMIN_NAME
+    )
+  );
+  const [nameSavedToast, setNameSavedToast] = useState(false);
+
+  const resolvedAdminName = adminAgentName.trim() || DEFAULT_SUPPORT_ADMIN_NAME;
+  const resolvedAdminNameRef = useRef(resolvedAdminName);
+  const typingMetaRef = useRef({});
+  const toastTimerRef = useRef(null);
+
+  useEffect(() => {
+    resolvedAdminNameRef.current = resolvedAdminName;
+  }, [resolvedAdminName]);
 
   useEffect(() => {
     const unsub = subscribeSupportTickets({
@@ -44,6 +67,53 @@ export default function TechSupportAdminTab({
     });
     return () => unsub();
   }, []);
+
+  const anyVisitorTyping = useMemo(
+    () => tickets.some((t) => t.typing?.visitor?.active),
+    [tickets]
+  );
+
+  useEffect(() => {
+    if (!anyVisitorTyping) return undefined;
+    setNowMs(Date.now());
+    const intervalId = setInterval(() => {
+      setNowMs(Date.now());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [anyVisitorTyping]);
+
+  const stopAdminTyping = useCallback((ticketId) => {
+    const meta = typingMetaRef.current[ticketId];
+    if (!meta) return;
+    if (meta.timeoutId) {
+      clearTimeout(meta.timeoutId);
+      meta.timeoutId = null;
+    }
+    if (meta.active) {
+      meta.active = false;
+      setSupportTypingStatus(ticketId, {
+        role: 'admin',
+        active: false,
+        name: resolvedAdminNameRef.current
+      });
+    }
+  }, []);
+
+  const stopAllAdminTyping = useCallback(() => {
+    Object.keys(typingMetaRef.current).forEach((tid) => {
+      stopAdminTyping(tid);
+    });
+  }, [stopAdminTyping]);
+
+  useEffect(
+    () => () => {
+      stopAllAdminTyping();
+      if (toastTimerRef.current) {
+        clearTimeout(toastTimerRef.current);
+      }
+    },
+    [stopAllAdminTyping]
+  );
 
   const supportCfg = localData?.[langTab]?.techSupport || {
     enabled: true,
@@ -69,14 +139,89 @@ export default function TechSupportAdminTab({
     [tickets]
   );
 
+  const updateSupportField = (key, value) => {
+    updateNested([langTab, 'techSupport', key], value);
+  };
+
+  const handleAdminNameChange = (val) => {
+    setAdminAgentName(val);
+    saveSupportAdminName(val);
+  };
+
+  const handleSaveAdminName = () => {
+    const finalName = adminAgentName.trim() || DEFAULT_SUPPORT_ADMIN_NAME;
+    setAdminAgentName(finalName);
+    saveSupportAdminName(finalName);
+    updateSupportField('adminAgentName', finalName);
+    setNameSavedToast(true);
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = setTimeout(() => {
+      setNameSavedToast(false);
+    }, 1800);
+  };
+
+  const handleReplyDraftChange = (ticketId, nextValue) => {
+    setReplyDrafts((prev) => ({
+      ...prev,
+      [ticketId]: nextValue
+    }));
+
+    if (!nextValue.trim()) {
+      stopAdminTyping(ticketId);
+      return;
+    }
+
+    if (!typingMetaRef.current[ticketId]) {
+      typingMetaRef.current[ticketId] = {
+        active: false,
+        lastSentAt: 0,
+        lastSentName: '',
+        timeoutId: null
+      };
+    }
+    const meta = typingMetaRef.current[ticketId];
+
+    if (meta.timeoutId) {
+      clearTimeout(meta.timeoutId);
+    }
+    meta.timeoutId = setTimeout(() => {
+      stopAdminTyping(ticketId);
+    }, 2200);
+
+    const name = resolvedAdminNameRef.current;
+    const now = Date.now();
+    if (!meta.active || meta.lastSentName !== name || now - meta.lastSentAt > 3000) {
+      meta.active = true;
+      meta.lastSentAt = now;
+      meta.lastSentName = name;
+      setSupportTypingStatus(ticketId, {
+        role: 'admin',
+        active: true,
+        name
+      });
+    }
+  };
+
   const handleSendReply = async (ticketId) => {
     const text = (replyDrafts[ticketId] || '').trim();
     if (!text) return;
+
+    const meta = typingMetaRef.current[ticketId];
+    if (meta) {
+      if (meta.timeoutId) {
+        clearTimeout(meta.timeoutId);
+        meta.timeoutId = null;
+      }
+      meta.active = false;
+    }
+
     setBusyId(ticketId);
     try {
       await appendSupportReply(ticketId, {
         sender: 'admin',
-        senderName: 'إدارة الدعم الفني - تسامي',
+        senderName: resolvedAdminNameRef.current,
         text,
         status: 'answered'
       });
@@ -84,10 +229,6 @@ export default function TechSupportAdminTab({
     } finally {
       setBusyId(null);
     }
-  };
-
-  const updateSupportField = (key, value) => {
-    updateNested([langTab, 'techSupport', key], value);
   };
 
   const addFaqItem = () => {
@@ -150,6 +291,58 @@ export default function TechSupportAdminTab({
 
       {subView === 'tickets' ? (
         <div className="space-y-4">
+          {/* Editable Admin Writer Name Bar */}
+          <div className="bg-white dark:bg-[#131c31] rounded-2xl border border-[#c59a45]/40 p-3.5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-9 h-9 rounded-xl bg-[#113163] text-[#dfb76c] flex items-center justify-center shrink-0">
+                <User className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-xs font-black text-[#0f172a] dark:text-white flex items-center gap-1.5">
+                  <span>اسم الكاتب / ممثل الدعم الفني الظاهر للعميل:</span>
+                  <Pencil className="w-3 h-3 text-[#c59a45] shrink-0" />
+                </div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                  يظهر للعميل: <span className="font-bold text-[#113163] dark:text-[#dfb76c]">{resolvedAdminName} يكتب الآن...</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 sm:min-w-[300px]">
+              <input
+                type="text"
+                value={adminAgentName}
+                onChange={(e) => handleAdminNameChange(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSaveAdminName();
+                  }
+                }}
+                placeholder={DEFAULT_SUPPORT_ADMIN_NAME}
+                className="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs font-bold text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
+              />
+              <button
+                type="button"
+                onClick={handleSaveAdminName}
+                className={`px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shrink-0 ${
+                  nameSavedToast
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-[#113163] hover:bg-[#1d4ed8] text-white'
+                }`}
+              >
+                {nameSavedToast ? (
+                  <>
+                    <Check className="w-3.5 h-3.5" />
+                    <span>تم الحفظ</span>
+                  </>
+                ) : (
+                  <span>حفظ الاسم</span>
+                )}
+              </button>
+            </div>
+          </div>
+
           {/* Status Filters */}
           <div className="flex flex-wrap gap-2">
             {[
@@ -185,168 +378,227 @@ export default function TechSupportAdminTab({
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredTickets.map((ticket) => (
-                <div
-                  key={ticket.id}
-                  className="bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3 shadow-sm"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="font-black text-[#0f172a] dark:text-white">
-                        {ticket.visitorName || 'زائر الموقع'}
-                      </span>
-                      <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#9c7224] dark:text-[#dfb76c] font-bold">
-                        {ticket.category || 'عام'}
-                      </span>
-                      {ticket.phone && (
-                        <a
-                          href={`https://wa.me/${normalizeWhatsAppDigits(ticket.phone)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 font-mono font-bold hover:underline"
-                          dir="ltr"
-                        >
-                          <MessageCircle className="w-3 h-3" />
-                          {ticket.phone}
-                        </a>
-                      )}
-                      <span className="text-[11px] text-slate-400">
-                        {ticket.createdAt
-                          ? new Date(ticket.createdAt).toLocaleString('ar-SA')
-                          : ''}
-                      </span>
-                    </div>
+              {filteredTickets.map((ticket) => {
+                const visitorTypingActive = isSupportTypingActive(ticket.typing?.visitor, nowMs);
+                const visitorTypingName =
+                  ticket.typing?.visitor?.name || ticket.visitorName || 'زائر الموقع';
 
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
-                          ticket.status === 'answered'
-                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300'
-                            : ticket.status === 'closed'
-                            ? 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
-                            : 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300'
-                        }`}
-                      >
-                        {ticket.status === 'answered' ? (
-                          <CheckCircle2 className="w-3 h-3" />
-                        ) : ticket.status === 'closed' ? (
-                          <Archive className="w-3 h-3" />
-                        ) : (
-                          <Clock className="w-3 h-3" />
+                return (
+                  <div
+                    key={ticket.id}
+                    className="bg-white dark:bg-[#131c31] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3 shadow-sm"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <span className="font-black text-[#0f172a] dark:text-white">
+                          {ticket.visitorName || 'زائر الموقع'}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[#9c7224] dark:text-[#dfb76c] font-bold">
+                          {ticket.category || 'عام'}
+                        </span>
+                        {ticket.phone && (
+                          <a
+                            href={`https://wa.me/${normalizeWhatsAppDigits(ticket.phone)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 font-mono font-bold hover:underline"
+                            dir="ltr"
+                          >
+                            <MessageCircle className="w-3 h-3" />
+                            {ticket.phone}
+                          </a>
                         )}
-                        {ticket.status === 'answered'
-                          ? 'تم الرد'
-                          : ticket.status === 'closed'
-                          ? 'مغلق'
-                          : 'بانتظار الرد'}
-                      </span>
+                        <span className="text-[11px] text-slate-400">
+                          {ticket.createdAt
+                            ? new Date(ticket.createdAt).toLocaleString('ar-SA')
+                            : ''}
+                        </span>
+                      </div>
 
-                      <button
-                        type="button"
-                        onClick={() =>
-                          updateSupportTicketStatus(
-                            ticket.id,
-                            ticket.status === 'closed' ? 'open' : 'closed'
-                          )
-                        }
-                        className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-                      >
-                        {ticket.status === 'closed' ? 'إعادة فتح' : 'إغلاق'}
-                      </button>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {visitorTypingActive && (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-300/70 dark:border-amber-700/60 text-amber-800 dark:text-amber-200 text-[11px] font-bold">
+                            <span className="inline-flex items-center gap-0.5" aria-hidden="true">
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 support-typing-dot" style={{ animationDelay: '0ms' }} />
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 support-typing-dot" style={{ animationDelay: '150ms' }} />
+                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 support-typing-dot" style={{ animationDelay: '300ms' }} />
+                            </span>
+                            <span>{visitorTypingName} يكتب الآن...</span>
+                          </span>
+                        )}
 
-                      <button
-                        type="button"
-                        onClick={() => deleteSupportTicket(ticket.id)}
-                        className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"
-                        title="حذف السؤال"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Original Visitor Question */}
-                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#0b1120] border border-slate-200/80 dark:border-slate-800 text-xs sm:text-sm font-semibold text-[#0f172a] dark:text-white">
-                    {ticket.question}
-                  </div>
-
-                  {/* Conversation Replies */}
-                  {Array.isArray(ticket.replies) && ticket.replies.length > 0 && (
-                    <div className="space-y-2 pr-3 border-r-2 border-[#c59a45]/50">
-                      {ticket.replies.map((rep) => (
-                        <div
-                          key={rep.id}
-                          className={`p-2.5 rounded-xl text-xs ${
-                            rep.sender === 'admin'
-                              ? 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 text-emerald-950 dark:text-emerald-100'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                        <span
+                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                            ticket.status === 'answered'
+                              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300'
+                              : ticket.status === 'closed'
+                              ? 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                              : 'bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300'
                           }`}
                         >
-                          <div className="flex items-center justify-between text-[10px] font-black mb-1 opacity-75">
-                            <span>
-                              {rep.sender === 'admin' ? rep.senderName || 'الإدارة' : 'الزائر'}
-                            </span>
-                            <span>
-                              {rep.createdAt
-                                ? new Date(rep.createdAt).toLocaleTimeString('ar-SA')
-                                : ''}
-                            </span>
-                          </div>
-                          {rep.text}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                          {ticket.status === 'answered' ? (
+                            <CheckCircle2 className="w-3 h-3" />
+                          ) : ticket.status === 'closed' ? (
+                            <Archive className="w-3 h-3" />
+                          ) : (
+                            <Clock className="w-3 h-3" />
+                          )}
+                          {ticket.status === 'answered'
+                            ? 'تم الرد'
+                            : ticket.status === 'closed'
+                            ? 'مغلق'
+                            : 'بانتظار الرد'}
+                        </span>
 
-                  {/* Quick Replies + Reply Input */}
-                  <div className="space-y-2 pt-1">
-                    <div className="flex flex-wrap gap-1.5">
-                      {QUICK_REPLIES_AR.map((qr, qIdx) => (
                         <button
-                          key={qIdx}
                           type="button"
                           onClick={() =>
-                            setReplyDrafts((prev) => ({ ...prev, [ticket.id]: qr }))
+                            updateSupportTicketStatus(
+                              ticket.id,
+                              ticket.status === 'closed' ? 'open' : 'closed'
+                            )
                           }
-                          className="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-[#c59a45]/20 text-slate-600 dark:text-slate-300 font-semibold transition"
+                          className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                         >
-                          + رد جاهز {qIdx + 1}
+                          {ticket.status === 'closed' ? 'إعادة فتح' : 'إغلاق'}
                         </button>
-                      ))}
+
+                        <button
+                          type="button"
+                          onClick={() => deleteSupportTicket(ticket.id)}
+                          className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"
+                          title="حذف السؤال"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={replyDrafts[ticket.id] || ''}
-                        onChange={(e) =>
-                          setReplyDrafts((prev) => ({
-                            ...prev,
-                            [ticket.id]: e.target.value
-                          }))
-                        }
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            handleSendReply(ticket.id);
-                          }
-                        }}
-                        placeholder="اكتب رد الدعم الفني ليظهر مباشرة للعميل في نافذة الدعم..."
-                        className="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
-                      />
-                      <button
-                        type="button"
-                        disabled={busyId === ticket.id || !(replyDrafts[ticket.id] || '').trim()}
-                        onClick={() => handleSendReply(ticket.id)}
-                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black flex items-center gap-1.5 transition disabled:opacity-50"
-                      >
-                        <Send className="w-3.5 h-3.5" />
-                        <span>{busyId === ticket.id ? 'جاري الإرسال...' : 'إرسال الرد'}</span>
-                      </button>
+                    {/* Original Visitor Question with Writer Header */}
+                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#0b1120] border border-slate-200/80 dark:border-slate-800 text-xs sm:text-sm text-[#0f172a] dark:text-white space-y-1.5">
+                      <div className="flex items-center justify-between gap-2 text-[10px] font-bold">
+                        <div className="flex items-center gap-1.5">
+                          <User className="w-3 h-3 text-[#c59a45]" />
+                          <span>{ticket.visitorName || 'زائر الموقع'}</span>
+                          <span className="px-1.5 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[9px]">
+                            الزائر
+                          </span>
+                        </div>
+                        {ticket.createdAt && (
+                          <span className="text-slate-400 font-normal" dir="ltr">
+                            {new Date(ticket.createdAt).toLocaleTimeString('ar-SA', {
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-semibold leading-relaxed">{ticket.question}</div>
+                    </div>
+
+                    {/* Conversation Replies */}
+                    {Array.isArray(ticket.replies) && ticket.replies.length > 0 && (
+                      <div className="space-y-2 pr-3 border-r-2 border-[#c59a45]/50">
+                        {ticket.replies.map((rep) => {
+                          const isFromAdmin = rep.sender === 'admin';
+                          const writerName = isFromAdmin
+                            ? rep.senderName || resolvedAdminName
+                            : rep.senderName || ticket.visitorName || 'زائر الموقع';
+
+                          return (
+                            <div
+                              key={rep.id}
+                              className={`p-2.5 rounded-xl text-xs ${
+                                isFromAdmin
+                                  ? 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 text-emerald-950 dark:text-emerald-100'
+                                  : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between gap-2 text-[10px] font-black mb-1 opacity-85">
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <span>{writerName}</span>
+                                  <span
+                                    className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                                      isFromAdmin
+                                        ? 'bg-emerald-600/15 text-emerald-800 dark:text-emerald-300'
+                                        : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                                    }`}
+                                  >
+                                    {isFromAdmin ? 'الإدارة' : 'الزائر'}
+                                  </span>
+                                </div>
+                                <span dir="ltr" className="font-normal opacity-75 shrink-0">
+                                  {rep.createdAt
+                                    ? new Date(rep.createdAt).toLocaleTimeString('ar-SA', {
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                      })
+                                    : ''}
+                                </span>
+                              </div>
+                              {rep.text}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Live Visitor Typing Indicator */}
+                    {visitorTypingActive && (
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50/90 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 text-xs font-bold text-amber-900 dark:text-amber-200">
+                        <span className="inline-flex items-center gap-0.5 shrink-0" aria-hidden="true">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 support-typing-dot" style={{ animationDelay: '0ms' }} />
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 support-typing-dot" style={{ animationDelay: '150ms' }} />
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 support-typing-dot" style={{ animationDelay: '300ms' }} />
+                        </span>
+                        <span>{visitorTypingName} يكتب الآن...</span>
+                      </div>
+                    )}
+
+                    {/* Quick Replies + Reply Input */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex flex-wrap gap-1.5">
+                        {QUICK_REPLIES_AR.map((qr, qIdx) => (
+                          <button
+                            key={qIdx}
+                            type="button"
+                            onClick={() => handleReplyDraftChange(ticket.id, qr)}
+                            className="text-[10px] px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-[#c59a45]/20 text-slate-600 dark:text-slate-300 font-semibold transition"
+                          >
+                            + رد جاهز {qIdx + 1}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={replyDrafts[ticket.id] || ''}
+                          onChange={(e) => handleReplyDraftChange(ticket.id, e.target.value)}
+                          onBlur={() => stopAdminTyping(ticket.id)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              handleSendReply(ticket.id);
+                            }
+                          }}
+                          placeholder={`اكتب رد الدعم الفني باسم (${resolvedAdminName})...`}
+                          className="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white outline-none focus:border-[#c59a45]"
+                        />
+                        <button
+                          type="button"
+                          disabled={busyId === ticket.id || !(replyDrafts[ticket.id] || '').trim()}
+                          onClick={() => handleSendReply(ticket.id)}
+                          className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black flex items-center gap-1.5 transition disabled:opacity-50"
+                        >
+                          <Send className="w-3.5 h-3.5" />
+                          <span>{busyId === ticket.id ? 'جاري الإرسال...' : 'إرسال الرد'}</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -392,7 +644,22 @@ export default function TechSupportAdminTab({
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white"
                 />
               </div>
-              <div className="md:col-span-2">
+              <div>
+                <label className="block font-semibold text-slate-500 dark:text-slate-400 mb-1">
+                  الاسم الافتراضي لممثل الدعم الفني:
+                </label>
+                <input
+                  type="text"
+                  value={adminAgentName}
+                  onChange={(e) => {
+                    handleAdminNameChange(e.target.value);
+                    updateSupportField('adminAgentName', e.target.value);
+                  }}
+                  placeholder={DEFAULT_SUPPORT_ADMIN_NAME}
+                  className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0b1120] text-[#0f172a] dark:text-white font-bold"
+                />
+              </div>
+              <div>
                 <label className="block font-semibold text-slate-500 dark:text-slate-400 mb-1">
                   رسالة الترحيب في النافذة:
                 </label>
