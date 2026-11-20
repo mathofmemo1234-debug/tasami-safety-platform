@@ -22,10 +22,9 @@ export default function Hero({
   onNavigateProducts
 }) {
   const [heroImgSrc, setHeroImgSrc] = useState('./images/hero-tasami-engineer-clean.jpg');
-  const [playCycle, setPlayCycle] = useState(1);
-  const [playMode, setPlayMode] = useState('initial'); // 'initial' | 'hover'
-  const [isPlaying, setIsPlaying] = useState(true);
 
+  const stageRef = useRef(null);
+  const isPlayingRef = useRef(false);
   const timerRef = useRef(null);
   const mountedAtRef = useRef(Date.now());
   const pointerLeftRef = useRef(true);
@@ -35,13 +34,12 @@ export default function Hero({
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
   const ChevronIcon = isAr ? ChevronLeft : ChevronRight;
 
-  const triggerReplay = useCallback((mode = 'initial') => {
+  const startPlayback = useCallback(() => {
     if (
       typeof window !== 'undefined' &&
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
-      setIsPlaying(false);
       return;
     }
 
@@ -49,48 +47,44 @@ export default function Hero({
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
-    setPlayMode(mode);
-    setIsPlaying(true);
-    setPlayCycle((c) => c + 1);
+
+    const el = stageRef.current;
+    if (!el) return;
+
+    isPlayingRef.current = true;
+    el.classList.remove('hero-is-playing');
+    void el.offsetWidth;
+    el.classList.add('hero-is-playing');
+
     timerRef.current = setTimeout(() => {
-      setIsPlaying(false);
+      isPlayingRef.current = false;
       timerRef.current = null;
-    }, 3200);
+    }, 2700);
   }, []);
 
   useEffect(() => {
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReduced) {
-      setIsPlaying(false);
-      return undefined;
-    }
-
-    timerRef.current = setTimeout(() => {
-      setIsPlaying(false);
-      timerRef.current = null;
-    }, 3200);
+    const rafId = requestAnimationFrame(() => {
+      startPlayback();
+    });
 
     return () => {
+      cancelAnimationFrame(rafId);
       if (timerRef.current) {
         clearTimeout(timerRef.current);
         timerRef.current = null;
       }
     };
-  }, []);
+  }, [startPlayback]);
 
   useEffect(() => {
     const handleHeroReplay = () => {
       if (Date.now() - mountedAtRef.current > 400) {
-        triggerReplay('initial');
+        startPlayback();
       }
     };
     const handlePageShow = (e) => {
       if (e.persisted) {
-        triggerReplay('initial');
+        startPlayback();
       }
     };
 
@@ -100,12 +94,12 @@ export default function Hero({
       window.removeEventListener('tasami-hero-replay', handleHeroReplay);
       window.removeEventListener('pageshow', handlePageShow);
     };
-  }, [triggerReplay]);
+  }, [startPlayback]);
 
   const handleShowcaseMouseEnter = () => {
-    if (!isPlaying && pointerLeftRef.current) {
+    if (!isPlayingRef.current && pointerLeftRef.current) {
       pointerLeftRef.current = false;
-      triggerReplay('hover');
+      startPlayback();
     }
   };
 
@@ -124,8 +118,8 @@ export default function Hero({
     {
       id: 'alarm',
       posClass: 'left-[31%] top-[28%]',
-      hudDelay: '1.55s',
-      radarDelay: '1.65s',
+      hudDelay: '1.35s',
+      radarDelay: '1.45s',
       Icon: BellRing,
       filter: 'alarm-smoke',
       popoverClass: 'hover-popover-down top-full pt-2 left-0',
@@ -138,8 +132,8 @@ export default function Hero({
     {
       id: 'suppression',
       posClass: 'left-[16%] top-[48%]',
-      hudDelay: '1.80s',
-      radarDelay: '1.90s',
+      hudDelay: '1.55s',
+      radarDelay: '1.65s',
       Icon: Flame,
       filter: 'suppression',
       popoverClass: 'hover-popover-up bottom-full pb-2 left-0',
@@ -152,8 +146,8 @@ export default function Hero({
     {
       id: 'pumps',
       posClass: 'left-[43%] top-[60%]',
-      hudDelay: '2.05s',
-      radarDelay: '2.15s',
+      hudDelay: '1.75s',
+      radarDelay: '1.85s',
       Icon: ShieldCheck,
       filter: 'sprinklers-pumps',
       popoverClass: 'hover-popover-up bottom-full pb-2 -translate-x-1/2 left-1/2',
@@ -334,12 +328,11 @@ export default function Hero({
               className="mx-auto max-w-md lg:max-w-none rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#131c31] shadow-[0_20px_50px_-24px_rgba(0,35,102,0.18)]"
             >
               {/* Visual Stage */}
-              <div className="relative h-[320px] sm:h-[380px] lg:h-[400px]">
+              <div ref={stageRef} className="relative h-[320px] sm:h-[380px] lg:h-[400px]">
                 {/* Clipped 3D Unfold & Single-Sweep Engineering Layer */}
                 <div
-                  key={`stage-${playCycle}`}
                   dir="ltr"
-                  className="hero-fold-stage absolute inset-0 rounded-t-2xl overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200/60 dark:from-[#0b1120] dark:to-[#131c31]"
+                  className="hero-fold-viewport absolute inset-0 rounded-t-2xl overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200/70 dark:from-[#0b1120] dark:to-[#131c31]"
                 >
                   {/* Unified Native Crisp Resting Image */}
                   <img
@@ -347,41 +340,33 @@ export default function Hero({
                     alt="مهندس سلامة معتمد - شركة تسامي الأعمال لأنظمة السلامة"
                     fetchpriority="high"
                     decoding="async"
-                    className={`${
-                      playMode === 'hover' ? 'hero-final-img-hover' : 'hero-final-img-initial'
-                    } absolute inset-0 w-full h-full object-cover`}
+                    className="hero-rest-img absolute inset-0 w-full h-full object-cover"
                     onError={() => setHeroImgSrc('./images/showcase/hero-engineer.jpg')}
                   />
 
-                  {/* Left Folding Wing */}
-                  <div
-                    aria-hidden="true"
-                    className={`${
-                      playMode === 'hover' ? 'hero-fold-left-hover' : 'hero-fold-left-initial'
-                    } absolute top-0 left-0 w-1/2 h-full overflow-hidden pointer-events-none shadow-[8px_0_24px_rgba(0,0,0,0.22)] border-r border-white/25`}
-                  >
-                    <img
-                      src={heroImgSrc}
-                      alt=""
-                      decoding="async"
-                      className="w-[200%] max-w-none h-full object-cover"
-                    />
-                  </div>
+                  {/* Locked-Hinge Fold Book */}
+                  <div aria-hidden="true" className="hero-fold-book absolute inset-0 pointer-events-none">
+                    {/* Left Wing */}
+                    <div className="hero-wing-left absolute top-0 left-0 w-1/2 h-full overflow-hidden border-r border-white/25">
+                      <img
+                        src={heroImgSrc}
+                        alt=""
+                        decoding="async"
+                        className="w-[200%] max-w-none h-full object-cover"
+                      />
+                      <div className="hero-left-shade absolute inset-0 bg-[#0b1120] pointer-events-none" />
+                    </div>
 
-                  {/* Right Folding Wing */}
-                  <div
-                    aria-hidden="true"
-                    className={`${
-                      playMode === 'hover' ? 'hero-fold-right-hover' : 'hero-fold-right-initial'
-                    } absolute top-0 left-1/2 w-1/2 h-full overflow-hidden pointer-events-none shadow-[-8px_0_24px_rgba(0,0,0,0.22)] border-l border-white/25`}
-                  >
-                    <img
-                      src={heroImgSrc}
-                      alt=""
-                      decoding="async"
-                      className="w-[200%] max-w-none h-full object-cover"
-                      style={{ transform: 'translateX(-50%)' }}
-                    />
+                    {/* Right Wing */}
+                    <div className="hero-wing-right absolute top-0 left-1/2 w-1/2 h-full overflow-hidden border-l border-white/25">
+                      <img
+                        src={heroImgSrc}
+                        alt=""
+                        decoding="async"
+                        className="w-[200%] max-w-none h-full object-cover"
+                        style={{ transform: 'translate3d(-50%, 0, 0)' }}
+                      />
+                    </div>
                   </div>
 
                   {/* Specular Fold Glass Glint */}
@@ -395,7 +380,7 @@ export default function Hero({
                   />
 
                   {/* Whisper-Light Bottom Edge Scrim Only (Keeps Photo Crystal Clear) */}
-                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#070b14]/35 to-transparent pointer-events-none" />
+                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#070b14]/30 to-transparent pointer-events-none" />
 
                   {/* Single Technical Safety Scan Beam (Left Skyline Once Only) */}
                   <div
@@ -430,12 +415,12 @@ export default function Hero({
                 </div>
 
                 {/* Unclipped Interactive HUD Overlay */}
-                <div key={`hud-${playCycle}`} className="absolute inset-0 z-10 pointer-events-none">
-                  {/* Top-Left Frosted-Glass Live Status Pill */}
+                <div className="absolute inset-0 z-10 pointer-events-none">
+                  {/* Top-Left Live Status Pill */}
                   <div
                     dir={isAr ? 'rtl' : 'ltr'}
-                    style={{ animationDelay: '1.25s' }}
-                    className="hero-hud-enter absolute top-3.5 left-3.5 pointer-events-auto inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b1120]/65 backdrop-blur-md border border-white/15 text-[10px] sm:text-[11px] font-semibold text-white"
+                    style={{ animationDelay: '1.15s' }}
+                    className="hero-hud-enter absolute top-3.5 left-3.5 pointer-events-auto inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b1120]/75 border border-white/15 text-[10px] sm:text-[11px] font-semibold text-white"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>{isAr ? 'رصد سلامة هندسي • SBC 801' : 'Active Safety Scan • SBC 801'}</span>
@@ -455,7 +440,7 @@ export default function Hero({
                           type="button"
                           onClick={() => onNavigateServices?.(node.filter)}
                           aria-label={node.title}
-                          className="relative w-8 h-8 rounded-full bg-[#002366]/85 hover:bg-[#002366] text-[#D4AF37] border border-[#D4AF37]/80 backdrop-blur-sm shadow-lg flex items-center justify-center transition-transform duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                          className="relative w-8 h-8 rounded-full bg-[#002366]/90 hover:bg-[#002366] text-[#D4AF37] border border-[#D4AF37]/80 shadow-lg flex items-center justify-center transition-transform duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
                         >
                           <span
                             aria-hidden="true"
@@ -489,13 +474,13 @@ export default function Hero({
                     );
                   })}
 
-                  {/* Bottom-Left Apple-Glass Accreditation Capsule (No Pause Button) */}
+                  {/* Bottom-Left Accreditation Capsule (No Pause Button) */}
                   <div
                     dir={isAr ? 'rtl' : 'ltr'}
-                    style={{ animationDelay: '2.2s' }}
+                    style={{ animationDelay: '1.90s' }}
                     className="hero-hud-enter absolute bottom-3.5 left-3.5 pointer-events-auto group"
                   >
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0b1120]/60 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white/95 cursor-default">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0b1120]/75 border border-white/15 text-[10px] font-semibold text-white/95 cursor-default">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                       <span>{isAr ? 'معتمد • UL / FM • سلامة' : 'Certified • UL / FM • Salamah'}</span>
                     </div>
