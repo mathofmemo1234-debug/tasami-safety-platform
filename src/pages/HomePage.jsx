@@ -34,39 +34,94 @@ export default function HomePage({
   const previewServices = [
     {
       id: 'suppression',
+      filter: 'suppression',
+      code: 'NFPA 2001 & 96',
       title: isAr ? 'أنظمة الإطفاء التلقائي' : 'Automatic Suppression',
       desc: isAr
         ? 'حماية فورية لغرف الخوادم والمطابخ التجارية بغازات نظيفة.'
         : 'Clean-agent and wet-chemical protection for server rooms and kitchens.',
+      highlights: isAr
+        ? ['غازات FM-200 و NOVEC 1230 الآمنة', 'أنظمة الأيروسول وغرف السيرفرات', 'إطفاء المطابخ التجارية التلقائي']
+        : ['FM-200 & NOVEC 1230 clean agents', 'Condensed aerosol & data rooms', 'Wet-chemical commercial kitchens'],
       icon: <Flame className="w-5 h-5 text-[#C5A059]" />,
       tag: isAr ? 'إطفاء نظيف' : 'Clean Agent'
     },
     {
       id: 'alarm-smoke',
+      filter: 'alarm-smoke',
+      code: 'NFPA 72 & 92 • SBC 801',
       title: isAr ? 'الإنذار والتحكم بالدخان' : 'Alarm & Smoke Control',
       desc: isAr
         ? 'كواشف مبكرة ذكية ومراوح سحب وضغط لسلالم الطوارئ.'
         : 'Smart early fire detection and certified stairwell pressurization.',
+      highlights: isAr
+        ? ['لوحات إنذار معنونة ذكية', 'كواشف دخان وحرارة عالية الدقة', 'مراوح سحب الدخان وضغط السلالم']
+        : ['Addressable smart fire panels', 'Precision smoke & heat detectors', 'Smoke extraction & pressurization'],
       icon: <BellRing className="w-5 h-5 text-[#002366] dark:text-[#D4AF37]" />,
       tag: isAr ? 'إنذار مبكر' : 'Early Detection'
     },
     {
       id: 'sprinklers-pumps',
+      filter: 'sprinklers-pumps',
+      code: 'NFPA 13 & 20 • UL/FM',
       title: isAr ? 'الرشاشات المائية والمضخات' : 'Sprinklers & Pumps',
       desc: isAr
         ? 'تصميم وتركيب شبكات الرشاشات ومحطات المضخات UL/FM.'
         : 'UL/FM certified fire pump stations and automated sprinkler grids.',
+      highlights: isAr
+        ? ['محطات مضخات كهرباء وديزل UL/FM', 'شبكات رشاشات مائية أوتوماتيكية', 'مواسير ASTM A53 ومحابس معتمدة']
+        : ['UL/FM electric & diesel pumps', 'Automated wet sprinkler grids', 'ASTM A53 pipes & listed valves'],
       icon: <Droplets className="w-5 h-5 text-[#002366] dark:text-[#D4AF37]" />,
       tag: isAr ? 'شبكات مائية' : 'Hydraulic Systems'
     },
     {
       id: 'maintenance-licenses',
+      filter: 'maintenance',
+      code: 'SBC 801 • SALAMAH',
       title: isAr ? 'الصيانة وتراخيص سلامة' : 'Maintenance & Compliance',
       desc: isAr
         ? 'فحص دوري وإصدار عقود وتراخيص منصة سلامة الرسمية.'
         : 'Preventive maintenance contracts and official Civil Defense approvals.',
+      highlights: isAr
+        ? ['عقود صيانة موثقة في منصة سلامة', 'فحص دوري واختبارات تشغيل كاملة', 'تقارير فنية فورية لتجديد بلدي']
+        : ['Electronic Salama portal contracts', 'Periodic preventive maintenance', 'Instant Balady compliance reports'],
       icon: <ShieldCheck className="w-5 h-5 text-[#C5A059]" />,
       tag: isAr ? 'معتمد رسمياً' : 'Official Certs'
+    }
+  ];
+
+  const accreditations = [
+    {
+      id: 'salamah',
+      title: isAr ? 'منصة سلامة' : 'Salamah',
+      sub: isAr ? 'ترخيص معتمد' : 'Civil Defense',
+      detail: isAr
+        ? 'اعتماد رسمي لإصدار عقود الصيانة الدورية ورفع تقارير الجاهزية للدفاع المدني.'
+        : 'Official authorization to issue periodic maintenance contracts and readiness reports.'
+    },
+    {
+      id: 'sbc',
+      title: 'SBC',
+      sub: isAr ? 'كود البناء السعودي' : 'Saudi Code',
+      detail: isAr
+        ? 'الالتزام الكامل بمتطلبات كود الحماية من الحرائق SBC 801 في التصميم والتنفيذ.'
+        : 'Full engineering compliance with Saudi Fire Code SBC 801 across all installations.'
+    },
+    {
+      id: 'saber',
+      title: 'SABER',
+      sub: isAr ? 'مطابقة ومواصفات' : 'Certified',
+      detail: isAr
+        ? 'جميع الأجهزة والأنابيب واللوحات مسجلة بشهادات مطابقة معتمدة من SASO.'
+        : 'All fire gear, pipes, and panels registered with SASO SABER conformity certificates.'
+    },
+    {
+      id: 'ulfm',
+      title: 'UL / FM',
+      sub: isAr ? 'معايير عالمية' : 'Listed',
+      detail: isAr
+        ? 'معدات ومضخات ورشاشات مختبرة ومعتمدة وفق أرقى معايير الجودة العالمية.'
+        : 'Fire pumps, valves, and sprinklers globally tested and listed by UL and FM.'
     }
   ];
 
@@ -106,7 +161,7 @@ export default function HomePage({
           lang={lang}
           content={content}
           onOpenConsultation={onOpenConsultation}
-          onNavigateServices={() => onNavigate('services')}
+          onNavigateServices={(filter = null) => onNavigate('services', filter ? 'services-grid' : null, filter)}
           onNavigateProducts={() => onNavigate('products')}
         />
       )}
@@ -215,12 +270,20 @@ export default function HomePage({
             {previewServices.map((srv) => (
               <div
                 key={srv.id}
-                onClick={() => onNavigate('services')}
-                className="group bg-white dark:bg-[#131c31] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] cursor-pointer flex flex-col justify-between transition-colors text-start"
+                role="button"
+                tabIndex={0}
+                onClick={() => onNavigate('services', 'services-grid', srv.filter)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onNavigate('services', 'services-grid', srv.filter);
+                  }
+                }}
+                className="group relative bg-white dark:bg-[#131c31] rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] hover:shadow-md cursor-pointer flex flex-col justify-between transition-all text-start focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-10 h-10 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center group-hover:border-[#C5A059] transition-colors">
                       {srv.icon}
                     </div>
                     <span className="text-[11px] font-semibold text-[#C5A059] dark:text-[#D4AF37]">
@@ -241,6 +304,29 @@ export default function HomePage({
                 <div className="pt-4 mt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-semibold text-[#002366] dark:text-[#D4AF37]">
                   <span>{isAr ? 'تفاصيل الخدمة' : 'Service Details'}</span>
                   <ChevronIcon className="w-3.5 h-3.5 text-[#C5A059]" />
+                </div>
+
+                {/* Hover-to-Reveal Service Technical Highlights */}
+                <div className="hover-popover-up hidden sm:block absolute bottom-full pb-2.5 inset-x-0 z-30 text-start">
+                  <div className="rounded-2xl bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-700/80 shadow-xl p-3.5 space-y-2">
+                    <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
+                      <span className="text-[10px] font-bold text-[#C5A059] dark:text-[#D4AF37]">{srv.code}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    </div>
+                    <div className="text-xs font-bold text-[#002366] dark:text-white">{srv.title}</div>
+                    <ul className="space-y-1">
+                      {srv.highlights.map((hl, hIdx) => (
+                        <li key={hIdx} className="flex items-start gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
+                          <span className="mt-1.5 w-1 h-1 rounded-full bg-[#C5A059] shrink-0" />
+                          <span>{hl}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-semibold text-[#002366] dark:text-[#D4AF37]">
+                      <span>{isAr ? 'عرض تفاصيل النظام' : 'View System Details'}</span>
+                      <ChevronIcon className="w-3.5 h-3.5 text-[#C5A059]" />
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -344,22 +430,29 @@ export default function HomePage({
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-              <div className="bg-white dark:bg-[#0b1120] p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] transition-colors text-center">
-                <div className="text-sm font-bold text-[#002366] dark:text-white">{isAr ? 'منصة سلامة' : 'Salamah'}</div>
-                <div className="text-[11px] text-[#C5A059] font-medium mt-0.5">{isAr ? 'ترخيص معتمد' : 'Civil Defense'}</div>
-              </div>
-              <div className="bg-white dark:bg-[#0b1120] p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] transition-colors text-center">
-                <div className="text-sm font-bold text-[#002366] dark:text-white">SBC</div>
-                <div className="text-[11px] text-[#C5A059] font-medium mt-0.5">{isAr ? 'كود البناء السعودي' : 'Saudi Code'}</div>
-              </div>
-              <div className="bg-white dark:bg-[#0b1120] p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] transition-colors text-center">
-                <div className="text-sm font-bold text-[#002366] dark:text-white">SABER</div>
-                <div className="text-[11px] text-[#C5A059] font-medium mt-0.5">{isAr ? 'مطابقة ومواصفات' : 'Certified'}</div>
-              </div>
-              <div className="bg-white dark:bg-[#0b1120] p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] transition-colors text-center">
-                <div className="text-sm font-bold text-[#002366] dark:text-white">UL / FM</div>
-                <div className="text-[11px] text-[#C5A059] font-medium mt-0.5">{isAr ? 'معايير عالمية' : 'Listed'}</div>
-              </div>
+              {accreditations.map((acc) => (
+                <div
+                  key={acc.id}
+                  className="group relative bg-white dark:bg-[#0b1120] p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-[#C5A059] transition-colors text-center cursor-default"
+                >
+                  <div className="text-sm font-bold text-[#002366] dark:text-white">{acc.title}</div>
+                  <div className="text-[11px] text-[#C5A059] font-medium mt-0.5">{acc.sub}</div>
+
+                  {/* Hover-to-Reveal Accreditation Guarantee */}
+                  <div className="hover-popover-up hidden sm:block absolute bottom-full pb-2 left-1/2 -translate-x-1/2 w-56 z-30 text-start">
+                    <div className="rounded-xl bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-700/80 shadow-xl p-3 space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] font-bold text-[#C5A059] dark:text-[#D4AF37]">{acc.sub}</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      </div>
+                      <div className="text-xs font-bold text-[#002366] dark:text-white">{acc.title}</div>
+                      <div className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300 font-normal">
+                        {acc.detail}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="pt-2 flex flex-wrap items-center justify-center gap-3">

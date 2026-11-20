@@ -22,7 +22,15 @@ import {
   Moon,
   User,
   UserCheck,
-  QrCode
+  QrCode,
+  Package,
+  Phone,
+  Mail,
+  MapPin,
+  Home,
+  BookOpen,
+  Star,
+  Sparkles
 } from 'lucide-react';
 import VisitorAuthModal from './VisitorAuthModal';
 import UserProfileModal from './UserProfileModal';
@@ -62,6 +70,7 @@ export default function Navbar({
 
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
+  const actionPopoverAlign = isAr ? 'left-0' : 'right-0';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +93,72 @@ export default function Navbar({
       setSearchOpen(false);
     }
   };
+
+  const homeSubItems = [
+    {
+      label: isAr ? 'الواجهة الرئيسية والركائز' : 'Hero & Core Pillars',
+      page: 'home',
+      sectionId: 'home',
+      desc: isAr ? 'منظومة الإطفاء والإنذار المعتمدة' : 'Integrated safety & alarm solutions',
+      icon: <Home className="w-4 h-4 text-[#C5A059]" />
+    },
+    {
+      label: isAr ? 'نبذة عن تسامي' : 'Company Highlight',
+      page: 'home',
+      sectionId: 'home-about',
+      desc: isAr ? 'شريككم الهندسي المعتمد وفق SBC' : 'Your certified SBC engineering partner',
+      icon: <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
+    },
+    {
+      label: isAr ? 'المرجع الفني للدفاع المدني' : 'Civil Defense Knowledge Hub',
+      page: 'home',
+      sectionId: 'civil-defense-knowledge-hub',
+      desc: isAr ? 'اشتراطات سلامة، SBC 801 وسابر' : 'Salama contracts, SBC 801 & SABER',
+      icon: <BookOpen className="w-4 h-4 text-[#C5A059]" />
+    },
+    {
+      label: isAr ? 'آراء وتقييمات العملاء' : 'Client Reviews & Ratings',
+      page: 'home',
+      sectionId: 'customer-reviews',
+      desc: isAr ? 'تجارب وشهادات شركائنا في المملكة' : 'Verified client testimonials kingdom-wide',
+      icon: <Star className="w-4 h-4 text-[#C5A059]" />
+    }
+  ];
+
+  const catalogItems = Array.isArray(content?.[lang]?.productsCatalog?.items)
+    ? content[lang].productsCatalog.items
+    : [];
+  const rawCategories = Array.isArray(content?.[lang]?.productsCatalog?.categories)
+    ? content[lang].productsCatalog.categories
+    : [
+        { id: 'networks', name: isAr ? 'شبكات الأنابيب والرشاشات' : 'Piping & Sprinklers' },
+        { id: 'alarms', name: isAr ? 'أنظمة الإنذار والكواشف' : 'Alarms & Detectors' },
+        { id: 'valves', name: isAr ? 'المحابس وصناديق الحريق' : 'Valves & Cabinets' },
+        { id: 'suppression', name: isAr ? 'أنظمة الإخماد التلقائي' : 'Clean Suppression' },
+        { id: 'pumps', name: isAr ? 'مضخات الحريق والمراوح' : 'Pumps & Fans' }
+      ];
+  const productCategories = rawCategories
+    .filter((cat) => cat.id !== 'all')
+    .map((cat) => ({
+      id: cat.id,
+      name: cat.name,
+      count: catalogItems.filter((it) => it.category === cat.id).length
+    }));
+
+  const contactCfg = content?.[lang]?.contact || {};
+  const contactPhone1 = contactCfg.phone1 || '+966 59 168 4133';
+  const contactPhone2 = contactCfg.phone2 || '+966 53 348 0098';
+  const contactEmail = contactCfg.email || 'info@tasaami.com';
+  const contactAddress =
+    contactCfg.address ||
+    (isAr ? 'مكة المكرمة – الشوقية – شارع إبراهيم الخليل' : 'Makkah – Ash Shawqiyah – Ibrahim Al Khalil St');
+  const contactMapsUrl =
+    contactCfg.googleMapsUrl ||
+    'https://www.google.com/maps/place/%D8%B4%D8%B1%D9%83%D8%A9+%D8%AA%D8%B3%D8%A7%D9%85%D9%8A+%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84%E2%80%AD/@21.3872248,39.8077324,17z';
+
+  const quickSearchChips = isAr
+    ? ['FM-200', 'مضخات الحريق', 'لوحات الإنذار', 'رشاشات الحريق']
+    : ['FM-200', 'Fire Pumps', 'Alarm Panels', 'Sprinklers'];
 
   // 1. عن الشركة Sub-items with strict target sections
   const aboutSubItems = [
@@ -191,16 +266,46 @@ export default function Navbar({
             <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 2xl:gap-1.5">
               
               {/* 1. الرئيسية (Home) */}
-              <button
-                onClick={() => onNavigate('home')}
-                className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
-                  currentPage === 'home'
-                    ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
-                    : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
-                }`}
-              >
-                {t.home}
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={() => onNavigate('home')}
+                  className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                    currentPage === 'home'
+                      ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
+                      : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
+                  }`}
+                >
+                  {t.home}
+                </button>
+
+                <div className={`hover-popover-down absolute top-full ${isAr ? 'right-0' : 'left-0'} pt-2.5 w-72 z-50`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-2 space-y-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#002366] dark:text-[#D4AF37] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                      {isAr ? 'أقسام الصفحة الرئيسية' : 'Home Highlights'}
+                    </div>
+                    {homeSubItems.map((item, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => onNavigate(item.page, item.sectionId)}
+                        className="w-full flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition group/item text-start"
+                      >
+                        <div className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center flex-shrink-0 mt-0.5 group-hover/item:border-[#C5A059] transition">
+                          {item.icon}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-xs font-bold text-[#0f172a] dark:text-white group-hover/item:text-[#002366] dark:group-hover/item:text-[#D4AF37] transition">
+                            {item.label}
+                          </div>
+                          <div className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1">
+                            {item.desc}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
               {/* 2. عن الشركة (About Company - Dropdown & Direct Navigate) */}
               <div className="relative group">
@@ -312,115 +417,462 @@ export default function Navbar({
                 </div>
               </div>
 
-              {/* 4. منتجاتنا (Dedicated Page) */}
-              <button
-                onClick={() => onNavigate('products')}
-                className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
-                  currentPage === 'products'
-                    ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
-                    : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
-                }`}
-              >
-                {t.products}
-              </button>
+              {/* 4. منتجاتنا (Dedicated Page with Hover Category Preview) */}
+              <div className="relative group">
+                <button
+                  onClick={() => onNavigate('products')}
+                  className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                    currentPage === 'products'
+                      ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
+                      : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
+                  }`}
+                >
+                  {t.products}
+                </button>
 
-              {/* 5. تواصل معنا */}
-              <button
-                onClick={() => onNavigate('contact')}
-                className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
-                  currentPage === 'contact'
-                    ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
-                    : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
-                }`}
-              >
-                {t.contact}
-              </button>
+                <div className={`hover-popover-down absolute top-full ${isAr ? 'right-0' : 'left-0'} pt-2.5 w-80 z-50`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-2 space-y-1">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#002366] dark:text-[#D4AF37] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <span>{isAr ? 'تصنيفات كتالوج المنتجات' : 'Product Categories'}</span>
+                      <span className="text-[9px] text-[#C5A059] font-bold">UL / FM / SABER</span>
+                    </div>
+                    {productCategories.map((cat) => (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => onNavigate('products', 'products-grid', cat.id)}
+                        className="w-full flex items-center justify-between gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition group/item text-start"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center flex-shrink-0 group-hover/item:border-[#C5A059] transition">
+                            <Package className="w-3.5 h-3.5 text-[#C5A059]" />
+                          </div>
+                          <span className="text-xs font-bold text-[#0f172a] dark:text-white group-hover/item:text-[#002366] dark:group-hover/item:text-[#D4AF37] truncate">
+                            {cat.name}
+                          </span>
+                        </div>
+                        {cat.count > 0 && (
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-[#0b1120] text-[#002366] dark:text-[#D4AF37] font-bold shrink-0">
+                            {cat.count}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 px-2 pb-1">
+                      <button
+                        type="button"
+                        onClick={() => onNavigate('products', 'products-grid', 'all')}
+                        className="w-full py-2 text-center text-xs font-semibold text-white bg-[#002366] hover:bg-[#1D4ED8] rounded-full transition-colors"
+                      >
+                        {isAr ? 'عرض الكتالوج الكامل ←' : 'Explore Full Catalog →'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5. تواصل معنا (with Direct Channels Hover Card) */}
+              <div className="relative group">
+                <button
+                  onClick={() => onNavigate('contact')}
+                  className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                    currentPage === 'contact'
+                      ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
+                      : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
+                  }`}
+                >
+                  {t.contact}
+                </button>
+
+                <div className={`hover-popover-down absolute top-full ${isAr ? 'right-0' : 'left-0'} pt-2.5 w-72 z-50`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-2 text-start">
+                    <div className="pb-1.5 text-[10px] font-bold text-[#002366] dark:text-[#D4AF37] uppercase tracking-wider border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <span>{isAr ? 'قنوات التواصل المباشر' : 'Direct Contact Channels'}</span>
+                      <span className="text-[9px] text-[#C5A059]">{isAr ? 'مكة المكرمة' : 'Makkah HQ'}</span>
+                    </div>
+                    <a
+                      href={`tel:${contactPhone1.replace(/\s+/g, '')}`}
+                      className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition"
+                    >
+                      <span className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center shrink-0">
+                        <Phone className="w-3.5 h-3.5 text-[#C5A059]" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[10px] text-slate-400">{isAr ? 'الهاتف الرئيسي' : 'Primary Line'}</div>
+                        <div className="text-xs font-bold text-[#0f172a] dark:text-white font-mono" dir="ltr">
+                          {contactPhone1}
+                        </div>
+                      </div>
+                    </a>
+                    <a
+                      href={`tel:${contactPhone2.replace(/\s+/g, '')}`}
+                      className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition"
+                    >
+                      <span className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center shrink-0">
+                        <Phone className="w-3.5 h-3.5 text-[#002366] dark:text-[#D4AF37]" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[10px] text-slate-400">{isAr ? 'الرقم الاحتياطي' : 'Secondary Line'}</div>
+                        <div className="text-xs font-bold text-[#0f172a] dark:text-white font-mono" dir="ltr">
+                          {contactPhone2}
+                        </div>
+                      </div>
+                    </a>
+                    <a
+                      href={`mailto:${contactEmail}`}
+                      className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition"
+                    >
+                      <span className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center shrink-0">
+                        <Mail className="w-3.5 h-3.5 text-[#C5A059]" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[10px] text-slate-400">{isAr ? 'البريد الإلكتروني' : 'Email'}</div>
+                        <div className="text-xs font-bold text-[#0f172a] dark:text-white truncate">{contactEmail}</div>
+                      </div>
+                    </a>
+                    <a
+                      href={contactMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-2.5 p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition"
+                    >
+                      <span className="w-7 h-7 rounded-lg border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-[#0b1120] flex items-center justify-center shrink-0 mt-0.5">
+                        <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[10px] text-slate-400">{isAr ? 'الموقع على الخريطة' : 'Google Maps HQ'}</div>
+                        <div className="text-[11px] font-semibold text-[#0f172a] dark:text-white line-clamp-2">
+                          {contactAddress}
+                        </div>
+                      </div>
+                    </a>
+                    <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800">
+                      <button
+                        type="button"
+                        onClick={() => onNavigate('contact')}
+                        className="w-full py-2 text-center text-xs font-semibold text-white bg-[#002366] hover:bg-[#1D4ED8] rounded-full transition-colors"
+                      >
+                        {isAr ? 'الانتقال لصفحة التواصل ←' : 'Go to Contact Page →'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </nav>
 
             {/* Actions (Dark Mode Toggle, Search, Lang, Account, QR, Admin, Consultation CTA) */}
             <div className="hidden md:flex items-center gap-1.5 2xl:gap-2 shrink-0">
               {/* Dark / Light Mode Toggle */}
-              <button
-                onClick={onToggleDarkMode}
-                aria-label={darkMode ? (lang === 'ar' ? 'تفعيل الوضع الفاتح' : 'Switch to Light Mode') : (lang === 'ar' ? 'تفعيل الوضع الداكن' : 'Switch to Dark Mode')}
-                title={darkMode ? (lang === 'ar' ? 'الوضع الفاتح' : 'Light Mode') : (lang === 'ar' ? 'الوضع الداكن' : 'Dark Mode')}
-                className="p-1.5 xl:p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
-              >
-                {darkMode ? <Sun className="w-4 h-4 text-[#D4AF37]" /> : <Moon className="w-4 h-4" />}
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={onToggleDarkMode}
+                  aria-label={darkMode ? (lang === 'ar' ? 'تفعيل الوضع الفاتح' : 'Switch to Light Mode') : (lang === 'ar' ? 'تفعيل الوضع الداكن' : 'Switch to Dark Mode')}
+                  title={darkMode ? (lang === 'ar' ? 'الوضع الفاتح' : 'Light Mode') : (lang === 'ar' ? 'الوضع الداكن' : 'Dark Mode')}
+                  className="p-1.5 xl:p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
+                >
+                  {darkMode ? <Sun className="w-4 h-4 text-[#D4AF37]" /> : <Moon className="w-4 h-4" />}
+                </button>
 
-              {/* Search Toggle */}
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                aria-label="Search"
-                title={lang === 'ar' ? 'بحث' : 'Search'}
-                className="p-1.5 xl:p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
-              >
-                <Search className="w-4 h-4" />
-              </button>
+                <div className={`hover-popover-down absolute top-full ${actionPopoverAlign} pt-2.5 w-56 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-1">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#002366] dark:text-[#D4AF37]">
+                      {darkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5 text-[#C5A059]" />}
+                      <span>{darkMode ? (isAr ? 'الوضع الفاتح' : 'Light Mode') : (isAr ? 'الوضع الداكن' : 'Dark Mode')}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 text-start font-normal leading-relaxed">
+                      {darkMode
+                        ? isAr
+                          ? 'اضغط للتبديل إلى المظهر النهاري المريح للقراءة.'
+                          : 'Switch to the crisp daytime light theme.'
+                        : isAr
+                        ? 'اضغط لتفعيل المظهر الليلي الداكن المريح للعين.'
+                        : 'Switch to the eye-friendly dark appearance.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Search Toggle with Live Quick-Search Hover Panel */}
+              <div className="relative group">
+                <button
+                  onClick={() => setSearchOpen(!searchOpen)}
+                  aria-label="Search"
+                  title={lang === 'ar' ? 'بحث' : 'Search'}
+                  className="p-1.5 xl:p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
+                >
+                  <Search className="w-4 h-4" />
+                </button>
+
+                <div className={`hover-popover-down hover-popover-interactive absolute top-full ${actionPopoverAlign} pt-2.5 w-80 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-2.5">
+                    <div className="text-[10px] font-bold text-[#002366] dark:text-[#D4AF37] uppercase tracking-wider">
+                      {isAr ? 'بحث سريع في المنتجات والأنظمة' : 'Quick Catalog Search'}
+                    </div>
+                    <form onSubmit={handleSearchSubmit} className="flex items-center gap-1.5">
+                      <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder={isAr ? 'ابحث عن مضخات، FM-200، إنذار...' : 'Search pumps, FM-200, alarms...'}
+                        className="flex-1 min-w-0 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1120] text-xs text-[#0f172a] dark:text-white focus:outline-none focus:border-[#C5A059]"
+                      />
+                      <button
+                        type="submit"
+                        className="px-3 py-1.5 rounded-xl bg-[#002366] hover:bg-[#1D4ED8] text-white text-xs font-semibold transition-colors shrink-0"
+                      >
+                        {isAr ? 'بحث' : 'Go'}
+                      </button>
+                    </form>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {quickSearchChips.map((chip) => (
+                        <button
+                          key={chip}
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery(chip);
+                            onNavigate('products');
+                            setSearchOpen(false);
+                          }}
+                          className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-[#0b1120] hover:bg-[#002366] hover:text-white dark:hover:bg-[#C5A059] text-[10px] font-semibold text-[#002366] dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 transition-colors"
+                        >
+                          {chip}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               {/* Language Switcher */}
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors whitespace-nowrap"
-                title="Switch Language"
-              >
-                <Globe className="w-3.5 h-3.5 text-[#C5A059]" />
-                <span>{lang === 'ar' ? 'EN' : 'العربية'}</span>
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors whitespace-nowrap"
+                  title="Switch Language"
+                >
+                  <Globe className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>{lang === 'ar' ? 'EN' : 'العربية'}</span>
+                </button>
+
+                <div className={`hover-popover-down absolute top-full ${actionPopoverAlign} pt-2.5 w-56 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-1">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#002366] dark:text-[#D4AF37]">
+                      <Globe className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>{isAr ? 'تبديل لغة الموقع' : 'Switch Site Language'}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 text-start font-normal leading-relaxed">
+                      {isAr
+                        ? 'اللغة الحالية: العربية — اضغط للتبديل الفوري إلى English.'
+                        : 'Current: English — Click to switch instantly to العربية.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               {/* Visitor / Client Account Portal */}
-              {currentUser ? (
-                <button
-                  onClick={() => setProfileModalOpen(true)}
-                  className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-transparent text-[#002366] dark:text-[#D4AF37] border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
-                  title={isAr ? `حساب الزائر: ${currentUser.name} (اضغط لإدارة الحساب والمفضلة والتقييم)` : `Visitor Account: ${currentUser.name}`}
-                >
-                  <UserCheck className="w-3.5 h-3.5 text-[#C5A059]" />
-                  <span className="max-w-[76px] xl:max-w-[110px] truncate">{currentUser.name}</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => setAuthModalOpen(true)}
-                  className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold text-[#002366] dark:text-[#D4AF37] bg-white dark:bg-transparent border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
-                  title={isAr ? 'بوابة الزوار: تسجيل الدخول أو فتح حساب جديد' : 'Visitor Portal: Sign In or Register'}
-                >
-                  <User className="w-3.5 h-3.5 text-[#C5A059]" />
-                  <span className="hidden xl:inline whitespace-nowrap">{isAr ? 'دخول الزوار' : 'Visitor Login'}</span>
-                  <span className="xl:hidden whitespace-nowrap">{isAr ? 'دخول' : 'Sign In'}</span>
-                </button>
-              )}
+              <div className="relative group">
+                {currentUser ? (
+                  <button
+                    onClick={() => setProfileModalOpen(true)}
+                    className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-transparent text-[#002366] dark:text-[#D4AF37] border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
+                    title={isAr ? `حساب الزائر: ${currentUser.name} (اضغط لإدارة الحساب والمفضلة والتقييم)` : `Visitor Account: ${currentUser.name}`}
+                  >
+                    <UserCheck className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span className="max-w-[76px] xl:max-w-[110px] truncate">{currentUser.name}</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setAuthModalOpen(true)}
+                    className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold text-[#002366] dark:text-[#D4AF37] bg-white dark:bg-transparent border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
+                    title={isAr ? 'بوابة الزوار: تسجيل الدخول أو فتح حساب جديد' : 'Visitor Portal: Sign In or Register'}
+                  >
+                    <User className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span className="hidden xl:inline whitespace-nowrap">{isAr ? 'دخول الزوار' : 'Visitor Login'}</span>
+                    <span className="xl:hidden whitespace-nowrap">{isAr ? 'دخول' : 'Sign In'}</span>
+                  </button>
+                )}
+
+                <div className={`hover-popover-down absolute top-full ${actionPopoverAlign} pt-2.5 w-64 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-2">
+                    {currentUser ? (
+                      <>
+                        <div className="pb-1.5 border-b border-slate-100 dark:border-slate-800">
+                          <div className="text-xs font-bold text-[#002366] dark:text-white truncate">{currentUser.name}</div>
+                          <div className="text-[10px] text-slate-400 font-mono truncate" dir="ltr">
+                            {currentUser.phone || currentUser.email}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setProfileModalOpen(true)}
+                          className="w-full py-1.5 px-3 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-[11px] font-semibold transition-colors"
+                        >
+                          {isAr ? 'إدارة الحساب والمفضلة' : 'Manage Profile & Favorites'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onNavigate('products')}
+                          className="w-full py-1.5 px-3 rounded-full border border-slate-200 dark:border-slate-700 hover:border-[#C5A059] text-[11px] font-semibold text-[#002366] dark:text-[#D4AF37] transition-colors"
+                        >
+                          {isAr ? 'تصفح المنتجات' : 'Browse Products'}
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-xs font-bold text-[#002366] dark:text-[#D4AF37]">
+                          {isAr ? 'بوابة الزوار والعملاء' : 'Visitor & Client Portal'}
+                        </div>
+                        <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                          <li className="flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                            <span>{isAr ? 'حفظ المنتجات المفضلة' : 'Save favorite equipment'}</span>
+                          </li>
+                          <li className="flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                            <span>{isAr ? 'متابعة طلبات المعاينة' : 'Track survey requests'}</span>
+                          </li>
+                          <li className="flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                            <span>{isAr ? 'إضافة تقييماتك ومشاركتها' : 'Post verified reviews'}</span>
+                          </li>
+                        </ul>
+                        <button
+                          type="button"
+                          onClick={() => setAuthModalOpen(true)}
+                          className="w-full py-1.5 px-3 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-[11px] font-semibold transition-colors"
+                        >
+                          {isAr ? 'تسجيل الدخول / حساب جديد' : 'Sign In / Create Account'}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* PWA & QR Code Install Trigger (visible in bar >= xl; also in Site Explorer & Footer) */}
-              <button
-                onClick={() => setIsPwaModalOpen(true)}
-                className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors whitespace-nowrap shrink-0"
-                title={isAr ? 'تثبيت التطبيق على الجوال والكمبيوتر ومسح الباركود' : 'Install App / Scan QR'}
-              >
-                <QrCode className="w-3.5 h-3.5 text-[#C5A059]" />
-                <span className="text-[11px]">{isAr ? 'التطبيق' : 'App / QR'}</span>
-              </button>
+              <div className="hidden xl:block relative group">
+                <button
+                  onClick={() => setIsPwaModalOpen(true)}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors whitespace-nowrap shrink-0"
+                  title={isAr ? 'تثبيت التطبيق على الجوال والكمبيوتر ومسح الباركود' : 'Install App / Scan QR'}
+                >
+                  <QrCode className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span className="text-[11px]">{isAr ? 'التطبيق' : 'App / QR'}</span>
+                </button>
+
+                <div className={`hover-popover-down absolute top-full ${actionPopoverAlign} pt-2.5 w-64 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-2">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#002366] dark:text-[#D4AF37]">
+                      <QrCode className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>{isAr ? 'تطبيق تسامي (PWA) ورمز QR' : 'Tasami App (PWA) & QR'}</span>
+                    </div>
+                    <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'تثبيت فوري بدون متجر' : 'Instant install without app store'}</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'يعمل على الجوال والكمبيوتر' : 'Works on mobile & desktop'}</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'مسح الباركود للمشاركة السريعة' : 'QR code for instant sharing'}</span>
+                      </li>
+                    </ul>
+                    <button
+                      type="button"
+                      onClick={() => setIsPwaModalOpen(true)}
+                      className="w-full py-1.5 px-3 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-[11px] font-semibold transition-colors"
+                    >
+                      {isAr ? 'فتح نافذة التثبيت' : 'Open Install Modal'}
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               {/* Admin Portal Trigger (always visible in navbar bar on tablet & desktop; also in mobile bar/menu, Site Explorer & Footer) */}
-              <button
-                onClick={onOpenAdmin}
-                className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors whitespace-nowrap shrink-0"
-                title={lang === 'ar' ? 'بوابة مدير الموقع وقاعدة البيانات' : 'Admin & Database Portal'}
-              >
-                <Shield className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
-                <span className="text-[11px]">{lang === 'ar' ? 'الإدارة' : 'Admin'}</span>
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={onOpenAdmin}
+                  className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors whitespace-nowrap shrink-0"
+                  title={lang === 'ar' ? 'بوابة مدير الموقع وقاعدة البيانات' : 'Admin & Database Portal'}
+                >
+                  <Shield className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
+                  <span className="text-[11px]">{lang === 'ar' ? 'الإدارة' : 'Admin'}</span>
+                </button>
+
+                <div className={`hover-popover-down absolute top-full ${actionPopoverAlign} pt-2.5 w-64 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#002366] dark:text-[#D4AF37]">
+                        <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
+                        <span>{isAr ? 'بوابة مدير الموقع' : 'Admin Control Portal'}</span>
+                      </span>
+                      <span className="text-[9px] px-1.5 py-0.5 rounded bg-[#002366]/10 dark:bg-[#C5A059]/20 text-[#002366] dark:text-[#D4AF37] font-bold">
+                        {isAr ? 'محمية' : 'Secured'}
+                      </span>
+                    </div>
+                    <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'إدارة المحتوى والمنتجات' : 'Manage content & products'}</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'استوديو الشعار والخطوط' : 'Logo & typography studio'}</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'مراجعة التقييمات والدعم الفني' : 'Reviews & technical support'}</span>
+                      </li>
+                    </ul>
+                    <button
+                      type="button"
+                      onClick={onOpenAdmin}
+                      className="w-full py-1.5 px-3 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-[11px] font-semibold transition-colors"
+                    >
+                      {isAr ? 'فتح لوحة التحكم' : 'Open Dashboard'}
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               {/* Request Consultation CTA Button */}
-              <button
-                onClick={onOpenConsultation}
-                className="flex items-center gap-1.5 px-2.5 xl:px-4 py-1.5 xl:py-2 rounded-full text-xs font-semibold text-white bg-[#002366] hover:bg-[#1D4ED8] transition-colors whitespace-nowrap"
-              >
-                <span className={isAr ? 'hidden xl:inline' : 'hidden 2xl:inline'}>{t.requestConsultation}</span>
-                <span className={isAr ? 'xl:hidden' : '2xl:hidden'}>{isAr ? 'طلب معاينة' : 'Site Survey'}</span>
-                <ArrowIcon className="w-3.5 h-3.5" />
-              </button>
+              <div className="relative group">
+                <button
+                  onClick={onOpenConsultation}
+                  className="flex items-center gap-1.5 px-2.5 xl:px-4 py-1.5 xl:py-2 rounded-full text-xs font-semibold text-white bg-[#002366] hover:bg-[#1D4ED8] transition-colors whitespace-nowrap"
+                >
+                  <span className={isAr ? 'hidden xl:inline' : 'hidden 2xl:inline'}>{t.requestConsultation}</span>
+                  <span className={isAr ? 'xl:hidden' : '2xl:hidden'}>{isAr ? 'طلب معاينة' : 'Site Survey'}</span>
+                  <ArrowIcon className="w-3.5 h-3.5" />
+                </button>
+
+                <div className={`hover-popover-down absolute top-full ${actionPopoverAlign} pt-2.5 w-64 z-50 text-start`}>
+                  <div className="bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200/80 dark:border-slate-800 p-3 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#002366] dark:text-[#D4AF37]">
+                      <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <span>{isAr ? 'معاينة هندسية وعرض سعر' : 'Site Survey & Quote'}</span>
+                    </div>
+                    <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'زيارة ميدانية معتمدة' : 'Certified field engineering visit'}</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'مطابقة كود البناء SBC 801' : 'SBC 801 compliance check'}</span>
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <span className="w-1 h-1 rounded-full bg-[#C5A059]" />
+                        <span>{isAr ? 'رد هندسي خلال 24 ساعة' : 'Engineering response within 24h'}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Mobile / Tablet Menu Button */}

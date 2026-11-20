@@ -105,6 +105,7 @@ export default function FloatingSupportDock({
     ? normalizeWhatsAppDigits(contact.phone2)
     : '966533480098';
   const displayPrimaryPhone = contact.phone1 || '+966 59 168 4133';
+  const displaySecondaryPhone = contact.phone2 || '+966 53 348 0098';
 
   const whatsappText = isAr
     ? 'السلام عليكم، أرغب بالتواصل مع شركة تسامي الأعمال للسلامة للاستفسار عن المنتجات والخدمات.'
@@ -215,55 +216,171 @@ export default function FloatingSupportDock({
 
   return (
     <>
-      {/* Global Floating Dock: Icons-Only (Royal Blue Support + Gold WhatsApp) */}
+      {/* Global Floating Dock: Icons with Apple-Style Hover Content Previews */}
       <div
         className={`fixed bottom-4 sm:bottom-6 ${
           isAr ? 'left-4 sm:left-6' : 'right-4 sm:right-6'
         } z-40 flex flex-col gap-2.5 items-center`}
       >
-        {/* Technical Support Icon-Only Button */}
+        {/* Technical Support Icon + Hover Content Card */}
         {popupEnabled && (
-          <button
-            type="button"
-            onClick={() => setIsOpen((v) => !v)}
-            aria-label={supportLabel}
-            title={supportLabel}
-            className="group relative w-12 h-12 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white border border-[#C5A059]/60 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
-          >
-            <Headphones className="w-5 h-5" />
-            {answeredCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C5A059] text-white text-[10px] font-bold flex items-center justify-center">
-                {answeredCount}
-              </span>
-            )}
-            <span
-              className={`hidden sm:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 absolute top-1/2 -translate-y-1/2 ${
-                isAr ? 'left-14' : 'right-14'
-              } whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#002366] text-white text-[11px] font-semibold shadow-md border border-[#C5A059]/40`}
+          <div className="relative group">
+            <button
+              type="button"
+              onClick={() => setIsOpen((v) => !v)}
+              aria-label={supportLabel}
+              title={supportLabel}
+              className="relative w-12 h-12 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white border border-[#C5A059]/60 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#C5A059]"
             >
-              {supportLabel}
-            </span>
-          </button>
+              <Headphones className="w-5 h-5" />
+              {answeredCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C5A059] text-white text-[10px] font-bold flex items-center justify-center">
+                  {answeredCount}
+                </span>
+              )}
+            </button>
+
+            {!isOpen && (
+              <div
+                dir={isAr ? 'rtl' : 'ltr'}
+                className={`hover-popover-side hidden sm:block absolute bottom-0 ${
+                  isAr ? 'left-full pl-3' : 'right-full pr-3'
+                } w-72 z-50 text-start`}
+              >
+                <div className="rounded-2xl bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-700/80 shadow-2xl overflow-hidden">
+                  <div className="bg-[#002366] px-3.5 py-2.5 text-white border-b border-[#C5A059]/40">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 text-xs font-bold">
+                        <Headphones className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <span>{isAr ? 'الدعم الفني المباشر' : 'Live Technical Support'}</span>
+                      </div>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 text-emerald-300 text-[10px] font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <span>{isAr ? 'متصل' : 'Online'}</span>
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-white/75 mt-0.5 text-start font-normal leading-snug">
+                      {isAr ? 'إجابات فورية من فريق السلامة والهندسة' : 'Instant answers from our engineering team'}
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 space-y-1.5">
+                    {faqs.slice(0, 2).map((f) => (
+                      <button
+                        key={f.id}
+                        type="button"
+                        onClick={() => {
+                          setOpenFaqId(f.id);
+                          setActiveMode('instant');
+                          setIsOpen(true);
+                        }}
+                        className="w-full p-2 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-[#C5A059] hover:bg-slate-50 dark:hover:bg-[#0b1120] transition text-start"
+                      >
+                        <div className="text-[10px] font-bold text-[#C5A059]">{f.category}</div>
+                        <div className="text-[11px] font-semibold text-[#002366] dark:text-white line-clamp-2 leading-snug">
+                          {f.question}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="px-3 py-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0b1120]/60 flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-slate-400" dir="ltr">
+                      {displayPrimaryPhone}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsOpen(true)}
+                      className="px-2.5 py-1 rounded-full bg-[#002366] hover:bg-[#1D4ED8] text-white text-[10px] font-semibold transition-colors whitespace-nowrap"
+                    >
+                      {isAr ? 'فتح نافذة الدعم ←' : 'Open Support →'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
-        {/* WhatsApp Icon-Only Link (Official WhatsApp Brand Green #25D366) */}
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={isAr ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}
-          title={isAr ? `واتساب (${displayPrimaryPhone})` : `WhatsApp (${displayPrimaryPhone})`}
-          className="group relative w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white border border-[#25D366] shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#25D366]/50"
-        >
-          <WhatsAppIcon className="w-6 h-6" />
-          <span
-            className={`hidden sm:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 absolute top-1/2 -translate-y-1/2 ${
-              isAr ? 'left-14' : 'right-14'
-            } whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#002366] text-white text-[11px] font-semibold shadow-md border border-[#C5A059]/40`}
+        {/* WhatsApp Icon + Hover Content Card (Official WhatsApp Brand Green #25D366) */}
+        <div className="relative group">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={isAr ? 'تواصل عبر واتساب' : 'Chat on WhatsApp'}
+            title={isAr ? `واتساب (${displayPrimaryPhone})` : `WhatsApp (${displayPrimaryPhone})`}
+            className="w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white border border-[#25D366] shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#25D366]/50"
           >
-            {whatsappLabel}
-          </span>
-        </a>
+            <WhatsAppIcon className="w-6 h-6" />
+          </a>
+
+          <div
+            dir={isAr ? 'rtl' : 'ltr'}
+            className={`hover-popover-side hidden sm:block absolute bottom-0 ${
+              isAr ? 'left-full pl-3' : 'right-full pr-3'
+            } w-72 z-50 text-start`}
+          >
+            <div className="rounded-2xl bg-white/95 dark:bg-[#131c31]/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-700/80 shadow-2xl p-3 space-y-2.5">
+              <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#25D366]" />
+                  <span className="text-xs font-bold text-[#002366] dark:text-white">
+                    {isAr ? 'واتساب تسامي المباشر' : 'Tasami Direct WhatsApp'}
+                  </span>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-[#25D366]/15 text-[#1EBE5D] text-[10px] font-bold">
+                  {isAr ? 'رد سريع' : 'Fast Reply'}
+                </span>
+              </div>
+
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 text-start font-normal leading-relaxed">
+                {isAr
+                  ? 'تواصل مباشر مع المهندس المختص للاستفسارات، عروض الأسعار، وحجز المعاينات'
+                  : 'Direct chat with our safety engineers for quotes, inquiries, and site surveys'}
+              </p>
+
+              <div className="space-y-1">
+                <a
+                  href={`https://wa.me/${primaryWaDigits}?text=${encodeURIComponent(whatsappText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-[#0b1120] hover:border-[#25D366] border border-slate-200/70 dark:border-slate-800 transition text-xs"
+                >
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                    {isAr ? 'الخط الرئيسي' : 'Primary'}
+                  </span>
+                  <span className="font-mono font-bold text-[#002366] dark:text-white" dir="ltr">
+                    {displayPrimaryPhone}
+                  </span>
+                </a>
+                <a
+                  href={`https://wa.me/${secondaryWaDigits}?text=${encodeURIComponent(whatsappText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-[#0b1120] hover:border-[#25D366] border border-slate-200/70 dark:border-slate-800 transition text-xs"
+                >
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                    {isAr ? 'الرقم الاحتياطي' : 'Secondary'}
+                  </span>
+                  <span className="font-mono font-bold text-[#002366] dark:text-white" dir="ltr">
+                    {displaySecondaryPhone}
+                  </span>
+                </a>
+              </div>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2 px-3 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+                <span>{isAr ? 'بدء محادثة واتساب الآن' : 'Start WhatsApp Chat Now'}</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Technical Support Instant Q&A Popup Window */}
