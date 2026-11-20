@@ -163,11 +163,11 @@ export default function Navbar({
             : 'py-2.5 sm:py-3'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-2 xl:gap-3">
+        <div className="max-w-[1360px] mx-auto px-3 sm:px-5 lg:px-4 xl:px-6">
+          <div className="flex items-center justify-between gap-1.5 lg:gap-2 xl:gap-3">
             
             {/* Logo + Quick Cascading Site Explorer */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               <button
                 onClick={() => onNavigate('home')}
                 className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#C5A059]/40 rounded-xl py-0.5 shrink-0"
@@ -188,12 +188,12 @@ export default function Navbar({
             </div>
 
             {/* Desktop Navigation Menu */}
-            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 2xl:gap-1.5">
               
               {/* 1. الرئيسية (Home) */}
               <button
                 onClick={() => onNavigate('home')}
-                className={`px-2 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
                   currentPage === 'home'
                     ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
@@ -206,7 +206,7 @@ export default function Navbar({
               <div className="relative group">
                 <button
                   onClick={() => onNavigate('about')}
-                  className={`flex items-center gap-1 px-2 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-1 px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
                     currentPage === 'about'
                       ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
                       : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
@@ -249,7 +249,7 @@ export default function Navbar({
               <div className="relative group">
                 <button
                   onClick={() => onNavigate('services')}
-                  className={`flex items-center gap-1 px-2 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-1 px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
                     currentPage === 'services'
                       ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
                       : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
@@ -315,7 +315,7 @@ export default function Navbar({
               {/* 4. منتجاتنا (Dedicated Page) */}
               <button
                 onClick={() => onNavigate('products')}
-                className={`px-2 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
                   currentPage === 'products'
                     ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
@@ -327,7 +327,7 @@ export default function Navbar({
               {/* 5. تواصل معنا */}
               <button
                 onClick={() => onNavigate('contact')}
-                className={`px-2 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                className={`px-1.5 xl:px-2.5 2xl:px-3 py-2 text-xs xl:text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
                   currentPage === 'contact'
                     ? 'text-[#002366] dark:text-[#D4AF37] border-[#C5A059]'
                     : 'text-slate-600 dark:text-slate-300 border-transparent hover:text-[#002366] dark:hover:text-[#D4AF37]'
@@ -339,13 +339,13 @@ export default function Navbar({
             </nav>
 
             {/* Actions (Dark Mode Toggle, Search, Lang, Account, QR, Admin, Consultation CTA) */}
-            <div className="hidden md:flex items-center gap-1.5 xl:gap-2 shrink-0">
+            <div className="hidden md:flex items-center gap-1.5 2xl:gap-2 shrink-0">
               {/* Dark / Light Mode Toggle */}
               <button
                 onClick={onToggleDarkMode}
                 aria-label={darkMode ? (lang === 'ar' ? 'تفعيل الوضع الفاتح' : 'Switch to Light Mode') : (lang === 'ar' ? 'تفعيل الوضع الداكن' : 'Switch to Dark Mode')}
                 title={darkMode ? (lang === 'ar' ? 'الوضع الفاتح' : 'Light Mode') : (lang === 'ar' ? 'الوضع الداكن' : 'Dark Mode')}
-                className="p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
+                className="p-1.5 xl:p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
               >
                 {darkMode ? <Sun className="w-4 h-4 text-[#D4AF37]" /> : <Moon className="w-4 h-4" />}
               </button>
@@ -355,7 +355,7 @@ export default function Navbar({
                 onClick={() => setSearchOpen(!searchOpen)}
                 aria-label="Search"
                 title={lang === 'ar' ? 'بحث' : 'Search'}
-                className="p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
+                className="p-1.5 xl:p-2 text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
               >
                 <Search className="w-4 h-4" />
               </button>
@@ -363,7 +363,7 @@ export default function Navbar({
               {/* Language Switcher */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors"
+                className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-full transition-colors whitespace-nowrap"
                 title="Switch Language"
               >
                 <Globe className="w-3.5 h-3.5 text-[#C5A059]" />
@@ -374,16 +374,16 @@ export default function Navbar({
               {currentUser ? (
                 <button
                   onClick={() => setProfileModalOpen(true)}
-                  className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-transparent text-[#002366] dark:text-[#D4AF37] border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
+                  className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-transparent text-[#002366] dark:text-[#D4AF37] border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
                   title={isAr ? `حساب الزائر: ${currentUser.name} (اضغط لإدارة الحساب والمفضلة والتقييم)` : `Visitor Account: ${currentUser.name}`}
                 >
                   <UserCheck className="w-3.5 h-3.5 text-[#C5A059]" />
-                  <span className="max-w-[90px] xl:max-w-[110px] truncate">{currentUser.name}</span>
+                  <span className="max-w-[76px] xl:max-w-[110px] truncate">{currentUser.name}</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setAuthModalOpen(true)}
-                  className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-semibold text-[#002366] dark:text-[#D4AF37] bg-white dark:bg-transparent border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
+                  className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold text-[#002366] dark:text-[#D4AF37] bg-white dark:bg-transparent border border-[#002366]/25 dark:border-[#C5A059]/50 hover:border-[#C5A059] transition-colors"
                   title={isAr ? 'بوابة الزوار: تسجيل الدخول أو فتح حساب جديد' : 'Visitor Portal: Sign In or Register'}
                 >
                   <User className="w-3.5 h-3.5 text-[#C5A059]" />
@@ -395,46 +395,55 @@ export default function Navbar({
               {/* PWA & QR Code Install Trigger (visible in bar >= xl; also in Site Explorer & Footer) */}
               <button
                 onClick={() => setIsPwaModalOpen(true)}
-                className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors"
+                className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors whitespace-nowrap shrink-0"
                 title={isAr ? 'تثبيت التطبيق على الجوال والكمبيوتر ومسح الباركود' : 'Install App / Scan QR'}
               >
                 <QrCode className="w-3.5 h-3.5 text-[#C5A059]" />
                 <span className="text-[11px]">{isAr ? 'التطبيق' : 'App / QR'}</span>
               </button>
 
-              {/* Admin Portal Trigger (visible in bar >= xl; also in Site Explorer & Footer) */}
+              {/* Admin Portal Trigger (always visible in navbar bar on tablet & desktop; also in mobile bar/menu, Site Explorer & Footer) */}
               <button
                 onClick={onOpenAdmin}
-                className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors"
+                className="flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-[#002366] dark:hover:text-[#D4AF37] bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] transition-colors whitespace-nowrap shrink-0"
                 title={lang === 'ar' ? 'بوابة مدير الموقع وقاعدة البيانات' : 'Admin & Database Portal'}
               >
-                <Shield className="w-3.5 h-3.5 text-[#C5A059]" />
+                <Shield className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
                 <span className="text-[11px]">{lang === 'ar' ? 'الإدارة' : 'Admin'}</span>
               </button>
 
               {/* Request Consultation CTA Button */}
               <button
                 onClick={onOpenConsultation}
-                className="flex items-center gap-1.5 px-3 xl:px-4 py-2 rounded-full text-xs font-semibold text-white bg-[#002366] hover:bg-[#1D4ED8] transition-colors whitespace-nowrap"
+                className="flex items-center gap-1.5 px-2.5 xl:px-4 py-1.5 xl:py-2 rounded-full text-xs font-semibold text-white bg-[#002366] hover:bg-[#1D4ED8] transition-colors whitespace-nowrap"
               >
-                <span className="hidden xl:inline">{t.requestConsultation}</span>
-                <span className="xl:hidden">{isAr ? 'طلب معاينة' : 'Site Survey'}</span>
+                <span className={isAr ? 'hidden xl:inline' : 'hidden 2xl:inline'}>{t.requestConsultation}</span>
+                <span className={isAr ? 'xl:hidden' : '2xl:hidden'}>{isAr ? 'طلب معاينة' : 'Site Survey'}</span>
                 <ArrowIcon className="w-3.5 h-3.5" />
               </button>
             </div>
 
             {/* Mobile / Tablet Menu Button */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
+              <button
+                onClick={onOpenAdmin}
+                aria-label={lang === 'ar' ? 'الإدارة' : 'Admin'}
+                title={lang === 'ar' ? 'بوابة مدير الموقع وقاعدة البيانات' : 'Admin & Database Portal'}
+                className="md:hidden flex items-center gap-1 p-1.5 sm:px-2 bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-lg text-xs font-semibold text-[#002366] dark:text-[#D4AF37] transition-colors"
+              >
+                <Shield className="w-4 h-4 text-[#C5A059]" />
+                <span className="hidden sm:inline text-[11px]">{lang === 'ar' ? 'الإدارة' : 'Admin'}</span>
+              </button>
               <button
                 onClick={onToggleDarkMode}
                 aria-label="Toggle theme"
-                className="p-1.5 bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-lg text-[#002366] dark:text-white transition-colors"
+                className="md:hidden p-1.5 bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-lg text-[#002366] dark:text-white transition-colors"
               >
                 {darkMode ? <Sun className="w-4 h-4 text-[#D4AF37]" /> : <Moon className="w-4 h-4" />}
               </button>
               <button
                 onClick={toggleLanguage}
-                className="px-2 py-1.5 text-xs font-semibold bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-lg text-[#002366] dark:text-white transition-colors"
+                className="md:hidden px-2 py-1.5 text-xs font-semibold bg-white dark:bg-transparent border border-slate-200/80 dark:border-slate-700 hover:border-[#C5A059] rounded-lg text-[#002366] dark:text-white transition-colors"
               >
                 {lang === 'ar' ? 'EN' : 'ع'}
               </button>
